@@ -1,5 +1,6 @@
 
 import web3 from './web3';
+//import web3 from 'web3';
 
 const deployeAddress = '0x0b7a9bf185d2266f81f64e8e0848ab66a1dd3cc5';
 

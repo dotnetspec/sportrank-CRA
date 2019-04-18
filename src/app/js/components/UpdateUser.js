@@ -1,8 +1,12 @@
-import { Button, FormGroup, ControlLabel, FormControl, HelpBlock, Image, Grid, Col, Row, PageHeader } from 'react-bootstrap';
+import { Button, FormGroup, ControlLabel, FormControl, Image, Col, Row } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react';
 import FieldGroup from './FieldGroup';
 import JSONops from './JSONops'
+import DSportRank from '../../../ABIaddress';
+import web3 from '../../../web3';
+import Container from 'react-bootstrap/Container'
+//import PageHeader from 'react-bootstrap/PageHeader'
 
 class UpdateUser extends Component {
 
@@ -75,44 +79,45 @@ class UpdateUser extends Component {
 //apparently it makes little sense to store this kind of user data on a BC
 //and it was done just for the sake of the original demo code. This function will
 //probably be deleted.
-  useBCToAddUpdatedUserVals(){
-    try {
-      const usernameHash = web3.utils.keccak256(user.username);
-      const updatedDescription = this.state.description;
-      //TODO: dummy value - This needs to be fully implemented with IPFS
-      const updatedImageHash = 'Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL';
-      //ensure defaultRankid isn't altered by updating the user
-      const placeHolderForRankId = '';
-      // set up our contract method with the input values from the form
-          const editAccount = DSportRank.methods.editAccount(usernameHash, updatedDescription, placeHolderForRankId, updatedImageHash);
-          // get a gas estimate before sending the transaction
-          //nxt 2 lines commented to avoid compile err
-          //const gasEstimate = await editAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
-          //const result = await editAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
-
-      if (result.status && !Boolean(result.status.toString().replace('0x', ''))) {
-        return this.setState({ isLoading: false, formState: 'error', formUpdated: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
-      }
-      console.log('here after contract should have updated')
-      // stop loading state, and render the form as successful
-      this.setState({ isLoading: false, formState: 'success', formUpdated: false });
-
-      //NB: below prevents onAfterUserUpdate
-      this.props.history.push('/');
-
-      // tell parent we've updated our user, so the current
-      // user is re-fetched to get the user's details
-      //REVIEW: return here?
-      return this.props.onAfterUserUpdate();
-
-      //return to home page
-      this.props.history.push('/');
-    }
-    catch (err) {
-      // stop loading state and show user the error
-      this.setState({ isLoading: false, formState: 'error', formUpdated: false, error: err.message });
-    }
-  }
+  //
+  // useBCToAddUpdatedUserVals(){
+  //   try {
+  //     const usernameHash = web3.utils.keccak256(user.username);
+  //     const updatedDescription = this.state.description;
+  //     //TODO: dummy value - This needs to be fully implemented with IPFS
+  //     const updatedImageHash = 'Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL';
+  //     //ensure defaultRankid isn't altered by updating the user
+  //     const placeHolderForRankId = '';
+  //     // set up our contract method with the input values from the form
+  //         const editAccount = DSportRank.methods.editAccount(usernameHash, updatedDescription, placeHolderForRankId, updatedImageHash);
+  //         // get a gas estimate before sending the transaction
+  //         //nxt 2 lines commented to avoid compile err
+  //         //const gasEstimate = await editAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
+  //         //const result = await editAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
+  //
+  //     if (result.status && !Boolean(result.status.toString().replace('0x', ''))) {
+  //       return this.setState({ isLoading: false, formState: 'error', formUpdated: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
+  //     }
+  //     console.log('here after contract should have updated')
+  //     // stop loading state, and render the form as successful
+  //     this.setState({ isLoading: false, formState: 'success', formUpdated: false });
+  //
+  //     //NB: below prevents onAfterUserUpdate
+  //     this.props.history.push('/');
+  //
+  //     // tell parent we've updated our user, so the current
+  //     // user is re-fetched to get the user's details
+  //     //REVIEW: return here?
+  //     return this.props.onAfterUserUpdate();
+  //
+  //     //return to home page
+  //     this.props.history.push('/');
+  //   }
+  //   catch (err) {
+  //     // stop loading state and show user the error
+  //     this.setState({ isLoading: false, formState: 'error', formUpdated: false, error: err.message });
+  //   }
+  // }
 
   //#region Component events
   /**
@@ -211,15 +216,15 @@ class UpdateUser extends Component {
     const { user } = this.props;
     const feedback = formState === 'success' ? 'Saved' : error;
     return (
-      <Grid>
+      <Container>
         <Row>
           <Col xs={12}>
-            <PageHeader>Update { user.username } <small>{this.props.account}</small></PageHeader>
+            <h2>Update { user.username } <small>{this.props.account}</small></h2>
           </Col>
         </Row>
         {this.state.error ? <span className='error'>Oh no!</span> : null}
         <p></p>
-        <Row className="show-grid">
+        <Row className="show-Container">
           <Col xs={12} >
             <Button
               bsStyle="primary"
@@ -301,12 +306,12 @@ class UpdateUser extends Component {
               <FormGroup
                 validationState={ formState }
               >
-                <HelpBlock>{ feedback }</HelpBlock>
+
               </FormGroup>
             </form>
           </Col>
         </Row>
-      </Grid>
+      </Container>
     );
   }
   //#endregion

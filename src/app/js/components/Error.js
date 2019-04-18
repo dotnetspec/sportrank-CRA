@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, PageHeader } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container'
+//import PageHeader from 'react-bootstrap/PageHeader'
 
 /**
  * Class representing the home page rendering
- * 
+ *
  * @extends React.Component
  */
 class Error extends Component {
@@ -20,12 +22,12 @@ class Error extends Component {
     const metaMaskPossible = (this.props.error.message.indexOf('Internal JSON-RPC error') > 0 || this.props.error.message.indexOf('Failed to fetch') > 0);
 
     return (
-      <Grid>
+      <Container>
         <Row>
           <Col xs={12}>
-            <PageHeader>
+            <h2>
               Whoopsieee <small>Something went wrong</small>
-            </PageHeader>
+            </h2>
             {metaMaskPossible ?
               <React.Fragment>
                 <h3>Metamask error?</h3>
@@ -37,16 +39,16 @@ class Error extends Component {
             <h3>Error details</h3>
             <pre>{this.props.error.message}<br />
             {this.props.error.stack}
-            { this.props.error.source ? 
+            { this.props.error.source ?
               <React.Fragment>
                 <br/>Source: { this.props.error.source }
               </React.Fragment>
-              : 
+              :
               ''
             }</pre>
           </Col>
         </Row>
-      </Grid>
+      </Container>
     );
   }
   //#endregion

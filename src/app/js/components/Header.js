@@ -1,5 +1,5 @@
 import { NavLink, withRouter } from 'react-router-dom'
-import { NavItem, Label, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, MenuItem, Overlay, Tooltip } from 'react-bootstrap';
+import { NavItem, Label, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Overlay, Tooltip } from 'react-bootstrap';
 import React, { Component } from 'react';
 //import DoChallenge from './DoChallenge';
 import Search from './Search';
@@ -10,6 +10,10 @@ import imgAvatar from '../../img/avatar-default.png';
 import JSONops from './JSONops'
 import {updateWarningText} from './Home'
 import {updatedExtAcctBalCB, newrankIdCB} from './App'
+import web3 from '../../../web3';
+//import { DropdownItem } from 'react-bootstrap';
+import DropdownItem from 'react-bootstrap/DropdownItem'
+//import config from '../../../ABIaddress';
 
 
 /**
@@ -95,7 +99,7 @@ class Header extends Component {
 
   /**
    * Switches to userupdate page
-   TODO: Need something like below from menuItem so can
+   TODO: Need something like below from DropdownItem so can
    pass e to 'handleShow' (which will become handleUpdateProfile)
    onSelect={(key, e) => this._handleAcctChange(e, key)}
    */
@@ -287,14 +291,14 @@ displayActivationBtns(){
     if (isError) navClasses.push('error');
     if (!isEditable) navClasses.push('logged-out');
 
-    // generate the menuitems for the accounts to populate
+    // generate the DropdownItems for the accounts to populate
     // the accounts dropdown
     const accts = this.props.userAccounts.map((userAccount, index) => {
       const isCurrUser = userAccount.address === this.props.account;
       const hasUser = Boolean(userAccount.user.username);
 
 //NB: return is part of accts definition above. Not the render return (below)
-      return <MenuItem
+      return <DropdownItem
         key={index}
         eventKey={index}
         active={isCurrUser}
@@ -313,14 +317,14 @@ displayActivationBtns(){
             <span className='username'>{userAccount.user.username}</span></React.Fragment>
           :
           <React.Fragment>
-            <Glyphicon glyph="question-sign" />
+
             <span className='address'>{limitAddressLength(userAccount.address, 4)}</span>
           </React.Fragment>
         }
         <React.Fragment>
           <small className='balance'>{this._formatBalance(userAccount.balance)}</small>
         </React.Fragment>
-      </MenuItem>
+      </DropdownItem>
     });
 
     let states = {};
@@ -336,7 +340,7 @@ displayActivationBtns(){
     // (This happens in the App component)
     states.isNotEditable = <React.Fragment>
       <span className='profile-link'>
-        <Glyphicon glyph="question-sign" />
+        {/*<Glyphicon glyph="question-sign" />*/}
         <span
           onMouseEnter={(e) => this._handleToggle(e)}
           onMouseLeave={(e) => this._handleToggle(e)}

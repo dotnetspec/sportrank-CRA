@@ -1,9 +1,13 @@
-import { Button, FormGroup, ControlLabel, FormControl, HelpBlock, Grid, Row, Col, PageHeader, Modal } from 'react-bootstrap';
+import { Button, FormGroup, ControlLabel, FormControl, HelpBlock, Row, Col, Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import FieldGroup from './FieldGroup'
 import JSONops from './JSONops'
 import {userNameCB, contactNoCB, emailCB} from './App'
+import web3 from '../../../web3';
+import DSportRank from '../../../ABIaddress';
+import Container from 'react-bootstrap/Container'
+//import PageHeader from 'react-bootstrap/PageHeader'
 
 
 //helper class
@@ -122,6 +126,8 @@ _continueClick = () => {
               try {
                 // set up our contract method with the input values from the form
                 console.log('newrankId ready to send to createAccount', newrankId)
+                //const createAccount = DSportRank.methods.createAccount(username, this.state.contactno, this.state.email, description, newrankId);
+
                 const createAccount = DSportRank.methods.createAccount(username, this.state.contactno, this.state.email, description, newrankId);
                 console.log('createAccount created', createAccount)
                 // get a gas estimate before sending the transaction
@@ -306,7 +312,7 @@ _continueClick = () => {
     if (!this.state.usernameHasChanged) feedback = '';
 
     return (
-      <Grid>
+      <Container>
       <Modal
           show={this.state.WarningModalIsOpen}
         >
@@ -324,7 +330,7 @@ _continueClick = () => {
         </Modal>
         <Row>
           <Col xs={12}>
-          <PageHeader>Create An Account Name<small> for account number:  { this.props.account }</small></PageHeader>
+          <h2>Create An Account Name<small> for account number:  { this.props.account }</small></h2>
           </Col>
         </Row>
         <Row>
@@ -385,7 +391,7 @@ _continueClick = () => {
             </form>
           </Col>
         </Row>
-      </Grid>
+      </Container>
     );
   }
   //#endregion

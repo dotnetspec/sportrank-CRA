@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { FormGroup, InputGroup, FormControl, Button, Glyphicon, ControlLabel, Col } from 'react-bootstrap';
+import { FormGroup, InputGroup, FormControl, Button, ControlLabel, Col } from 'react-bootstrap';
 
 /**
  * Class that renders a form to faciliate searching of
@@ -95,7 +95,7 @@ class Search extends Component {
           <Button
             bsStyle="primary"
             disabled={ !isValid }
-            onClick={ !isValid ? null : (e) => this._handleClick(e) }><Glyphicon glyph="search" /></Button>
+            onClick={ !isValid ? null : (e) => this._handleClick(e) }></Button>
           </InputGroup.Button>
         </InputGroup>
       </FormGroup>

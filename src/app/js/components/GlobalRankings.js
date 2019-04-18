@@ -1,5 +1,6 @@
 import { Switch, Route } from 'react-router-dom';
-import { Grid, Row, Col, PageHeader, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, MenuItem, Overlay, Tooltip } from 'react-bootstrap';
+//import { TableHeaderColumn } from 'react-bootstrap-table';
+import { Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, DropdownItem, Overlay, Tooltip, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import PropsRoute from './PropsRoute';
 import Home from './Home';
 import Userchallenges from './Userchallenges';
@@ -13,6 +14,7 @@ import CreateNewRanking from './CreateNewRanking';
 import UserRankings from './UserRankings'
 import {newrankIdCB, viewingOnlyCB} from './App'
 import {saveJson, loadJson} from '../lib/service'
+import Container from 'react-bootstrap/Container'
 
 const selectRowPropAfterClickRow = {
   selectedRankingId: ''
@@ -121,7 +123,6 @@ class GlobalRankings extends Component {
 
 
       //NB: to enable non-test jsonbin.io data use the following as a property of
-      //BootstrapTable:
       //data={this.props.rankingListJSONdata}
       //original test: data={this.state.data}
       return (
@@ -180,11 +181,11 @@ class GlobalRankings extends Component {
     return (
       <div>
       {this.props.error ? <span className='error'>Oh no!</span> : null}
-      <Grid>
+      <Container>
         <Row>
           {this.globalBSTableDisplay()}
         </Row>
-      </Grid>
+      </Container>
       </div>
     )
   }

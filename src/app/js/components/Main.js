@@ -32,7 +32,7 @@ class Main extends Component {
   }
 
 configPathname(){
-  //const {pathname} = this.props.location;
+  const {pathname} = this.props.location;
   console.log('pathname prop in main.js', this.props.location.pathname)
   if(pathname.includes("srhost")){
     this.setState({ pathnameStr: '/srhost/' });

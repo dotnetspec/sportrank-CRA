@@ -1,9 +1,9 @@
 import React from 'react';
-import { FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup } from 'react-bootstrap';
-
+//import { FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup } from 'react-bootstrap';
+import { FormGroup, FormLabel, FormControl, InputGroup } from 'react-bootstrap';
 /**
  * Creates a from group with label and form control with options for feedback, help, and addons.
- * 
+ *
  * @param {config} configObj
  *      * id              {String}          (required) The FormGroup controlId.
  *      * label           {String}          (required) The control's label text.
@@ -14,7 +14,7 @@ import { FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup } from 'rea
  *         ** location    {String}          (required) Placement of the addon. One of 'before', 'after'.
  *         ** addOn       {React.Component} (required) React component or string to represent the add on. ie '$' or <Button>Update</Button>.
  *      * ...props        {Any}             (optional) Any other props passed in will be appended as props to the FormControl component, ie type='file'.
- * 
+ *
  * @example
  * <FieldGroup
  *   type="text"
@@ -35,16 +35,16 @@ import { FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup } from 'rea
  *     }
  *   }
  * />
- * 
+ *
  * @returns {React.Component} The completed component to render.
  */
 const FieldGroup = ({ id, label, help, validationState, hasFeedback, inputAddOn, ...props }) => {
   return (
     <React.Fragment>
       <FormGroup controlId={id} validationState={validationState}>
-        <ControlLabel>{label}</ControlLabel>
-        
-        { inputAddOn ? 
+        <FormLabel>{label}</FormLabel>
+
+        { inputAddOn ?
           <InputGroup>
             { inputAddOn.location === 'before' ? <InputGroup.Addon>{ inputAddOn.addOn }</InputGroup.Addon> : '' }
             <FormControl {...props} />
@@ -54,9 +54,9 @@ const FieldGroup = ({ id, label, help, validationState, hasFeedback, inputAddOn,
           <FormControl {...props}>{ props.children }</FormControl>
         }
         {hasFeedback ? <FormControl.Feedback /> : ''}
-        {help && <HelpBlock>{help}</HelpBlock>}
+        
       </FormGroup>
-      
+
     </React.Fragment>
   );
 }

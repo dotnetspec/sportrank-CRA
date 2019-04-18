@@ -10,7 +10,9 @@ import PropsRoute from './PropsRoute';
 import JSONops from './JSONops'
 import { formatEth, limitLength, limitAddressLength } from '../utils';
 import {saveJson, loadJson} from '../lib/service'
-import config from '../../../src/embarkArtifacts/config/blockchain';
+//import config from '../../../src/embarkArtifacts/config/blockchain';
+import web3 from '../../../web3';
+import DSportRank from '../../../ABIaddress';
 //import web3 from '../../../src/embarkArtifacts/config/modules/web3/index';
 //REVIEW: is the solution to this to write your own api?
 //import jsonData from '../../json/Rankings.json'
@@ -235,7 +237,8 @@ _loadsetRankingListJSONData = async () => {
   _loadCurrentUserAccounts = async () => {
     console.log('_loadCurrentUserAccounts')
       // get all the accounts the node controls
-      await EmbarkJS.Blockchain.connect(config);
+      //await EmbarkJS.Blockchain.connect(DSportRank);
+      //web3.Blockchain.co
       const accounts = await web3.eth.getAccounts();
         //console.log('_loadCurrentUserAccounts 1')
       // Generates a mapping of users and accounts to be used
@@ -263,7 +266,7 @@ _loadsetRankingListJSONData = async () => {
           let balance = await web3.eth.getBalance(address);
           balance = web3.utils.fromWei(balance, 'ether');
           // update user picture with ipfs url
-          user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
+          //user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
           // add the following mapping to our result
           next(null, {
             address: address,
@@ -389,7 +392,8 @@ _loadsetRankingListJSONData = async () => {
         //req.open("PUT", "https://api.jsonbin.io/b", true);
         req.setRequestHeader("Content-type", "application/json");
         //req.send('{"Player": "Johan Straus"}') || {}
-        req.send(myJSON) || {}
+        req.send(myJSON)
+        //|| {}
         }catch (err) {
         // stop loading state and show the error
         console.log(err)
@@ -439,14 +443,15 @@ _loadsetRankingListJSONData = async () => {
   //any change with setState here will re-render app.js
   //async componentDidMount() {
   componentDidMount() {
-    EmbarkJS.onReady(() => {
+    //EmbarkJS.onReady(() => {
       try{
       this._loadCurrentUserAccounts();
       }catch(e){
         console.log(e)
       }
       //console.log('rankingListData:data', this.state.rankingListData)
-    });
+   //}
+  //);
     //if newRankId is blank a user either has just loaded the app or has clicked the
     //ListAllRankingss btn
     console.log('this.state.newrankIdCB', this.state.newrankIdCB)

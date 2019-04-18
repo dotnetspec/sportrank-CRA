@@ -1,11 +1,18 @@
-import { Grid, Row, Col, Thumbnail, ListGroup, ListGroupItem, PageHeader, Button } from 'react-bootstrap';
+import { Row, Col, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
 import React, { Component } from 'react';
 import imgAvatar from '../../img/avatar-default.png';
-import { formatDistance } from 'date-fns/esm'
+import { formatDistance } from 'date-fns'
 import { EventEmitter } from 'events';
 import { withRouter } from 'react-router-dom'
-import EmbarkJS from '../../../src/embarkArtifacts/embarkjs';
-import DSportRank from '../../../src/embarkArtifacts/contracts/DSportRank';
+//import EmbarkJS from '../../../src/embarkArtifacts/embarkjs';
+import DSportRank from '../../../ABIaddress';
+import web3 from '../../../web3';
+import Container from 'react-bootstrap/Container'
+//import { PageHeader } from 'react-bootstrap';
+//import * as ReactBootstrap from 'react-bootstrap';
+//import PageHeader from 'react-bootstrap/PageHeader'
+import Thumbnail from 'react-bootstrap/Thumbnail'
+
 
 // Original: The Player looks up the player using the number parsed from
 // the URL's pathname. If no player is found with the given
@@ -60,7 +67,7 @@ class Userrankings extends Component {
       let user = await DSportRank.methods.users(web3.utils.keccak256(username)).call();
 
       // update picture url for ipfs
-      user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
+      //user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
 
       // format the user.creationDate for display
       user.creationDate = this._formatDate(user.creationDate);
@@ -107,7 +114,7 @@ class Userrankings extends Component {
        })
        .on('error', function(error){
          console.log('second err');
-         this.props.onError(err, 'UserRankings._subscribeToNewRankingEvent');
+         this.props.onError(error, 'UserRankings._subscribeToNewRankingEvent');
        });
  }
 
@@ -147,12 +154,12 @@ class Userrankings extends Component {
    * Get the user details and subscribe to their ranking event
    */
   componentDidMount(){
-    EmbarkJS.onReady((err) => {
-      console.log(3)
-      console.log('this.state.rankings in componentDidMount');
-      console.log(this.state.rankings);
-      this._init();
-    });
+    // EmbarkJS.onReady((err) => {
+    //   console.log(3)
+    //   console.log('this.state.rankings in componentDidMount');
+    //   console.log(this.state.rankings);
+    //   this._init();
+    // });
   }
 
   /**
@@ -182,16 +189,16 @@ class Userrankings extends Component {
 
     if (user === {}) {
   // Render loading state ...
-  return (<Grid><Row><Col xs={12}>Loading...</Col></Row></Grid>);
+  return (<Container><Row><Col xs={12}>Loading...</Col></Row></Container>);
     } else if (user.username === ''){
       return (
-      <Grid>
+      <Container>
         <Row>
           <Col xs={12}>
-            <PageHeader>{ this.props.match.params.username } <small>does not exist!</small></PageHeader>
+            <h2>{ this.props.match.params.username } <small>does not exist!</small></h2>
           </Col>
         </Row>
-      </Grid>);
+      </Container>);
     }else {
       // Render real UI ...
       const {username, description, picture, creationDate} = user;
@@ -213,8 +220,8 @@ class Userrankings extends Component {
                           return <ListGroupItem className='tweet' key={ index } header={ ranking.time }>{ contentToDisplay }</ListGroupItem>
                         });
       return (
-        <Grid>
-        <Row className="show-grid">
+        <Container>
+        <Row className="show-Container">
           <Col xs={12} md={8} xsOffset={3} >
             <Button
               bsStyle="primary"
@@ -228,7 +235,7 @@ class Userrankings extends Component {
         </Row>
           <Row>
             <Col xs={12}>
-              <PageHeader>{ username } s <small>rankings</small></PageHeader>
+              <h2>{ username } s <small>rankings</small></h2>
             </Col>
           </Row>
           <Row>
@@ -246,7 +253,7 @@ class Userrankings extends Component {
               </ListGroup>
             </Col>
           </Row>
-        </Grid>
+        </Container>
       )
     }
   }

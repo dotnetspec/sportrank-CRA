@@ -1,9 +1,13 @@
-import { Button, FormGroup, ControlLabel, FormControl, HelpBlock, Grid, Row, Col, PageHeader, Modal } from 'react-bootstrap';
+import { Button, FormGroup, ControlLabel, FormControl, HelpBlock, Row, Col, Modal } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container'
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import FieldGroup from './FieldGroup'
 import JSONops from './JSONops'
 import {newrankIdCB} from './App'
+import web3 from '../../../web3';
+import DSportRank from '../../../ABIaddress';
+//import PageHeader from 'react-bootstrap/PageHeader'
 
 
 //helper class
@@ -308,7 +312,8 @@ getNewRankId = async () => {
       //id set for table display and correct ranking setting
       //REVIEW: may handle below differently but getting rankingid involves
       //chicken and egg problem getting an initiial json
-      req.send('{"RANKING": "NEWRANKING", "STATUS":"NEW", "id":1}') || {}
+      //req.send('{"RANKING": "NEWRANKING", "STATUS":"NEW", "id":1}') || {}
+      req.send('{"RANKING": "NEWRANKING", "STATUS":"NEW", "id":1}')
       }catch (err) {
       // stop loading state and show the error
       console.log(err)
@@ -510,7 +515,7 @@ getNewRankId = async () => {
     if (!this.state.rankingnameHasChanged) feedback = '';
 
     return (
-      <Grid>
+      <Container>
       <Modal
           show={this.state.WarningModalIsOpen}
         >
@@ -528,7 +533,7 @@ getNewRankId = async () => {
         </Modal>
         <Row>
           <Col xs={12}>
-          <PageHeader>Create A New Ranking Name</PageHeader>
+          <h2>Create A New Ranking Name</h2>
           </Col>
         </Row>
         <Row>
@@ -573,7 +578,7 @@ getNewRankId = async () => {
             </form>
           </Col>
         </Row>
-      </Grid>
+      </Container>
     );
   }
   //#endregion

@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, PageHeader, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, MenuItem, Overlay, Tooltip } from 'react-bootstrap';
+//import { Grid, Row, Col, PageHeader, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, MenuItem, Overlay, Tooltip } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import '../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
+import { Row, Col, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, DropdownItem, Overlay, Tooltip } from 'react-bootstrap';
+//import { TableHeaderColumn } from 'react-bootstrap-table';
 import { NavLink, withRouter } from 'react-router-dom'
 import Spinner from 'react-spinkit';
-import Chance from "chance"
+//import Chance from "chance"
 import DoChallenge from './DoChallenge'
 import EnterResult from './EnterResult'
 import JSONops from './JSONops'
+import Container from 'react-bootstrap/Container'
+//import PageHeader from 'react-bootstrap/PageHeader'
 
  //REVIEW: May be able to improve setting rank with similar to:
  //this.setState((state, props) => ({
@@ -460,7 +463,7 @@ const { rankingJSONdata, contactNoCB, emailCB } = this.props;
             </Modal.Footer>
           </Modal>
 
-        <Grid>
+        <Container>
           <Row>
           {isLoading ?
             states.isLoading
@@ -478,9 +481,9 @@ const { rankingJSONdata, contactNoCB, emailCB } = this.props;
                   </div>
 
             <Col xs={12}>
-              <PageHeader>
+              <h2>
 
-              </PageHeader>
+              </h2>
             </Col>
           </Row>
           <Row>
@@ -488,7 +491,7 @@ const { rankingJSONdata, contactNoCB, emailCB } = this.props;
 
             </Col>
           </Row>
-        </Grid>
+        </Container>
       </div>
     );
   }

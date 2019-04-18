@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Grid, Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, MenuItem, Overlay, Tooltip, Button, Radio, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { Container, Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, DropdownItem, Overlay, Tooltip, Button, Radio, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 //import testData from "../../json/Rankings.json";
 import React, { Component } from 'react'
 import FieldGroup from './FieldGroup'
@@ -173,7 +173,6 @@ const opponentCurrentlyChallengingUser = JSONops._getUserValue(this.props.data, 
           controlId="formBasicText"
           //validationState={ validationState }
         >
-          <HelpBlock></HelpBlock>
         </FormGroup>
       </form>
 </>

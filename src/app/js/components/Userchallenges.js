@@ -1,11 +1,14 @@
-import { Grid, Row, Col, Thumbnail, ListGroup, ListGroupItem, PageHeader, Button } from 'react-bootstrap';
+import { Row, Col, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
 import React, { Component } from 'react';
 import imgAvatar from '../../img/avatar-default.png';
-import { formatDistance } from 'date-fns/esm'
+import { formatDistance } from 'date-fns'
 import { EventEmitter } from 'events';
-import EmbarkJS from '../../../src/embarkArtifacts/embarkjs';
-import DSportRank from '../../../src/embarkArtifacts/contracts/DSportRank';
-
+//import EmbarkJS from '../../../src/embarkArtifacts/embarkjs';
+import DSportRank from '../../../ABIaddress';
+import web3 from '../../../web3';
+import Container from 'react-bootstrap/Container'
+import Thumbnail from 'react-bootstrap/Thumbnail'
+//import PageHeader from 'react-bootstrap/PageHeader'
 // The Player looks up the player using the number parsed from
 // the URL's pathname. If no player is found with the given
 // number, then a "player not found" message is displayed.
@@ -44,7 +47,7 @@ class Userchallenges extends Component {
       let user = await DSportRank.methods.users(web3.utils.keccak256(username)).call();
 
       // update picture url for ipfs
-      user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
+      //user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
 
       // format the user.creationDate for display
       user.creationDate = this._formatDate(user.creationDate);
@@ -97,7 +100,7 @@ class Userchallenges extends Component {
          console.log('this.props')
          console.log(this.props)
          console.log(error)
-         this.props.onError(err, 'UserChallenges._subscribeToNewChallengeEvent');
+         this.props.onError(error, 'UserChallenges._subscribeToNewChallengeEvent');
        });
  }
 
@@ -116,7 +119,7 @@ class Userchallenges extends Component {
   let res2 = '';
 
   //const DSportRank = require('Embark/contracts/DSportRank');
-  const DSportRank = require('Embark/contracts/DSportRank');
+  //const DSportRank = require('Embark/contracts/DSportRank');
 
   const usernameHash = web3.utils.keccak256(this.props.match.params.username);
 console.log('usernameHash')
@@ -137,7 +140,7 @@ const challengeContent = 'txt tot test'
             console.log('this.props')
             console.log(this.props)
             console.log(error)
-            this.props.onError(err, 'UserChallenges.getPastEvents');
+            this.props.onError(error, 'UserChallenges.getPastEvents');
           });
 
 console.log(res1)
@@ -199,9 +202,9 @@ getEvents1(){
    * Get the user details and subscribe to their challenge event
    */
   componentDidMount(){
-    EmbarkJS.onReady((err) => {
-      this._init();
-    });
+    // EmbarkJS.onReady((err) => {
+    //   this._init();
+    // });
 
   }
 
@@ -233,16 +236,16 @@ getEvents1(){
 
     if (user === {}) {
       // Render loading state ...
-      return (<Grid><Row><Col xs={12}>Loading...</Col></Row></Grid>);
+      return (<Container><Row><Col xs={12}>Loading...</Col></Row></Container>);
     } else if (user.username === ''){
       return (
-      <Grid>
+      <Container>
         <Row>
           <Col xs={12}>
-            <PageHeader>{ this.props.match.params.username } <small>does not exist!</small></PageHeader>
+            <h2>{ this.props.match.params.username } <small>does not exist!</small></h2>
           </Col>
         </Row>
-      </Grid>);
+      </Container>);
     }else {
       // Render real UI ...
       const {username, description, picture, creationDate} = user;
@@ -251,8 +254,8 @@ getEvents1(){
                           return <ListGroupItem className='tweet' key={ index } header={ challenge.time }>{ challenge.content }</ListGroupItem>
                         });
       return (
-        <Grid>
-        <Row className="show-grid">
+        <Container>
+        <Row className="show-Container">
           <Col xs={12} md={8} xsOffset={3} >
             <Button
               bsStyle="primary"
@@ -266,7 +269,7 @@ getEvents1(){
         </Row>
           <Row>
             <Col xs={12}>
-              <PageHeader>{ username } s <small>challenges</small></PageHeader>
+              <h2>{ username } s <small>challenges</small></h2>
             </Col>
           </Row>
           <Row>
@@ -284,7 +287,7 @@ getEvents1(){
               </ListGroup>
             </Col>
           </Row>
-        </Grid>
+        </Container>
       )
     }
   }

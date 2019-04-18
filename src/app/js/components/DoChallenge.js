@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Grid, Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, MenuItem, Overlay, Tooltip, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { Container, Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, DropdownItem, Overlay, Tooltip, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 //import testData from "../../json/Rankings.json";
 import React, { Component } from 'react'
 import FieldGroup from './FieldGroup'
@@ -7,7 +7,9 @@ import Spinner from 'react-spinkit'
 import JSONops from './JSONops'
 import {contactNoCB, emailCB, updatedExtAcctBalCB} from './App'
 //import sendmail from 'sendmail'
-import Fortmatic from 'fortmatic';
+//import Fortmatic from 'fortmatic';
+import web3 from '../../../web3';
+import DSportRank from '../../../ABIaddress';
 
 /**
  * Class that renders a form to allow the user to create
@@ -270,7 +272,6 @@ displayContactDetails(){
           controlId="formBasicText"
           validationState={ validationState }
         >
-          <HelpBlock>{ feedback }</HelpBlock>
         </FormGroup>
       </form>
       </>

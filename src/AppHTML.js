@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import web3 from './web3';
 import auth from './ABIaddress';
+//import web3 from 'web3';
 
 class AppHTML extends Component {
 
@@ -22,6 +23,7 @@ class AppHTML extends Component {
 
        //this.setState({owners, balance});
        this.setState({balance, accounts});
+
   }
 
   onSubmit = async (event)=>{
