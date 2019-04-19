@@ -1,6 +1,7 @@
-import { Grid, Button, FormGroup, ControlLabel, FormControl, HelpBlock, Row, Col, Modal } from 'react-bootstrap';
+import { Grid, Button, Row, Col, Modal } from 'react-bootstrap';
+//import { Grid, Button, FormGroup, ControlLabel, FormControl, HelpBlock, Row, Col, Modal } from 'react-bootstrap';
 //import Grid from 'react-bootstrap/Grid'
-import { withRouter } from 'react-router-dom'
+//import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import FieldGroup from './FieldGroup'
 import JSONops from './JSONops'
@@ -11,26 +12,26 @@ import DSportRank from '../../../ABIaddress';
 
 
 //helper class
-class UserConfirmCreateNewRanking extends Component {
-
-   render(
-
-   ) {
-     const isLoading = false;
-              return (
-                <div>
-                hello
-                <Button
-                  //bsStyle="primary"
-                  //disabled={ !isValid }
-                  //onClick={ !isValid ? null : (e) => this._continueClick(e) }
-                  onClick={ (e) => this._cancelClick(e) }
-                >
-                { isLoading ? 'Loading...' : 'Cancel' }
-                </Button>
-               </div>);
-          }
-        }
+// class UserConfirmCreateNewRanking extends Component {
+//
+//    render(
+//
+//    ) {
+//      const isLoading = false;
+//               return (
+//                 <div>
+//                 hello
+//                 <Button
+//                   //bsStyle="primary"
+//                   //disabled={ !isValid }
+//                   //onClick={ !isValid ? null : (e) => this._continueClick(e) }
+//                   onClick={ (e) => this._cancelClick(e) }
+//                 >
+//                 { isLoading ? 'Loading...' : 'Cancel' }
+//                 </Button>
+//                </div>);
+//           }
+//         }
 
 /**
  * Class that renders a form to facilitate the creation
@@ -290,7 +291,7 @@ getNewRankId = async () => {
         //this async section tests whether the result
         //from the code lower down has been returned
         //(without using await)
-        if (req.readyState == XMLHttpRequest.DONE) {
+        if (req.readyState === XMLHttpRequest.DONE) {
           const resulttxt = JSON.parse(req.responseText);
           //only here can set state (once result is back)
           newrankIdCB(resulttxt.id)

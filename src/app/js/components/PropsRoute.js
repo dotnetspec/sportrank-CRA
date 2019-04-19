@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+//import React, { Component } from 'react';
+import React from 'react';
 import { Route } from 'react-router-dom';
 
 const _renderMergedProps = (component, ...rest) => {
@@ -11,7 +12,7 @@ const _renderMergedProps = (component, ...rest) => {
 /**
  * Renders a @external "Route" with props passed to the route
  * and available to all components mounted in that route
- * 
+ *
  * @param {React.Component} component - component to render for the route
  * @param {params} ...rest - props to pass to component when it's mounted
  */

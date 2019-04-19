@@ -1,8 +1,8 @@
 import { Grid, Row, Col, ListGroup, ListGroupItem, Button, Thumbnail } from 'react-bootstrap';
 import React, { Component } from 'react';
-import imgAvatar from '../../img/avatar-default.png';
+//import imgAvatar from '../../img/avatar-default.png';
 import { formatDistance } from 'date-fns'
-import { EventEmitter } from 'events';
+//import { EventEmitter } from 'events';
 //import EmbarkJS from '../../../src/embarkArtifacts/embarkjs';
 import DSportRank from '../../../ABIaddress';
 import web3 from '../../../web3';

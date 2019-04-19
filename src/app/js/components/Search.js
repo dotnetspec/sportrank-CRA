@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { FormGroup, InputGroup, FormControl, Button, ControlLabel, Col } from 'react-bootstrap';
+import { FormGroup, InputGroup, FormControl, Button } from 'react-bootstrap';
 
 /**
  * Class that renders a form to faciliate searching of

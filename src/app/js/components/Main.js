@@ -1,4 +1,5 @@
-import { Switch, Route } from 'react-router-dom';
+//import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import PropsRoute from './PropsRoute';
 import Home from './Home';
 import Userchallenges from './Userchallenges';
@@ -7,7 +8,7 @@ import UpdateUser from './UpdateUser';
 import DeactivatePlayer from './DeactivatePlayer';
 import Error from './Error';
 import React, { Component } from 'react';
-import JSONops from './JSONops'
+//import JSONops from './JSONops'
 import CreateNewRanking from './CreateNewRanking';
 import UserRankings from './UserRankings'
 import GlobalRankings from './GlobalRankings'

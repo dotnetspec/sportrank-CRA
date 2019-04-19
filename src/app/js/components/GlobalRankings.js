@@ -1,19 +1,22 @@
-import { Switch, Route } from 'react-router-dom';
+//import { Switch, Route } from 'react-router-dom';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { Grid, Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, DropdownItem, Overlay, Tooltip, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
-import PropsRoute from './PropsRoute';
+//import { Grid, Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, DropdownItem, Overlay, Tooltip, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { Grid, Row } from 'react-bootstrap';
+
+
+//import PropsRoute from './PropsRoute';
 import Home from './Home';
-import Userchallenges from './Userchallenges';
-import CreateUser from './CreateUser';
-import UpdateUser from './UpdateUser';
-import DeactivatePlayer from './DeactivatePlayer';
-import Error from './Error';
+//import Userchallenges from './Userchallenges';
+// import CreateUser from './CreateUser';
+// import UpdateUser from './UpdateUser';
+// import DeactivatePlayer from './DeactivatePlayer';
+//import Error from './Error';
 import React, { Component } from 'react';
-import JSONops from './JSONops'
-import CreateNewRanking from './CreateNewRanking';
-import UserRankings from './UserRankings'
+// import JSONops from './JSONops'
+// import CreateNewRanking from './CreateNewRanking';
+//import UserRankings from './UserRankings'
 import {newrankIdCB, viewingOnlyCB} from './App'
-import {saveJson, loadJson} from '../lib/service'
+//import {saveJson, loadJson} from '../lib/service'
 //import Grid from 'react-bootstrap/Grid'
 
 const selectRowPropAfterClickRow = {

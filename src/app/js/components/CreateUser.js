@@ -1,4 +1,4 @@
-import { Grid, Button, FormGroup, ControlLabel, FormControl, HelpBlock, Row, Col, Modal } from 'react-bootstrap';
+import { Grid, Button, Row, Col, Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import FieldGroup from './FieldGroup'
@@ -11,26 +11,26 @@ import DSportRank from '../../../ABIaddress';
 
 
 //helper class
-class UserConfirmCreateUser extends Component {
-
-   render(
-
-   ) {
-     const isLoading = false;
-              return (
-                <div>
-                hello
-                <Button
-                  //bsStyle="primary"
-                  //disabled={ !isValid }
-                  //onClick={ !isValid ? null : (e) => this._continueClick(e) }
-                  onClick={ (e) => this._cancelClick(e) }
-                >
-                { isLoading ? 'Loading...' : 'Cancel' }
-                </Button>
-               </div>);
-          }
-        }
+// class UserConfirmCreateUser extends Component {
+//
+//    render(
+//
+//    ) {
+//      const isLoading = false;
+//               return (
+//                 <div>
+//                 hello
+//                 <Button
+//                   //bsStyle="primary"
+//                   //disabled={ !isValid }
+//                   //onClick={ !isValid ? null : (e) => this._continueClick(e) }
+//                   onClick={ (e) => this._cancelClick(e) }
+//                 >
+//                 { isLoading ? 'Loading...' : 'Cancel' }
+//                 </Button>
+//                </div>);
+//           }
+//         }
 
 /**
  * Class that renders a form to facilitate the creation

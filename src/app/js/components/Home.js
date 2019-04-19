@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, PageHeader, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, MenuItem, Overlay, Tooltip } from 'react-bootstrap';
+//import { Grid, Row, Col, PageHeader, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, MenuItem, Overlay, Tooltip } from 'react-bootstrap';
+import { Grid, Row, Col, Button, Modal } from 'react-bootstrap';
+
+
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 //import { Row, Col, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, DropdownItem, Overlay, Tooltip } from 'react-bootstrap';
 //import { TableHeaderColumn } from 'react-bootstrap-table';
-import { NavLink, withRouter } from 'react-router-dom'
+//import { NavLink, withRouter } from 'react-router-dom'
 import Spinner from 'react-spinkit';
 //import Chance from "chance"
 import DoChallenge from './DoChallenge'

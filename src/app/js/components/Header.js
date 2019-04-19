@@ -1,15 +1,18 @@
 import { NavLink, withRouter } from 'react-router-dom'
-import { NavItem, Label, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Overlay, Tooltip } from 'react-bootstrap';
+//import { NavItem, Label, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Overlay, Tooltip } from 'react-bootstrap';
+import { Button, Image, Navbar, ButtonToolbar, Dropdown, Overlay, Tooltip } from 'react-bootstrap';
+
 import React, { Component } from 'react';
 //import DoChallenge from './DoChallenge';
 import Search from './Search';
 import { formatEth, limitLength, limitAddressLength } from '../utils';
 import Spinner from 'react-spinkit';
-import FieldGroup from './FieldGroup';
-import imgAvatar from '../../img/avatar-default.png';
+//import FieldGroup from './FieldGroup';
+//import imgAvatar from '../../img/avatar-default.png';
 import JSONops from './JSONops'
 import {updateWarningText} from './Home'
-import {updatedExtAcctBalCB, newrankIdCB} from './App'
+//import {updatedExtAcctBalCB, newrankIdCB} from './App'
+import {updatedExtAcctBalCB} from './App'
 import web3 from '../../../web3';
 //import { DropdownItem } from 'react-bootstrap';
 //import DropdownItem from 'react-bootstrap/DropdownItem'

@@ -3,7 +3,7 @@ import { Button, FormGroup } from 'react-bootstrap';
 //import testData from "../../json/Rankings.json";
 import React, { Component } from 'react'
 //import FieldGroup from './FieldGroup'
-import Spinner from 'react-spinkit'
+//import Spinner from 'react-spinkit'
 import JSONops from './JSONops'
 import {contactNoCB, emailCB} from './App'
 
@@ -20,9 +20,9 @@ class EnterResult extends Component{
   constructor(props, context) {
     super(props, context);
 
-    const data = this.props.data;
+    //const data = this.props.data;
     //REVIEW: How is this line below supposed to work?
-    const { username, account, onAfterChallenge } = this.props;
+    //const { username, account, onAfterChallenge } = this.props;
 
     //REVIEW: to see the selectedOption change in console had to use an auxilary variabe
     //https://stackoverflow.com/questions/34974775/react-js-setstate-is-late-on-last-input

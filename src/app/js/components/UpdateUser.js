@@ -1,10 +1,10 @@
-import { Grid, Button, FormGroup, ControlLabel, FormControl, Image, Col, Row } from 'react-bootstrap';
+import { Grid, Button, FormGroup, Image, Col, Row } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react';
 import FieldGroup from './FieldGroup';
 import JSONops from './JSONops'
-import DSportRank from '../../../ABIaddress';
-import web3 from '../../../web3';
+//import DSportRank from '../../../ABIaddress';
+//import web3 from '../../../web3';
 //import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
 
@@ -59,7 +59,7 @@ class UpdateUser extends Component {
         // if the user has updated their photo, try to upload it to ipfs
         // and use the resulting ipfs hash to send to the contract as part
         // of the user's profile.
-        let hash = '';
+        //let hash = '';
         if (this.state.picture !== '') {
           try {
             // upload the file to ipfs and get the resulting hash
@@ -129,8 +129,8 @@ class UpdateUser extends Component {
    */
   _handleClick = async () => {
     this.setState({error:true});
-    const { account, user } = this.props;
-    const { description } = this.state;
+    //const { account, user } = this.props;
+    //const { description } = this.state;
     //REVIEW:
     // if the form has not been updated, do nothing
     //if (!this.state.formUpdated) return;
@@ -212,9 +212,9 @@ class UpdateUser extends Component {
   }
 
   render() {
-    const { isLoading, error, formState, formUpdated, contactno, email, description, picture } = this.state;
+    const { isLoading, formState, formUpdated, contactno, email, description, picture } = this.state;
     const { user } = this.props;
-    const feedback = formState === 'success' ? 'Saved' : error;
+    //const feedback = formState === 'success' ? 'Saved' : error;
     return (
       <Grid>
         <Row>

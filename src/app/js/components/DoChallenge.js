@@ -3,7 +3,7 @@
 import { Button, FormGroup} from 'react-bootstrap';
 //import testData from "../../json/Rankings.json";
 import React, { Component } from 'react'
-import FieldGroup from './FieldGroup'
+//import FieldGroup from './FieldGroup'
 import Spinner from 'react-spinkit'
 import JSONops from './JSONops'
 import {contactNoCB, emailCB, updatedExtAcctBalCB} from './App'
@@ -25,10 +25,10 @@ class DoChallenge extends Component{
   constructor(props, context) {
     super(props, context);
 
-    const data = this.props.data;
+    //const data = this.props.data;
     //original code before onAfterChallenge bound
     //const { username, account, onAfterChallenge } = this.props;
-    const { username, account } = this.props;
+    //const { username, account } = this.props;
     //let onAfterChallenge = this.props.onAfterChallenge();
 
     // initial state
@@ -235,13 +235,14 @@ displayContactDetails(){
     //with this.getUserNameFromAccount(userName)
     const validationState = this._getValidationState();
     const isValid = validationState !== 'error';
-    const { isLoading, error, challenge, challengeHasChanged } = this.state;
+    //const { isLoading, error, challenge, challengeHasChanged } = this.state;
+    const { isLoading, error } = this.state;
 
     let feedback = !isValid ? 'challenge details must be 140 characters or less' : '';
     if(this.state.error) feedback = error;
-    let placeholderText = "Please write contact details and suggested court location(s)/time(s)/date(s) you would like to send to ";
-    placeholderText += this.props.selectedOpponentName;
-    placeholderText += " here:";
+    // let placeholderText = "Please write contact details and suggested court location(s)/time(s)/date(s) you would like to send to ";
+    // placeholderText += this.props.selectedOpponentName;
+    // placeholderText += " here:";
 
     return (
       <>

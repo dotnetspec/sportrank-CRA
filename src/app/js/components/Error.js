@@ -11,9 +11,9 @@ import { Grid, Row, Col } from 'react-bootstrap';
 class Error extends Component {
 
   //#region Constructor
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
   //#endregion
 
   //#region React lifecycle events
