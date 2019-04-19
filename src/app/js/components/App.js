@@ -240,7 +240,7 @@ _loadsetRankingListJSONData = async () => {
       //await EmbarkJS.Blockchain.connect(DSportRank);
       //web3.Blockchain.co
       const accounts = await web3.eth.getAccounts();
-        //console.log('_loadCurrentUserAccounts 1')
+        console.log('accounts', accounts)
       // Generates a mapping of users and accounts to be used
       // for populating the accounts dropdown
       await map(accounts, async function (address, next) {
@@ -289,7 +289,7 @@ _loadsetRankingListJSONData = async () => {
         });
         //check that there is an existing default account user
         //before setting state, and if there isn't go to create
-        if(defaultUserAccount.user.username === ''){
+        if(defaultUserAccount.user.username === '' || defaultUserAccount.user.username === undefined){
           this.setState({
           rankingDefault: '',
           isUserInJson: false,

@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom'
-import { Grid, Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, DropdownItem, Overlay, Tooltip, Button, Radio, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+//import { Link } from 'react-router-dom'
+import { Button, FormGroup } from 'react-bootstrap';
 //import testData from "../../json/Rankings.json";
 import React, { Component } from 'react'
-import FieldGroup from './FieldGroup'
+//import FieldGroup from './FieldGroup'
 import Spinner from 'react-spinkit'
 import JSONops from './JSONops'
 import {contactNoCB, emailCB} from './App'
