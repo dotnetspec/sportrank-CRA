@@ -1,10 +1,10 @@
-import { Button, FormGroup, ControlLabel, FormControl, HelpBlock, Row, Col, PageHeader } from 'react-bootstrap';
-//import Container from 'react-bootstrap/Container'
+import { Grid, Button, FormGroup, ControlLabel, FormControl, HelpBlock, Row, Col, PageHeader } from 'react-bootstrap';
+//import Grid from 'react-bootstrap/Grid'
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import FieldGroup from './FieldGroup'
 import JSONops from './JSONops'
-import Container from 'react-bootstrap/Container'
+//import Grid from 'react-bootstrap/Grid'
 
 /**
  * REVIEW: Class that renders a form to facilitate the deletion
@@ -71,14 +71,14 @@ class DeactivatePlayer extends Component {
     // if (!this.state.usernameHasChanged) feedback = '';
     return (
       <>
-        <Container>
-          <Row className="show-Container">
+        <Grid>
+          <Row className="show-Grid">
             <Col xs={12} md={8}>
               <h3 align='center'>Are you sure you want to deactive this player?</h3>
               <h5 align='center'>(You can re-activate (at the bottom of the rankings) in future via 'Update Profile')</h5>
             </Col>
           </Row>
-          <Row className="show-Container">
+          <Row className="show-Grid">
             <Col xs={12} md={8} xsOffset={3} >
 
               <Button
@@ -92,7 +92,7 @@ class DeactivatePlayer extends Component {
             </Col>
           </Row>
           <p></p>
-          <Row className="show-Container">
+          <Row className="show-Grid">
             <Col xs={12} md={8} xsOffset={3} >
               <Button
                 bsStyle="primary"
@@ -104,7 +104,7 @@ class DeactivatePlayer extends Component {
               </Button>
             </Col>
           </Row>
-        </Container>
+        </Grid>
       </>
     );
   }

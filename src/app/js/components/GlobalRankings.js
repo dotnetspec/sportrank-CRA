@@ -1,6 +1,6 @@
 import { Switch, Route } from 'react-router-dom';
-//import { TableHeaderColumn } from 'react-bootstrap-table';
-import { Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, DropdownItem, Overlay, Tooltip, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+import { Grid, Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, DropdownItem, Overlay, Tooltip, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import PropsRoute from './PropsRoute';
 import Home from './Home';
 import Userchallenges from './Userchallenges';
@@ -14,7 +14,7 @@ import CreateNewRanking from './CreateNewRanking';
 import UserRankings from './UserRankings'
 import {newrankIdCB, viewingOnlyCB} from './App'
 import {saveJson, loadJson} from '../lib/service'
-import Container from 'react-bootstrap/Container'
+//import Grid from 'react-bootstrap/Grid'
 
 const selectRowPropAfterClickRow = {
   selectedRankingId: ''
@@ -181,11 +181,11 @@ class GlobalRankings extends Component {
     return (
       <div>
       {this.props.error ? <span className='error'>Oh no!</span> : null}
-      <Container>
+      <Grid>
         <Row>
           {this.globalBSTableDisplay()}
         </Row>
-      </Container>
+      </Grid>
       </div>
     )
   }

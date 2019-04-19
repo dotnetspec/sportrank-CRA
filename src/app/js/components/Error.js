@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'react-bootstrap';
-import Container from 'react-bootstrap/Container'
+import { Grid, Row, Col } from 'react-bootstrap';
+//import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
 
 /**
@@ -22,7 +22,7 @@ class Error extends Component {
     const metaMaskPossible = (this.props.error.message.indexOf('Internal JSON-RPC error') > 0 || this.props.error.message.indexOf('Failed to fetch') > 0);
 
     return (
-      <Container>
+      <Grid>
         <Row>
           <Col xs={12}>
             <h2>
@@ -48,7 +48,7 @@ class Error extends Component {
             }</pre>
           </Col>
         </Row>
-      </Container>
+      </Grid>
     );
   }
   //#endregion

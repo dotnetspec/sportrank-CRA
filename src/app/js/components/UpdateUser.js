@@ -1,11 +1,11 @@
-import { Button, FormGroup, ControlLabel, FormControl, Image, Col, Row } from 'react-bootstrap';
+import { Grid, Button, FormGroup, ControlLabel, FormControl, Image, Col, Row } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react';
 import FieldGroup from './FieldGroup';
 import JSONops from './JSONops'
 import DSportRank from '../../../ABIaddress';
 import web3 from '../../../web3';
-import Container from 'react-bootstrap/Container'
+//import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
 
 class UpdateUser extends Component {
@@ -216,7 +216,7 @@ class UpdateUser extends Component {
     const { user } = this.props;
     const feedback = formState === 'success' ? 'Saved' : error;
     return (
-      <Container>
+      <Grid>
         <Row>
           <Col xs={12}>
             <h2>Update { user.username } <small>{this.props.account}</small></h2>
@@ -224,7 +224,7 @@ class UpdateUser extends Component {
         </Row>
         {this.state.error ? <span className='error'>Oh no!</span> : null}
         <p></p>
-        <Row className="show-Container">
+        <Row className="show-Grid">
           <Col xs={12} >
             <Button
               bsStyle="primary"
@@ -311,7 +311,7 @@ class UpdateUser extends Component {
             </form>
           </Col>
         </Row>
-      </Container>
+      </Grid>
     );
   }
   //#endregion

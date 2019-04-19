@@ -1,4 +1,4 @@
-import { Button, FormGroup, ControlLabel, FormControl, HelpBlock, Row, Col, Modal } from 'react-bootstrap';
+import { Grid, Button, FormGroup, ControlLabel, FormControl, HelpBlock, Row, Col, Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import FieldGroup from './FieldGroup'
@@ -6,7 +6,7 @@ import JSONops from './JSONops'
 import {userNameCB, contactNoCB, emailCB} from './App'
 import web3 from '../../../web3';
 import DSportRank from '../../../ABIaddress';
-import Container from 'react-bootstrap/Container'
+//import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
 
 
@@ -312,7 +312,7 @@ _continueClick = () => {
     if (!this.state.usernameHasChanged) feedback = '';
 
     return (
-      <Container>
+      <Grid>
       <Modal
           show={this.state.WarningModalIsOpen}
         >
@@ -391,7 +391,7 @@ _continueClick = () => {
             </form>
           </Col>
         </Row>
-      </Container>
+      </Grid>
     );
   }
   //#endregion

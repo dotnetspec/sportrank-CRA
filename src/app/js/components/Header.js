@@ -12,7 +12,7 @@ import {updateWarningText} from './Home'
 import {updatedExtAcctBalCB, newrankIdCB} from './App'
 import web3 from '../../../web3';
 //import { DropdownItem } from 'react-bootstrap';
-import DropdownItem from 'react-bootstrap/DropdownItem'
+//import DropdownItem from 'react-bootstrap/DropdownItem'
 //import config from '../../../ABIaddress';
 
 
@@ -298,7 +298,7 @@ displayActivationBtns(){
       const hasUser = Boolean(userAccount.user.username);
 
 //NB: return is part of accts definition above. Not the render return (below)
-      return <DropdownItem
+      return <Dropdown.Item
         key={index}
         eventKey={index}
         active={isCurrUser}
@@ -324,7 +324,7 @@ displayActivationBtns(){
         <React.Fragment>
           <small className='balance'>{this._formatBalance(userAccount.balance)}</small>
         </React.Fragment>
-      </DropdownItem>
+      </Dropdown.Item>
     });
 
     let states = {};

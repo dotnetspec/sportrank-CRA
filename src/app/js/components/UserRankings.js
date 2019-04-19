@@ -1,4 +1,4 @@
-import { Row, Col, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
+import { Grid, Row, Col, ListGroup, ListGroupItem, Button, Thumbnail } from 'react-bootstrap';
 import React, { Component } from 'react';
 import imgAvatar from '../../img/avatar-default.png';
 import { formatDistance } from 'date-fns'
@@ -7,11 +7,11 @@ import { withRouter } from 'react-router-dom'
 //import EmbarkJS from '../../../src/embarkArtifacts/embarkjs';
 import DSportRank from '../../../ABIaddress';
 import web3 from '../../../web3';
-import Container from 'react-bootstrap/Container'
+//import Grid from 'react-bootstrap/Grid'
 //import { PageHeader } from 'react-bootstrap';
 //import * as ReactBootstrap from 'react-bootstrap';
 //import PageHeader from 'react-bootstrap/PageHeader'
-import Thumbnail from 'react-bootstrap/Thumbnail'
+//import Thumbnail from 'react-bootstrap/Thumbnail'
 
 
 // Original: The Player looks up the player using the number parsed from
@@ -189,16 +189,16 @@ class Userrankings extends Component {
 
     if (user === {}) {
   // Render loading state ...
-  return (<Container><Row><Col xs={12}>Loading...</Col></Row></Container>);
+  return (<Grid><Row><Col xs={12}>Loading...</Col></Row></Grid>);
     } else if (user.username === ''){
       return (
-      <Container>
+      <Grid>
         <Row>
           <Col xs={12}>
             <h2>{ this.props.match.params.username } <small>does not exist!</small></h2>
           </Col>
         </Row>
-      </Container>);
+      </Grid>);
     }else {
       // Render real UI ...
       const {username, description, picture, creationDate} = user;
@@ -220,8 +220,8 @@ class Userrankings extends Component {
                           return <ListGroupItem className='tweet' key={ index } header={ ranking.time }>{ contentToDisplay }</ListGroupItem>
                         });
       return (
-        <Container>
-        <Row className="show-Container">
+        <Grid>
+        <Row className="show-Grid">
           <Col xs={12} md={8} xsOffset={3} >
             <Button
               bsStyle="primary"
@@ -240,11 +240,11 @@ class Userrankings extends Component {
           </Row>
           <Row>
             <Col xs={4}>
-              <Thumbnail src={picture} alt={username} className='profilePic'>
+              <img src={picture} alt={username} className='profilePic'>
                 <h3>{ username }</h3>
                 <p>{ description }</p>
                 <p className='created'>Created { creationDate }</p>
-              </Thumbnail>
+              </img>
 
             </Col>
             <Col xs={8}>
@@ -253,7 +253,7 @@ class Userrankings extends Component {
               </ListGroup>
             </Col>
           </Row>
-        </Container>
+        </Grid>
       )
     }
   }

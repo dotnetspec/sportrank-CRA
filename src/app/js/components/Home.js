@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-//import { Grid, Row, Col, PageHeader, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, MenuItem, Overlay, Tooltip } from 'react-bootstrap';
+import { Grid, Row, Col, PageHeader, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, MenuItem, Overlay, Tooltip } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
-import { Row, Col, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, DropdownItem, Overlay, Tooltip } from 'react-bootstrap';
+//import { Row, Col, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, DropdownItem, Overlay, Tooltip } from 'react-bootstrap';
 //import { TableHeaderColumn } from 'react-bootstrap-table';
 import { NavLink, withRouter } from 'react-router-dom'
 import Spinner from 'react-spinkit';
@@ -9,7 +9,7 @@ import Spinner from 'react-spinkit';
 import DoChallenge from './DoChallenge'
 import EnterResult from './EnterResult'
 import JSONops from './JSONops'
-import Container from 'react-bootstrap/Container'
+//import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
 
  //REVIEW: May be able to improve setting rank with similar to:
@@ -463,7 +463,7 @@ const { rankingJSONdata, contactNoCB, emailCB } = this.props;
             </Modal.Footer>
           </Modal>
 
-        <Container>
+        <Grid>
           <Row>
           {isLoading ?
             states.isLoading
@@ -491,7 +491,7 @@ const { rankingJSONdata, contactNoCB, emailCB } = this.props;
 
             </Col>
           </Row>
-        </Container>
+        </Grid>
       </div>
     );
   }

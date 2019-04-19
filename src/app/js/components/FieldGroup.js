@@ -1,6 +1,8 @@
 import React from 'react';
-//import { FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup } from 'react-bootstrap';
-import { FormGroup, FormLabel, FormControl, InputGroup } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, HelpBlock, InputGroup, Form } from 'react-bootstrap';
+//import FormLabel from 'react-bootstrap/FormLabel'
+//import { FormGroup, FormLabel, FormControl, InputGroup } from 'react-bootstrap';
+
 /**
  * Creates a from group with label and form control with options for feedback, help, and addons.
  *
@@ -42,7 +44,7 @@ const FieldGroup = ({ id, label, help, validationState, hasFeedback, inputAddOn,
   return (
     <React.Fragment>
       <FormGroup controlId={id} validationState={validationState}>
-        <FormLabel>{label}</FormLabel>
+        <Form.Label>{label}</Form.Label>
 
         { inputAddOn ?
           <InputGroup>
@@ -54,7 +56,7 @@ const FieldGroup = ({ id, label, help, validationState, hasFeedback, inputAddOn,
           <FormControl {...props}>{ props.children }</FormControl>
         }
         {hasFeedback ? <FormControl.Feedback /> : ''}
-        
+
       </FormGroup>
 
     </React.Fragment>

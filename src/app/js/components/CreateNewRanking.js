@@ -1,5 +1,5 @@
-import { Button, FormGroup, ControlLabel, FormControl, HelpBlock, Row, Col, Modal } from 'react-bootstrap';
-import Container from 'react-bootstrap/Container'
+import { Grid, Button, FormGroup, ControlLabel, FormControl, HelpBlock, Row, Col, Modal } from 'react-bootstrap';
+//import Grid from 'react-bootstrap/Grid'
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import FieldGroup from './FieldGroup'
@@ -515,7 +515,7 @@ getNewRankId = async () => {
     if (!this.state.rankingnameHasChanged) feedback = '';
 
     return (
-      <Container>
+      <Grid>
       <Modal
           show={this.state.WarningModalIsOpen}
         >
@@ -578,7 +578,7 @@ getNewRankId = async () => {
             </form>
           </Col>
         </Row>
-      </Container>
+      </Grid>
     );
   }
   //#endregion
