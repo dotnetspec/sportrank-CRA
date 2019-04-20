@@ -4,7 +4,7 @@ import { Button, Image, Navbar, ButtonToolbar, Dropdown, Overlay, Tooltip } from
 
 import React, { Component } from 'react';
 //import DoChallenge from './DoChallenge';
-import Search from './Search';
+//import Search from './Search';
 import { formatEth, limitLength, limitAddressLength } from '../utils';
 import Spinner from 'react-spinkit';
 //import FieldGroup from './FieldGroup';
@@ -47,7 +47,7 @@ import web3 from '../../../web3';
     render() {
       let htmlTxtToReturn = ''
       let htmlTxtToReturn2 = ''
-      if(this.props.updatedExtAcctBalCB != 0){
+      if(this.props.updatedExtAcctBalCB !== 0){
        htmlTxtToReturn = 'SportRank has contributed: '
        htmlTxtToReturn2 = this.combineETHVals() + " ETH to your favourite sport"
       }
@@ -107,7 +107,7 @@ class Header extends Component {
    onSelect={(key, e) => this._handleAcctChange(e, key)}
    */
   _handleUpdateProfile(username) {
-    if(username != null){
+    if(username !== null){
       // redirect user to the profile update page
       this.props.history.push('/update/@' + username);
     }
@@ -118,7 +118,7 @@ class Header extends Component {
   }
 
   _handleDeactivatePlayer(username) {
-    if(username != null){
+    if(username !== null){
       //REVIEW: The naming of 'delete/deactivate' etc.
       // redirect user to the deactive player (currently named 'DeactivatePlayer') page
       this.props.history.push('/delete/@' + username);
@@ -228,7 +228,7 @@ class Header extends Component {
 
   navHomeOrToUserUpdate(){
     //TODO: display SportRank Home in white without small tag
-    if(this.props.user.username != ''){
+    if(this.props.user.username !== ''){
       return  <NavLink exact to="/"><small>Sportrank HOME</small><small>Decentralized Sport</small></NavLink>
     }else{
       return <NavLink exact to="/create"><small>Sportrank HOME</small><small>Decentralized Sport</small></NavLink>
@@ -277,8 +277,8 @@ displayActivationBtns(){
 
   render() {
 
-    const { picture, username, description, usersRankingLists } = this.props.user;
-
+    //const { picture, username, usersRankingLists } = this.props.user;
+    const { picture, username } = this.props.user;
     // console.log('usersRankingLists')
     // console.log(usersRankingLists)
     const isEditable = Boolean(username);

@@ -137,7 +137,7 @@ onClickChallengeSelected(cell, row, rowIndex){
   selectRowPropAfterClickRow.selectedOpponentRank = `${row['RANK']}`;
   // console.log('this.props.user.rankings')
   // console.log(this.props.user.chanllenges)
-    if(this.props.user.username != ''){
+    if(this.props.user.username !== ''){
       this._handleShowChallengeModal();
     }else{
         this.setState({ warningText: 'Error: Sorry your account is not recognized' });
@@ -228,7 +228,7 @@ challengeButton(cell, row, enumObject, rowIndex) {
       if (currentUserName === this.props.user.username && activeBool)
         {
             //console.log(details.RANK);
-            if(currentChallengerName != 'AVAILABLE'){
+            if(currentChallengerName !== 'AVAILABLE'){
               textToDisplayChallenger = 'Your current challenge is VS ' + currentChallengerName;
               textToDisplayContinue =   'Enter a result against ' + currentChallengerName + ' to continue'
 
@@ -272,7 +272,7 @@ challengeButton(cell, row, enumObject, rowIndex) {
     //if there is a username but it's not listed in the json, add this user to the current list
     //REVIEW: This test may be more consistently handled
     console.log('this.props.loadingJSON', this.props.loadingJSON)
-    if(this.props.user.username != ''
+    if(this.props.user.username !== ''
     && !JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, this.props.user.username)
     && this.props.loadingJSON === false
     && this.props.viewingOnlyCB === false
@@ -380,15 +380,15 @@ challengeButton(cell, row, enumObject, rowIndex) {
 
 
   render() {
-    const selectRowProp = {
-      mode: 'radio',
-      clickToSelect: true,
-      unselectable: [0],
-      selected: [],
-      bgColor: 'gold'
-    };
+    // const selectRowProp = {
+    //   mode: 'radio',
+    //   clickToSelect: true,
+    //   unselectable: [0],
+    //   selected: [],
+    //   bgColor: 'gold'
+    // };
 
-    const { username } = this.props.user;
+    //const { username } = this.props.user;
 
     let isError = this.props.error && this.props.error.message;
     //XXX: temp to run
@@ -405,7 +405,8 @@ challengeButton(cell, row, enumObject, rowIndex) {
     states.isError = <span className='error'>ERROR!</span>;
 
 
-const { rankingJSONdata, contactNoCB, emailCB } = this.props;
+//const { rankingJSONdata, contactNoCB, emailCB } = this.props;
+const { rankingJSONdata } = this.props;
     return (
       <div>
 

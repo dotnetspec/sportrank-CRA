@@ -156,7 +156,7 @@ contract DSportRank{
      */
     function userExists(bytes32 usernameHash) public view returns (bool) {
         // must check a property... bc solidity!
-            return users[usernameHash].creationDate != 0;
+            return users[usernameHash].creationDate !== 0;
     }
     /**
      * challenge

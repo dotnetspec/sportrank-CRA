@@ -5,7 +5,7 @@ import { Grid, Row } from 'react-bootstrap';
 
 
 //import PropsRoute from './PropsRoute';
-import Home from './Home';
+//import Home from './Home';
 //import Userchallenges from './Userchallenges';
 // import CreateUser from './CreateUser';
 // import UpdateUser from './UpdateUser';

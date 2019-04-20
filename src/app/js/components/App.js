@@ -4,12 +4,13 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import imgAvatar from '../../img/avatar-default.png';
 import { map } from 'async';
-import { Switch, Route } from 'react-router-dom';
-import PropsRoute from './PropsRoute';
+//import { Switch, Route } from 'react-router-dom';
+//import PropsRoute from './PropsRoute';
 //import axios from 'axios'
 import JSONops from './JSONops'
-import { formatEth, limitLength, limitAddressLength } from '../utils';
-import {saveJson, loadJson} from '../lib/service'
+//import { formatEth, limitLength, limitAddressLength } from '../utils';
+import { formatEth } from '../utils';
+//import {saveJson, loadJson} from '../lib/service'
 //import config from '../../../src/embarkArtifacts/config/blockchain';
 import web3 from '../../../web3';
 import DSportRank from '../../../ABIaddress';
@@ -134,7 +135,7 @@ _loadsetJSONData = async () => {
     //await fetch('https://api.jsonbin.io/b/5bd82af2baccb064c0bdc92a/1000')
      .then((response) => response.json())
      .then((responseJson) => {
-       if(responseJson.length != 0){
+       if(responseJson.length !== 0){
          console.log('json returns with length ' + responseJson.length + 'in _loadsetJSONData in app.js')
          console.log('responseJson data', responseJson)
          //HACK: it appears this code is not being used but commit
@@ -180,7 +181,7 @@ _loadsetRankingListJSONData = async () => {
   await fetch(httpStr)
      .then((response) => response.json())
      .then((responseJson) => {
-       if(responseJson.length != 0){
+       if(responseJson.length !== 0){
          console.log('json returns with length ' + responseJson.length)
          console.log('responseJson data', responseJson)
          //HACK: it appears this code is not being used but commit
@@ -253,7 +254,7 @@ _loadsetRankingListJSONData = async () => {
           const user = await DSportRank.methods.users(usernameHash).call();
 
           console.log('_loadCurrentUserAccounts 3')
-          if (user.username != ''){
+          if (user.username !== ''){
           console.log('user.username', user.username)
           console.log('user.contactno', user.contactno)
           //console.log('rankingList', rankingList)
@@ -331,7 +332,7 @@ _loadsetRankingListJSONData = async () => {
         console.log('isCurrentUserActive', this.state.isCurrentUserActive)
         //json won't be loaded until there is at least a default ranking initially
         //otherwise we'll be going to createuser
-        //if(this.state.rankingDefault != ''){
+        //if(this.state.rankingDefault !== ''){
           //REVIEW: possibly use JSONops._loadsetJSONData here if
           //will allow setState here
           //OR use componentDidMount
@@ -357,7 +358,7 @@ _loadsetRankingListJSONData = async () => {
           //this async section tests whether the result
           //from the code lower down has been returned
           //(without using await)
-          if (req.readyState == XMLHttpRequest.DONE) {
+          if (req.readyState === XMLHttpRequest.DONE) {
             const resulttxt = JSON.parse(req.responseText);
             //only here can set state (once result is back)
             this.setState({ newrankId: resulttxt.id});
@@ -462,7 +463,7 @@ _loadsetRankingListJSONData = async () => {
     this._loadsetJSONData();
     }
     console.log('this.state.user.username in componentDidMount in app', this.state.user.username)
-    if(this.state.user.username != undefined){
+    if(this.state.user.username !== undefined){
     this.getNewRankId();
     }
   }

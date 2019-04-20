@@ -234,12 +234,12 @@ displayContactDetails(){
     //determine userName from account no. stored in JSON
     //with this.getUserNameFromAccount(userName)
     const validationState = this._getValidationState();
-    const isValid = validationState !== 'error';
-    //const { isLoading, error, challenge, challengeHasChanged } = this.state;
-    const { isLoading, error } = this.state;
+    //const isValid = validationState !== 'error';
+    //const { isLoading, error, challenge, challengeHasChanged } = this.state
+    const { isLoading } = this.state;
 
-    let feedback = !isValid ? 'challenge details must be 140 characters or less' : '';
-    if(this.state.error) feedback = error;
+    // let feedback = !isValid ? 'challenge details must be 140 characters or less' : '';
+    // if(this.state.error){feedback = error};
     // let placeholderText = "Please write contact details and suggested court location(s)/time(s)/date(s) you would like to send to ";
     // placeholderText += this.props.selectedOpponentName;
     // placeholderText += " here:";

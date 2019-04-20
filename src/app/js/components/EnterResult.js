@@ -93,7 +93,8 @@ const opponentCurrentlyChallengingUser = JSONops._getUserValue(this.props.data, 
 
   _handleClick = async (e) => {
     try{
-      const result = this._processResult(this.selectedOption, this.props.user);
+      //const result = this._processResult(this.selectedOption, this.props.user);
+      this._processResult(this.selectedOption, this.props.user);
       // remove loading state
       this.setState({ isLoading: false });
       //clear the contact info

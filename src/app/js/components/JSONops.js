@@ -385,14 +385,14 @@ console.log('rankingID, data, currentUser, accountno in deactivatePlayer', ranki
       //get current opponent (who player is challenging) name
       //where current user is the challenger then we get the player name
       //const opponentsName = this._getUserValue(data, currentUser, "CURRENTCHALLENGERNAME");
-      console.log('currentUsersOppenentPlayerValue', currentUsersOppenentPlayerValue)
+      //console.log('currentUsersOppenentPlayerValue', currentUsersOppenentPlayerValue)
       //re-set my opponents 'current opponent' to AVAILABLE if not already AVAILABLE
-      // if(opponentsName != "AVAILABLE"){
+      // if(opponentsName !== "AVAILABLE"){
       //   updatedUserJSON = this._setUserValue(data, opponentsName, "CURRENTCHALLENGERNAME", "AVAILABLE");
       // }
       //handle the opponent's display (if there is an opponenet)
       let currentUsersOppenentPlayerValue = this._getVal(lookupCurrentUsersOppenentPlayerValue);
-      if(currentUsersOppenentPlayerValue != undefined){
+      if(currentUsersOppenentPlayerValue !== undefined){
         //re-set my opponents 'current opponent' to AVAILABLE
         updatedUserJSON = this._setUserValue(data, currentUsersOppenentPlayerValue, "CURRENTCHALLENGERNAME", "AVAILABLE");
       }
@@ -583,11 +583,11 @@ console.log('rankingID, data, currentUser, accountno in deactivatePlayer', ranki
                   === isPlayerAvailableToEnterResultAgainstObj.lookupKey || isPlayerAvailableToEnterResultAgainstObj.lookupKey
                   === '*') {
                     //NB. be careful editing this logic - save first!
-                    if(  (isPlayerAvailableToEnterResultAgainstObj.jsonRS[i].NAME != user
-                          && isPlayerAvailableToEnterResultAgainstObj.jsonRS[i].CURRENTCHALLENGERNAME != user)
+                    if(  (isPlayerAvailableToEnterResultAgainstObj.jsonRS[i].NAME !== user
+                          && isPlayerAvailableToEnterResultAgainstObj.jsonRS[i].CURRENTCHALLENGERNAME !== user)
                         ||
-                          (isPlayerAvailableToEnterResultAgainstObj.jsonRS[i].NAME != opponentName
-                          && isPlayerAvailableToEnterResultAgainstObj.jsonRS[i].CURRENTCHALLENGERNAME != opponentName)
+                          (isPlayerAvailableToEnterResultAgainstObj.jsonRS[i].NAME !== opponentName
+                          && isPlayerAvailableToEnterResultAgainstObj.jsonRS[i].CURRENTCHALLENGERNAME !== opponentName)
                         ||
                           isPlayerAvailableToEnterResultAgainstObj.jsonRS[i].CURRENTCHALLENGERNAME === 'AVAILABLE'
                       ){
@@ -650,7 +650,7 @@ console.log('rankingID, data, currentUser, accountno in deactivatePlayer', ranki
         const playerRank = this._getUserValue(data, currentUser, "RANK");
         const opponentRank = this._getUserValue(data, opponentName, "RANK");
 
-        let isChallengerLowerRankThanPlayer = false;
+        //let isChallengerLowerRankThanPlayer = false;
       //NB: A lower number is a HIGHER rank, a HIGHER number is a LOWER rank
             if (playerRank > opponentRank){
               return true;
@@ -685,7 +685,7 @@ console.log('rankingID, data, currentUser, accountno in deactivatePlayer', ranki
     let req = new XMLHttpRequest();
 
         req.onreadystatechange = () => {
-          if (req.readyState == XMLHttpRequest.DONE) {
+          if (req.readyState === XMLHttpRequest.DONE) {
             console.log('httpString in req.onreadystatechange', httpString);
             //NB. when checking on jsonbin.io e.g. https://jsonbin.io/5c340b667b31f426f8531274/1
             //ensure you include the version number to see that the array has been 'PUT'
