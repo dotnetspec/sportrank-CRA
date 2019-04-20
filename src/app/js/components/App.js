@@ -64,6 +64,12 @@ import DSportRank from '../../../ABIaddress';
       console.log('in viewingOnlyCB', viewingOnlyCB)
         this.setState({viewingOnlyCB})
     }
+
+//for dev - utility - timer
+    let startTime = performance.now();  //Run at the beginning of the code
+    function executingAt() {
+      return (performance.now() - startTime) / 1000;
+    }
 /**
  * Class representing the highest order component. Any user
  * updates in child components should trigger an event in this
@@ -222,14 +228,49 @@ _loadsetRankingListJSONData = async () => {
 //REVIEW: Possible to getUserRank in App.js (and set state) rather than Home.js?
 //currently no - problem is waiting for username to check against rank
 
+  //param 2 - current item index
 // async function yourFunc() {
-//     const provider = ganache.provider();
-//     const web3 = new Web3(provider);
-//     const accounts = await web3.eth.getAccounts();
-//
-//     for (let i = 0; i < 10; i++)
-//         console.log('account['+i+']: '+accounts[i]);
 // }
+
+  // async function manageCurrentAccountAddressIndex(address, next) {
+  //     try {
+  //       //console.log('_loadCurrentUserAccounts 2')
+  //       // get the owner details for this address from the contract
+  //       const usernameHash = await DSportRank.methods.owners(address).call();
+  //       // get user details from contract
+  //       const user = await DSportRank.methods.users(usernameHash).call();
+  //
+  //       console.log('_loadCurrentUserAccounts 3')
+  //       if (user.username !== ''){
+  //       console.log('user.username', user.username)
+  //       console.log('user.contactno', user.contactno)
+  //       //console.log('rankingList', rankingList)
+  //       console.log('user.creationDate', user.creationDate)
+  //       console.log('user.description', user.description)
+  //       console.log('user.rankingDefault', user.rankingDefault)
+  //       //console.log('user.challenges', user.challenges)
+  //     }
+  //       // gets the balance of the address
+  //       let balance = await web3.eth.getBalance(address);
+  //       balance = web3.utils.fromWei(balance, 'ether');
+  //       // update user picture with ipfs url
+  //       //user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
+  //       // add the following mapping to our result
+  //       next(null, {
+  //         address: address,
+  //         user: user,
+  //         balance: balance
+  //         //,
+  //         //NB: added by me:
+  //         //updatedExtAcctBalCB: globalVardevAccountBalResult
+  //       });
+  //     }
+  //     catch (err) {
+  //       next(err);
+  //     }//end of try/catch within async function definition within await/map
+  //   }//end of async function definition within await map
+
+//}
 
 
 /**
@@ -246,13 +287,19 @@ _loadsetRankingListJSONData = async () => {
  *
  * @returns {null}
  */
+
+
+
   _loadCurrentUserAccounts = async () => {
     console.log('_loadCurrentUserAccounts')
       // get all the accounts the node controls
       //await EmbarkJS.Blockchain.connect(DSportRank);
       //web3.Blockchain.co
+      console.log('about to do await on getAccounts(), when done - got accounts after await')
+      console.log('exec at', executingAt());
       const accounts = await web3.eth.getAccounts();
-        console.log('accounts', accounts)
+        console.log('got accounts after await', accounts)
+        console.log('exec at', executingAt());
       // Generates a mapping of users and accounts to be used
       // for populating the accounts dropdown
       // map takes 3 args -
@@ -262,16 +309,23 @@ _loadsetRankingListJSONData = async () => {
 
       // param 1 - current item value (accounts);
       await map(accounts,
+
         //param 2 - current item index
         async function (address, next) {
+        //this.manageCurrentAccountAddressIndex(address, next) {
             try {
-              //console.log('_loadCurrentUserAccounts 2')
+              console.log('address', address)
               // get the owner details for this address from the contract
+              console.log('about to get usernameHash, when done - got usernameHash after await')
+              console.log('exec at', executingAt());
               const usernameHash = await DSportRank.methods.owners(address).call();
+              console.log('got usernameHash after await', usernameHash)
+              console.log('exec at', executingAt());
               // get user details from contract
               const user = await DSportRank.methods.users(usernameHash).call();
 
-              console.log('_loadCurrentUserAccounts 3')
+              //console.log('_loadCurrentUserAccounts 3')
+              //below just used for logging
               if (user.username !== ''){
               console.log('user.username', user.username)
               console.log('user.contactno', user.contactno)
@@ -280,13 +334,19 @@ _loadsetRankingListJSONData = async () => {
               console.log('user.description', user.description)
               console.log('user.rankingDefault', user.rankingDefault)
               //console.log('user.challenges', user.challenges)
-            }
+              }//end if
+
               // gets the balance of the address
               let balance = await web3.eth.getBalance(address);
               balance = web3.utils.fromWei(balance, 'ether');
+              console.log('balance', balance)
+              //REVIEW: stopped execution here after first account loads
+              //to prevent Callback already called error 
+              return null;
               // update user picture with ipfs url
               //user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
               // add the following mapping to our result
+              console.log('next1', next)
               next(null, {
                 address: address,
                 user: user,
@@ -295,8 +355,10 @@ _loadsetRankingListJSONData = async () => {
                 //NB: added by me:
                 //updatedExtAcctBalCB: globalVardevAccountBalResult
               });
+              console.log('next2', next)
             }
             catch (err) {
+              console.log("Error after await", err);
               next(err);
             }//end of try/catch within async function definition within await/map
           }//end of async function definition within await map
@@ -367,9 +429,17 @@ _loadsetRankingListJSONData = async () => {
       }//end of the functionality that has (mysteriously) been added into
       //what should have been simply passing an array into a map function
       //however, much critical assignment is done in this stage
-      //and also
-    );////end of error check and account assignment within whole of await map
+
+    );////end of whole of await map including error Checking
+    //I think a .then() could be added at the end of the await[?]
       console.log('end of loadingAccounts')
+      //currently forcing loading accounts to end once the
+      //current or first account has been found (to enable app to load)
+      //multiple account loading not currently a priority
+      //actual - didn't work code continues (don't know why)
+      this.setState({
+        loadingAccounts: false
+      })
       console.log('this.state.loadingAccounts',this.state.loadingAccounts)
   }// end of _loadCurrentUserAccounts
 
@@ -476,7 +546,7 @@ _loadsetRankingListJSONData = async () => {
       try{
       this._loadCurrentUserAccounts();
       }catch(e){
-        console.log(e)
+        console.log('componentDidMount _loadCurrentUserAccounts()', e)
       }
       //console.log('rankingListData:data', this.state.rankingListData)
    //}
