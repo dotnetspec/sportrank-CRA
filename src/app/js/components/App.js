@@ -221,6 +221,17 @@ _loadsetRankingListJSONData = async () => {
 }
 //REVIEW: Possible to getUserRank in App.js (and set state) rather than Home.js?
 //currently no - problem is waiting for username to check against rank
+
+// async function yourFunc() {
+//     const provider = ganache.provider();
+//     const web3 = new Web3(provider);
+//     const accounts = await web3.eth.getAccounts();
+//
+//     for (let i = 0; i < 10; i++)
+//         console.log('account['+i+']: '+accounts[i]);
+// }
+
+
 /**
  * Loads user details from the contract for all accounts on the node.
  *
@@ -244,47 +255,60 @@ _loadsetRankingListJSONData = async () => {
         console.log('accounts', accounts)
       // Generates a mapping of users and accounts to be used
       // for populating the accounts dropdown
-      await map(accounts, async function (address, next) {
+      // map takes 3 args -
+      // current item value (accounts);
+      // current item index (async function (address, next))
+      // the array itself that the map was called upon.
 
-        try {
-          //console.log('_loadCurrentUserAccounts 2')
-          // get the owner details for this address from the contract
-          const usernameHash = await DSportRank.methods.owners(address).call();
-          // get user details from contract
-          const user = await DSportRank.methods.users(usernameHash).call();
+      // param 1 - current item value (accounts);
+      await map(accounts,
+        //param 2 - current item index
+        async function (address, next) {
+            try {
+              //console.log('_loadCurrentUserAccounts 2')
+              // get the owner details for this address from the contract
+              const usernameHash = await DSportRank.methods.owners(address).call();
+              // get user details from contract
+              const user = await DSportRank.methods.users(usernameHash).call();
 
-          console.log('_loadCurrentUserAccounts 3')
-          if (user.username !== ''){
-          console.log('user.username', user.username)
-          console.log('user.contactno', user.contactno)
-          //console.log('rankingList', rankingList)
-          console.log('user.creationDate', user.creationDate)
-          console.log('user.description', user.description)
-          console.log('user.rankingDefault', user.rankingDefault)
-          //console.log('user.challenges', user.challenges)
-        }
-          // gets the balance of the address
-          let balance = await web3.eth.getBalance(address);
-          balance = web3.utils.fromWei(balance, 'ether');
-          // update user picture with ipfs url
-          //user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
-          // add the following mapping to our result
-          next(null, {
-            address: address,
-            user: user,
-            balance: balance
-            //,
-            //NB: added by me:
-            //updatedExtAcctBalCB: globalVardevAccountBalResult
-          });
-        }
-        catch (err) {
-          next(err);
-        }//end of try/catch within async function definition within await/map
-      }//end of async function definition within await map
+              console.log('_loadCurrentUserAccounts 3')
+              if (user.username !== ''){
+              console.log('user.username', user.username)
+              console.log('user.contactno', user.contactno)
+              //console.log('rankingList', rankingList)
+              console.log('user.creationDate', user.creationDate)
+              console.log('user.description', user.description)
+              console.log('user.rankingDefault', user.rankingDefault)
+              //console.log('user.challenges', user.challenges)
+            }
+              // gets the balance of the address
+              let balance = await web3.eth.getBalance(address);
+              balance = web3.utils.fromWei(balance, 'ether');
+              // update user picture with ipfs url
+              //user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
+              // add the following mapping to our result
+              next(null, {
+                address: address,
+                user: user,
+                balance: balance
+                //,
+                //NB: added by me:
+                //updatedExtAcctBalCB: globalVardevAccountBalResult
+              });
+            }
+            catch (err) {
+              next(err);
+            }//end of try/catch within async function definition within await/map
+          }//end of async function definition within await map
+
+          //param 3 - the array itself that the map was called upon
+          //this moment seemingly confusingly is used to
+          //do a whole series of state var assignments
       , (err, userAccounts) => {
+        //err is only relevant in the next line
         if (err) return this._onError(err, 'App._loadCurrentUserAccounts');
 
+        //now all these assignments are done on the userAccounts array
         const defaultUserAccount = userAccounts.find((userAccount) => {
           return userAccount.address === web3.eth.defaultAccount;
         });
@@ -340,7 +364,11 @@ _loadsetRankingListJSONData = async () => {
 
         console.log('this.state.data', this.state.data)
 
-      });////end of error check and account assignment within whole of await map
+      }//end of the functionality that has (mysteriously) been added into
+      //what should have been simply passing an array into a map function
+      //however, much critical assignment is done in this stage
+      //and also
+    );////end of error check and account assignment within whole of await map
       console.log('end of loadingAccounts')
       console.log('this.state.loadingAccounts',this.state.loadingAccounts)
   }// end of _loadCurrentUserAccounts
