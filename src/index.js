@@ -1,13 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
+import App from './app/js/components/App'
+import * as serviceWorker from './serviceWorker';
 import './app/css/1fonts.css';
 import './app/css/2bootstrap.css';
 import './app/css/3bootstrap-theme.css';
 import './app/css/dapp.css';
+// Put any other imports below so that CSS from your
+// components takes precedence over default styles.
 //import AppHTML from './AppHTML';
-import App from './app/js/components/App'
-import * as serviceWorker from './serviceWorker';
+
 
 //ReactDOM.render(<AppHTML />, document.getElementById('root'));
 
