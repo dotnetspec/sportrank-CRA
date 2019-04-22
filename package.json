@@ -13,6 +13,7 @@
     "jquery": "^3.4.0",
     "lodash": "^4.17.11",
     "npm-install": "0.0.1",
+    "p-iteration": "^1.1.8",
     "popper.js": "^1.15.0",
     "react": "^16.8.6",
     "react-bootstrap": "^0.32.4",
@@ -24,7 +25,8 @@
     "sendmail": "^1.4.1",
     "ts-pnp": "^1.0.1",
     "typescript": "^3.4.3",
-    "web3": "^1.0.0-beta.52"
+    "web3": "^1.0.0-beta.52",
+    "web3-hdwallet-provider": "^1.0.4-fix2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",

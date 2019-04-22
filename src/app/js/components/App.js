@@ -4,17 +4,12 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
 import imgAvatar from '../../img/avatar-default.png';
 import { map } from 'async';
-//import { Switch, Route } from 'react-router-dom';
-//import PropsRoute from './PropsRoute';
-//import axios from 'axios'
 import JSONops from './JSONops'
-//import { formatEth, limitLength, limitAddressLength } from '../utils';
 import { formatEth } from '../utils';
-//import {saveJson, loadJson} from '../lib/service'
-//import config from '../../../src/embarkArtifacts/config/blockchain';
 import web3 from '../../../web3';
 import DSportRank from '../../../ABIaddress';
-//import web3 from '../../../src/embarkArtifacts/config/modules/web3/index';
+//import p-iteration from 'p-iteration'
+
 //REVIEW: is the solution to this to write your own api?
 //import jsonData from '../../json/Rankings.json'
 
@@ -306,13 +301,17 @@ _loadsetRankingListJSONData = async () => {
       // current item value (accounts);
       // current item index (async function (address, next))
       // the array itself that the map was called upon.
-
+      //not sure if need p-iteration
+      //const { map } = require('p-iteration');
       // param 1 - current item value (accounts);
+      //accounts should be an array of addresses
       await map(accounts,
-
+        //which are being mapped to the relevant addresses:
         //param 2 - current item index
+        //map() maps 2 types of indexed item
+        //(labelled address and next), which come back as promises,
+        //to it's 3rd param userAccounts
         async function (address, next) {
-        //this.manageCurrentAccountAddressIndex(address, next) {
             try {
               console.log('address', address)
               // get the owner details for this address from the contract
@@ -326,27 +325,29 @@ _loadsetRankingListJSONData = async () => {
 
               //console.log('_loadCurrentUserAccounts 3')
               //below just used for logging
-              if (user.username !== ''){
-              console.log('user.username', user.username)
-              console.log('user.contactno', user.contactno)
-              //console.log('rankingList', rankingList)
-              console.log('user.creationDate', user.creationDate)
-              console.log('user.description', user.description)
-              console.log('user.rankingDefault', user.rankingDefault)
-              //console.log('user.challenges', user.challenges)
-              }//end if
+                  if (user.username !== ''){
+                  console.log('user.username', user.username)
+                  console.log('user.contactno', user.contactno)
+                  //console.log('rankingList', rankingList)
+                  console.log('user.creationDate', user.creationDate)
+                  console.log('user.description', user.description)
+                  console.log('user.rankingDefault', user.rankingDefault)
+                  //console.log('user.challenges', user.challenges)
+                  }//end if
 
               // gets the balance of the address
               let balance = await web3.eth.getBalance(address);
               balance = web3.utils.fromWei(balance, 'ether');
               console.log('balance', balance)
               //REVIEW: stopped execution here after first account loads
-              //to prevent Callback already called error 
-              return null;
+              //to prevent Callback already called error
+              //return null;
               // update user picture with ipfs url
               //user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
               // add the following mapping to our result
               console.log('next1', next)
+              //call the 'next' callback function and wait for it's promise
+              //(async functions return promises)
               next(null, {
                 address: address,
                 user: user,
@@ -358,7 +359,7 @@ _loadsetRankingListJSONData = async () => {
               console.log('next2', next)
             }
             catch (err) {
-              console.log("Error after await", err);
+              console.log("Error within current item index", err);
               next(err);
             }//end of try/catch within async function definition within await/map
           }//end of async function definition within await map
