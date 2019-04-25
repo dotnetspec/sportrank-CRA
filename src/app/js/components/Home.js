@@ -325,7 +325,7 @@ challengeButton(cell, row, enumObject, rowIndex) {
       return (
         <BootstrapTable options={ this.tablesortoptions } data={this.props.rankingJSONdata}
         >
-              <TableHeaderColumn  isKey dataField='id'
+              <TableHeaderColumn  isKey={true} dataField='id'
               hidden>
                 ID
               </TableHeaderColumn>

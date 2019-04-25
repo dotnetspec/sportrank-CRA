@@ -126,51 +126,53 @@ class App extends Component {
   //#region Helper methods
   //_loadsetJSONData being used here and not in JSONops because of need to setState
 _loadsetJSONData = async () => {
-  try {
-    //e.g. let httpStr = 'https://api.jsonbin.io/b/5bd82af2baccb064c0bdc92a/latest';
-  let httpStr = 'https://api.jsonbin.io/b/' + this.state.newrankIdCB + '/latest';
-  let responseDataAsArray = [];
-  console.log('httpStr', httpStr)
-  await fetch(httpStr)
-  //await fetch('https://api.jsonbin.io/b/' + httpStr + '/latest')
-    //await fetch('https://api.jsonbin.io/b/5bd82af2baccb064c0bdc92a/1000')
-     .then((response) => response.json())
-     .then((responseJson) => {
-       if(responseJson.length !== 0){
-         console.log('json returns with length ' + responseJson.length + 'in _loadsetJSONData in app.js')
-         console.log('responseJson data', responseJson)
-         //HACK: it appears this code is not being used but commit
-         // made as new rankings are being created for new users without error
-         //on creation of a new user the [] isn't recognized
-         //although the new json object comes back BootstrapTable cannot handle it.So convert here:
-         if(responseJson.length === undefined){
-           //turn the object into an array for use by BSTable
-           //responseJson = "[" + responseJson + "]";
-           responseDataAsArray[0] = responseJson;
-           responseJson = responseDataAsArray;
-           console.log('responseJson converted to array', responseJson)
-         }
-             this.setState({
-               data: responseJson,
-               //data: responseDataAsArray,
-               //REVIEW: loadingJSON not currently being used
-               loadingJSON: false,
-               //NB: data in state is slow to keep up, use responseJson!
-               isUserInJson: JSONops.isPlayerListedInJSON(responseJson, this.state.user.username),
-               rank: JSONops._getUserValue(responseJson, this.state.user.username, "RANK"),
-               updatedExtAcctBalCB: this._loadExternalBalance(),
-               isCurrentUserActive: JSONops._getUserValue(responseJson, this.state.user.username, "ACTIVE"),
-               //isRankingIDInvalid: JSONops.isRankingIDInvalid(responseJson[0])
+  if(this.state.newrankIdCB !== ''){
+      try {
+        //e.g. let httpStr = 'https://api.jsonbin.io/b/5bd82af2baccb064c0bdc92a/latest';
+      let httpStr = 'https://api.jsonbin.io/b/' + this.state.newrankIdCB + '/latest';
+      let responseDataAsArray = [];
+      console.log('httpStr', httpStr)
+      await fetch(httpStr)
+      //await fetch('https://api.jsonbin.io/b/' + httpStr + '/latest')
+        //await fetch('https://api.jsonbin.io/b/5bd82af2baccb064c0bdc92a/1000')
+         .then((response) => response.json())
+         .then((responseJson) => {
+           if(responseJson.length !== 0){
+             console.log('json returns with length ' + responseJson.length + 'in _loadsetJSONData in app.js')
+             console.log('responseJson data', responseJson)
+             //HACK: it appears this code is not being used but commit
+             // made as new rankings are being created for new users without error
+             //on creation of a new user the [] isn't recognized
+             //although the new json object comes back BootstrapTable cannot handle it.So convert here:
+             if(responseJson.length === undefined){
+               //turn the object into an array for use by BSTable
+               //responseJson = "[" + responseJson + "]";
+               responseDataAsArray[0] = responseJson;
+               responseJson = responseDataAsArray;
+               console.log('responseJson converted to array', responseJson)
              }
-         , function(){
-             });
-           }
-     })
-  //REVIEW:this.setState({ isLoading: false });the 'return' is not important, the setState is
-  return null;
-}catch (err) {
-     return console.error(err);
-  }
+                 this.setState({
+                   data: responseJson,
+                   //data: responseDataAsArray,
+                   //REVIEW: loadingJSON not currently being used
+                   loadingJSON: false,
+                   //NB: data in state is slow to keep up, use responseJson!
+                   isUserInJson: JSONops.isPlayerListedInJSON(responseJson, this.state.user.username),
+                   rank: JSONops._getUserValue(responseJson, this.state.user.username, "RANK"),
+                   updatedExtAcctBalCB: this._loadExternalBalance(),
+                   isCurrentUserActive: JSONops._getUserValue(responseJson, this.state.user.username, "ACTIVE"),
+                   //isRankingIDInvalid: JSONops.isRankingIDInvalid(responseJson[0])
+                 }
+             , function(){
+                 });
+               }
+         })
+      //REVIEW:this.setState({ isLoading: false });the 'return' is not important, the setState is
+        return null;
+        }catch (err) {
+           return console.error(err);
+        }//end try/catch
+    }//end if this.state.newrankIdCB
 }
 //TODO: together with _loadsetJSONData need to refactor into single source for fetch code
 _loadsetRankingListJSONData = async () => {
@@ -222,10 +224,6 @@ _loadsetRankingListJSONData = async () => {
 }
 //REVIEW: Possible to getUserRank in App.js (and set state) rather than Home.js?
 //currently no - problem is waiting for username to check against rank
-
-
-
-
 /**
  * Loads user details from the contract for all accounts on the node.
  *
@@ -249,13 +247,13 @@ _loadsetRankingListJSONData = async () => {
       // get all the accounts the node controls
       //await EmbarkJS.Blockchain.connect(DSportRank);
       //web3.Blockchain.co
-      console.log('about to do await on getAccounts(), when done - got accounts after await')
-      console.log('exec at', executingAt());
+      // console.log('about to do await on getAccounts(), when done - got accounts after await')
+      // console.log('exec at', executingAt());
       const accountsFromTheBC = await web3.eth.getAccounts();
-        console.log('got accounts after await', accountsFromTheBC)
-        console.log('exec at', executingAt());
-
-        console.log('the data', this.state.data);
+        // console.log('got accounts after await', accountsFromTheBC)
+        // console.log('exec at', executingAt());
+        //
+        // console.log('the data', this.state.data);
 
         //accountsFromTheBC just indicates how many times to iterate. It isn't used
         //otherwise
@@ -285,14 +283,14 @@ _loadsetRankingListJSONData = async () => {
         //async function (perhaps it can be moved out?)
         async function (address, callback) {
             try {
-              console.log('callback inside await map', callback)
-              console.log('address inside await map', address)
-              // get the owner details for this address from the contract
-              console.log('about to get usernameHash, when done - got usernameHash after await')
-              console.log('exec at', executingAt());
+              // console.log('callback inside await map', callback)
+              // console.log('address inside await map', address)
+              // // get the owner details for this address from the contract
+              // console.log('about to get usernameHash, when done - got usernameHash after await')
+              //console.log('exec at', executingAt());
               const usernameHash = await DSportRank.methods.owners(address).call();
-              console.log('got usernameHash after await', usernameHash)
-              console.log('exec at', executingAt());
+              // console.log('got usernameHash after await', usernameHash)
+              // console.log('exec at', executingAt());
               // get user details from contract
               const user = await DSportRank.methods.users(usernameHash).call();
               //
@@ -321,12 +319,7 @@ _loadsetRankingListJSONData = async () => {
               //console.log('callback1', callback)
               //call the callback function and wait for it's promise
               //(async functions return promises)
-              //console.log('user', user)
-              //this.setState({
-                // address: address,
-                // user: user,
-                // balance: balance
-              //}) //end of the setState
+
               callback(null, {
                 address: address,
                 user: user,
