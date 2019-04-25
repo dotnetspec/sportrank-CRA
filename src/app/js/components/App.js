@@ -223,49 +223,7 @@ _loadsetRankingListJSONData = async () => {
 //REVIEW: Possible to getUserRank in App.js (and set state) rather than Home.js?
 //currently no - problem is waiting for username to check against rank
 
-  //param 2 - current item index
-// async function yourFunc() {
-// }
 
-  // async function manageCurrentAccountAddressIndex(address, next) {
-  //     try {
-  //       //console.log('_loadCurrentUserAccounts 2')
-  //       // get the owner details for this address from the contract
-  //       const usernameHash = await DSportRank.methods.owners(address).call();
-  //       // get user details from contract
-  //       const user = await DSportRank.methods.users(usernameHash).call();
-  //
-  //       console.log('_loadCurrentUserAccounts 3')
-  //       if (user.username !== ''){
-  //       console.log('user.username', user.username)
-  //       console.log('user.contactno', user.contactno)
-  //       //console.log('rankingList', rankingList)
-  //       console.log('user.creationDate', user.creationDate)
-  //       console.log('user.description', user.description)
-  //       console.log('user.rankingDefault', user.rankingDefault)
-  //       //console.log('user.challenges', user.challenges)
-  //     }
-  //       // gets the balance of the address
-  //       let balance = await web3.eth.getBalance(address);
-  //       balance = web3.utils.fromWei(balance, 'ether');
-  //       // update user picture with ipfs url
-  //       //user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
-  //       // add the following mapping to our result
-  //       next(null, {
-  //         address: address,
-  //         user: user,
-  //         balance: balance
-  //         //,
-  //         //NB: added by me:
-  //         //updatedExtAcctBalCB: globalVardevAccountBalResult
-  //       });
-  //     }
-  //     catch (err) {
-  //       next(err);
-  //     }//end of try/catch within async function definition within await/map
-  //   }//end of async function definition within await map
-
-//}
 
 
 /**
@@ -284,7 +242,8 @@ _loadsetRankingListJSONData = async () => {
  */
 
 
-
+//the 'real' code
+//
   _loadCurrentUserAccounts = async () => {
     console.log('_loadCurrentUserAccounts')
       // get all the accounts the node controls
@@ -292,9 +251,15 @@ _loadsetRankingListJSONData = async () => {
       //web3.Blockchain.co
       console.log('about to do await on getAccounts(), when done - got accounts after await')
       console.log('exec at', executingAt());
-      const accounts = await web3.eth.getAccounts();
-        console.log('got accounts after await', accounts)
+      const accountsFromTheBC = await web3.eth.getAccounts();
+        console.log('got accounts after await', accountsFromTheBC)
         console.log('exec at', executingAt());
+
+        console.log('the data', this.state.data);
+
+        //accountsFromTheBC just indicates how many times to iterate. It isn't used
+        //otherwise
+
       // Generates a mapping of users and accounts to be used
       // for populating the accounts dropdown
       // map takes 3 args -
@@ -305,15 +270,23 @@ _loadsetRankingListJSONData = async () => {
       //const { map } = require('p-iteration');
       // param 1 - current item value (accounts);
       //accounts should be an array of addresses
-      await map(accounts,
+      //when using MetaMask we can only currently access one account at a time
+      //until an MM update changes this
+      await map(accountsFromTheBC,
         //which are being mapped to the relevant addresses:
         //param 2 - current item index
         //map() maps 2 types of indexed item
         //(labelled address and next), which come back as promises,
         //to it's 3rd param userAccounts
-        async function (address, next) {
+
+        //I think this is designed so that the current item value (accountsFromTheBC)
+        //becomes the first param in the async function
+        //callback is the name of any function that you name that can be called within this
+        //async function (perhaps it can be moved out?)
+        async function (address, callback) {
             try {
-              console.log('address', address)
+              console.log('callback inside await map', callback)
+              console.log('address inside await map', address)
               // get the owner details for this address from the contract
               console.log('about to get usernameHash, when done - got usernameHash after await')
               console.log('exec at', executingAt());
@@ -322,18 +295,18 @@ _loadsetRankingListJSONData = async () => {
               console.log('exec at', executingAt());
               // get user details from contract
               const user = await DSportRank.methods.users(usernameHash).call();
-
-              //console.log('_loadCurrentUserAccounts 3')
-              //below just used for logging
-                  if (user.username !== ''){
-                  console.log('user.username', user.username)
-                  console.log('user.contactno', user.contactno)
-                  //console.log('rankingList', rankingList)
-                  console.log('user.creationDate', user.creationDate)
-                  console.log('user.description', user.description)
-                  console.log('user.rankingDefault', user.rankingDefault)
-                  //console.log('user.challenges', user.challenges)
-                  }//end if
+              //
+              // //console.log('_loadCurrentUserAccounts 3')
+              // //below just used for logging
+              //     if (user.username !== ''){
+              //     console.log('user.username', user.username)
+              //     console.log('user.contactno', user.contactno)
+              //     //console.log('rankingList', rankingList)
+              //     console.log('user.creationDate', user.creationDate)
+              //     console.log('user.description', user.description)
+              //     console.log('user.rankingDefault', user.rankingDefault)
+              //     //console.log('user.challenges', user.challenges)
+              //     }//end if
 
               // gets the balance of the address
               let balance = await web3.eth.getBalance(address);
@@ -345,10 +318,16 @@ _loadsetRankingListJSONData = async () => {
               // update user picture with ipfs url
               //user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
               // add the following mapping to our result
-              console.log('next1', next)
-              //call the 'next' callback function and wait for it's promise
+              //console.log('callback1', callback)
+              //call the callback function and wait for it's promise
               //(async functions return promises)
-              next(null, {
+              //console.log('user', user)
+              //this.setState({
+                // address: address,
+                // user: user,
+                // balance: balance
+              //}) //end of the setState
+              callback(null, {
                 address: address,
                 user: user,
                 balance: balance
@@ -356,11 +335,12 @@ _loadsetRankingListJSONData = async () => {
                 //NB: added by me:
                 //updatedExtAcctBalCB: globalVardevAccountBalResult
               });
-              console.log('next2', next)
+              console.log('callback2', callback)
             }
             catch (err) {
               console.log("Error within current item index", err);
-              next(err);
+
+              //next(err);
             }//end of try/catch within async function definition within await/map
           }//end of async function definition within await map
 
@@ -370,41 +350,55 @@ _loadsetRankingListJSONData = async () => {
       , (err, userAccounts) => {
         //err is only relevant in the next line
         if (err) return this._onError(err, 'App._loadCurrentUserAccounts');
-
+        //console.log('user in 3rd param', user)
+        console.log('userAccounts array', userAccounts)
+        console.log('web3.eth.defaultAccount', web3.eth.getAccounts(accounts => console.log(accounts[0])))
         //now all these assignments are done on the userAccounts array
-        const defaultUserAccount = userAccounts.find((userAccount) => {
+        let defaultUserAccount = userAccounts.find((userAccount) => {
           return userAccount.address === web3.eth.defaultAccount;
+          //return userAccount.address === web3.eth.getAccounts(accounts => console.log(accounts[0]));
         });
+        //HACK: I think only works for 1 account
+        //I'm forced to specify array index[0] when it wasn't previously required
+        defaultUserAccount = userAccounts;
+        console.log('accountsFromTheBC in third param', userAccounts)
+        console.log('here 1')
+        console.log('defaultUserAccount', defaultUserAccount)
+        console.log('defaultUserAccount.user.username', defaultUserAccount[0].user.username)
+        console.log('here 1a')
         //check that there is an existing default account user
         //before setting state, and if there isn't go to create
-        if(defaultUserAccount.user.username === '' || defaultUserAccount.user.username === undefined){
+        if(defaultUserAccount[0].user.username === '' || defaultUserAccount[0].user.username === undefined){
+          console.log('here 2')
           this.setState({
           rankingDefault: '',
           isUserInJson: false,
           isCurrentUserActive:false });
           this.props.history.push('/create');
         }else{
+          console.log('here 3')
         //console.log('ready to set state which will prompt re-render')
         this.setState({
           //rank: JSONops._getUserValue(this.state.data, this.state.user.username, "RANK"),
-          //rankingDefault: defaultUserAccount.user.rankingDefault,
+          //rankingDefault: defaultUserAccount[0].user.rankingDefault,
           //REVEIW: perhaps change the naming of rankingDefault as it may be confusing
           //now that it is set by the user selection in GlobalRankings not the default value
           // in the contract
-          newrankId: defaultUserAccount.user.rankingDefault,
+          newrankId: defaultUserAccount[0].user.rankingDefault,
           isUserInJson: JSONops.isPlayerListedInJSON(this.state.data, this.state.user.username),
           isCurrentUserActive: JSONops._getUserValue(this.state.data, this.state.user.username, "ACTIVE")
         }) //end of the setState
       }//end of the if
-
+console.log('here 4')
 //common setState
       this.setState({ userAccounts: userAccounts,
-        user: defaultUserAccount.user,
-        contactno: defaultUserAccount.user.contactno,
-        email: defaultUserAccount.user.email,
-        description: defaultUserAccount.user.description,
-        account: web3.eth.defaultAccount,
-        balance: defaultUserAccount.balance,
+        user: defaultUserAccount[0].user,
+        contactno: defaultUserAccount[0].user.contactno,
+        email: defaultUserAccount[0].user.email,
+        description: defaultUserAccount[0].user.description,
+        //account: web3.eth.defaultAccount,
+        account: defaultUserAccount[0].address,
+        balance: defaultUserAccount[0].balance,
         //rank: JSONops._getUserValue(this.state.data, this.state.user.username, "RANK"),
         contactNoCB: '',
         emailCB: '',
@@ -413,6 +407,8 @@ _loadsetRankingListJSONData = async () => {
         newrankId: '',
         viewingOnlyCB: true
       }) //end of the setState
+      console.log('here 5')
+      console.log('this.state.account', this.state.account)
         console.log('ready to _loadsetRankingListJSONData after a render')
         console.log('isUserInJson', this.state.isUserInJson)
 
@@ -546,6 +542,8 @@ _loadsetRankingListJSONData = async () => {
     //EmbarkJS.onReady(() => {
       try{
       this._loadCurrentUserAccounts();
+
+      console.log('this.state.account', this.state.account)
       }catch(e){
         console.log('componentDidMount _loadCurrentUserAccounts()', e)
       }

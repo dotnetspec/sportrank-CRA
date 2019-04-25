@@ -1,6 +1,6 @@
 import { NavLink, withRouter } from 'react-router-dom'
 //import { NavItem, Label, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Overlay, Tooltip } from 'react-bootstrap';
-import { Button, Image, Navbar, ButtonToolbar, Dropdown, Overlay, Tooltip } from 'react-bootstrap';
+import { Button, Image, Navbar, ButtonToolbar, Dropdown, Overlay, Tooltip, MenuItem } from 'react-bootstrap';
 
 import React, { Component } from 'react';
 //import DoChallenge from './DoChallenge';
@@ -247,7 +247,7 @@ class Header extends Component {
   // }
 
 componentDidMount(){
-
+console.log('header componentDidMount')
 }
 
 displayActivationBtns(){
@@ -294,14 +294,22 @@ displayActivationBtns(){
     if (isError) navClasses.push('error');
     if (!isEditable) navClasses.push('logged-out');
 
+    console.log('header user name in account dropdown', this.props.userAccounts)
+
     // generate the DropdownItems for the accounts to populate
     // the accounts dropdown
     const accts = this.props.userAccounts.map((userAccount, index) => {
       const isCurrUser = userAccount.address === this.props.account;
       const hasUser = Boolean(userAccount.user.username);
+        console.log('accts', accts)
+        console.log('this.props.account', this.props.account)
+        console.log('header address inside mapping of account dropdown', userAccount.address)
+        console.log('header user name inside mapping of account dropdown', userAccount.user.username)
+        console.log('index', index)
+        console.log('isCurrUser', isCurrUser)
 
 //NB: return is part of accts definition above. Not the render return (below)
-      return <Dropdown.Item
+      return <MenuItem
         key={index}
         eventKey={index}
         active={isCurrUser}
@@ -327,7 +335,7 @@ displayActivationBtns(){
         <React.Fragment>
           <small className='balance'>{this._formatBalance(userAccount.balance)}</small>
         </React.Fragment>
-      </Dropdown.Item>
+      </MenuItem>
     });
 
     let states = {};

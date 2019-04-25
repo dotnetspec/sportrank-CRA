@@ -110,6 +110,7 @@ class GlobalRankings extends Component {
     // loadJson()
     // .then (({data}) => this.setState({data:data}))
     // .catch(() => this.setState({error:true}));
+      console.log('globalRankings componentDidMount');
   }
 
   globalBSTableDisplay(){
@@ -171,6 +172,7 @@ class GlobalRankings extends Component {
 
             </BootstrapTable>
           )
+
         }
 
 

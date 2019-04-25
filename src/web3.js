@@ -13,11 +13,12 @@ var httpProvider = new Web3(new Web3.providers.HttpProvider("https://rinkeby.inf
 
 
 
-var provider = new Web3HDWalletProvider(mnemonic, httpProvider);
+//var provider = new Web3HDWalletProvider(mnemonic, httpProvider);
 // Or, alternatively pass in a zero-based address index.
 //var provider = new Web3HDWalletProvider(mnemonic, httpProvider, 5);
 
 //const web3 = new Web3(provider);
 const web3 = new Web3(window.web3.currentProvider);
+//console.log('web3', web3)
 
 export default web3;
