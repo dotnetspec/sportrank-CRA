@@ -59,7 +59,7 @@ describe("User Profile Test", function(){
     //   cy.get('.updateProfileBtn').click()
     // //  cy.contains('Update Profile').click()
     //   cy.url()
-    //   .should('eq', 'http://localhost:8000/')
+    //   .should('eq', 'http://localhost:3000/')
     })
 
     it('Shows an error message on failed submission', () => {

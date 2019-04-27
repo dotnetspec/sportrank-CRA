@@ -23,7 +23,7 @@ describe('Home Component', () => {
     cy.route('POST', 'http://localhost:5001/api/v0/id?stream-channels=true', 'fixture:ipfs')
     cy.route('GET', '/manifest.json', 'fixture:manifest')
     cy.route('GET', '/', 'fixture:globalRankings')
-    cy.route('GET', 'http://localhost:8000/home/@player1', 'fixture:ranking1')
+    cy.route('GET', 'http://localhost:3000/home/@player1', 'fixture:ranking1')
 })
     it('View btn click Home route', () => {
         //cy.RankingSeedViaGlobalViewBtn()
