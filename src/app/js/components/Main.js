@@ -50,6 +50,7 @@ configPathname(){
 //when it clearly gets passed to Home.js?
   componentDidMount() {
     console.log('this.props.user', this.props.user);
+    console.log('this.props.error in app', this.props.error);
     //let currentUserRank = await JSONops._getUserRank(this.props.rankingJSONdata, this.props.user[1]);
     // let currentUserRank =  JSONops._getUserValue(this.props.rankingJSONdata, this.props.user[1], "RANK");
     // //JSONops._getUserValue(this.state.data, this.state.user.username, "RANK"),

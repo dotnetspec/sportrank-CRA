@@ -44,7 +44,7 @@ const FieldGroup = ({ id, label, help, validationState, hasFeedback, inputAddOn,
   return (
     <React.Fragment>
       <FormGroup controlId={id} validationState={validationState}>
-        <Form.Label>{label}</Form.Label>
+        {/* <Form.Label>{label}</Form.Label> */}
 
         { inputAddOn ?
           <InputGroup>

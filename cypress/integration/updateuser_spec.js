@@ -1,4 +1,4 @@
-describe("User Profile Test", function(){
+describe("updateduser: User Profile Test", function(){
 
   beforeEach(() => {
   //cy.visit('/')
@@ -10,8 +10,9 @@ describe("User Profile Test", function(){
 
   it('Nav to Update Profile page', function(){
     //NB: comment/uncomment below and beforeEach according to single or multi tests
-    // cy.visit('/')
-    // cy.contains('Update Profile').click()
+    cy.visit('/')
+    cy.wait(300)
+    cy.contains('Update Profile').click()
     cy.url()
     .should('include', '/update/@player1')
     cy.focused()
@@ -26,9 +27,9 @@ describe("User Profile Test", function(){
   })
 
   context('Form Submission To BC', () => {
-    beforeEach(() => {
-    cy.server()
-    })
+    // beforeEach(() => {
+    // cy.server()
+    // })
     it('Adds a user update on submit', () => {
       cy.get('.email').clear()
       .type('cypress@test.com')
@@ -44,6 +45,7 @@ describe("User Profile Test", function(){
       // cy.contains('Update Profile').click()
     })
     it('Returns to home on submit', () => {
+      cy.server()
       cy.route('POST','https://localhost:8000/json',
       [{ "RANKINGNAME":"testRank1","RANKINGDESC":"testRank","ACTIVE":true,"RANKINGID":"5c6a7cf5a83a2931773847b8"},
       {"RANKINGID":"5c6a81756874aa33ba152e56","ACTIVE":true,"RANKINGDESC":"test","RANKINGNAME":"test11"},
@@ -62,20 +64,21 @@ describe("User Profile Test", function(){
     //   .should('eq', 'http://localhost:3000/')
     })
 
-    it('Shows an error message on failed submission', () => {
-      cy.route({
-        url:'https://localhost:8000/json',
-        method: 'POST',
-        status: 500,
-        response: {}
-      })
-      //do something as otherwise it's supposed to do nothing currently
-      // cy.get('.description').clear()
-      // .type('test description')
-      // .should('not.have.value', 'test descriptio')
-      cy.get('.updateProfileBtn').click()
-      cy.get('.error')
-      .should('be.visible')
-    })
+//REVIEW: currently not sure how this should work
+    // it('Shows an error message on failed submission', () => {
+    //   cy.route({
+    //     url:'https://localhost:8000/json',
+    //     method: 'POST',
+    //     status: 500,
+    //     response: {}
+    //   })
+    //   //do something as otherwise it's supposed to do nothing currently
+    //   // cy.get('.description').clear()
+    //   // .type('test description')
+    //   // .should('not.have.value', 'test descriptio')
+    //   cy.get('.updateProfileBtn').click()
+    //   cy.get('.error')
+    //   .should('be.visible')
+    // })
   })
 })

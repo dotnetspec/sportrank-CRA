@@ -77,6 +77,17 @@ export function formatEth(eth, decimals){
   return Number.parseFloat(eth).toFixed(decimals);
 }
 
+//to check if an object is empty
+export function isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+}
+
+//for dev - utility - timer
+    // let startTime = performance.now();  //Run at the beginning of the code
+    // function executingAt() {
+    //   return (performance.now() - startTime) / 1000;
+    // }
+
   // export default = {
   //   limitLength,
   //   limitAddressLength,

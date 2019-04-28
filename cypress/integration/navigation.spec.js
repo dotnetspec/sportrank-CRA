@@ -13,6 +13,8 @@ context('Navigation', () => {
 
     //cy.RankingSeedViaGlobalViewBtn()
 
+    cy.wait(300)
+
     cy.location('pathname').should('include', 'player1')
 
     cy.go('back')

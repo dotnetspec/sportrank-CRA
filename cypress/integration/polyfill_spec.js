@@ -70,7 +70,7 @@ describe('polyfill window.fetch from tests', function () {
 //   })
 
 it('table loaded', function () {
-  //cy.route('GET', '/home/@player1', 'fixture:ranking1')
+  cy.route('GET', '/home/@player1', 'fixture:ranking1')
 
     cy.get('tbody').find('tr').should('have.length', 6)
     }

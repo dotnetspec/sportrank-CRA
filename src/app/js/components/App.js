@@ -60,11 +60,7 @@ import DSportRank from '../../../ABIaddress';
         this.setState({viewingOnlyCB})
     }
 
-//for dev - utility - timer
-    let startTime = performance.now();  //Run at the beginning of the code
-    function executingAt() {
-      return (performance.now() - startTime) / 1000;
-    }
+
 /**
  * Class representing the highest order component. Any user
  * updates in child components should trigger an event in this

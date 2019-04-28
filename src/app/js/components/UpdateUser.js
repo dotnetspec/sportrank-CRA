@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react';
 import FieldGroup from './FieldGroup';
 import JSONops from './JSONops'
+import { isEmpty } from '../utils';
 //import DSportRank from '../../../ABIaddress';
 //import web3 from '../../../web3';
 //import Grid from 'react-bootstrap/Grid'
@@ -128,7 +129,7 @@ class UpdateUser extends Component {
    * @returns {null}
    */
   _handleClick = async () => {
-    this.setState({error:true});
+    //this.setState({error:true});
     //const { account, user } = this.props;
     //const { description } = this.state;
     //REVIEW:
@@ -136,12 +137,10 @@ class UpdateUser extends Component {
     //if (!this.state.formUpdated) return;
 
     // show loading state
-    this.setState({ isLoading: true });
+    //this.setState({ isLoading: true });
       //this.props.history.push('/');
 
     this.setState({ isLoading: false });
-
-
     return null;
   }
 
@@ -222,7 +221,7 @@ class UpdateUser extends Component {
             <h2>Update { user.username } <small>{this.props.account}</small></h2>
           </Col>
         </Row>
-        {this.state.error ? <span className='error'>Oh no!</span> : null}
+        {isEmpty(this.state.error) ? null : <span className='error'>Oh no!</span>}
         <p></p>
         <Row className="show-Grid">
           <Col xs={12} >
@@ -290,7 +289,7 @@ class UpdateUser extends Component {
                 validationState={ formState }
               />
               <FormGroup>
-                { user.picture.length ? <Image src={ user.picture } width="100" circle /> : '' }
+                 { user.picture.length ? <Image src={ user.picture } width="100" circle /> : '' }
               </FormGroup>
               <FormGroup>
                 <Button

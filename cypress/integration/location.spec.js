@@ -15,19 +15,19 @@ context('Location', () => {
     // https://on.cypress.io/location
     cy.location().should((location) => {
       expect(location.hash).to.be.empty
-      expect(location.href).to.eq('http://localhost:3000/')
-      expect(location.host).to.eq('localhost:8000')
+      expect(location.href).to.eq('https://localhost:3000/')
+      expect(location.host).to.eq('localhost:3000')
       expect(location.hostname).to.eq('localhost')
-      expect(location.origin).to.eq('http://localhost:3000')
+      expect(location.origin).to.eq('https://localhost:3000')
       expect(location.pathname).to.eq('/')
-      expect(location.port).to.eq('8000')
-      expect(location.protocol).to.eq('http:')
+      expect(location.port).to.eq('3000')
+      expect(location.protocol).to.eq('https:')
       expect(location.search).to.be.empty
     })
   })
 
   it('cy.url() - get the current URL', () => {
     // https://on.cypress.io/url
-    cy.url().should('eq', 'http://localhost:3000/')
+    cy.url().should('eq', 'https://localhost:3000/')
   })
 })

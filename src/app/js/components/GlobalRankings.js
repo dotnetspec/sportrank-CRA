@@ -2,7 +2,7 @@
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 //import { Grid, Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, DropdownItem, Overlay, Tooltip, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { Grid, Row } from 'react-bootstrap';
-
+import { isEmpty } from '../utils';
 
 //import PropsRoute from './PropsRoute';
 //import Home from './Home';
@@ -39,6 +39,7 @@ class GlobalRankings extends Component {
     this.state = {
       data:''
       // ,
+      // //error currently not used, so set to false
       // error: false
     }
     this.tablesortoptions = {
@@ -46,6 +47,7 @@ class GlobalRankings extends Component {
      defaultSortOrder: 'asc'  // default sort order
    };
    console.log('in GlobalRankings')
+   console.log('this.props.error in GlobalRankings', this.props.error);
   }
   //#endregion
 
@@ -185,7 +187,7 @@ class GlobalRankings extends Component {
 
     return (
       <div>
-      {this.props.error ? <span className='error'>Oh no!</span> : null}
+      {isEmpty(this.props.error) ? null : <span className='error'>Oh no!</span>}
       <Grid>
         <Row>
           {this.globalBSTableDisplay()}

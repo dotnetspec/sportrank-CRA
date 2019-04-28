@@ -1,8 +1,13 @@
 Cypress.Commands.add('GlobalSeed', () => {
   cy.server()
   cy.route('GET', '/', 'fixture:globalRankings')
+  // .then((resp) => {
+  //   window.localstorage.setItem('jwt', resp.body.user.token)
+  // })
   cy.visit('/')
 })
+
+
 
 Cypress.Commands.add('InitializeServerAndRoutes', () => {
   cy.server()
@@ -10,10 +15,10 @@ Cypress.Commands.add('InitializeServerAndRoutes', () => {
   cy.route('GET', 'https://api.jsonbin.io/b/5c36f5422c87fa27306acb52/latest', 'fixture:globalRankings').as('globalRankings')
   cy.route('GET', 'https://api.jsonbin.io/b/5c875c79adeb832d3ec6732d/latest', 'fixture:ranking1')
   //.as('globalRankings')
-  cy.route('POST', 'http://localhost:5001/api/v0/id?stream-channels=true', 'fixture:ipfs')
+  cy.route('POST', 'https://localhost:5001/api/v0/id?stream-channels=true', 'fixture:ipfs')
   cy.route('GET', '/manifest.json', 'fixture:manifest')
   cy.route('GET', '/', 'fixture:globalRankings')
-  cy.route('GET', 'http://localhost:3000/home/@player1', 'fixture:ranking1')
+  cy.route('GET', 'https://localhost:3000/home/@player1', 'fixture:ranking1')
 })
 
 Cypress.Commands.add('SeedRanking', () => {
@@ -33,12 +38,16 @@ Cypress.Commands.add('RankingSeedViaGlobalViewBtn', () => {
   cy.visit('/')
   //cy.wait('@globalRankingList')
   //unless wait doesn't pick up player
-  //cy.wait(1000)
+  //REVIEW: wait seems necessary currently due to intermittent failure
+  cy.wait(500)
   cy.get('tbody>tr>td').contains("View").as('firstViewBtn')
     cy.get('@firstViewBtn').click()
   //click to get to a particular ranking
   cy.route('GET', '/', 'fixture:ranking1')
 })
+// .then((resp) => {
+//   window.localstorage.setItem('jwt', resp.body.user.token)
+// })
 
 Cypress.Commands.add('GlobalRankingWitCyStub', () => {
   cy.server()
