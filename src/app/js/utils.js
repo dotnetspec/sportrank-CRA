@@ -83,10 +83,10 @@ export function isEmpty(obj) {
 }
 
 //for dev - utility - timer
-    // let startTime = performance.now();  //Run at the beginning of the code
-    // function executingAt() {
-    //   return (performance.now() - startTime) / 1000;
-    // }
+    let startTime = performance.now();  //Run at the beginning of the code
+    export function executingAt() {
+      return (performance.now() - startTime) / 1000;
+    }
 
   // export default = {
   //   limitLength,

@@ -247,7 +247,7 @@ class Header extends Component {
   // }
 
 componentDidMount(){
-console.log('header componentDidMount')
+console.log('header componentDidMount user', this.props.user)
 }
 
 displayActivationBtns(){

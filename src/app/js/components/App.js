@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 import imgAvatar from '../../img/avatar-default.png';
 import { map } from 'async';
 import JSONops from './JSONops'
-import { formatEth } from '../utils';
+import { formatEth, executingAt } from '../utils';
 import web3 from '../../../web3';
 import DSportRank from '../../../ABIaddress';
 //import p-iteration from 'p-iteration'
@@ -246,10 +246,10 @@ _loadsetRankingListJSONData = async () => {
       // console.log('about to do await on getAccounts(), when done - got accounts after await')
       // console.log('exec at', executingAt());
       const accountsFromTheBC = await web3.eth.getAccounts();
-        // console.log('got accounts after await', accountsFromTheBC)
-        // console.log('exec at', executingAt());
-        //
-        // console.log('the data', this.state.data);
+        console.log('got accounts after await', accountsFromTheBC)
+        console.log('exec at', executingAt());
+
+        console.log('the data', this.state.data);
 
         //accountsFromTheBC just indicates how many times to iterate. It isn't used
         //otherwise
