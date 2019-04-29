@@ -49,6 +49,21 @@ Cypress.Commands.add('RankingSeedViaGlobalViewBtn', () => {
 //   window.localstorage.setItem('jwt', resp.body.user.token)
 // })
 
+//REVIEW: currently not used:
+Cypress.Commands.add('RankingSeedHomePage', () => {
+  cy.server()
+  cy.route('GET', '/home/@player1', 'fixture:ranking1.json').as('ranking1')
+  cy.visit('/home/@player1')
+  //cy.wait('@globalRankingList')
+  //unless wait doesn't pick up player
+  //REVIEW: wait seems necessary currently due to intermittent failure
+  //cy.wait(500)
+  // cy.get('tbody>tr>td').contains("View").as('firstViewBtn')
+  //   cy.get('@firstViewBtn').click()
+  //click to get to a particular ranking
+  //cy.route('GET', '/', 'fixture:ranking1')
+})
+
 Cypress.Commands.add('GlobalRankingWitCyStub', () => {
   cy.server()
   cy.route('GET', '/', 'fixture:globalRankings').as('globalRankingList')

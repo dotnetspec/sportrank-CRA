@@ -133,7 +133,7 @@ class GlobalRankings extends Component {
       //original test: data={this.state.data}
       return (
         <BootstrapTable  options={ this.tablesortoptions } data={this.props.rankingListJSONdata}
-        className='tableFixHead'
+        className='bstable'
         >
               <TableHeaderColumn isKey dataField='RANKINGID'
               hidden >
