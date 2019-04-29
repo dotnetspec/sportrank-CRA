@@ -35,12 +35,15 @@ Cypress.Commands.add('SeedRanking', () => {
 Cypress.Commands.add('RankingSeedViaGlobalViewBtn', () => {
   cy.server()
   cy.route('GET', '/', 'fixture:globalRankings.json').as('globalRankingList')
+  cy.wait(200)
   cy.visit('/')
   //cy.wait('@globalRankingList')
   //unless wait doesn't pick up player
   //REVIEW: wait seems necessary currently due to intermittent failure
-  cy.wait(500)
+cy.wait(500)
   cy.get('tbody>tr>td').contains("View").as('firstViewBtn')
+  //cy.wait(800)
+  //click({force: true}) might become necessary 
     cy.get('@firstViewBtn').click()
   //click to get to a particular ranking
   cy.route('GET', '/', 'fixture:ranking1')

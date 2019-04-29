@@ -69,7 +69,8 @@ describe('polyfill window.fetch from tests', function () {
 //     })
 //   })
 
-it('table loaded', function () {
+//REVEIW: not sure what this does
+it.skip('table loaded', function () {
   cy.route('GET', '/home/@player1', 'fixture:ranking1')
 
     cy.get('tbody').find('tr').should('have.length', 6)

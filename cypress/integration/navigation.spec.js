@@ -2,18 +2,20 @@
 
 context('Navigation', () => {
   beforeEach(() => {
-    //cy.visit('https://example.cypress.io')
-    // cy.get('.navbar-nav').contains('Commands').click()
-    // cy.get('.dropdown-menu').contains('Navigation').click()
-    cy.RankingSeedViaGlobalViewBtn()
+    //cy.RankingSeedViaGlobalViewBtn()
+    cy.GlobalSeed()
   })
 
   it('cy.go() - go back or forward in the browser\'s history', () => {
     // https://on.cypress.io/go
-
     //cy.RankingSeedViaGlobalViewBtn()
+    //click to get to a particular ranking
+    cy.route('GET', '/', 'fixture:ranking1')
+    cy.wait(2000)
+    cy.get('tbody>tr>td').contains("View").as('firstViewBtn')
+    //cy.wait(800)
+      cy.get('@firstViewBtn').click({force: true})
 
-    cy.wait(500)
 
     cy.location('pathname').should('include', 'player1')
 

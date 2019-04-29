@@ -416,6 +416,8 @@ displayActivationBtns(){
       </Modal>*/}
     </React.Fragment>;
 
+    console.log('states', states)
+
     return (
 
       <Navbar collapseOnSelect className={navClasses.join(' ')}>

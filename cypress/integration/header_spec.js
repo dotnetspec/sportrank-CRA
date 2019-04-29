@@ -1,5 +1,5 @@
 describe('Header Tests', function() {
-  it.only('Successfully loads initial header', function() {
+  it('Successfully loads initial header', function() {
     cy.GlobalSeed()
 
     cy.get('[data-cy=deactive]')
@@ -17,6 +17,9 @@ describe('Header Tests', function() {
     cy.get('[data-cy=CreateNewRanking]')
     .should('be.visible')
 
+    //getting [data-cy=usernameinprofilelink] makes
+    //<span.username visible ie. it returns the whole html element
+    //not just the value e.g. 'player1'
     cy.get('[data-cy=usernameinprofilelink]')
     //.should('eq', 'player1')
     .should('be.visible')
@@ -40,6 +43,11 @@ describe('Header Tests', function() {
 
     cy.get('[data-cy=CreateNewRanking]')
     .should('be.visible')
+
+    cy.get('[data-cy=usernameinprofilelink]')
+    //.should('eq', 'player1')
+    .should('be.visible')
+    .contains('player1')
   })
 
 })

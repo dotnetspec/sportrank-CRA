@@ -11,7 +11,16 @@ context('Network Requests', () => {
 
   it('cy.server() - control behavior of network requests and responses', () => {
     // https://on.cypress.io/server
-    cy.RankingSeedViaGlobalViewBtn()
+    //cy.RankingSeedViaGlobalViewBtn()
+    cy.GlobalSeed()
+    cy.route('GET', '/', 'fixture:ranking1')
+    //wait for the player1 username to load
+    //REVIEW: this must be improved ...
+    cy.wait(2000)
+    cy.get('tbody>tr>td').contains("View").as('firstViewBtn')
+    //cy.wait(800)
+      cy.get('@firstViewBtn').click({force: true})
+
     cy.server().should((server) => {
       // the default options on server
       // you can override any of these options
