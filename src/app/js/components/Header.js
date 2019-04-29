@@ -325,7 +325,7 @@ displayActivationBtns(){
             circle
             className='profile'
           ></Image>
-            <span className='username'>{userAccount.user.username}</span></React.Fragment>
+            <span className='username' data-cy='usernameinprofile'>{userAccount.user.username}</span></React.Fragment>
           :
           <React.Fragment>
 
@@ -378,7 +378,7 @@ displayActivationBtns(){
           circle
           className='profile'
         ></Image>
-        <span className='username'>{username}</span>
+        <span className='username' data-cy='usernameinprofilelink'>{username}</span>
       </span>
       <small className='balance'>{this._formatBalance(this.props.balance)}</small>
     </React.Fragment>;
