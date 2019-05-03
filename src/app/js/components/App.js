@@ -237,7 +237,9 @@ _loadsetRankingListJSONData = async () => {
 
 
 //the 'real' code
-//
+//_loadCurrentUserAccounts uses an anonymous async function to assign
+//the accounts array from web3.eth.getAccounts() to the State array 'userAccounts'
+//via each address in the map function  (which does: return userAccount.address)
   _loadCurrentUserAccounts = async () => {
     console.log('_loadCurrentUserAccounts')
       // get all the accounts the node controls
@@ -259,7 +261,7 @@ _loadsetRankingListJSONData = async () => {
       // map takes 3 args -
       // current item value (accounts);
       // current item index (async function (address, next))
-      // the array itself that the map was called upon.
+      // the name of the new array that the mapping will create.
       //not sure if need p-iteration
       //const { map } = require('p-iteration');
       // param 1 - current item value (accounts);
@@ -270,13 +272,15 @@ _loadsetRankingListJSONData = async () => {
         //which are being mapped to the relevant addresses:
         //param 2 - current item index
         //map() maps 2 types of indexed item
-        //(labelled address and next), which come back as promises,
+        //(labelled address and callback (was originally 'next')), which come back as promises,
         //to it's 3rd param userAccounts
 
         //I think this is designed so that the current item value (accountsFromTheBC)
         //becomes the first param in the async function
         //callback is the name of any function that you name that can be called within this
         //async function (perhaps it can be moved out?)
+        //this is an anonymous function (with 2 params) that could be using fat arrow syntax
+        //it can have as many params as it likes
         async function (address, callback) {
             try {
               // console.log('callback inside await map', callback)
@@ -333,9 +337,10 @@ _loadsetRankingListJSONData = async () => {
             }//end of try/catch within async function definition within await/map
           }//end of async function definition within await map
 
-          //param 3 - the array itself that the map was called upon
-          //this moment seemingly confusingly is used to
-          //do a whole series of state var assignments
+          //param 3 - the new name for the array that the mapping will create
+          //this moment (when the accounts have been returned) is used to
+          //do a whole series of state var assignments in another anonymous
+          //function
       , (err, userAccounts) => {
         //err is only relevant in the next line
         if (err) return this._onError(err, 'App._loadCurrentUserAccounts');
@@ -344,9 +349,12 @@ _loadsetRankingListJSONData = async () => {
         console.log('web3.eth.defaultAccount', web3.eth.getAccounts(accounts => console.log(accounts[0])))
         //now all these assignments are done on the userAccounts array
         let defaultUserAccount = userAccounts.find((userAccount) => {
+          console.log('about to return default userAccount.address', web3.eth.defaultAccount);
           return userAccount.address === web3.eth.defaultAccount;
           //return userAccount.address === web3.eth.getAccounts(accounts => console.log(accounts[0]));
         });
+        //now all these assignments are done as the values are added,
+        //one at a time, to the userAccounts array
         //HACK: I think only works for 1 account
         //I'm forced to specify array index[0] when it wasn't previously required
         defaultUserAccount = userAccounts;
@@ -380,6 +388,8 @@ _loadsetRankingListJSONData = async () => {
       }//end of the if
 console.log('here 4')
 //common setState
+//the most important setState is the first one, which is the point of this
+//
       this.setState({ userAccounts: userAccounts,
         user: defaultUserAccount[0].user,
         contactno: defaultUserAccount[0].user.contactno,

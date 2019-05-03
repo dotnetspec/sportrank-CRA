@@ -7,13 +7,14 @@
     "async": "^2.6.2",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
-    "browserslist": "^4.5.5",
+    "browserslist": "^4.5.6",
     "chance": "^1.0.18",
     "date-fns": "^2.0.0-alpha.25",
-    "fortmatic": "^0.7.0",
-    "jquery": "^3.4.0",
+    "fortmatic": "^0.7.2",
+    "jquery": "^3.4.1",
     "lodash": "^4.17.11",
     "npm-install": "0.0.1",
+    "nyc": "^14.1.0",
     "p-iteration": "^1.1.8",
     "popper.js": "^1.15.0",
     "react": "^16.8.6",
@@ -30,15 +31,20 @@
     "web3-hdwallet-provider": "^1.0.4-fix2"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/register": "^7.4.4",
     "cypress": "^3.2.0",
-    "react-scripts": "^3.0.0"
+    "react-scripts": "^3.0.0",
+    "riteway": "^6.0.3"
   },
   "scripts": {
+    "test": "nyc riteway -r @babel/register -r @babel/polyfill 'src/app/js/**/*.test.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test_orig": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
