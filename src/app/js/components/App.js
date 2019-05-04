@@ -249,7 +249,7 @@ _loadsetRankingListJSONData = async () => {
       // console.log('exec at', executingAt());
       const accountsFromTheBC = await web3.eth.getAccounts();
         console.log('got accounts after await', accountsFromTheBC)
-        console.log('exec at', executingAt());
+        //console.log('exec at', executingAt());
 
         console.log('the data', this.state.data);
 

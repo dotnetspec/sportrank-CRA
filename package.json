@@ -37,14 +37,18 @@
     "@babel/preset-env": "^7.4.4",
     "@babel/register": "^7.4.4",
     "cypress": "^3.2.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "react-addons-test-utils": "^15.6.2",
     "react-scripts": "^3.0.0",
+    "react-test-renderer": "^16.8.6",
     "riteway": "^6.0.3"
   },
   "scripts": {
-    "test": "nyc riteway -r @babel/register -r @babel/polyfill 'src/app/js/**/*.test.js'",
+    "test-nyc": "nyc riteway -r @babel/register -r @babel/polyfill 'src/app/js/**/*.test.js' | tap-color",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test_orig": "react-scripts test",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

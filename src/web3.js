@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 
 //const Web3 = require("web3");
-//const Web3HDWalletProvider = require("web3-hdwallet-provider");
+const Web3HDWalletProvider = require("web3-hdwallet-provider");
 const mnemonic = "blind vendor near grace hover video merit hint brave ticket man awkward";
 // 12 word mnemonic
 
@@ -15,9 +15,12 @@ const mnemonic = "blind vendor near grace hover video merit hint brave ticket ma
 
 //let web3 = new Web3HDWalletProvider(mnemonic, httpProvider);
 // Or, alternatively pass in a zero-based address index.
-//var provider = new Web3HDWalletProvider(mnemonic, httpProvider, 5);
 
-//const web3 = new Web3(provider);
+//below passes Enzyme tests but doesn't work in browser
+// var httpProvider = new Web3.providers.HttpProvider('http://rinkeby.infura.io/964a8fdda64246719dc7ba8cbf301cc7');
+// var provider = new Web3HDWalletProvider(mnemonic, httpProvider, 5);
+// const web3 = new Web3(provider);
+//below works for 1 account only (but doesn't currently pass Enzyme tests)
 const web3 = new Web3(window.web3.currentProvider, mnemonic);
 
 // if(typeof web3 != 'undefined'){

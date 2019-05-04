@@ -1,3 +1,4 @@
+//const { performance } = require('performance');
 /**
  * Limits the length of a string for display purposes, replacing the removed text
  * with the replacement entity specified
@@ -83,10 +84,11 @@ export function isEmpty(obj) {
 }
 
 //for dev - utility - timer
-    let startTime = performance.now();  //Run at the beginning of the code
-    export function executingAt() {
-      return (performance.now() - startTime) / 1000;
-    }
+//riteway test framework doesn't like this:
+    // let startTime = window.performance.now();  //Run at the beginning of the code
+    // export function executingAt() {
+    //   return (window.performance.now() - startTime) / 1000;
+    // }
 
   // export default = {
   //   limitLength,
