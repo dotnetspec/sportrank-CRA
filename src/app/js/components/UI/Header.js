@@ -1,24 +1,14 @@
 import { NavLink, withRouter } from 'react-router-dom'
 //import { NavItem, Label, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Overlay, Tooltip } from 'react-bootstrap';
 import { Button, Image, Navbar, ButtonToolbar, Dropdown, Overlay, Tooltip, MenuItem } from 'react-bootstrap';
-
 import React, { Component } from 'react';
-//import DoChallenge from './DoChallenge';
-//import Search from './Search';
-import { formatEth, limitLength, limitAddressLength } from '../utils';
+import { formatEth, limitLength, limitAddressLength } from '../../utils';
 import Spinner from 'react-spinkit';
-//import FieldGroup from './FieldGroup';
-//import imgAvatar from '../../img/avatar-default.png';
-import JSONops from './JSONops'
-import {updateWarningText} from './Home'
-//import {updatedExtAcctBalCB, newrankIdCB} from './App'
-import {updatedExtAcctBalCB} from './App'
-import web3 from '../../../web3';
-//import { DropdownItem } from 'react-bootstrap';
-//import DropdownItem from 'react-bootstrap/DropdownItem'
-//import config from '../../../ABIaddress';
-
-
+import JSONops from '../JSONops'
+import {updateWarningText} from '../Home'
+import {updatedExtAcctBalCB} from '../App'
+import web3 from '../../../../web3';
+import DeactivatePlayerBtn from './buttons/DeactivatePlayerBtn'
 /**
  * Class displaying the accumulated ETH balance from
  *previous transactions
@@ -81,24 +71,16 @@ class Header extends Component {
       showTooltip: false
       //updatedExtAcctBalCB: 0
     };
-
-
-
   //#endregion
-
 }
-
   //#region Component events
   /**
    * Hides the tweet modal
    */
   _handleClose() {
     this.setState({ showModal: false });
-
     updatedExtAcctBalCB = updatedExtAcctBalCB.bind(this);
   }
-
-
 
   /**
    * Switches to userupdate page
@@ -117,18 +99,18 @@ class Header extends Component {
     }
   }
 
-  _handleDeactivatePlayer(username) {
-    if(username !== null){
-      //REVIEW: The naming of 'delete/deactivate' etc.
-      // redirect user to the deactive player (currently named 'DeactivatePlayer') page
-      this.props.history.push('/delete/@' + username);
-    }
-    else {
-      //create a new user
-      //TODO: add better handling here
-      //this.props.history.push('/create');
-    }
-  }
+  // _handleDeactivatePlayer(username) {
+  //   if(username !== null){
+  //     //REVIEW: The naming of 'delete/deactivate' etc.
+  //     // redirect user to the deactive player (currently named 'DeactivatePlayer') page
+  //     this.props.history.push('/delete/@' + username);
+  //   }
+  //   else {
+  //     //create a new user
+  //     //TODO: add better handling here
+  //     //this.props.history.push('/create');
+  //   }
+  // }
 
   /**
    * Toggles the current account address tooltip
@@ -182,7 +164,6 @@ class Header extends Component {
     );
   }
 
-
   _handleReactivatePlayer(user) {
     try {
       console.log('in _handleReactivatePlayer', this.props.newrankIdCB, this.props.rankingJSONdata, user, this.props.account)
@@ -224,8 +205,6 @@ class Header extends Component {
     };
   }
 
-
-
   navHomeOrToUserUpdate(){
     //TODO: display SportRank Home in white without small tag
     if(this.props.user.username !== ''){
@@ -259,9 +238,7 @@ displayActivationBtns(){
       if(pathname.includes("home/@")){
         return(
           <>
-          <Button bsStyle="primary" data-cy='deactivate' onClick={(e) => this._handleDeactivatePlayer(this.props.user[1])}>
-            Deactivate Player
-          </Button>
+          <DeactivatePlayerBtn username={this.props.user.username} {...this.props}/>
           <Button bsStyle="primary" data-cy='reactivate' onClick={(e) => this._handleReactivatePlayer(this.props.user[1])}>
             Reactivate Player
           </Button>
@@ -269,14 +246,9 @@ displayActivationBtns(){
       )
     }else{ return null }
 }
-
-
   //#endregion
-
   //#region React lifecycle events
-
   render() {
-
     //const { picture, username, usersRankingLists } = this.props.user;
     const { picture, username } = this.props.user;
     // console.log('usersRankingLists')
@@ -295,7 +267,6 @@ displayActivationBtns(){
     if (!isEditable) navClasses.push('logged-out');
 
     console.log('header user name in account dropdown', this.props.userAccounts)
-
     // generate the DropdownItems for the accounts to populate
     // the accounts dropdown
     const accts = this.props.userAccounts.map((userAccount, index) => {
@@ -419,13 +390,11 @@ displayActivationBtns(){
     console.log('states', states)
 
     return (
-
       <Navbar collapseOnSelect className={navClasses.join(' ')}>
         <Navbar.Header>
           <Navbar.Brand>
 
             {this.navHomeOrToUserUpdate()}
-
 
             {isLoading ?
               states.isLoading
@@ -433,7 +402,6 @@ displayActivationBtns(){
               isError ?
                 states.isError
                 :
-
             <CurrentETHBal updatedExtAcctBalCB={this.props.updatedExtAcctBalCB}
             />
           }

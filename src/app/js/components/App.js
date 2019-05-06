@@ -1,4 +1,4 @@
-import Header from './Header'
+import Header from './UI/Header'
 import Main from './Main'
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'

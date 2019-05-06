@@ -40,6 +40,7 @@ class DeactivatePlayer extends Component {
    //QUESTION: why does below not work with this.props.history.push('/');?
   //_handleClick = async () => {
   _handleClick(e) {
+    //console.log('this.props.user in deactivateplayer', this.props.user);
     try {
       console.log('this.props.newrankIdCB',this.props.newrankIdCB)
     JSONops.deactivatePlayer(this.props.newrankIdCB, this.props.rankingJSONdata, this.props.user, this.props.account);
