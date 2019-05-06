@@ -27,7 +27,7 @@
     "sendmail": "^1.4.1",
     "ts-pnp": "^1.1.2",
     "typescript": "^3.4.5",
-    "web3": "^1.0.0-beta.52",
+    "web3": "^1.0.0-beta.54",
     "web3-hdwallet-provider": "^1.0.4-fix2"
   },
   "devDependencies": {
