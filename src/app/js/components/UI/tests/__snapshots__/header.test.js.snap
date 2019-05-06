@@ -2,7 +2,7 @@
 
 exports[`testing navigation deactivate btn renders correctly 1`] = `
 <button
-  className="btn btn-primary"
+  className="deactivatebtn btn btn-primary"
   data-cy="deactivate"
   disabled={false}
   onClick={[Function]}

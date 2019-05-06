@@ -705,6 +705,7 @@ console.log('rankingID, data, currentUser, accountno in deactivatePlayer', ranki
         let myJsonString = JSON.stringify(data);
         console.log('httpString, data, data.id in _sendJSONDataWithRankingID', httpString, data, data.id);
 
+        console.log('data.id alone in _sendJSONDataWithRankingID', data.id)
         //if this is a new ranking send an array, not just an object
         //if this is a new ranking id will be 1
         //HACK: there may be a better way to test that this is a new ranking and user

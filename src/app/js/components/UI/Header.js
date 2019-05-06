@@ -238,7 +238,7 @@ displayActivationBtns(){
       if(pathname.includes("home/@")){
         return(
           <>
-          <DeactivatePlayerBtn username={this.props.user.username} {...this.props}/>
+          <DeactivatePlayerBtn {...this.props} newrankIdCB={this.props.newrankIdCB} user={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
           <Button bsStyle="primary" data-cy='reactivate' onClick={(e) => this._handleReactivatePlayer(this.props.user[1])}>
             Reactivate Player
           </Button>
