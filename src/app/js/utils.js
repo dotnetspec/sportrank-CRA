@@ -83,6 +83,31 @@ export function isEmpty(obj) {
     return Object.keys(obj).length === 0;
 }
 
+/**
+ * Formats an ethereum balance for display
+ * @param {*} balance to be formatted
+ */
+export function formatBalance(balance) {
+  //trim middle set to false - looks better
+  balance = formatEth(balance, 3)
+  return 'Ξ' + limitLength(
+    parseFloat(
+      balance
+    ).toFixed(4), 6, '', true
+  );
+}
+
+//below just for testing familiarity
+export function sum(a, b) {
+  return a + b;
+}
+
+export function forEach(items, callback) {
+for (let index = 0; index < items.length; index++) {
+  callback(items[index]);
+  }
+}
+
 //for dev - utility - timer
 //riteway test framework doesn't like this:
     // let startTime = window.performance.now();  //Run at the beginning of the code

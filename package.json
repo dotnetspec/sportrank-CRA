@@ -45,8 +45,6 @@
     "riteway": "^6.0.3"
   },
   "scripts": {
-    "cypress": "npx cypress open",
-    "test-nyc": "nyc riteway -r @babel/register -r @babel/polyfill 'src/app/js/**/*.test.js' | tap-color",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --watch",

@@ -23,15 +23,13 @@ class DeactivatePlayerBtn extends Component {
 
   _handleDeactivatePlayer(username) {
 
-    this.setState({
-    DeactivatePlayerBtn_clicked: true });
-
     if(username !== null){
       //JSONops.deactivatePlayer(this.props.newrankIdCB, this.props.rankingJSONdata, this.props.user, this.props.account);
       //TODO: find a way to implement this separately - e.g. with setState and in componentDidMount()
       //for now workaround by passing test=true prop
       if(this.props.test !== 'true'){
         //JSONops.deactivatePlayer(this.props.newrankIdCB, this.props.rankingJSONdata, this.props.user, this.props.account);
+        this.setState({DeactivatePlayerBtn_clicked: true });
         this.props.history.push('/delete/@' + username);
       }
       //REVIEW: The naming of 'delete/deactivate' etc.

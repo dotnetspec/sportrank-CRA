@@ -2,13 +2,15 @@ import { NavLink, withRouter } from 'react-router-dom'
 //import { NavItem, Label, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Overlay, Tooltip } from 'react-bootstrap';
 import { Button, Image, Navbar, ButtonToolbar, Dropdown, Overlay, Tooltip, MenuItem } from 'react-bootstrap';
 import React, { Component } from 'react';
-import { formatEth, limitLength, limitAddressLength } from '../../utils';
+//import { formatEth, limitLength,limitAddressLength } from '../../utils';
+import { limitAddressLength } from '../../utils';
 import Spinner from 'react-spinkit';
 import JSONops from '../JSONops'
 import {updateWarningText} from '../Home'
 import {updatedExtAcctBalCB} from '../App'
 import web3 from '../../../../web3';
-import DeactivatePlayerBtn from './buttons/DeactivatePlayerBtn'
+import DeactivatePlayerBtn from './buttons/DeactivatePlayerBtn';
+import {formatBalance} from '../../utils';
 /**
  * Class displaying the accumulated ETH balance from
  *previous transactions
@@ -150,19 +152,19 @@ class Header extends Component {
     }
   }
 
-  /**
-   * Formats an ethereum balance for display
-   * @param {*} balance to be formatted
-   */
-  _formatBalance(balance) {
-    //trim middle set to false - looks better
-    balance = formatEth(balance, 3)
-    return 'Ξ' + limitLength(
-      parseFloat(
-        balance
-      ).toFixed(4), 6, '', true
-    );
-  }
+  // /**
+  //  * Formats an ethereum balance for display
+  //  * @param {*} balance to be formatted
+  //  */
+  // formatBalance(balance) {
+  //   //trim middle set to false - looks better
+  //   balance = formatEth(balance, 3)
+  //   return 'Ξ' + limitLength(
+  //     parseFloat(
+  //       balance
+  //     ).toFixed(4), 6, '', true
+  //   );
+  // }
 
   _handleReactivatePlayer(user) {
     try {
@@ -304,7 +306,7 @@ displayActivationBtns(){
           </React.Fragment>
         }
         <React.Fragment>
-          <small className='balance'>{this._formatBalance(userAccount.balance)}</small>
+          <small className='balance'>{formatBalance(userAccount.balance)}</small>
         </React.Fragment>
       </MenuItem>
     });
@@ -331,7 +333,7 @@ displayActivationBtns(){
         >{limitAddressLength(this.props.account, 4)}
         </span>
       </span>
-      <small className='balance'>{this._formatBalance(this.props.balance)}</small>
+      <small className='balance'>{formatBalance(this.props.balance)}</small>
       <Overlay {...tooltipProps} placement="bottom">
         <Tooltip id="overload-bottom">{this.props.account}</Tooltip>
       </Overlay>
@@ -351,7 +353,7 @@ displayActivationBtns(){
         ></Image>
         <span className='username' data-cy='usernameinprofilelink'>{username}</span>
       </span>
-      <small className='balance'>{this._formatBalance(this.props.balance)}</small>
+      <small className='balance'>{formatBalance(this.props.balance)}</small>
     </React.Fragment>;
 
     // state for showing the update profile button and challenge button modal
