@@ -54,8 +54,7 @@ import { _loadsetJSONData, _loadsetRankingListJSONData } from './SideEffects/io/
     export function newrankIdCB(newrankIdCB) {
       console.log('in newrankIdCB', newrankIdCB)
         this.setState({newrankIdCB});
-        _loadsetJSONData(newrankIdCB, callback);
-        //callback();
+        _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
     }
     //cb from GlobalRankings.js to set the rank state as view only
     export function viewingOnlyCB(viewingOnlyCB) {
@@ -63,7 +62,7 @@ import { _loadsetJSONData, _loadsetRankingListJSONData } from './SideEffects/io/
         this.setState({viewingOnlyCB})
     }
 
-    export function callback(data) {
+    export function _loadsetJSONData_callback(data) {
       console.log('data account in callback', data[0].ACCOUNT);
       //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
        //done();
@@ -144,7 +143,7 @@ class App extends Component {
     //click List All Rankings and Enter to reset the default ranking to display
     newrankIdCB = newrankIdCB.bind(this);
     viewingOnlyCB = viewingOnlyCB.bind(this);
-    callback = callback.bind(this);
+    _loadsetJSONData_callback = _loadsetJSONData_callback.bind(this);
     _loadsetRankingListJSONData_callback = _loadsetRankingListJSONData_callback.bind(this);
 
   }
@@ -169,8 +168,6 @@ class App extends Component {
  * @returns {null}
  */
 
-
-//the 'real' code
 //_loadCurrentUserAccounts uses an anonymous async function to assign
 //the accounts array from web3.eth.getAccounts() to the State array 'userAccounts'
 //via each address in the map function  (which does: return userAccount.address)
