@@ -8,7 +8,7 @@ import JSONops from './JSONops'
 import { formatEth, executingAt } from '../utils';
 import web3 from '../../../web3';
 import DSportRank from '../../../ABIaddress';
-import { _loadsetJSONData, _loadsetRankingListJSONData } from './SideEffects/io/Jsonio';
+import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId } from './SideEffects/io/Jsonio';
 //import p-iteration from 'p-iteration'
 
 //REVIEW: is the solution to this to write your own api?
@@ -88,6 +88,12 @@ import { _loadsetJSONData, _loadsetRankingListJSONData } from './SideEffects/io/
             })
       }
 
+      export function getNewRankId_callback(data){
+        this.setState({ newrankId: data.id});
+        this.setState({ ranknameHasChanged: true});
+        this.setState({ isLoading: false});
+      }
+
 /**
  * Class representing the highest order component. Any user
  * updates in child components should trigger an event in this
@@ -145,7 +151,7 @@ class App extends Component {
     viewingOnlyCB = viewingOnlyCB.bind(this);
     _loadsetJSONData_callback = _loadsetJSONData_callback.bind(this);
     _loadsetRankingListJSONData_callback = _loadsetRankingListJSONData_callback.bind(this);
-
+    getNewRankId_callback = getNewRankId_callback.bind(this);
   }
   //#endregion
 
@@ -372,63 +378,6 @@ console.log('here 4')
       console.log('this.state.loadingAccounts',this.state.loadingAccounts)
   }// end of _loadCurrentUserAccounts
 
-  //TODO:add code to get from jsonbin.io
-  //we are using this and not JSONops because we need to set state here
-  //get a new rankid ready in case user wants/needs to create a new ranking
-  //do this after _loadsetJSONData so that we will already have the correct username
-  getNewRankId = async () => {
-    console.log('userNameCB in getNewRankId in app', this.state.userNameCB)
-      try{
-      this.setState({ isLoading: true});
-      let req = new XMLHttpRequest();
-        req.onreadystatechange = () => {
-          //this async section tests whether the result
-          //from the code lower down has been returned
-          //(without using await)
-          if (req.readyState === XMLHttpRequest.DONE) {
-            const resulttxt = JSON.parse(req.responseText);
-            //only here can set state (once result is back)
-            this.setState({ newrankId: resulttxt.id});
-            console.log("this.state.newrankId", this.state.newrankId)
-            //this.setState({ ranknameHasChanged: true});
-            this.setState({ isLoading: false});
-            // console.log('this.state.rankId')
-            // console.log(this.state.rankId)
-          }
-        };
-        //NB: following will send the request but
-        //need to wait for the results to come back
-        //(above) before any further processing can be
-        //don
-        var obj = {
-        DATESTAMP: Date.now(),
-        ACTIVE: true,
-        DESCRIPTION: this.state.description,
-        CURRENTCHALLENGERNAME: "AVAILABLE",
-        CURRENTCHALLENGERID: 0,
-        ACCOUNT: this.state.account,
-        EMAIL: this.state.emai,
-        CONTACTNO: this.state.contactno,
-        RANK: 1,
-        NAME: this.state.user,
-        id: 1 };
-
-        let myJSON = JSON.stringify(obj);
-        console.log('getNewRankId using myJSON', myJSON)
-
-        req.open("POST", "https://api.jsonbin.io/b", true);
-        //req.open("PUT", "https://api.jsonbin.io/b", true);
-        req.setRequestHeader("Content-type", "application/json");
-        //req.send('{"Player": "Johan Straus"}') || {}
-        req.send(myJSON)
-        //|| {}
-        }catch (err) {
-        // stop loading state and show the error
-        console.log(err)
-        this.setState({ isLoading: false, error: err.message });
-      };
-        return null;
-    }
 //REVIEW: below based on
 //https://medium.com/@bluepnume/learn-about-promises-before-you-start-using-async-await-eb148164a9c8
 //to a (small) degree - anyway it's a useful reference
@@ -471,11 +420,6 @@ console.log('here 4')
   //any change with setState here will re-render app.js
   //async componentDidMount() {
   componentDidMount() {
-    //_loadsetJSONData(this.state.newrankIdCB, callback);
-    //console.log('_loadsetJSONData(5c81c1e944e81057efe3e2c8)')
-    //_loadsetJSONData(this.state.newrankIdCB, callback);
-
-
       try{
         console.log('this.state.newrankIdCB before _loadCurrentUserAccounts', this.state.newrankIdCB)
         if(this.state.newrankIdCB === ''){
@@ -486,23 +430,16 @@ console.log('here 4')
       }catch(e){
         console.log('componentDidMount app _loadCurrentUserAccounts()', e)
       }
-      //console.log('rankingListData:data', this.state.rankingListData)
-   //}
-  //);
-    //if newRankId is blank a user either has just loaded the app or has clicked the
+    //if newRankId(CB?) is blank a user either has just loaded the app or has clicked the
     //ListAllRankingss btn
     console.log('this.state.newrankIdCB', this.state.newrankIdCB)
     if(this.state.newrankIdCB === ''){
-    //this._loadsetRankingListJSONData();
-    _loadsetRankingListJSONData('5c36f5422c87fa27306acb52',_loadsetRankingListJSONData_callback)
-    }else{
-    //console.log('_loadsetJSONData next')
-    //_loadsetJSONData(this.state.newrankIdCB, callback);
-    //_loadsetJSONData('5c81c1e944e81057efe3e2c8', callback);
+      _loadsetRankingListJSONData(this.state.rankingDefault,_loadsetRankingListJSONData_callback);
     }
     console.log('this.state.user.username in componentDidMount in app', this.state.user.username)
     if(this.state.user.username !== undefined){
-    this.getNewRankId();
+      //this.getNewRankId();
+      getNewRankId(getNewRankId_callback, "test description", '123456', 'test@test.com', '67890', 'player1');
     }
   }
 
