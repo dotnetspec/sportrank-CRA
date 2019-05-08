@@ -52,7 +52,7 @@ test.skip('the data is json', async () => {
 });
 
 test('the data is ranking data', done => {
-  //const rankid = '5bd82af2baccb064c0bdc92a';
+  const rankid = '5bd82af2baccb064c0bdc92a';
   //let httpStr = 'https://api.jsonbin.io/b/' + rankid + '/latest';
   //await expect(fetch(httpStr)).resolves.toMatchSnapshot();
   //await expect(_loadsetJSONData(rankid)).resolves.toMatchSnapshot();
@@ -64,13 +64,13 @@ test('the data is ranking data', done => {
   //await expect(_loadsetJSONData(rankid)).resolves.toMatch(/"RANKINGNAME":"testRank1"/);
   function callback(data) {
     //data =
-    const datanew = data;
-    console.log('datanew', datanew[0].ACCOUNT);
+    //const datanew = data;
+    console.log('datanew', data[0].ACCOUNT);
      expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
      done();
    }
 
-   _loadsetJSONData(callback);
+   _loadsetJSONData(rankid, callback);
  });
 
  // beforeEach(async () => {
