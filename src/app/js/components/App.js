@@ -8,7 +8,7 @@ import JSONops from './JSONops'
 import { formatEth, executingAt } from '../utils';
 import web3 from '../../../web3';
 import DSportRank from '../../../ABIaddress';
-import { _loadsetJSONData } from './SideEffects/io/Jsonio';
+import { _loadsetJSONData, _loadsetRankingListJSONData } from './SideEffects/io/Jsonio';
 //import p-iteration from 'p-iteration'
 
 //REVIEW: is the solution to this to write your own api?
@@ -81,6 +81,14 @@ import { _loadsetJSONData } from './SideEffects/io/Jsonio';
        })
      }
 
+     export function _loadsetRankingListJSONData_callback(data) {
+       console.log('data account in _loadsetRankingListJSONData_callback', data[0].RANKINGNAME);
+        this.setState({
+              rankingListData: data
+              //loadingRankingListJSON: false
+            })
+      }
+
 /**
  * Class representing the highest order component. Any user
  * updates in child components should trigger an event in this
@@ -137,62 +145,13 @@ class App extends Component {
     newrankIdCB = newrankIdCB.bind(this);
     viewingOnlyCB = viewingOnlyCB.bind(this);
     callback = callback.bind(this);
+    _loadsetRankingListJSONData_callback = _loadsetRankingListJSONData_callback.bind(this);
 
   }
-
-
   //#endregion
 
   //#region Helper methods
 
-//TODO: together with _loadsetJSONData need to refactor into single source for fetch code
-_loadsetRankingListJSONData = async () => {
-  try {
-    //e.g. let httpStr = 'https://api.jsonbin.io/b/5bd82af2baccb064c0bdc92a/latest';
-    let httpStr = 'https://api.jsonbin.io/b/' + this.state.rankingDefault + '/latest';
-  let responseDataAsArray = [];
-  console.log('httpStr', httpStr)
-  await fetch(httpStr)
-     .then((response) => response.json())
-     .then((responseJson) => {
-       if(responseJson.length !== 0){
-         console.log('json returns with length ' + responseJson.length)
-         console.log('responseJson data', responseJson)
-         //HACK: it appears this code is not being used but commit
-         // made as new rankings are being created for new users without error
-         //on creation of a new user the [] isn't recognized
-         //although the new json object comes back BootstrapTable
-         //cannot handle it.So convert here:
-         if(responseJson.length === undefined){
-           //turn the object into an array for use by BSTable
-           //responseJson = "[" + responseJson + "]";
-           responseDataAsArray[0] = responseJson;
-           responseJson = responseDataAsArray;
-           console.log('responseJson converted to array', responseJson)
-         }
-         //if the response comes back with 'Route not found!' error msg will trigger a warning on table display
-         responseJson = JSONops.deleteRouteNotFoundInGlobalJson(responseJson);
-             this.setState({
-               rankingListData: responseJson
-               //loadingRankingListJSON: false
-               //,
-               //NB: data in state is slow to keep up, use responseJson for future query ops ...
-               //REVIEW: may need functionality similar to following in future:
-               //updatedExtAcctBalCB: this._loadExternalBalance(),
-               //isCurrentUserActive: JSONops._getUserValue(responseJson, this.state.user.username, "ACTIVE")
-             }
-         , function(){
-             });
-           }
-     })
-  //REVIEW:
-  //this.setState({ isLoading: false });
-  //the 'return' is not important, the setState is
-  return null;
-}catch (err) {
-     return console.error(err);
-  }
-}
 //REVIEW: Possible to getUserRank in App.js (and set state) rather than Home.js?
 //currently no - problem is waiting for username to check against rank
 /**
@@ -537,7 +496,8 @@ console.log('here 4')
     //ListAllRankingss btn
     console.log('this.state.newrankIdCB', this.state.newrankIdCB)
     if(this.state.newrankIdCB === ''){
-    this._loadsetRankingListJSONData();
+    //this._loadsetRankingListJSONData();
+    _loadsetRankingListJSONData('5c36f5422c87fa27306acb52',_loadsetRankingListJSONData_callback)
     }else{
     //console.log('_loadsetJSONData next')
     //_loadsetJSONData(this.state.newrankIdCB, callback);

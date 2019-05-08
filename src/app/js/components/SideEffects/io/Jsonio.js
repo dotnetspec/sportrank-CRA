@@ -38,7 +38,7 @@ export async function _loadsetJSONData (newrankIdCB, callback){
         }//end try/catch
 }
 
-export async function _loadsetRankingListJSONData (rankingDefault, callback){
+export async function _loadsetRankingListJSONData (rankingDefault, _loadsetRankingListJSONData_callback){
   try {
     //e.g. let httpStr = 'https://api.jsonbin.io/b/5bd82af2baccb064c0bdc92a/latest';
     let httpStr = 'https://api.jsonbin.io/b/' + rankingDefault + '/latest';
@@ -48,7 +48,7 @@ export async function _loadsetRankingListJSONData (rankingDefault, callback){
      .then((response) => response.json())
      .then((responseJson) => {
        if(responseJson.length !== 0){
-         callback(responseJson);
+         _loadsetRankingListJSONData_callback(responseJson);
          console.log('json returns with length ' + responseJson.length)
          console.log('responseJson data', responseJson)
          //HACK: it appears this code is not being used but commit

@@ -76,13 +76,13 @@ test('_loadsetJSONData data is ranking data', done => {
  test('_loadsetRankingListJSONData data is list of ranking lists data', done => {
    const rankingDefaultid = '5c36f5422c87fa27306acb52';
 
-   function callback(data) {
+   function _loadsetRankingListJSONData_callback(data) {
      console.log('data', data[0].RANKINGNAME);
       expect(data[0].RANKINGNAME).toMatch("testRank1");
       //done() is the cb(?) function in the declaration (above)
       done();
     }
-    _loadsetRankingListJSONData(rankingDefaultid, callback);
+    _loadsetRankingListJSONData(rankingDefaultid, _loadsetRankingListJSONData_callback);
   });
 
  test.skip('get json', async (done) => {
