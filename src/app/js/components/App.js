@@ -144,57 +144,7 @@ class App extends Component {
   //#endregion
 
   //#region Helper methods
-  //_loadsetJSONData being used here and not in JSONops because of need to setState
 
-// _loadsetJSONData = async () => {
-//   if(this.state.newrankIdCB !== ''){
-//       try {
-//         //e.g. let httpStr = 'https://api.jsonbin.io/b/5bd82af2baccb064c0bdc92a/latest';
-//       let httpStr = 'https://api.jsonbin.io/b/' + this.state.newrankIdCB + '/latest';
-//       let responseDataAsArray = [];
-//       console.log('httpStr', httpStr)
-//       await fetch(httpStr)
-//       //await fetch('https://api.jsonbin.io/b/' + httpStr + '/latest')
-//         //await fetch('https://api.jsonbin.io/b/5bd82af2baccb064c0bdc92a/1000')
-//          .then((response) => response.json())
-//          .then((responseJson) => {
-//            if(responseJson.length !== 0){
-//              console.log('json returns with length ' + responseJson.length + 'in _loadsetJSONData in app.js')
-//              console.log('responseJson data', responseJson)
-//              //HACK: it appears this code is not being used but commit
-//              // made as new rankings are being created for new users without error
-//              //on creation of a new user the [] isn't recognized
-//              //although the new json object comes back BootstrapTable cannot handle it.So convert here:
-//              if(responseJson.length === undefined){
-//                //turn the object into an array for use by BSTable
-//                //responseJson = "[" + responseJson + "]";
-//                responseDataAsArray[0] = responseJson;
-//                responseJson = responseDataAsArray;
-//                console.log('responseJson converted to array', responseJson)
-//              }
-//                  this.setState({
-//                    data: responseJson,
-//                    //data: responseDataAsArray,
-//                    //REVIEW: loadingJSON not currently being used
-//                    loadingJSON: false,
-//                    //NB: data in state is slow to keep up, use responseJson!
-//                    isUserInJson: JSONops.isPlayerListedInJSON(responseJson, this.state.user.username),
-//                    rank: JSONops._getUserValue(responseJson, this.state.user.username, "RANK"),
-//                    updatedExtAcctBalCB: this._loadExternalBalance(),
-//                    isCurrentUserActive: JSONops._getUserValue(responseJson, this.state.user.username, "ACTIVE"),
-//                    //isRankingIDInvalid: JSONops.isRankingIDInvalid(responseJson[0])
-//                  }
-//              , function(){
-//                  });
-//                }
-//          })
-//       //REVIEW:this.setState({ isLoading: false });the 'return' is not important, the setState is
-//         return null;
-//         }catch (err) {
-//            return console.error(err);
-//         }//end try/catch
-//     }//end if this.state.newrankIdCB
-// }
 //TODO: together with _loadsetJSONData need to refactor into single source for fetch code
 _loadsetRankingListJSONData = async () => {
   try {

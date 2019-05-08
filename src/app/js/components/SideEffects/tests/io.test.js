@@ -1,4 +1,4 @@
-import { _loadsetJSONData } from '../io/Jsonio';
+import { _loadsetJSONData, _loadsetRankingListJSONData } from '../io/Jsonio';
 
 beforeEach(() => {
     jest.setTimeout(6000);
@@ -51,7 +51,7 @@ test.skip('the data is json', async () => {
   //expect(parsedData).toMatch(/"RANKINGNAME":"testRank1"/);
 });
 
-test('the data is ranking data', done => {
+test('_loadsetJSONData data is ranking data', done => {
   const rankid = '5bd82af2baccb064c0bdc92a';
   //let httpStr = 'https://api.jsonbin.io/b/' + rankid + '/latest';
   //await expect(fetch(httpStr)).resolves.toMatchSnapshot();
@@ -65,7 +65,7 @@ test('the data is ranking data', done => {
   function callback(data) {
     //data =
     //const datanew = data;
-    console.log('datanew', data[0].ACCOUNT);
+    console.log('data', data[0].ACCOUNT);
      expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
      done();
    }
@@ -73,9 +73,17 @@ test('the data is ranking data', done => {
    _loadsetJSONData(rankid, callback);
  });
 
- // beforeEach(async () => {
- //     await client.init();
- // })
+ test('_loadsetRankingListJSONData data is list of ranking lists data', done => {
+   const rankingDefaultid = '5c36f5422c87fa27306acb52';
+
+   function callback(data) {
+     console.log('data', data[0].RANKINGNAME);
+      expect(data[0].RANKINGNAME).toMatch("testRank1");
+      //done() is the cb(?) function in the declaration (above)
+      done();
+    }
+    _loadsetRankingListJSONData(rankingDefaultid, callback);
+  });
 
  test.skip('get json', async (done) => {
      //jest.setTimeout(90000);
