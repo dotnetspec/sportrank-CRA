@@ -1,3 +1,8 @@
+import DSportRank from '../../../../../ABIaddress';
+import web3 from '../../../../../web3';
+
+
+
 export async function _loadsetJSONData (newrankIdCB, _loadsetJSONData_callback){
       try {
             let httpStr = 'https://api.jsonbin.io/b/' + newrankIdCB + '/latest';
@@ -87,6 +92,46 @@ export async function getNewRankId(getNewRankId_callback, description, account, 
     };
       return null;
   }
+
+//NB: this function cannot actually be used in app.js as it's only simulating the one
+//nested inside the mapping function of _loadCurrentUserAccounts
+//   export async function _loadCurrentUserAccountsInsideMapping(address, _loadCurrentUserAccountsInsideMapping_callback){
+//     // var MyContract = web3.eth.contract(ABI);
+//     // var contractInstance = MyContract.at(address);
+//     //const contractInstance = new DSportRank();
+//     // window.addEventListener('load', function() {
+//     //   const web3 = new Web3(Web3.givenProvider || 'ws://localhost:8546', null, {});
+//     // })
+//     //console.log('web3.currentProvider', web3.currentProvider);
+//     const usernameHash = await DSportRank.methods.owners(address).call();
+//
+//     // const myContract = new web3.eth.Contract([...], '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe', {
+//     // defaultAccount: '0x1234567890123456789012345678901234567891', // default from address
+//     // defaultGasPrice: '20000000000' // default gas price in wei, 20 gwei in this case
+// //});
+//     // if(!DSportRank.isConnected()) {
+//     //
+//     //     console.log('not connected to web3!')
+//     //
+//     // } else {
+//       //const usernameHash = await DSportRank.methods.owners(address).call();
+//           // console.log('got usernameHash after await', usernameHash)
+//           // console.log('exec at', executingAt());
+//           // get user details from contract
+//       const user = await DSportRank.methods.users(usernameHash).call();
+//       //const user = "player1";
+//       const balance = 2;
+//       // gets the balance of the address
+//       // let balance = await web3.eth.getBalance(address);
+//       // balance = web3.utils.fromWei(balance, 'ether');
+//       // console.log('balance', balance);
+//       const contractObj = {address: address, user: user, balance: balance};
+//       _loadCurrentUserAccountsInsideMapping_callback(contractObj);
+//     }
+
+
+
+  //}
 //REVIEW: following is attempt to refactor fetchjson
 // async function fetchJSON(JSONid, callback){
 //   try {

@@ -94,6 +94,12 @@ import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId } from './S
         this.setState({ isLoading: false});
       }
 
+      export function _loadCurrentUserAccountsInsideMapping_callback(data){
+        this.setState({ address: data.address});
+        this.setState({ user: data.user});
+        this.setState({ balance: data.balance});
+      }
+
 /**
  * Class representing the highest order component. Any user
  * updates in child components should trigger an event in this
@@ -214,10 +220,15 @@ class App extends Component {
 
         //I think this is designed so that the current item value (accountsFromTheBC)
         //becomes the first param in the async function
-        //callback is the name of any function that you name that can be called within this
-        //async function (perhaps it can be moved out?)
+        //callback is the (arbitrary) name that can be called within this
+        //async function
         //this is an anonymous function (with 2 params) that could be using fat arrow syntax
         //it can have as many params as it likes
+
+        //I believe address (arbitrary name, could be anything)
+        //is being iteratively extracted from the accountsFromTheBC
+        //array, and then used here to get the user name from the contract
+        //via the usernameHash
         async function (address, callback) {
             try {
               // console.log('callback inside await map', callback)
@@ -257,6 +268,13 @@ class App extends Component {
               //call the callback function and wait for it's promise
               //(async functions return promises)
 
+              //callback creates obj that is implicitly assigned by the
+              //mapping to userAccounts array (or obj?)
+              //because the callback is the result of this anon
+              //async function
+              //in brackets is the data that's come back from the callback function
+              //a 'null' for some unknown reason and the data as it comes back
+              //from the contract
               callback(null, {
                 address: address,
                 user: user,
