@@ -9,6 +9,7 @@ import { formatEth, executingAt } from '../utils';
 import web3 from '../../../web3';
 import DSportRank from '../../../ABIaddress';
 import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId } from './SideEffects/io/Jsonio';
+import { _loadCurrentUserAccountsInsideMapping } from './SideEffects/io/web3io';
 //import p-iteration from 'p-iteration'
 
 //REVIEW: is the solution to this to write your own api?
@@ -229,6 +230,9 @@ class App extends Component {
         //is being iteratively extracted from the accountsFromTheBC
         //array, and then used here to get the user name from the contract
         //via the usernameHash
+
+        //instead of using an anonymous function will used named one from io/Contractio
+        //async function _loadCurrentUserAccountsInsideMapping(address, _loadCurrentUserAccountsInsideMapping_callback){
         async function (address, callback) {
             try {
               // console.log('callback inside await map', callback)
@@ -237,22 +241,9 @@ class App extends Component {
               // console.log('about to get usernameHash, when done - got usernameHash after await')
               //console.log('exec at', executingAt());
               const usernameHash = await DSportRank.methods.owners(address).call();
-              // console.log('got usernameHash after await', usernameHash)
               // console.log('exec at', executingAt());
               // get user details from contract
               const user = await DSportRank.methods.users(usernameHash).call();
-              //
-              // //console.log('_loadCurrentUserAccounts 3')
-              // //below just used for logging
-              //     if (user.username !== ''){
-              //     console.log('user.username', user.username)
-              //     console.log('user.contactno', user.contactno)
-              //     //console.log('rankingList', rankingList)
-              //     console.log('user.creationDate', user.creationDate)
-              //     console.log('user.description', user.description)
-              //     console.log('user.rankingDefault', user.rankingDefault)
-              //     //console.log('user.challenges', user.challenges)
-              //     }//end if
 
               // gets the balance of the address
               let balance = await web3.eth.getBalance(address);
@@ -273,8 +264,18 @@ class App extends Component {
               //because the callback is the result of this anon
               //async function
               //in brackets is the data that's come back from the callback function
-              //a 'null' for some unknown reason and the data as it comes back
+              //and the data as it comes back
               //from the contract
+              //the 'null' might originally have been the first
+              //argument of the callback function as the currently iterated
+              //value of the array.  that was passed to the cb
+              //it went from being a 'this' to a null because it went out of scope
+
+              //if you use the Contractio code the callback will already give you
+              //a complete obj. No need to make the assignment here then
+
+              //_loadCurrentUserAccountsInsideMapping_callback(contractObj);
+
               callback(null, {
                 address: address,
                 user: user,
@@ -283,7 +284,7 @@ class App extends Component {
                 //NB: added by me:
                 //updatedExtAcctBalCB: globalVardevAccountBalResult
               });
-              console.log('callback2', callback)
+              //console.log('callback2', callback)
             }
             catch (err) {
               console.log("Error within current item index", err);
