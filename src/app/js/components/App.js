@@ -302,7 +302,7 @@ class App extends Component {
         if (err) return this._onError(err, 'App._loadCurrentUserAccounts');
         //console.log('user in 3rd param', user)
         console.log('userAccounts array', userAccounts)
-        console.log('web3.eth.defaultAccount', web3.eth.getAccounts(accounts => console.log(accounts[0])))
+        //console.log('web3.eth.defaultAccount', web3.eth.getAccounts(accounts => console.log(accounts[0])))
         //now all these assignments are done on the userAccounts array
         let defaultUserAccount = userAccounts.find((userAccount) => {
           console.log('about to return default userAccount.address', web3.eth.defaultAccount);
