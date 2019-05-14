@@ -9,7 +9,8 @@ import JSONops from '../JSONops'
 import {updateWarningText} from '../Home'
 import {updatedExtAcctBalCB} from '../App'
 import web3 from '../../../../web3';
-import DeactivatePlayerBtn from './buttons/DeactivatePlayerBtn';
+//import DeactivatePlayerBtn from './buttons/DeactivatePlayerBtn';
+import PlayerStatusBtn from './buttons/PlayerStatusBtn';
 import {formatBalance} from '../../utils';
 /**
  * Class displaying the accumulated ETH balance from
@@ -240,7 +241,7 @@ displayActivationBtns(){
       if(pathname.includes("home/@")){
         return(
           <>
-          <DeactivatePlayerBtn {...this.props} newrankIdCB={this.props.newrankIdCB} user={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
+          <PlayerStatusBtn {...this.props} newrankIdCB={this.props.newrankIdCB} user={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
           <Button bsStyle="primary" data-cy='reactivate' onClick={(e) => this._handleReactivatePlayer(this.props.user[1])}>
             Reactivate Player
           </Button>

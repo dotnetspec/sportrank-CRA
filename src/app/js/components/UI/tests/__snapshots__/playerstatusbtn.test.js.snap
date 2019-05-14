@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlayerStatusBtn PlayerStatusBtn btn renders correctly 1`] = `
+<button
+  className="deactivatebtn btn btn-success"
+  data-cy="deactivate"
+  disabled={false}
+  onClick={[Function]}
+  type="button"
+>
+  De-Activate?
+</button>
+`;
+
+exports[`PlayerStatusBtn renders whole PlayerStatusBtn.js correctly 1`] = `ShallowWrapper {}`;
+
+exports[`PlayerStatusBtn should check if PlayerStatusBtn_clicked 1`] = `
+<button
+  className="deactivatebtn btn btn-success"
+  data-cy="deactivate"
+  disabled={false}
+  onClick={[Function]}
+  type="button"
+>
+  De-Activate?
+</button>
+`;
+
+exports[`PlayerStatusBtn should check if PlayerStatusBtn_clicked: initial state 1`] = `
+Object {
+  "PlayerActive": true,
+  "PlayerStatusBtn_clicked": false,
+  "bsStyle": "success",
+  "btnText": "De-Activate?",
+}
+`;
+
+exports[`PlayerStatusBtn should check if PlayerStatusBtn_clicked: updated state 1`] = `
+Object {
+  "PlayerActive": false,
+  "PlayerStatusBtn_clicked": true,
+  "bsStyle": "warning",
+  "btnText": "De-Activate?",
+}
+`;
+
+exports[`testing PlayerStatusBtn PlayerStatusBtn btn renders correctly 1`] = `
+<button
+  className="deactivatebtn btn btn-success"
+  data-cy="deactivate"
+  disabled={false}
+  onClick={[Function]}
+  type="button"
+>
+  De-Activate?
+</button>
+`;
+
+exports[`testing PlayerStatusBtn renders whole PlayerStatusBtn.js correctly 1`] = `ShallowWrapper {}`;
+
+exports[`testing PlayerStatusBtn should check if PlayerStatusBtn_clicked 1`] = `
+<button
+  className="deactivatebtn btn btn-success"
+  data-cy="deactivate"
+  disabled={false}
+  onClick={[Function]}
+  type="button"
+>
+  De-Activate?
+</button>
+`;
+
+exports[`testing PlayerStatusBtn should check if PlayerStatusBtn_clicked: initial state 1`] = `
+Object {
+  "PlayerActive": true,
+  "PlayerStatusBtn_clicked": false,
+  "bsStyle": "success",
+  "btnText": "De-Activate?",
+}
+`;
+
+exports[`testing PlayerStatusBtn should check if PlayerStatusBtn_clicked: updated state 1`] = `
+Object {
+  "PlayerActive": false,
+  "PlayerStatusBtn_clicked": true,
+  "bsStyle": "warning",
+  "btnText": "De-Activate?",
+}
+`;
