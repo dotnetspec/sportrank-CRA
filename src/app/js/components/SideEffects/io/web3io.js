@@ -16,13 +16,30 @@ import DSportRank from '../../../../../ABIaddress';
       _loadCurrentUserAccountsInsideMapping_callback(contractObj);
     }
 
-export async function isWeb3Connected(){
-  console.log('here')
-    web3.eth.net.isListening()
-      .then(() => console.log('is connected'))
-      .catch(e => console.log('Wow. Something went wrong'));
-      return 'in here'
-    }
+// export async function isWeb3Connected(){
+//   console.log('here')
+//     web3.eth.net.isListening()
+//       .then(() => console.log('is connected'))
+//       .catch(e => console.log('Wow. Something went wrong'));
+//       return 'in here'
+//     }
+
+export async function connectToWeb3new(connectToWeb3_callback){
+    console.log('connectToWeb3new')
+  let ethereumObj = {};
+    if (typeof web3.ethereum !== 'undefined') {
+      console.log('you have an etherem compatible browser')
+      if(web3.ethereum.isMetaMask){
+        console.log('you have MM in the browser')
+        ethereumObj = {networkVersion:  window.ethereum.networkVersion,   // property_# may be an identifier...
+                            selectedAddress:  window.ethereum.selectedAddress}
+        // console.log('ethereum.networkVersion',  )
+        // console.log('ethereum.selectedAddress', )
+        connectToWeb3_callback(ethereumObj);
+        //window.ethereum.enable();
+        }
+    };
+  }
 
 
 export async function connectToWeb3(){

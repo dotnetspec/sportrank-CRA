@@ -13,3 +13,27 @@ exports[`testing navigation deactivate btn renders correctly 1`] = `
 `;
 
 exports[`testing navigation renders whole header.js correctly 1`] = `ShallowWrapper {}`;
+
+exports[`testing navigation should check if DeactivatePlayerBtn_clicked 1`] = `
+<button
+  className="deactivatebtn btn btn-primary"
+  data-cy="deactivate"
+  disabled={false}
+  onClick={[Function]}
+  type="button"
+>
+  Deactivate Player
+</button>
+`;
+
+exports[`testing navigation should check if DeactivatePlayerBtn_clicked: initial state 1`] = `
+Object {
+  "DeactivatePlayerBtn_clicked": false,
+}
+`;
+
+exports[`testing navigation should check if DeactivatePlayerBtn_clicked: updated state 1`] = `
+Object {
+  "DeactivatePlayerBtn_clicked": true,
+}
+`;

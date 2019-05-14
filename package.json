@@ -47,7 +47,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --watch",
+    "test": "react-scripts test",
+    "test:watch": "react-scripts --watch",
+    "test:coverage": "react-scripts --coverage --colors",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

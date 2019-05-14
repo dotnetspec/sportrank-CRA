@@ -4,7 +4,7 @@ import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId } from '../
 //     jest.setTimeout(1000);
 //   });
 
-test('_loadsetJSONData data is ranking data', done => {
+test.skip('_loadsetJSONData data is ranking data', done => {
   const rankid = '5bd82af2baccb064c0bdc92a';
   //let httpStr = 'https://api.jsonbin.io/b/' + rankid + '/latest';
   //await expect(fetch(httpStr)).resolves.toMatchSnapshot();
@@ -19,7 +19,7 @@ test('_loadsetJSONData data is ranking data', done => {
    _loadsetJSONData(rankid, _loadsetJSONData_callback);
  });
 
- test('_loadsetRankingListJSONData data is list of ranking lists data', done => {
+ test.skip('_loadsetRankingListJSONData data is list of ranking lists data', done => {
    const rankingDefaultid = '5c36f5422c87fa27306acb52';
 
    function _loadsetRankingListJSONData_callback(data) {
@@ -31,7 +31,7 @@ test('_loadsetJSONData data is ranking data', done => {
     _loadsetRankingListJSONData(rankingDefaultid, _loadsetRankingListJSONData_callback);
   });
 
-  test('getNewRankId', done => {
+  test.skip('getNewRankId', done => {
     //const rankingDefaultid = '5c36f5422c87fa27306acb52';
 
     function getNewRankId_callback(data) {
