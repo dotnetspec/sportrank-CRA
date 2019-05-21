@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import {newrankIdCB, viewingOnlyCB} from '../../App'
 /**
  * Class representing global ranking view button in the BootstrapTable.
  * The component rendering in this area is controlled by
@@ -17,6 +18,10 @@ class GlobalRankingViewBtn extends Component {
       //GlobalRankingViewBtn_clicked: false
     };
   }
+
+  // const selectRowPropAfterClickRow = {
+  //   selectedRankingId: ''
+  // };
 
   // _handleChangeStatusPlayer(username) {
   //   if(username !== null){
@@ -43,10 +48,10 @@ class GlobalRankingViewBtn extends Component {
     //console.log('Product #', rowIndex);
     // selectRowPropAfterClickRow.selectedRankingId = `${row['RANKINGID']}`;
     // console.log('selectRowPropAfterClickRow.selectedRankingId', selectRowPropAfterClickRow.selectedRankingId)
-    // newrankIdCB(selectRowPropAfterClickRow.selectedRankingId);
-    // viewingOnlyCB(true);
+    newrankIdCB(`${row['RANKINGID']}`);
+    viewingOnlyCB(true);
     this.props.onAfterUserUpdate();
-    this.props.history.push('/home/@' + this.props.user.username);
+    this.props.history.push('/home/@' + this.props.username);
     //this.openResultModal();
    }
 
@@ -61,16 +66,17 @@ class GlobalRankingViewBtn extends Component {
       //   {this.state.btnText}
       // </Button>
 
-      <Button
-         className='globalrankingviewbtn'  data-cy='globalrankingviewbtn'
-         //type="button"
-         // onClick={() =>
-         // this.onClickRankingViewSelected(this.props.cell, this.props.row, this.props.rowIndex)}
-         //onClick={(e) => this._handleChangeStatusPlayer(this.props.user)}
-      >
-      {this.props.cell} {this.props.row} {this.props.rowIndex}
-      View
-      </Button>
+        <Button
+           className='globalrankingviewbtn'  data-cy='globalrankingviewbtn'
+           //type="button"
+           onClick={() =>
+           this.onClickRankingViewSelected(this.props.cell, this.props.row, this.props.rowIndex)}
+           //onClick={(e) => this._handleChangeStatusPlayer(this.props.user)}
+        >
+        View
+
+        </Button>
+
     )
   }
   //#endregion

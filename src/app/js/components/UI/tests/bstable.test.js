@@ -11,7 +11,7 @@ import { shallow, mount } from 'enzyme';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
 describe('Bootstrap Table UI', () => {
-    it('clicking table view btn',()=>{
+    it.skip('clicking table view btn',()=>{
          //const items = [{'id':1,'text':'hello'},{'id':2,'text':'world'}]
        //   const json = [
        //   {

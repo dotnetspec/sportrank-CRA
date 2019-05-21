@@ -3,7 +3,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 //import { Grid, Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, DropdownItem, Overlay, Tooltip, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { Grid, Row } from 'react-bootstrap';
 import { isEmpty } from '../utils';
-//import GlobalRankingViewBtn from './buttons/GlobalRankingViewBtn';
+import GlobalRankingViewBtn from './UI/buttons/GlobalRankingViewBtn';
 
 //import PropsRoute from './PropsRoute';
 //import Home from './Home';
@@ -96,20 +96,24 @@ class GlobalRankings extends Component {
 
    rankingViewButton(cell, row, enumObject, rowIndex) {
        return (
-          <button
-             bsstyle="primary"
-             //type="button"
-             onClick={() =>
-             this.onClickRankingViewSelected(cell, row, rowIndex)}
-          >
-          View
-          </button>
+          // <button
+          //    bsstyle="primary"
+          //    //type="button"
+          //    onClick={() =>
+          //    this.onClickRankingViewSelected(cell, row, rowIndex)}
+          // >
+          // View
+          // </button>
 
           //REVIEW: Ready to implement:
-          // <GlobalRankingViewBtn cell={cell} row={row} rowIndex={rowIndex}
-          // onClick={() =>
-          //     this.onClickRankingViewSelected(cell, row, rowIndex)}
-          // />
+            <GlobalRankingViewBtn cell={cell} row={row} rowIndex={rowIndex}
+            onChildClick={this.props.onChildClick}
+            onAfterUserUpdate={this.props.onAfterUserUpdate}
+            history={this.props.history}
+            username={this.props.user.username}
+            // onClick={() =>
+            //     this.onClickRankingViewSelected(cell, row, rowIndex)}
+            />
        )
     }
 
@@ -166,11 +170,10 @@ class GlobalRankings extends Component {
               <TableHeaderColumn
               dataField='viewbtn'
               dataFormat={this.rankingViewButton.bind(this)}
-              handlerankingViewButton={this.rankingViewButton.bind(this)}
-            >
+              //handlerankingViewButton={this.rankingViewButton.bind(this)}
+              >
               View
               </TableHeaderColumn>
-
               <TableHeaderColumn
               dataField='joinbtn'
               dataFormat={this.rankingButton.bind(this)}
