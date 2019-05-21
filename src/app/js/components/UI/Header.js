@@ -242,6 +242,7 @@ displayActivationBtns(){
         return(
           <>
           <PlayerStatusBtn {...this.props} newrankIdCB={this.props.newrankIdCB} user={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
+          <PlayerStatusBtn data-cy='playerStatus' {...this.props} newrankIdCB={this.props.newrankIdCB} user={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
           <Button bsStyle="primary" data-cy='reactivate' onClick={(e) => this._handleReactivatePlayer(this.props.user[1])}>
             Reactivate Player
           </Button>
