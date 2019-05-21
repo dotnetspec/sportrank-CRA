@@ -3,6 +3,7 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 //import { Grid, Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, DropdownItem, Overlay, Tooltip, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { Grid, Row } from 'react-bootstrap';
 import { isEmpty } from '../utils';
+//import GlobalRankingViewBtn from './buttons/GlobalRankingViewBtn';
 
 //import PropsRoute from './PropsRoute';
 //import Home from './Home';
@@ -66,6 +67,10 @@ class GlobalRankings extends Component {
    }
 
    onClickRankingViewSelected(cell, row, rowIndex){
+     //REVIEW: the naming here.
+     //tell Header that the view btn has been clicked
+     //so it can display the 'Activate?' btn
+     this.props.onChildClick();
      //console.log('Product #', rowIndex);
      selectRowPropAfterClickRow.selectedRankingId = `${row['RANKINGID']}`;
      console.log('selectRowPropAfterClickRow.selectedRankingId', selectRowPropAfterClickRow.selectedRankingId)
@@ -99,6 +104,12 @@ class GlobalRankings extends Component {
           >
           View
           </button>
+
+          //REVIEW: Ready to implement:
+          // <GlobalRankingViewBtn cell={cell} row={row} rowIndex={rowIndex}
+          // onClick={() =>
+          //     this.onClickRankingViewSelected(cell, row, rowIndex)}
+          // />
        )
     }
 
@@ -153,14 +164,15 @@ class GlobalRankings extends Component {
               </TableHeaderColumn>
 
               <TableHeaderColumn
-              dataField='button'
+              dataField='viewbtn'
               dataFormat={this.rankingViewButton.bind(this)}
+              handlerankingViewButton={this.rankingViewButton.bind(this)}
             >
               View
               </TableHeaderColumn>
 
               <TableHeaderColumn
-              dataField='button'
+              dataField='joinbtn'
               dataFormat={this.rankingButton.bind(this)}
             >
               Join

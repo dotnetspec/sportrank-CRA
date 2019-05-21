@@ -71,11 +71,21 @@ class Header extends Component {
 
     this.state = {
       showModal: false,
-      showTooltip: false
+      showTooltip: false,
+      playerActive: true,
+      specificRankingOptionBtns: false
       //updatedExtAcctBalCB: 0
     };
+//this.handleChildClick = this.handleChildClick.bind(this)
   //#endregion
 }
+
+//display the ranking specific btn options
+// handleChildClick(index) {
+//    this.setState({specificRankingOptionBtns:true})
+//  }
+
+
   //#region Component events
   /**
    * Hides the tweet modal
@@ -199,6 +209,8 @@ class Header extends Component {
       // //this.props.history.push('/userrankings/@' + user);
       //       this.props.history.push('/sportrank/');
       //     }else{
+      //REVIEW: Better naming for onChildClick
+            this.props.onListAllChildClick();
             this.props.history.push('/');
           //}
       //this.props.history.push('/@' + this.state.username);
@@ -233,15 +245,11 @@ console.log('header componentDidMount user', this.props.user)
 }
 
 displayActivationBtns(){
-  //console.log('displayActivationBtns', this.props.rankingJSONdata, this.props.user.username)
-  const {pathname} = this.props.location;
-  console.log('pathname', pathname)
-      // if(JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, this.props.user.username)
-      //     ){
-      if(pathname.includes("home/@")){
+  // const {pathname} = this.props.location;
+  //     if(pathname.includes("home/@")){
+  if(this.props.specificRankingOptionBtns){
         return(
           <>
-          <PlayerStatusBtn {...this.props} newrankIdCB={this.props.newrankIdCB} user={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
           <PlayerStatusBtn data-cy='playerStatus' {...this.props} newrankIdCB={this.props.newrankIdCB} user={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
           <Button bsStyle="primary" data-cy='reactivate' onClick={(e) => this._handleReactivatePlayer(this.props.user[1])}>
             Reactivate Player
@@ -253,6 +261,7 @@ displayActivationBtns(){
   //#endregion
   //#region React lifecycle events
   render() {
+    if(this.props.userAccounts !== undefined){
     //const { picture, username, usersRankingLists } = this.props.user;
     const { picture, username } = this.props.user;
     // console.log('usersRankingLists')
@@ -271,6 +280,8 @@ displayActivationBtns(){
     if (!isEditable) navClasses.push('logged-out');
 
     console.log('header user name in account dropdown', this.props.userAccounts)
+
+    //const { picture, username } = this.props.user;
     // generate the DropdownItems for the accounts to populate
     // the accounts dropdown
     const accts = this.props.userAccounts.map((userAccount, index) => {
@@ -449,6 +460,11 @@ displayActivationBtns(){
       </Navbar>
     );
   }
+  else{
+    return(null)
+  }//end if this.props.userAccounts !== undefined)
+}
+
   //#endregion
 }
 export default withRouter(Header)

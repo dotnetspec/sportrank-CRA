@@ -10,7 +10,18 @@ describe('PlayerStatusBtn', () => {
    expect(PlayerStatusBtnShallow).toMatchSnapshot();
   });
 
-  it('renders PlayerStatusBtn text correctly', () => {
+//REVIEW: this appears to be just another way of doing same thing
+//can probably remove one
+  it('deactivate btn renders correctly', () => {
+    const deactivateplayerbtn = renderer
+     .create(
+        <PlayerStatusBtn
+          username='player1' />
+      ).toJSON();
+   expect(deactivateplayerbtn).toMatchSnapshot();
+  });
+
+  it('De-Activate - renders PlayerStatusBtn text correctly', () => {
     const PlayerStatusBtnShallow = shallow(<PlayerStatusBtn />);
    expect(PlayerStatusBtnShallow.find('[data-cy="deactivate"]').render().text()).toEqual('De-Activate?')
   });
@@ -35,7 +46,7 @@ describe('PlayerStatusBtn', () => {
     expect(instance.state).toMatchSnapshot('initial state')
     instance._handleChangeStatusPlayer({ target: { PlayerStatusBtn_clicked: true } })
     expect(instance.state).toMatchSnapshot('updated state')
-  })
+  });
 
  it('should update PlayerStatusBtn state with button click', () => {
    const historyMock = { push: jest.fn() };
@@ -49,9 +60,46 @@ describe('PlayerStatusBtn', () => {
      expect(component.state('PlayerActive')).toEqual(false);
      expect(component.state('PlayerStatusBtn_clicked')).toEqual(true);
      expect(component.state('bsStyle')).toEqual('warning');
+     //expect(component.state('btnText').text()).toEqual('Re-Activate?');
+     expect(component.state('btnText')).toEqual('Re-Activate?')
+
+     component
+       .find('PlayerStatusBtn')
+       .simulate('click');
+
+     expect(component.state('PlayerActive')).toEqual(true);
+     expect(component.state('PlayerStatusBtn_clicked')).toEqual(true);
+     expect(component.state('bsStyle')).toEqual('success');
+     //expect(component.state('btnText').render().text()).toEqual('De-Activate?')
+     expect(component.state('btnText')).toEqual('De-Activate?');
 
    component.unmount();
- })
+ });
+
+ // it('De-Activate - renders PlayerStatusBtn text correctly', () => {
+ //   const historyMock = { push: jest.fn() };
+ //   const component = mount(
+ //       <PlayerStatusBtn  username='player1' history={historyMock} />
+ //   );
+ //   expect(shallow(<PlayerStatusBtn />).find('form.login').exists()).toBe(true);
+ // });
+
+ it('Does state update if DeactivatePlayerBtn_clicked', () => {
+   const historyMock = { push: jest.fn() };
+   const component = renderer.create(<PlayerStatusBtn
+     username='player1' history={historyMock}/>)
+   expect(component.toJSON()).toMatchSnapshot()
+
+   // getInstance is returning the `this` object you have in your component
+   // meaning anything accessible on `this` inside your component
+   // can be accessed on getInstance, including props!
+   const instance = component.getInstance()
+   expect(instance.state).toMatchSnapshot('initial state')
+
+   instance._handleChangeStatusPlayer({ target: { PlayerStatusBtn_clicked: true } })
+   expect(instance.state).toMatchSnapshot('updated state')
+ });
+
 //simulating changes (e.g. to form input)
 //  .find('#name')
 // .simulate('change', { target: { value: 'Ross' } });

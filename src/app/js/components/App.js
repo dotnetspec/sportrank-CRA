@@ -146,7 +146,8 @@ class App extends Component {
       viewingOnlyCB: true,
       contactno: '',
       email: '',
-      description:''
+      description:'',
+      specificRankingOptionBtns: false
     }
     //bind the callback functions
     updatedExtAcctBalCB = updatedExtAcctBalCB.bind(this);
@@ -159,7 +160,18 @@ class App extends Component {
     _loadsetJSONData_callback = _loadsetJSONData_callback.bind(this);
     _loadsetRankingListJSONData_callback = _loadsetRankingListJSONData_callback.bind(this);
     getNewRankId_callback = getNewRankId_callback.bind(this);
+    this.handleChildClick = this.handleChildClick.bind(this);
+    this.handleListAllChildClick = this.handleListAllChildClick.bind(this);
   }
+
+  //display the ranking specific btn options
+  handleChildClick() {
+        this.setState({specificRankingOptionBtns:true})
+    }
+
+   handleListAllChildClick(){
+     this.setState({specificRankingOptionBtns:false})
+   }
   //#endregion
 
   //#region Helper methods
@@ -483,6 +495,9 @@ console.log('here 4')
           userAccounts={this.state.userAccounts}
           balance={this.state.balance}
           error={this.state.error}
+          onChildClick={(e) => this.handleChildClick()}
+          onListAllChildClick={(e) => this.handleListAllChildClick()}
+          specificRankingOptionBtns={this.state.specificRankingOptionBtns}
           onAfterUserUpdate={(e) => this._loadCurrentUserAccounts()}
           onError={(err, source) => this._onError(err, source)}
           rankingJSONdata={this.state.data}
@@ -502,6 +517,8 @@ console.log('here 4')
           account={this.state.account}
           userAccounts={this.state.userAccounts}
           error={this.state.error}
+          onChildClick={(e) => this.handleChildClick()}
+          specificRankingOptionBtns={this.state.specificRankingOptionBtns}
           onAfterUserUpdate={(e) => this._loadCurrentUserAccounts()}
           onError={(err, source) => this._onError(err, source)}
           rankingJSONdata={this.state.data}

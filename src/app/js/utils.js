@@ -80,7 +80,11 @@ export function formatEth(eth, decimals){
 
 //to check if an object is empty
 export function isEmpty(obj) {
-    return Object.keys(obj).length === 0;
+    if(obj === undefined || obj === null){
+      return true;
+    }else{
+      return Object.keys(obj).length === 0;
+  }
 }
 
 /**

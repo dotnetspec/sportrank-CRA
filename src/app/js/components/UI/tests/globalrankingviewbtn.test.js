@@ -1,0 +1,39 @@
+import React from 'react'
+//import { BrowserRouter } from 'react-router-dom'
+//import sinon from 'sinon'
+//import App from '../../App'
+import GlobalRankingViewBtn from '../buttons/GlobalRankingViewBtn'
+//import chai from 'chai'
+// import DeactivatePlayerBtn  from '../buttons/DeactivatePlayerBtn'
+// import Header  from '../Header'
+//import renderer from 'react-test-renderer'
+import { shallow, mount } from 'enzyme';
+//import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
+
+describe('Global Ranking View Btn UI', () => {
+    it('clicking table view btn',()=>{
+         //const items = [{'id':1,'text':'hello'},{'id':2,'text':'world'}]
+       //   const json = [
+       //   {
+       //     "RANKINGNAME":"testRa1","RANKINGDESC":"testRank","ACTIVE":true,"RANKINGID":"5c6a7cf5a83a2931773847b8"
+       //   }
+       // ]
+         //const handleClickStub = sinon.spy()
+         const viewbtnwrapper = shallow(
+           //<BrowserRouter>
+             //<BootstrapTable  onChildClick={handleClickStub} rankingListJSONdata={json}/>
+             <GlobalRankingViewBtn cell='4' row='1' rowIndex='1'  />
+           //</BrowserRouter>
+         );
+
+         expect(viewbtnwrapper).toMatchSnapshot();
+         //console.log(appwrapper.state('specificRankingOptionBtns')) // prints false
+         //wrapper.find(GlobalRankings).last().simulate('click')
+         //const globalRankingswrapper = shallow(<GlobalRankings />);
+         // const myFakeCallback = () => console.log('Do your treatment here - callback called');
+         // tableHeaderColumnwrapper.find('bstable').prop('handlerankingViewButton')(myFakeCallback)
+         // expect(handleClickStub.calledOnce).to.be.true() // successful
+         //console.log(appwrapper.state('specificRankingOptionBtns'))  // prints true
+          //expect(appwrapper.state().specificRankingOptionBtns).to.equal(false);
+       })
+});

@@ -1,62 +1,104 @@
 import React from 'react'
+import { BrowserRouter } from 'react-router-dom'
+import sinon from 'sinon'
+import App from '../../App'
+import GlobalRankings from '../../GlobalRankings'
+//import chai from 'chai'
 import DeactivatePlayerBtn  from '../buttons/DeactivatePlayerBtn'
 import Header  from '../Header'
 import renderer from 'react-test-renderer'
 import { shallow, mount } from 'enzyme';
 //import icon from './img/ross.png'
-describe('testing navigation', () => {
+describe('Header UI', () => {
 
-  it('should check if DeactivatePlayerBtn_clicked', () => {
-    const historyMock = { push: jest.fn() };
-    const component = renderer.create(<DeactivatePlayerBtn
-      username='player1' history={historyMock}/>)
-    expect(component.toJSON()).toMatchSnapshot()
-
-    // getInstance is returning the `this` object you have in your component
-    // meaning anything accessible on `this` inside your component
-    // can be accessed on getInstance, including props!
-    const instance = component.getInstance()
-    expect(instance.state).toMatchSnapshot('initial state')
-
-    instance._handleDeactivatePlayer({ target: { DeactivatePlayerBtn_clicked: true } })
-    expect(instance.state).toMatchSnapshot('updated state')
-  })
-
-
- it('deactivate btn renders correctly', () => {
-   const deactivateplayerbtn = renderer
-    .create(
-       <DeactivatePlayerBtn
-         username='player1' />
-     ).toJSON();
-  expect(deactivateplayerbtn).toMatchSnapshot();
- });
-
- it('renders whole header.js correctly', () => {
+ it('Shallowrenders header.js', () => {
    const header = shallow(<Header />);
   expect(header).toMatchSnapshot();
  });
 
- it('should update deactivate btn state with button click', () => {
-   //REVEIW: need to snd all this test data?
-   //just setState and do deactivate sepaately
-   // const testJsondata = '[{"id":1,"NAME":"player1","CONTACTNO":"12345678","EMAIL":"p1@test.com","RANK":2,"ACCOUNT":"0xd04b71a8eddcC67ceEf47FF5ED9ecFe3383D2C28","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"player3","DESCRIPTION":"p1","ACTIVE":true,"DATESTAMP":1552368743582},{"DATESTAMP":1552368743582,"ACTIVE":true,"DESCRIPTION":"p3","CURRENTCHALLENGERNAME":"player1","CURRENTCHALLENGERID":1,"ACCOUNT":"0xcE2aF83b46015d4731Ab3deef8bee01261DF7272","RANK":1,"EMAIL":"test3@test.com","CONTACTNO":"12345678","NAME":"player3","id":2},{"DATESTAMP":1552367186957,"ACTIVE":true,"DESCRIPTION":"mtester","CURRENTCHALLENGERNAME":"AVAILABLE","CURRENTCHALLENGERID":0,"ACCOUNT":"0xF10474f12c7E25420304454cC3Cd33A868CAf2E0","RANK":3,"EMAIL":"mtest1@test.com","CONTACTNO":"12345668","NAME":"mplayer1","id":3}]'
+//let expect = chai.expect;
+ it.skip('clicking menu item',()=>{
+      //const items = [{'id':1,'text':'hello'},{'id':2,'text':'world'}]
+      const json = [
+      {
+        "RANKINGNAME":"testRa1","RANKINGDESC":"testRank","ACTIVE":true,"RANKINGID":"5c6a7cf5a83a2931773847b8"
+      }
+    ]
+      const handleClickStub = sinon.spy()
+      const appwrapper = mount(
+        <BrowserRouter>
+          <App  onChildClick={handleClickStub} rankingListJSONdata={json}/>
+        </BrowserRouter>);
+      //console.log(appwrapper.state('specificRankingOptionBtns')) // prints false
+      //wrapper.find(GlobalRankings).last().simulate('click')
+      //const globalRankingswrapper = shallow(<GlobalRankings />);
+      const myFakeCallback = () => console.log('Do your treatment here - callback called');
+      appwrapper.find('bstable').prop('handlerankingViewButton')(myFakeCallback)
+      expect(handleClickStub.calledOnce).to.be.true() // successful
+      console.log(appwrapper.state('specificRankingOptionBtns'))  // prints true
+       expect(appwrapper.state().specificRankingOptionBtns).to.equal(false);
+    })
 
-   const historyMock = { push: jest.fn() };
-   const component = mount(
-   //   //JSONops.deactivatePlayer(this.props.newrankIdCB, this.props.rankingJSONdata, this.props.user, this.props.account);
-   //   <DeactivatePlayerBtn newrankIdCB='5c87394bbb08b22a75685941' rankingJSONdata={testJsondata}
-   //     username='player1' account='0x847700B781667abdD98E1393420754E503dca5b7'/>
 
-       <DeactivatePlayerBtn  username='player1' history={historyMock} />
-   );
-   component
-     .find('DeactivatePlayerBtn')
-     .simulate('click');
 
-   expect(component.state('DeactivatePlayerBtn_clicked')).toEqual(true);
-   component.unmount();
- })
+ it.skip('Displays Active btn if in a ranking list', () => {
+
+   //const props = {user:'player1', picture:''};
+   //simulates just the username from the returned 'Results' array
+   // const Result = [{username:'player1'}];
+   // const userObj = {user: Result[0]};
+   // const userAccounts = [{address: "0x847700B781667abdD98E1393420754E503dca5b7"},
+   // {balance: "23.746269267999999996"},
+   // {user: Result[0]}];
+   // const header = renderer.create(
+   //   <BrowserRouter location="Home">
+   //      <Header user='player1' picture='' userAccounts={userAccounts} />
+   //   </BrowserRouter>);
+   const header = shallow(<Header location='home/@player1'/>);
+   // const header = mount(
+   //    <BrowserRouter location="home/@player1">
+   //        <Header  location='home/@player1'/>
+   //        </BrowserRouter>
+   //    );
+     //browserHistory.push('/login');
+     expect(header.state().specificRankingOptionBtns).to.equal(false);
+     //expect(header.state('specificRankingOptionBtns')).toEqual(false);
+
+});
+//    const jsondata = [
+//    {
+//      "RANKINGNAME":"testRa1","RANKINGDESC":"testRank","ACTIVE":true,"RANKINGID":"5c6a7cf5a83a2931773847b8"
+//    }];
+//   const wrapper = shallow(<BootstrapTable data={jsondata}/>);
+//
+// //expect(wrapper.find('.clicks-0').length).to.equal(1);
+// wrapper.find('View').simulate('click');
+// const header = shallow(<Header />);
+//    header
+//      .find('PlayerStatusBtn')
+//      //.simulate('click');
+//
+//    expect(header.state('playerActive')).toEqual(true);
+
+
+//  it.only('should update PlayerStatusBtn state with button click', () => {
+//    const historyMock = { push: jest.fn() };
+//    const component = mount(
+//        <Home />
+//    );
+//
+//    //has the logic prevented the playerStatus from displaying?
+// expect(shallow(<Header />).find('playerStatus').exists()).toBe(true)
+//
+//    //wrapper.find('#email').simulate('change', {target: {name: 'email', value: 'blah@gmail.com'}});
+//
+//    const header = shallow(<Header />);
+//    header
+//      .find('PlayerStatusBtn')
+//      .simulate('click');
+//
+//    expect(header.state('playerActive')).toEqual(false);
+//  })
 //simulating changes (e.g. to form input)
 //  .find('#name')
 // .simulate('change', { target: { value: 'Ross' } });

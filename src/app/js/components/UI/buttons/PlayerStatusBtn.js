@@ -26,10 +26,12 @@ class PlayerStatusBtn extends Component {
       this.setState({PlayerStatusBtn_clicked: true });
       if(this.state.PlayerActive === true){
         this.setState({PlayerActive: false });
-        this.setState({bsStyle: 'warning'})
+        this.setState({bsStyle: 'warning'});
+        this.setState({btnText: 'Re-Activate?'})
       }else{
         this.setState({PlayerActive: true });
-        this.setState({bsStyle: 'success'})
+        this.setState({bsStyle: 'success'});
+        this.setState({btnText: 'De-Activate?'})
       }
       //REVIEW: passing name to json to be deactivated
       //could be done in this component?
