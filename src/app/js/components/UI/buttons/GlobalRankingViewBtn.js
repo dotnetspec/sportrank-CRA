@@ -40,15 +40,20 @@ class GlobalRankingViewBtn extends Component {
   //   }
   // }
 
-  onClickRankingViewSelected(cell, row, rowIndex){
+  onClickRankingViewSelected(row){
     //REVIEW: the naming here.
     //tell Header that the view btn has been clicked
     //so it can display the 'Activate?' btn
     this.props.onChildClick();
-    //console.log('Product #', rowIndex);
-    // selectRowPropAfterClickRow.selectedRankingId = `${row['RANKINGID']}`;
-    // console.log('selectRowPropAfterClickRow.selectedRankingId', selectRowPropAfterClickRow.selectedRankingId)
-    newrankIdCB(`${row['RANKINGID']}`);
+    console.log('typeof row', typeof row)
+    console.log('row', row)
+    //NB: this was using 'template literals' backquote or backtick character
+    //to find the RANKINGID in the row object
+    //I think this means it therefore (together with
+    //the ${}) sees it as a legitimate js object
+    //original:
+    //var rankingID = `${row['RANKINGID']}`
+    newrankIdCB(row.RANKINGID);
     viewingOnlyCB(true);
     this.props.onAfterUserUpdate();
     this.props.history.push('/home/@' + this.props.username);
@@ -70,7 +75,8 @@ class GlobalRankingViewBtn extends Component {
            className='globalrankingviewbtn'  data-cy='globalrankingviewbtn'
            //type="button"
            onClick={() =>
-           this.onClickRankingViewSelected(this.props.cell, this.props.row, this.props.rowIndex)}
+           //this.onClickRankingViewSelected(this.props.cell, this.props.row, this.props.rowIndex)}
+           this.onClickRankingViewSelected(this.props.row)}
            //onClick={(e) => this._handleChangeStatusPlayer(this.props.user)}
         >
         View
