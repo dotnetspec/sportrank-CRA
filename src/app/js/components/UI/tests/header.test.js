@@ -1,10 +1,14 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import sinon from 'sinon'
+//import sinon from 'sinon'
+import { stub, sinon } from 'sinon';
 import App from '../../App'
 import GlobalRankings from '../../GlobalRankings'
 //import chai from 'chai'
-import DeactivatePlayerBtn  from '../buttons/DeactivatePlayerBtn'
+//import DeactivatePlayerBtn  from '../buttons/DeactivatePlayerBtn'
+//import GlobalRankingViewBtn  from '../buttons/GlobalRankingViewBtn'
+import PlayerStatusBtn from './buttons/PlayerStatusBtn';
+
 import Header  from '../Header'
 import renderer from 'react-test-renderer'
 import { shallow, mount } from 'enzyme';
@@ -15,6 +19,17 @@ describe('Header UI', () => {
    const header = shallow(<Header />);
   expect(header).toMatchSnapshot();
  });
+
+   it.skip('should handle a child click (View) and change state of specificRankingOptionBtns in app.js', () => {
+     const onParentClick = stub();
+     const wrapper = shallow(<App onChildClick={onParentClick} />);
+     wrapper.find("Child").prop('onChildClick')('foo');
+     //param '1' is row number
+     //wrapper.find(PlayerStatusBtn).prop('PlayerStatusBtn_clicked')('1');
+
+     expect(onParentClick.callCount).to.be.equal(1);
+     // You can also check if the 'foo' argument was passed to onParentClick
+   });
 
 //let expect = chai.expect;
  it.skip('clicking menu item',()=>{

@@ -1,23 +1,59 @@
 import React from 'react'
-import PlayerStatusBtn  from '../buttons/PlayerStatusBtn'
+import { BrowserRouter } from 'react-router-dom'
+import App  from '../../App'
 import renderer from 'react-test-renderer'
 import { shallow, mount } from 'enzyme';
+import { stub } from 'sinon';
 
-describe('PlayerStatusBtn', () => {
+describe('App', () => {
 
-  it('renders whole PlayerStatusBtn.js correctly', () => {
-    const PlayerStatusBtnShallow = shallow(<PlayerStatusBtn />);
-   expect(PlayerStatusBtnShallow).toMatchSnapshot();
+  it('renders whole App.js correctly', () => {
+    const AppShallow = shallow(<App />);
+   expect(AppShallow).toMatchSnapshot();
   });
 
+  it('shallow <BrowserRouter><App /></BrowserRouter> correctly', () => {
+    const AppShallow = shallow(<BrowserRouter><App /></BrowserRouter>);
+   expect(AppShallow).toMatchSnapshot();
+  });
 
+  fit('mount <BrowserRouter><App /></BrowserRouter> correctly', () => {
+    const AppMount = mount(<BrowserRouter><App /></BrowserRouter>);
+   expect(AppMount).toMatchSnapshot();
+  });
 
-it('renders PlayerStatusBtn.js state correctly', () => {
-  const wrapper = mount(<PlayerStatusBtn />);
+it.skip('renders App.js state correctly', () => {
+  const wrapper = mount(<BrowserRouter><App /></BrowserRouter>);
+  //console.log(wrapper.instance().state);
+  //const wrapper = shallow(<App />);
+  //const wrapper = mount(<App />);
+  console.log(wrapper.instance().state);
+  //const wrapper = mount(shallow(<BrowserRouter><App /></BrowserRouter>).get(0));
   // expect(wrapper.state('foo')).to.equal(10);
-  expect(wrapper.state('PlayerStatusBtn_clicked')).toEqual(false);
+  expect(wrapper.state('.specificRankingOptionBtns')).toEqual(false);
   //expect(wrapper.state().foo).to.equal(10);
   //expect(wrapper.state().PlayerStatusBtn_clicked).to.equal(false);
+});
+
+//REVIEW; to do: code lifted from:
+//https://stackoverflow.com/questions/41864111/how-to-test-component-callback-invoked-by-child-component-callback-in-react-with
+describe('<App/> handling the PlayerStatusBtn_clicked callback', () => {
+  it.skip('should handle a child PlayerStatusBtn_clicked', () => {
+    const onParentClick = stub();
+    const wrapper = shallow(<App onChildClick={onParentClick} />);
+    wrapper.find("Child").prop('onChildClick')('foo');
+    expect(onParentClick.callCount).to.be.equal(1);
+    // You can also check if the 'foo' argument was passed to onParentClick
+  });
+
+  it('should handle a child PlayerStatusBtn_clicked', () => {
+    const wrapper = mount(<BrowserRouter><App /></BrowserRouter>);
+    expect(wrapper.find('.specificRankingOptionBtns')).toEqual(false);
+    //expect(wrapper.find('.bar')).to.have.lengthOf(0);
+    wrapper.setState({ specificRankingOptionBtns: true });
+    expect(wrapper.find('.specificRankingOptionBtns')).toEqual(true);
+    //expect(wrapper.find('.bar')).to.have.lengthOf(1);
+  });
 });
 
 //REVIEW: this appears to be just another way of doing same thing
@@ -25,28 +61,28 @@ it('renders PlayerStatusBtn.js state correctly', () => {
   it('deactivate btn renders correctly', () => {
     const deactivateplayerbtn = renderer
      .create(
-        <PlayerStatusBtn
+        <App
           username='player1' />
       ).toJSON();
    expect(deactivateplayerbtn).toMatchSnapshot();
   });
 
-  it('De-Activate - renders PlayerStatusBtn text correctly', () => {
-    const PlayerStatusBtnShallow = shallow(<PlayerStatusBtn />);
-   expect(PlayerStatusBtnShallow.find('[data-cy="deactivate"]').render().text()).toEqual('De-Activate?')
+  it('De-Activate - renders App text correctly', () => {
+    const AppShallow = shallow(<App />);
+   expect(AppShallow.find('[data-cy="deactivate"]').render().text()).toEqual('De-Activate?')
   });
 
-  it('PlayerStatusBtn btn renders correctly', () => {
-    const PlayerStatusBtnrender = renderer
+  it('App btn renders correctly', () => {
+    const Apprender = renderer
      .create(
-        <PlayerStatusBtn username='player1' />
+        <App username='player1' />
       ).toJSON();
-   expect(PlayerStatusBtnrender).toMatchSnapshot();
+   expect(Apprender).toMatchSnapshot();
   });
 
-  it('should check if PlayerStatusBtn_clicked', () => {
+  it('should check if App_clicked', () => {
     const historyMock = { push: jest.fn() };
-    const component = renderer.create(<PlayerStatusBtn
+    const component = renderer.create(<App
       username='player1' history={historyMock}/>)
     expect(component.toJSON()).toMatchSnapshot()
     // getInstance is returning the `this` object you have in your component
@@ -58,10 +94,10 @@ it('renders PlayerStatusBtn.js state correctly', () => {
     expect(instance.state).toMatchSnapshot('updated state')
   });
 
- it('should update PlayerStatusBtn state with button click', () => {
+ it('should update App state with button click', () => {
    const historyMock = { push: jest.fn() };
    const component = mount(
-       <PlayerStatusBtn  username='player1' history={historyMock} />
+       <App  username='player1' history={historyMock} />
    );
    component
      .find('PlayerStatusBtn')
@@ -96,7 +132,7 @@ it('renders PlayerStatusBtn.js state correctly', () => {
 
  it('Does state update if DeactivatePlayerBtn_clicked', () => {
    const historyMock = { push: jest.fn() };
-   const component = renderer.create(<PlayerStatusBtn
+   const component = renderer.create(<App
      username='player1' history={historyMock}/>)
    expect(component.toJSON()).toMatchSnapshot()
 
