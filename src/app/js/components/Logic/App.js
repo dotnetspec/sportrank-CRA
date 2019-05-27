@@ -197,7 +197,7 @@ class App extends Component {
 //the accounts array from web3.eth.getAccounts() to the State array 'userAccounts'
 //via each address in the map function  (which does: return userAccount.address)
   _loadCurrentUserAccounts = async () => {
-    console.log('_loadCurrentUserAccounts')
+    //console.log('_loadCurrentUserAccounts')
       // get all the accounts the node controls
       //await EmbarkJS.Blockchain.connect(DSportRank);
       //web3.Blockchain.co
@@ -377,7 +377,7 @@ console.log('here 4')
         viewingOnlyCB: true
       }) //end of the setState
       console.log('here 5')
-      console.log('this.state.account', this.state.account)
+      //console.log('this.state.account', this.state.account)
         console.log('ready to _loadsetRankingListJSONData after a render')
         console.log('isUserInJson', this.state.isUserInJson)
 
@@ -452,18 +452,18 @@ console.log('here 4')
   //async componentDidMount() {
   componentDidMount() {
       try{
-        console.log('this.state.newrankIdCB before _loadCurrentUserAccounts', this.state.newrankIdCB)
+        //console.log('this.state.newrankIdCB before _loadCurrentUserAccounts', this.state.newrankIdCB)
         if(this.state.newrankIdCB === ''){
           this._loadCurrentUserAccounts();
         }
       //_loadsetJSONData(this.state.newrankIdCB, callback);
-      console.log('this.state.account', this.state.account)
+      //console.log('this.state.account', this.state.account)
       }catch(e){
-        console.log('componentDidMount app _loadCurrentUserAccounts()', e)
+        //console.log('componentDidMount app _loadCurrentUserAccounts()', e)
       }
     //if newRankId(CB?) is blank a user either has just loaded the app or has clicked the
     //ListAllRankingss btn
-    console.log('this.state.newrankIdCB', this.state.newrankIdCB)
+    //console.log('this.state.newrankIdCB', this.state.newrankIdCB)
     if(this.state.newrankIdCB === ''){
       _loadsetRankingListJSONData(this.state.rankingDefault,_loadsetRankingListJSONData_callback);
     }

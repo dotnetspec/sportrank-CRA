@@ -241,7 +241,7 @@ class Header extends Component {
   // }
 
 componentDidMount(){
-console.log('header componentDidMount user', this.props.user)
+//console.log('header componentDidMount user', this.props.user)
 }
 
 displayActivationBtns(){
@@ -279,7 +279,7 @@ displayActivationBtns(){
     if (isError) navClasses.push('error');
     if (!isEditable) navClasses.push('logged-out');
 
-    console.log('header user name in account dropdown', this.props.userAccounts)
+    //console.log('header user name in account dropdown', this.props.userAccounts)
 
     //const { picture, username } = this.props.user;
     // generate the DropdownItems for the accounts to populate
@@ -402,7 +402,7 @@ displayActivationBtns(){
       </Modal>*/}
     </React.Fragment>;
 
-    console.log('states', states)
+    //console.log('states', states)
 
     return (
       <Navbar collapseOnSelect className={navClasses.join(' ')}>

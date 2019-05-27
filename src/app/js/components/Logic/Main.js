@@ -34,7 +34,7 @@ class Main extends Component {
 
 configPathname(){
   const {pathname} = this.props.location;
-  console.log('pathname prop in main.js', this.props.location.pathname)
+  //console.log('pathname prop in main.js', this.props.location.pathname)
   if(pathname.includes("srhost")){
     this.setState({ pathnameStr: '/srhost/' });
   }
@@ -49,8 +49,8 @@ configPathname(){
 //QUESTION: why does componentDidMount not have the data from this.props.rankingJSONdata
 //when it clearly gets passed to Home.js?
   componentDidMount() {
-    console.log('this.props.user', this.props.user);
-    console.log('this.props.error in app', this.props.error);
+    //console.log('this.props.user', this.props.user);
+    //console.log('this.props.error in app', this.props.error);
     //let currentUserRank = await JSONops._getUserRank(this.props.rankingJSONdata, this.props.user[1]);
     // let currentUserRank =  JSONops._getUserValue(this.props.rankingJSONdata, this.props.user[1], "RANK");
     // //JSONops._getUserValue(this.state.data, this.state.user.username, "RANK"),
@@ -88,6 +88,7 @@ configPathname(){
           <PropsRoute path='/userrankings/@:username' component={UserRankings} {...this.props} rankingJSONdata={this.props.rankingJSONdata}/>
           <PropsRoute path='/delete/@:username' component={DeactivatePlayer} {...this.props} user={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata}/>}/>
           <PropsRoute path='/whoopsie' component={Error} {...this.props}/>
+
         </Switch>
       </main>
     )

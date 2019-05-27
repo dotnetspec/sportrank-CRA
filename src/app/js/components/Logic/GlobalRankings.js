@@ -47,8 +47,8 @@ class GlobalRankings extends Component {
      defaultSortName: 'RANKINGNAME',  // default sort column name
      defaultSortOrder: 'asc'  // default sort order
    };
-   console.log('in GlobalRankings')
-   console.log('this.props.error in GlobalRankings', this.props.error);
+   //console.log('in GlobalRankings')
+   //console.log('this.props.error in GlobalRankings', this.props.error);
   }
   //#endregion
 
@@ -121,20 +121,14 @@ class GlobalRankings extends Component {
 //QUESTION: why does componentDidMount not have the data from this.props.rankingJSONdata
 //when it clearly gets passed to Home.js?
   componentDidMount() {
-    //this.setState({error:false});
-    //NB: loadJson is currently a testing function
-    //and the 'data' comes from the test stub
-    // loadJson()
-    // .then (({data}) => this.setState({data:data}))
-    // .catch(() => this.setState({error:true}));
-      console.log('globalRankings componentDidMount');
+  
   }
 
   globalBSTableDisplay(){
       //if (this.props.rankingJSONdata[0] === null && this.props.user.username === null){
       // if (JSONops.isJSONEmpty(this.props.rankingJSONdata) && this.props.user.username === null){
       //
-      console.log('inside globalBSTableDisplay');
+      //console.log('inside globalBSTableDisplay');
 
 
       //   this.props.history.push('/create');
@@ -198,7 +192,7 @@ class GlobalRankings extends Component {
   //this.props.user[1] is a quick way (not object.keys) to access the array
   //if need it get   {React.version} by adding to return() below: (currently 16.6.3)
   render () {
-      console.log('b4 render globalBSTableDisplay with rankingListJSONdata', this.props.rankingListJSONdata)
+      //console.log('b4 render globalBSTableDisplay with rankingListJSONdata', this.props.rankingListJSONdata)
 
     return (
       <div>
