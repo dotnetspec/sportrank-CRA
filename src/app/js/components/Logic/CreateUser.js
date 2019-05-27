@@ -1,11 +1,11 @@
 import { Grid, Button, Row, Col, Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
-import FieldGroup from './FieldGroup'
+import FieldGroup from '../UI/FieldGroup'
 import JSONops from './JSONops'
 import {userNameCB, contactNoCB, emailCB} from './App'
-import web3 from '../../../web3';
-import DSportRank from '../../../ABIaddress';
+import web3 from '../../../../web3';
+import DSportRank from '../../../../ABIaddress';
 //import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
 

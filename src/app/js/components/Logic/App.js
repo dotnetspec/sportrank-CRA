@@ -1,15 +1,15 @@
-import Header from './UI/Header'
+import Header from '../UI/Header'
 import Main from './Main'
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
-import imgAvatar from '../../img/avatar-default.png';
+import imgAvatar from '../../../img/avatar-default.png';
 import { map } from 'async';
 import JSONops from './JSONops'
-import { formatEth, executingAt } from '../utils';
-import web3 from '../../../web3';
-import DSportRank from '../../../ABIaddress';
-import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId } from './SideEffects/io/Jsonio';
-import { _loadCurrentUserAccountsInsideMapping } from './SideEffects/io/web3io';
+import { formatEth, executingAt } from '../../utils';
+import web3 from '../../../../web3';
+import DSportRank from '../../../../ABIaddress';
+import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId } from '../SideEffects/io/Jsonio';
+import { _loadCurrentUserAccountsInsideMapping } from '../SideEffects/io/web3io';
 //import p-iteration from 'p-iteration'
 
 //REVIEW: is the solution to this to write your own api?

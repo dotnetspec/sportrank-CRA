@@ -2,12 +2,12 @@ import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 //import sinon from 'sinon'
 import { stub, sinon } from 'sinon';
-import App from '../../App'
-import GlobalRankings from '../../GlobalRankings'
+import App from '../../Logic/App'
+import GlobalRankings from '../../Logic/GlobalRankings'
 //import chai from 'chai'
 //import DeactivatePlayerBtn  from '../buttons/DeactivatePlayerBtn'
 //import GlobalRankingViewBtn  from '../buttons/GlobalRankingViewBtn'
-import PlayerStatusBtn from './buttons/PlayerStatusBtn';
+import PlayerStatusBtn from '../buttons/PlayerStatusBtn';
 
 import Header  from '../Header'
 import renderer from 'react-test-renderer'

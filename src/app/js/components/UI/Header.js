@@ -5,9 +5,9 @@ import React, { Component } from 'react';
 //import { formatEth, limitLength,limitAddressLength } from '../../utils';
 import { limitAddressLength } from '../../utils';
 import Spinner from 'react-spinkit';
-import JSONops from '../JSONops'
-import {updateWarningText} from '../Home'
-import {updatedExtAcctBalCB} from '../App'
+//import JSONops from '../Logic/JSONops';
+//import {updateWarningText} from '../../Logic/Home'
+import {updatedExtAcctBalCB} from '../Logic/App'
 import web3 from '../../../../web3';
 //import DeactivatePlayerBtn from './buttons/DeactivatePlayerBtn';
 import PlayerStatusBtn from './buttons/PlayerStatusBtn';

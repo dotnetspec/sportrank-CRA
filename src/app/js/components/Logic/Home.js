@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 //import { Grid, Row, Col, PageHeader, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, MenuItem, Overlay, Tooltip } from 'react-bootstrap';
 import { Grid, Row, Col, Button, Modal } from 'react-bootstrap';
 
-import '../../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
+import '../../../../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 //import { Row, Col, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, DropdownItem, Overlay, Tooltip } from 'react-bootstrap';
 //import { TableHeaderColumn } from 'react-bootstrap-table';

@@ -4,8 +4,8 @@ import React, { Component } from 'react';
 import { formatDistance } from 'date-fns'
 //import { EventEmitter } from 'events';
 //import EmbarkJS from '../../../src/embarkArtifacts/embarkjs';
-import DSportRank from '../../../ABIaddress';
-import web3 from '../../../web3';
+import DSportRank from '../../../../ABIaddress';
+import web3 from '../../../../web3';
 //import Grid from 'react-bootstrap/Grid'
 //import Thumbnail from 'react-bootstrap/Thumbnail'
 //import PageHeader from 'react-bootstrap/PageHeader'

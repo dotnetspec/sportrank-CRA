@@ -1,9 +1,9 @@
 import { Grid, Button, FormGroup, Image, Col, Row } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react';
-import FieldGroup from './FieldGroup';
+import FieldGroup from '../UI/FieldGroup';
 import JSONops from './JSONops'
-import { isEmpty } from '../utils';
+import { isEmpty } from '../../utils';
 //import DSportRank from '../../../ABIaddress';
 //import web3 from '../../../web3';
 //import Grid from 'react-bootstrap/Grid'

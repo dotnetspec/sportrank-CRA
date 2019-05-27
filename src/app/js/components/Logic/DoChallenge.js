@@ -9,8 +9,8 @@ import JSONops from './JSONops'
 import {contactNoCB, emailCB, updatedExtAcctBalCB} from './App'
 //import sendmail from 'sendmail'
 //import Fortmatic from 'fortmatic';
-import web3 from '../../../web3';
-import DSportRank from '../../../ABIaddress';
+import web3 from '../../../../web3';
+import DSportRank from '../../../../ABIaddress';
 
 /**
  * Class that renders a form to allow the user to create

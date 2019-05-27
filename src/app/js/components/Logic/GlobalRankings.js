@@ -2,8 +2,8 @@
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 //import { Grid, Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, DropdownItem, Overlay, Tooltip, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { Grid, Row } from 'react-bootstrap';
-import { isEmpty } from '../utils';
-import GlobalRankingViewBtn from './UI/buttons/GlobalRankingViewBtn';
+import { isEmpty } from '../../utils';
+import GlobalRankingViewBtn from '../UI/buttons/GlobalRankingViewBtn';
 
 //import PropsRoute from './PropsRoute';
 //import Home from './Home';
