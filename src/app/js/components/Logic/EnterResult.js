@@ -42,6 +42,7 @@ class EnterResult extends Component{
     };
 
     this.challengeInput = null;
+    this._handleClick = this._handleClick.bind(this);
   }
   //#endregion
 
@@ -91,7 +92,10 @@ const opponentCurrentlyChallengingUser = JSONops._getUserValue(this.props.data, 
    * @returns {null}
    */
 
-  _handleClick = async (e) => {
+   //REVIEW: changed from fat arrow to avoid 'this'
+   //obj reference issues (and used bind in the constructor)
+  //_handleClick = async (e) => {
+    _handleClick(e){
     try{
       //const result = this._processResult(this.selectedOption, this.props.user);
       this._processResult(this.selectedOption, this.props.user);
