@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PRACTICE - test a functional component 1`] = `
+<div>
+  <h1>
+    Hello React Function Component!
+  </h1>
+  <input
+    onChange={[Function]}
+    type="text"
+    value="initial state"
+  />
+  <p>
+    initial state
+  </p>
+</div>
+`;

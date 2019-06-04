@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { BrowserRouter, MemoryRouter } from 'react-router-dom'
 import App  from '../App'
 import PropsRoute  from '../PropsRoute'
 import Error from '../Error'
 import GlobalRankings from '../GlobalRankings'
+//import { expect } from 'chai';
 //import utils from '../../../utils'
 //import * as jsonops from '../JSONops'
 //import JSONops from '../JSONops'
@@ -13,6 +14,7 @@ import Main from "../Main";
 //import renderer from 'react-test-renderer'
 import { shallow, mount } from 'enzyme';
 import { isJSONEmpty } from '../JSONops'; // isJSONEmpty here is a mock function
+import * as renderer from 'react-test-renderer'
 //import * as pleaseMockMeFuncts from '../Practise'
 //auto mock all the exported functions in utils.js
 //jest.mock("./JSONops");
@@ -21,8 +23,55 @@ import { isJSONEmpty } from '../JSONops'; // isJSONEmpty here is a mock function
 //const addMock = jest.spyOn(JSONops, "isJSONEmpty");
 
 
-// Test.spec.js
-import Practice from '../Practice';
+// practice.spec.js
+//curly braces because, as a functional component, it is now a 'named' import
+import { Practice, setValInPractice } from '../Practice';
+
+// fit('PRACTICE - test a functional component', () => {
+//   shallow(<Practice />);
+//   expect(Practice.prototype.componentDidMount).toHaveBeenCalled();
+// });
+
+it('should change the state of Practice', () => {
+  //const component = renderer.create(<Practice />)
+  // const instance = component.getInstance()
+  // global.jestExpect(instance.state.value).to.equal('new state');
+  //const PracticeFunct = new Practice();
+  //const [value, setValue] = useState("");
+  expect(Practice.state.value).to.equal('new state');
+   //const state = { value: 'new state' };
+   //const newState = setValInPractice(state);
+   const [value, setValue] = useState("new state");
+   //chai expect
+   //expect(newState.value).to.equal('new state');
+   expect(value).to.equal('new state');
+ });
+
+//taken from playerstatusbtn.test.js
+xit('PRACTICE - test a functional component', () => {
+  //const historyMock = { push: jest.fn() };
+  //const component = renderer.create(<Practice history={historyMock}/>)
+  const component = renderer.create(<Practice />)
+  //console.log(component.instance().state);
+  //const component = mount(shallow(<Practice />).get(0))
+  expect(component.toJSON()).toMatchSnapshot()
+  // getInstance is returning the `this` object you have in your component
+  // meaning anything accessible on `this` inside your component
+  // can be accessed on getInstance, including props!
+  const instance = component.getInstance()
+
+  global.jestExpect(instance.state).toMatchSnapshot('initial state')
+  instance.onChange({ target: { value: 'updated stateu' } })
+  global.jestExpect(instance.state).toMatchSnapshot('updated state')
+});
+
+
+// it('check the onChange callback', () => {const onChange = jest.fn(),
+//   props = { value: '20.01.2018', onChange},
+//   DateInputComponent = mount(<DateInput {...props} />).find('input');
+//   DateInputComponent.simulate('change', { target: {value: moment('2018-01-22')} });
+//   expect(onChange).toHaveBeenCalledWith('22.01.2018');
+// });
 
 xit('PRACTICE - invokes `componentDidMount` when mounted', () => {
   jest.spyOn(Practice.prototype, 'componentDidMount');

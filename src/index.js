@@ -9,10 +9,6 @@ import './app/css/3bootstrap-theme.css';
 import './app/css/dapp.css';
 // Put any other imports below so that CSS from your
 // components takes precedence over default styles.
-//import AppHTML from './AppHTML';
-
-
-//ReactDOM.render(<AppHTML />, document.getElementById('root'));
 
 ReactDOM.render((
   <BrowserRouter>

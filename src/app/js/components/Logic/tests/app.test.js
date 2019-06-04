@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import App  from '../../App'
+import App  from '../App'
 import renderer from 'react-test-renderer'
 import { shallow, mount } from 'enzyme';
 import { stub } from 'sinon';

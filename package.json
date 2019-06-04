@@ -38,12 +38,16 @@
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "@babel/register": "^7.4.4",
+    "@testing-library/react": "^8.0.1",
+    "bs-jest-dom": "^2.0.1",
     "cypress": "^3.3.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.1",
+    "jest-dom": "^3.4.0",
     "react-addons-test-utils": "^15.6.2",
     "react-scripts": "^3.0.1",
-    "riteway": "^6.0.3"
+    "riteway": "^6.0.3",
+    "user-event": "^3.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
