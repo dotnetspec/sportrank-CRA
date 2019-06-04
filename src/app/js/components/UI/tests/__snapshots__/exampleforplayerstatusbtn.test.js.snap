@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`examples of some things 1`] = `
+<button
+  class="deactivatebtn btn btn-warning"
+  data-cy="deactivate"
+  data-testid="activatebtn-input"
+  placeholder="De-Activate?"
+  type="button"
+>
+  Re-Activate?
+</button>
+`;

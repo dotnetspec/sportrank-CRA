@@ -4,8 +4,10 @@ exports[`PlayerStatusBtn Does state update if DeactivatePlayerBtn_clicked 1`] = 
 <button
   className="deactivatebtn btn btn-success"
   data-cy="deactivate"
+  data-testid="activatebtn-input"
   disabled={false}
   onClick={[Function]}
+  placeholder="De-Activate?"
   type="button"
 >
   De-Activate?
@@ -34,8 +36,10 @@ exports[`PlayerStatusBtn PlayerStatusBtn btn renders correctly 1`] = `
 <button
   className="deactivatebtn btn btn-success"
   data-cy="deactivate"
+  data-testid="activatebtn-input"
   disabled={false}
   onClick={[Function]}
+  placeholder="De-Activate?"
   type="button"
 >
   De-Activate?
@@ -46,8 +50,10 @@ exports[`PlayerStatusBtn deactivate btn renders correctly 1`] = `
 <button
   className="deactivatebtn btn btn-success"
   data-cy="deactivate"
+  data-testid="activatebtn-input"
   disabled={false}
   onClick={[Function]}
+  placeholder="De-Activate?"
   type="button"
 >
   De-Activate?
@@ -60,8 +66,10 @@ exports[`PlayerStatusBtn should check if PlayerStatusBtn_clicked 1`] = `
 <button
   className="deactivatebtn btn btn-success"
   data-cy="deactivate"
+  data-testid="activatebtn-input"
   disabled={false}
   onClick={[Function]}
+  placeholder="De-Activate?"
   type="button"
 >
   De-Activate?

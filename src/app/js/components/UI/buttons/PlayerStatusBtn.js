@@ -47,6 +47,8 @@ class PlayerStatusBtn extends Component {
     //needs to be sorted to be consistent
     return (
       <Button className='deactivatebtn'  data-cy='deactivate'
+      placeholder="De-Activate?"
+      data-testid="activatebtn-input"
       bsStyle={this.state.bsStyle}
       onClick={(e) => this._handleChangeStatusPlayer(this.props.user)}
       >
