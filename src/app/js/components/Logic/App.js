@@ -204,10 +204,10 @@ class App extends Component {
       // console.log('about to do await on getAccounts(), when done - got accounts after await')
       // console.log('exec at', executingAt());
       const accountsFromTheBC = await web3.eth.getAccounts();
-        console.log('got accounts after await', accountsFromTheBC)
+        //console.log('got accounts after await', accountsFromTheBC)
         //console.log('exec at', executingAt());
 
-        console.log('the data', this.state.data);
+        //console.log('the data', this.state.data);
 
         //accountsFromTheBC just indicates how many times to iterate. It isn't used
         //otherwise
@@ -260,7 +260,7 @@ class App extends Component {
               // gets the balance of the address
               let balance = await web3.eth.getBalance(address);
               balance = web3.utils.fromWei(balance, 'ether');
-              console.log('balance', balance)
+              //console.log('balance', balance)
               //REVIEW: stopped execution here after first account loads
               //to prevent Callback already called error
               //return null;
@@ -299,7 +299,7 @@ class App extends Component {
               //console.log('callback2', callback)
             }
             catch (err) {
-              console.log("Error within current item index", err);
+              //console.log("Error within current item index", err);
 
               //next(err);
             }//end of try/catch within async function definition within await/map
@@ -313,7 +313,7 @@ class App extends Component {
         //err is only relevant in the next line
         if (err) return this._onError(err, 'App._loadCurrentUserAccounts');
         //console.log('user in 3rd param', user)
-        console.log('userAccounts array', userAccounts)
+        //console.log('userAccounts array', userAccounts)
         //console.log('web3.eth.defaultAccount', web3.eth.getAccounts(accounts => console.log(accounts[0])))
         //now all these assignments are done on the userAccounts array
         let defaultUserAccount = userAccounts.find((userAccount) => {
@@ -326,11 +326,11 @@ class App extends Component {
         //HACK: I think only works for 1 account
         //I'm forced to specify array index[0] when it wasn't previously required
         defaultUserAccount = userAccounts;
-        console.log('accountsFromTheBC in third param', userAccounts)
-        console.log('here 1')
-        console.log('defaultUserAccount', defaultUserAccount)
-        console.log('defaultUserAccount.user.username', defaultUserAccount[0].user.username)
-        console.log('here 1a')
+        // console.log('accountsFromTheBC in third param', userAccounts)
+        // console.log('here 1')
+        // console.log('defaultUserAccount', defaultUserAccount)
+        // console.log('defaultUserAccount.user.username', defaultUserAccount[0].user.username)
+        // console.log('here 1a')
         //check that there is an existing default account user
         //before setting state, and if there isn't go to create
         if(defaultUserAccount[0].user.username === '' || defaultUserAccount[0].user.username === undefined){

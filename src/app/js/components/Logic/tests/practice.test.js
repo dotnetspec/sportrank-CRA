@@ -32,7 +32,7 @@ import { Practice, setValInPractice } from '../Practice';
 //   expect(Practice.prototype.componentDidMount).toHaveBeenCalled();
 // });
 
-it('should change the state of Practice', () => {
+xit('should change the state of Practice', () => {
   //const component = renderer.create(<Practice />)
   // const instance = component.getInstance()
   // global.jestExpect(instance.state.value).to.equal('new state');
