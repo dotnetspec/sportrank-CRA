@@ -16,7 +16,7 @@ import React, { Component } from 'react';
 // import JSONops from './JSONops'
 // import CreateNewRanking from './CreateNewRanking';
 //import UserRankings from './UserRankings'
-import {newrankIdCB, viewingOnlyCB} from './App'
+//import {newrankIdCB, viewingOnlyCB} from './App'
 //import {saveJson, loadJson} from '../lib/service'
 //import Grid from 'react-bootstrap/Grid'
 
@@ -57,8 +57,8 @@ class GlobalRankings extends Component {
   onClickRankingSelected(cell, row, rowIndex){
     selectRowPropAfterClickRow.selectedRankingId = `${row['RANKINGID']}`;
     console.log('selectRowPropAfterClickRow.selectedRankingId', selectRowPropAfterClickRow.selectedRankingId)
-    newrankIdCB(selectRowPropAfterClickRow.selectedRankingId);
-    viewingOnlyCB(false);
+    this.props.newrankIdCB(selectRowPropAfterClickRow.selectedRankingId);
+    this.props.viewingOnlyCB(false);
     this.props.onAfterUserUpdate();
     //if joining and not yet a member of the ranking home will add the new player to the bottom
     //of the rankings in the selected ladder
@@ -66,20 +66,20 @@ class GlobalRankings extends Component {
     //this.openResultModal();
    }
 
-   onClickRankingViewSelected(cell, row, rowIndex){
-     //REVIEW: the naming here.
-     //tell Header that the view btn has been clicked
-     //so it can display the 'Activate?' btn
-     this.props.onChildClick();
-     //console.log('Product #', rowIndex);
-     selectRowPropAfterClickRow.selectedRankingId = `${row['RANKINGID']}`;
-     console.log('selectRowPropAfterClickRow.selectedRankingId', selectRowPropAfterClickRow.selectedRankingId)
-     newrankIdCB(selectRowPropAfterClickRow.selectedRankingId);
-     viewingOnlyCB(true);
-     this.props.onAfterUserUpdate();
-     this.props.history.push('/home/@' + this.props.user.username);
-     //this.openResultModal();
-    }
+   // onClickRankingViewSelected(cell, row, rowIndex){
+   //   //REVIEW: the naming here.
+   //   //tell Header that the view btn has been clicked
+   //   //so it can display the 'Activate?' btn
+   //   this.props.onChildClick();
+   //   //console.log('Product #', rowIndex);
+   //   selectRowPropAfterClickRow.selectedRankingId = `${row['RANKINGID']}`;
+   //   console.log('selectRowPropAfterClickRow.selectedRankingId', selectRowPropAfterClickRow.selectedRankingId)
+   //   newrankIdCB(selectRowPropAfterClickRow.selectedRankingId);
+   //   viewingOnlyCB(true);
+   //   this.props.onAfterUserUpdate();
+   //   this.props.history.push('/home/@' + this.props.user.username);
+   //   //this.openResultModal();
+   //  }
 
   rankingButton(cell, row, enumObject, rowIndex) {
       return (
@@ -111,6 +111,8 @@ class GlobalRankings extends Component {
             onAfterUserUpdate={this.props.onAfterUserUpdate}
             history={this.props.history}
             username={this.props.user.username}
+            newrankIdCB={this.props.newrankIdCB}
+            viewingOnlyCB={this.props.viewingOnlyCB}
             // onClick={() =>
             //     this.onClickRankingViewSelected(cell, row, rowIndex)}
             />
@@ -121,7 +123,7 @@ class GlobalRankings extends Component {
 //QUESTION: why does componentDidMount not have the data from this.props.rankingJSONdata
 //when it clearly gets passed to Home.js?
   componentDidMount() {
-  
+
   }
 
   globalBSTableDisplay(){

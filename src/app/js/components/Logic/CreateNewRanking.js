@@ -5,7 +5,7 @@ import { Grid, Button, Row, Col, Modal } from 'react-bootstrap';
 import React, { Component } from 'react'
 import FieldGroup from '../UI/FieldGroup'
 import JSONops from './JSONops'
-import {newrankIdCB} from './App'
+//import {newrankIdCB} from './App'
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
 //import PageHeader from 'react-bootstrap/PageHeader'
@@ -294,7 +294,7 @@ getNewRankId = async () => {
         if (req.readyState === XMLHttpRequest.DONE) {
           const resulttxt = JSON.parse(req.responseText);
           //only here can set state (once result is back)
-          newrankIdCB(resulttxt.id)
+          this.props.newrankIdCB(resulttxt.id)
           this.setState({ rankId: resulttxt.id});
           this.setState({ ranknameHasChanged: true});
           this.setState({ isLoading: false});

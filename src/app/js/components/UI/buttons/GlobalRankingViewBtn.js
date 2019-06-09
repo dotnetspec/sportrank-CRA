@@ -53,8 +53,8 @@ class GlobalRankingViewBtn extends Component {
     //the ${}) sees it as a legitimate js object
     //original:
     //var rankingID = `${row['RANKINGID']}`
-    newrankIdCB(row.RANKINGID);
-    viewingOnlyCB(true);
+    this.props.newrankIdCB(row.RANKINGID);
+    this.props.viewingOnlyCB(true);
     this.props.onAfterUserUpdate();
     this.props.history.push('/home/@' + this.props.username);
     //this.openResultModal();

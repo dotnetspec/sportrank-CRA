@@ -51,12 +51,12 @@ import { _loadCurrentUserAccountsInsideMapping } from '../SideEffects/io/web3io'
       console.log('in userNameCB', userNameCB)
         this.setState({userNameCB})
     }
-    //cb from GlobalRankings.js to set the rank id  selected by the user
-    export function newrankIdCB(newrankIdCB) {
-      console.log('in newrankIdCB', newrankIdCB)
-        this.setState({newrankIdCB});
-        _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
-    }
+    // //cb from GlobalRankings.js to set the rank id  selected by the user
+    // export function newrankIdCB(newrankIdCB) {
+    //   console.log('in newrankIdCB', newrankIdCB)
+    //     this.setState({newrankIdCB});
+    //     _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
+    // }
     //cb from GlobalRankings.js to set the rank state as view only
     export function viewingOnlyCB(viewingOnlyCB) {
       console.log('in viewingOnlyCB', viewingOnlyCB)
@@ -155,13 +155,14 @@ class App extends Component {
     emailCB = emailCB.bind(this);
     userNameCB = userNameCB.bind(this);
     //click List All Rankings and Enter to reset the default ranking to display
-    newrankIdCB = newrankIdCB.bind(this);
-    viewingOnlyCB = viewingOnlyCB.bind(this);
+    //newrankIdCB = newrankIdCB.bind(this);
+    this.viewingOnlyCB = viewingOnlyCB.bind(this);
     _loadsetJSONData_callback = _loadsetJSONData_callback.bind(this);
     _loadsetRankingListJSONData_callback = _loadsetRankingListJSONData_callback.bind(this);
     getNewRankId_callback = getNewRankId_callback.bind(this);
     this.handleChildClick = this.handleChildClick.bind(this);
     this.handleListAllChildClick = this.handleListAllChildClick.bind(this);
+    this.newrankIdCB = this.newrankIdCB.bind(this);
   }
 
   //display the ranking specific btn options
@@ -171,6 +172,13 @@ class App extends Component {
 
    handleListAllChildClick(){
      this.setState({specificRankingOptionBtns:false})
+   }
+
+   //cb from GlobalRankings.js to set the rank id  selected by the user
+   newrankIdCB(newrankIdCB) {
+     console.log('in newrankIdCB', newrankIdCB)
+       this.setState({newrankIdCB});
+       _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
    }
   //#endregion
 
