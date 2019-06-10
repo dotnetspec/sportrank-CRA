@@ -151,7 +151,6 @@ class App extends Component {
     emailCB = emailCB.bind(this);
     userNameCB = userNameCB.bind(this);
     //click List All Rankings and Enter to reset the default ranking to display
-    //newrankIdCB = newrankIdCB.bind(this);
     this.viewingOnlyCB = this.viewingOnlyCB.bind(this);
     _loadsetJSONData_callback = _loadsetJSONData_callback.bind(this);
     _loadsetRankingListJSONData_callback = _loadsetRankingListJSONData_callback.bind(this);
@@ -159,7 +158,6 @@ class App extends Component {
     this.handleChildClick = this.handleChildClick.bind(this);
     this.handleListAllChildClick = this.handleListAllChildClick.bind(this);
     this.newrankIdCB = this.newrankIdCB.bind(this);
-    //this.viewingOnlyCB = this.viewingOnlyCB.bind(this);
   }
 
   //display the ranking specific btn options

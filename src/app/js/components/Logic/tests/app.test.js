@@ -4,6 +4,9 @@ import App  from '../App'
 import renderer from 'react-test-renderer'
 import { shallow, mount } from 'enzyme';
 import { stub } from 'sinon';
+import { render, fireEvent, cleanup } from '@testing-library/react'
+
+afterEach(cleanup);
 
 describe('App', () => {
 
@@ -17,7 +20,7 @@ describe('App', () => {
    expect(AppShallow).toMatchSnapshot();
   });
 
-  fit('mount <BrowserRouter><App /></BrowserRouter> correctly', () => {
+  it('mount <BrowserRouter><App /></BrowserRouter> correctly', () => {
     const AppMount = mount(<BrowserRouter><App /></BrowserRouter>);
    expect(AppMount).toMatchSnapshot();
   });
@@ -33,6 +36,31 @@ it.skip('renders App.js state correctly', () => {
   expect(wrapper.state('.specificRankingOptionBtns')).toEqual(false);
   //expect(wrapper.state().foo).to.equal(10);
   //expect(wrapper.state().PlayerStatusBtn_clicked).to.equal(false);
+});
+
+describe('RTL - <App/> ', () => {
+    fit('check btn visibility', () => {
+      // Render new instance in every test to prevent leaking state
+      // const historyMock = { push: jest.fn() };
+      // const onClick = jest.fn();
+      // const onAfterUserUpdate = jest.fn();
+      // const newrankIdCB = jest.fn();
+      // const viewingOnlyCB = jest.fn();
+      //
+      // const row = {RANKINGNAME: "mplayer1rank", RANKINGDESC: "mp1r", ACTIVE: true, RANKINGID: "5c875c79adeb832d3ec6732d"}
+
+      const { getByText } = render(<BrowserRouter><App /></BrowserRouter>);
+
+      //looking for text that hasn't been rendered just causes error
+        //expect(getByText("De-Activate")).not.toBeVisible();
+        expect(getByText("List All Rankings")).toBeVisible();
+
+      // fireEvent.click(getByText(/View/i));
+      // expect(onClick).toHaveBeenCalled();
+      // expect(onAfterUserUpdate).toHaveBeenCalled();
+      // expect(newrankIdCB).toHaveBeenCalled();
+      // expect(viewingOnlyCB).toHaveBeenCalled();
+    });
 });
 
 //REVIEW; to do: code lifted from:

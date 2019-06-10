@@ -11,6 +11,7 @@ import {updatedExtAcctBalCB} from '../Logic/App'
 import web3 from '../../../../web3';
 //import DeactivatePlayerBtn from './buttons/DeactivatePlayerBtn';
 import PlayerStatusBtn from './buttons/PlayerStatusBtn';
+import ListAllRankingsBtn from './buttons/ListAllRankingsBtn';
 import {formatBalance} from '../../utils';
 /**
  * Class displaying the accumulated ETH balance from
@@ -376,9 +377,8 @@ displayActivationBtns(){
     //TODO: change to states.challenge
 
     states.challenge = <React.Fragment>
-    <Button bsStyle="primary" data-cy='ListAllRankings' onClick={(e) => this._handleRankingList(this.props.user[1])}>
-      List All Rankings
-    </Button>
+
+    <ListAllRankingsBtn />
       <Button bsStyle="primary" data-cy='UpdateProfile' onClick={(e) => this._handleUpdateProfile(this.props.user[1])}>
         Update Profile
       </Button>
