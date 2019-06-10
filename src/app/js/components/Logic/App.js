@@ -175,11 +175,19 @@ class App extends Component {
    }
 
    //cb from GlobalRankings.js to set the rank id  selected by the user
-   newrankIdCB(newrankIdCB) {
-     console.log('in newrankIdCB', newrankIdCB)
-       this.setState({newrankIdCB});
-       _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
+   newrankIdCB(newRankIdparam) {
+     //const cb = newRankIdparam (arguments[1], arguments[2]);
+     //console.log('cb', cb);
+     console.log('in newrankIdCB', newRankIdparam)
+       this.setState({newrankIdCB:newRankIdparam});
+       _loadsetJSONData(newRankIdparam, _loadsetJSONData_callback);
    }
+
+   // newrankIdCB (callback, param1, param2) {
+   //   console.log('callback', callback,param1, param2)
+   //     callback (param1, param2);
+   // }
+
   //#endregion
 
   //#region Helper methods
@@ -540,8 +548,8 @@ console.log('here 4')
           newrankId={this.state.newrankId}
           rankingDefault={this.state.rankingDefault}
           getNewRankingID={(e) => this.getNewRankId()}
-          newrankIdCB={this.state.newrankIdCB}
-          viewingOnlyCB={this.state.viewingOnlyCB}
+          newrankIdCB={this.newrankIdCB.bind(this)}
+          viewingOnlyCB={(e) => this.viewingOnlyCB()}
           isUserInJson={this.state.isUserInJson}
           loadingJSON={this.state.loadingJSON}
           />

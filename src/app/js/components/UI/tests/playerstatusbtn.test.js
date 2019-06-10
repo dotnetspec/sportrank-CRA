@@ -9,10 +9,12 @@ import {
 import 'jest-dom/extend-expect'
 import PlayerStatusBtn from '../buttons/PlayerStatusBtn'
 import React from 'react'
-import { render } from '@testing-library/react'
+import { render, cleanup } from '@testing-library/react'
 
 //originally based on example:
 //https://testing-library.com/docs/dom-testing-library/example-intro
+
+afterEach(cleanup);
 
 test('PlayerStatusBtn text on click', async () => {
   const playerStatusBtnText = 'Re-Activate?'

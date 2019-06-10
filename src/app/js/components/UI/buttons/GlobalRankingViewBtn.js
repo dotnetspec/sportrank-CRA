@@ -46,7 +46,7 @@ class GlobalRankingViewBtn extends Component {
     //so it can display the 'Activate?' btn
     this.props.onChildClick();
     console.log('typeof row', typeof row)
-    console.log('row', row)
+    console.log('row.RANKINGID', row.RANKINGID)
     //NB: this was using 'template literals' backquote or backtick character
     //to find the RANKINGID in the row object
     //I think this means it therefore (together with

@@ -5,7 +5,7 @@ import {
 import 'jest-dom/extend-expect'
 import GlobalRankingViewBtn from '../buttons/GlobalRankingViewBtn'
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, cleanup } from '@testing-library/react'
 
 //originally based on example:
 //https://testing-library.com/docs/dom-testing-library/example-intro
@@ -15,6 +15,8 @@ import { render, fireEvent } from '@testing-library/react'
 //
 // })
 
+afterEach(cleanup);
+
 it('calls "onClick" prop on button click', () => {
   // Render new instance in every test to prevent leaking state
   const historyMock = { push: jest.fn() };
@@ -22,8 +24,8 @@ it('calls "onClick" prop on button click', () => {
   const onAfterUserUpdate = jest.fn();
   const newrankIdCB = jest.fn();
   const viewingOnlyCB = jest.fn();
-  //cell={cell} row={row} rowIndex={rowIndex}
-  var row = {RANKINGNAME: "mplayer1rank", RANKINGDESC: "mp1r", ACTIVE: true, RANKINGID: "5c875c79adeb832d3ec6732d"}
+
+  const row = {RANKINGNAME: "mplayer1rank", RANKINGDESC: "mp1r", ACTIVE: true, RANKINGID: "5c875c79adeb832d3ec6732d"}
   const { getByText } = render(<GlobalRankingViewBtn
     onChildClick={onClick}
     row={row}
@@ -39,27 +41,3 @@ it('calls "onClick" prop on button click', () => {
   expect(newrankIdCB).toHaveBeenCalled();
   expect(viewingOnlyCB).toHaveBeenCalled();
 });
-
-
-//below test not relevant for this component
-xit('GlobalRankingViewBtn text on click', async () => {
-  const playerStatusBtnText = 'Re-Activate?'
-
-  const historyMock = { push: jest.fn() };
-
-  const { getByPlaceholderText, getByTestId} = render(<GlobalRankingViewBtn username='player1'
-  history={historyMock}
-  />)
-  const inputNode = getByPlaceholderText('De-Activate?')
-
-  inputNode.btnText = playerStatusBtnText
-
-  inputNode.click();
-
-  await wait(() =>
-    expect(getByTestId('activatebtn-input')).toHaveTextContent(
-      playerStatusBtnText
-    )
-  )
-  expect(inputNode).toMatchSnapshot()
-})
