@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import {newrankIdCB, viewingOnlyCB} from '../../Logic/App'
+//import {newrankIdCB, viewingOnlyCB} from '../../Logic/App'
 /**
  * Class representing global ranking view button in the BootstrapTable.
  * The component rendering in this area is controlled by

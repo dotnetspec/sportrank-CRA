@@ -378,7 +378,7 @@ displayActivationBtns(){
 
     states.challenge = <React.Fragment>
 
-    <ListAllRankingsBtn />
+    <ListAllRankingsBtn onListAllChildClick={this.props.onListAllChildClick}/>
       <Button bsStyle="primary" data-cy='UpdateProfile' onClick={(e) => this._handleUpdateProfile(this.props.user[1])}>
         Update Profile
       </Button>
