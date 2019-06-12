@@ -250,7 +250,7 @@ displayActivationBtns(){
   if(this.props.specificRankingOptionBtns){
         return(
           <>
-          <PlayerStatusBtn data-cy='playerStatus' data-testid='playerStatus' {...this.props} newrankIdCB={this.props.newrankIdCB} user={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
+          <PlayerStatusBtn isCurrentUserActive={this.props.isCurrentUserActive} data-cy='playerStatus' data-testid='playerStatus' {...this.props} newrankIdCB={this.props.newrankIdCB} user={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
           <Button bsStyle="primary" data-cy='reactivate' data-testid='reactivate' onClick={(e) => this._handleReactivatePlayer(this.props.user[1])}>
             Reactivate Player
           </Button>
@@ -403,7 +403,7 @@ displayActivationBtns(){
     </React.Fragment>;
 
     //console.log('states', states)
-//This is what actually gets rendered to the DOM 
+//This is what actually gets rendered to the DOM
     return (
       <Navbar collapseOnSelect className={navClasses.join(' ')}>
         <Navbar.Header>
