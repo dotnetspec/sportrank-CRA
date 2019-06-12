@@ -504,6 +504,7 @@ console.log('here 4')
     return (
       <div>
         <Header
+          data-testid='header'
           user={this.state.user}
           account={this.state.account}
           userAccounts={this.state.userAccounts}

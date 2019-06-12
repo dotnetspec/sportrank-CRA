@@ -3,41 +3,18 @@ import axiosMock from 'axios'
 //import {render, fireEvent, cleanup, wait} from '../'
 import {render, fireEvent, cleanup, wait} from '@testing-library/react'
 import 'jest-dom/extend-expect'
+import {renderWithRouter} from '../../../utils'
+import Fetch from '../io/Fetch'
 
 afterEach(cleanup)
 
 jest.mock('axios');
 
-// instead of importing it, we'll define it inline here
-// import Fetch from '../fetch'
-
-class Fetch extends React.Component {
-  state = {}
-  componentDidUpdate(prevProps) {
-    if (this.props.url !== prevProps.url) {
-      this.fetch()
-    }
-  }
-  fetch = async () => {
-    const response = await axiosMock.get(this.props.url)
-    this.setState({data: response.data})
-  }
-  render() {
-    const {data} = this.state
-    return (
-      <div>
-        <button onClick={this.fetch}>Fetch</button>
-        {data ? <span>{data.greeting}</span> : null}
-      </div>
-    )
-  }
-}
-
 test('Fetch makes an API call and displays the greeting when load-greeting is clicked', async () => {
   // Arrange
   axiosMock.get.mockResolvedValueOnce({data: {greeting: 'hello there'}})
   const url = '/greeting'
-  const {container, getByText} = render(<Fetch url={url} />)
+  const {container, getByText} = renderWithRouter(<Fetch url={url} />)
 
   // Act
   fireEvent.click(getByText('Fetch'))

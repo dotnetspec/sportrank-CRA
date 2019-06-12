@@ -21,6 +21,7 @@ import { withRouter } from 'react-router-dom';
              placeholder="List All Rankings"
              bsStyle="primary"
              data-cy='ListAllRankings'
+             data-testid='ListAllRankings'
              onClick={(e) => _handleRankingList()}>
                List All Rankings
              </Button>

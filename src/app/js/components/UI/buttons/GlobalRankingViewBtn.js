@@ -72,7 +72,9 @@ class GlobalRankingViewBtn extends Component {
       // </Button>
 
         <Button
-           className='globalrankingviewbtn'  data-cy='globalrankingviewbtn'
+           className='globalrankingviewbtn'
+           data-testid='globalrankingviewbtn'
+           data-cy='globalrankingviewbtn'
            //type="button"
            onClick={() =>
            //this.onClickRankingViewSelected(this.props.cell, this.props.row, this.props.rowIndex)}

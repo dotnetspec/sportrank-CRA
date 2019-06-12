@@ -4,7 +4,6 @@ import sinon from 'sinon'
 //import App from '../../App'
 //import GlobalRankings from '../../GlobalRankings'
 //import chai from 'chai'
-import DeactivatePlayerBtn  from '../buttons/DeactivatePlayerBtn'
 import Header  from '../Header'
 import renderer from 'react-test-renderer'
 import { shallow, mount } from 'enzyme';

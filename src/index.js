@@ -12,7 +12,7 @@ import './app/css/dapp.css';
 
 ReactDOM.render((
   <BrowserRouter>
-    <App />
+    <App data-testid='app'/>
   </BrowserRouter>
 ), document.getElementById('root'));
 

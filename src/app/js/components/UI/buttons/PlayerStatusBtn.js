@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
+import JSONops from '../../Logic/JSONops';
 /**
  * Functional component representing player status button in the header.
  * The component rendering in this area is controlled by
@@ -15,7 +16,7 @@ import { Button } from 'react-bootstrap';
 
 
    //const onChange = event => setValue(event.target.value);
-     const _handleChangeStatusPlayerBtnText = (username) => {
+     const _handleChangeStatusPlayerBtnText = (username, props) => {
      // const _handleChangeStatusPlayerBtnText = event =>
      // {
        if(username !== null){
@@ -27,6 +28,14 @@ import { Button } from 'react-bootstrap';
              setPlayerActive(true );
              setStyle('success');
              setValue('De-Activate?')
+             try {
+               console.log('in _handleReactivatePlayer', props.newrankIdCB, this.props.rankingJSONdata, username, this.props.account)
+               JSONops.reactivatePlayer(this.props.newrankIdCB, this.props.rankingJSONdata, username, this.props.account);
+               this.props.history.push('/home/@' + username);
+             } catch (err) {
+             // stop loading state and show the error
+             console.log(err.message);
+             };
            }
          }else {
              console.log('no username passed to deactivate btn!')

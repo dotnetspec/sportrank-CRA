@@ -9,7 +9,6 @@ import JSONops from '../Logic/JSONops';
 import {updateWarningText} from '../Logic/Home'
 import {updatedExtAcctBalCB} from '../Logic/App'
 import web3 from '../../../../web3';
-//import DeactivatePlayerBtn from './buttons/DeactivatePlayerBtn';
 import PlayerStatusBtn from './buttons/PlayerStatusBtn';
 import ListAllRankingsBtn from './buttons/ListAllRankingsBtn';
 import {formatBalance} from '../../utils';
@@ -251,8 +250,8 @@ displayActivationBtns(){
   if(this.props.specificRankingOptionBtns){
         return(
           <>
-          <PlayerStatusBtn data-cy='playerStatus' {...this.props} newrankIdCB={this.props.newrankIdCB} user={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
-          <Button bsStyle="primary" data-cy='reactivate' onClick={(e) => this._handleReactivatePlayer(this.props.user[1])}>
+          <PlayerStatusBtn data-cy='playerStatus' data-testid='playerStatus' {...this.props} newrankIdCB={this.props.newrankIdCB} user={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
+          <Button bsStyle="primary" data-cy='reactivate' data-testid='reactivate' onClick={(e) => this._handleReactivatePlayer(this.props.user[1])}>
             Reactivate Player
           </Button>
           </>
@@ -295,7 +294,7 @@ displayActivationBtns(){
         console.log('index', index)
         console.log('isCurrUser', isCurrUser)
 
-//NB: return is part of accts definition above. Not the render return (below)
+//NB: this return is part of accts mapping above. Not the render return (below)
       return <MenuItem
         key={index}
         eventKey={index}
@@ -376,9 +375,10 @@ displayActivationBtns(){
     //in same place
     //TODO: change to states.challenge
 
+
     states.challenge = <React.Fragment>
 
-    <ListAllRankingsBtn onListAllChildClick={this.props.onListAllChildClick}/>
+    <ListAllRankingsBtn data-testid='ListAllRankings' onListAllChildClick={this.props.onListAllChildClick}/>
       <Button bsStyle="primary" data-cy='UpdateProfile' onClick={(e) => this._handleUpdateProfile(this.props.user[1])}>
         Update Profile
       </Button>
@@ -403,7 +403,7 @@ displayActivationBtns(){
     </React.Fragment>;
 
     //console.log('states', states)
-
+//This is what actually gets rendered to the DOM 
     return (
       <Navbar collapseOnSelect className={navClasses.join(' ')}>
         <Navbar.Header>

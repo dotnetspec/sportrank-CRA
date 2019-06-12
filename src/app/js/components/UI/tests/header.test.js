@@ -5,7 +5,6 @@ import { stub, sinon } from 'sinon';
 import App from '../../Logic/App'
 import GlobalRankings from '../../Logic/GlobalRankings'
 //import chai from 'chai'
-//import DeactivatePlayerBtn  from '../buttons/DeactivatePlayerBtn'
 //import GlobalRankingViewBtn  from '../buttons/GlobalRankingViewBtn'
 import PlayerStatusBtn from '../buttons/PlayerStatusBtn';
 
