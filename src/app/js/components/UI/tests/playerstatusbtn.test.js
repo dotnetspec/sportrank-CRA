@@ -16,61 +16,40 @@ import { render, cleanup } from '@testing-library/react'
 
 afterEach(cleanup);
 
-fit('PlayerStatusBtn correctly displays initial status', async () => {
-  //const playerStatusBtnText = 'Re-Activate?'
+it('PlayerStatusBtn correctly displays initial status', async () => {
+const historyMock = { push: jest.fn() };
 
   const props  = {
-    isCurrentUserActive:true
+    isCurrentUserActive: true,
+    username: 'player1',
+    history: historyMock
   }
 
-  const historyMock = { push: jest.fn() };
-
-  const { getByTestId} = render(<PlayerStatusBtn username='player1'
-  history={historyMock}
-  
+  const { getByTestId} = render(<PlayerStatusBtn
   {...props}
   />)
-  //const inputNode = getByPlaceholderText('De-Activate?')
-
-  //inputNode.btnText = playerStatusBtnText
 
   expect(getByTestId('activatebtn-input')).toHaveTextContent(
     'De-Activate?'
   )
-
-  // Get elements by their text, just like a real user does.
-  //getByText(container, 'De-Activate?').click()
-  //inputNode.click();
-
-  // getByTestId and queryByTestId are an escape hatch to get elements
-  // by a test id (could also attempt to get this element by it's text)
-  // jest snapshots work great with regular DOM nodes!
-  //expect(inputNode).toMatchSnapshot()
 })
 
-test('PlayerStatusBtn text on click', async () => {
-  const playerStatusBtnText = 'Re-Activate?'
+it('PlayerStatusBtn text correct with isCurrentUserActive = false', async () => {
+    //const isCurrentUserActiveCB = jest.fn();
+    const historyMock = { push: jest.fn() };
+    const props  = {
+      isCurrentUserActive: false,
+      username: 'player1',
+      //isCurrentUserActiveCB: isCurrentUserActiveCB,
+      history: historyMock
+    }
 
-  const historyMock = { push: jest.fn() };
+    const { getByTestId } = render(<PlayerStatusBtn
+    {...props}
+    />)
 
-  const { getByPlaceholderText, getByTestId} = render(<PlayerStatusBtn username='player1'
-  history={historyMock}
-  />)
-  const inputNode = getByPlaceholderText('De-Activate?')
+   const inputNode = getByTestId('activatebtn-input')
 
-  inputNode.btnText = playerStatusBtnText
-
-  // Get elements by their text, just like a real user does.
-  //getByText(container, 'De-Activate?').click()
-  inputNode.click();
-
-  await wait(() =>
-    expect(getByTestId('activatebtn-input')).toHaveTextContent(
-      playerStatusBtnText
-    )
-  )
-  // getByTestId and queryByTestId are an escape hatch to get elements
-  // by a test id (could also attempt to get this element by it's text)
-  // jest snapshots work great with regular DOM nodes!
-  expect(inputNode).toMatchSnapshot()
+   expect(inputNode).toHaveTextContent('Re-Activate?')
+   expect(inputNode).toMatchSnapshot()
 })

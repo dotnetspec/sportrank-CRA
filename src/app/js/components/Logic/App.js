@@ -510,6 +510,7 @@ console.log('here 4')
           userAccounts={this.state.userAccounts}
           balance={this.state.balance}
           error={this.state.error}
+          isCurrentUserActive={this.state.isCurrentUserActive}
           onChildClick={(e) => this.handleChildClick()}
           onListAllChildClick={(e) => this.handleListAllChildClick()}
           specificRankingOptionBtns={this.state.specificRankingOptionBtns}

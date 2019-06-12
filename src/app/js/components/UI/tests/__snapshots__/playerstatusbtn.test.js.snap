@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PlayerStatusBtn text on click 1`] = `
+exports[`PlayerStatusBtn text correct with isCurrentUserActive = false 1`] = `
 <button
   class="deactivatebtn btn btn-warning"
   data-cy="deactivate"

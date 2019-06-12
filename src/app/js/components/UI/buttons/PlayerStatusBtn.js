@@ -8,13 +8,13 @@ import JSONops from '../../Logic/JSONops';
  */
 
  const PlayerStatusBtn = props => {
-   console.log('props.isCurrentUserActive', props.isCurrentUserActive)
-   const [playerActive, setPlayerActive] = React.useState(props.isCurrentUserActive);
+
+   const [playerActive, setPlayerActive] = React.useState(true);
    //do this way to avoid 're-render' error
    let style = '';
    let value = '';
 
-   if(playerActive === true){
+   if(props.isCurrentUserActive === true){
      style = 'success';
      value='De-Activate?';
    }else{
@@ -24,15 +24,8 @@ import JSONops from '../../Logic/JSONops';
 
    const [btnText, setValue] = React.useState(value);
    const [bsStyle, setStyle] = React.useState(style);
-
-   //displayCurrentStatus();
-
-
-   //const onChange = event => setValue(event.target.value);
    //REVIEW: can probably use the main props only
      const _handleChangeStatusPlayerBtnText = (username, props) => {
-     // const _handleChangeStatusPlayerBtnText = event =>
-     // {
        if(username !== null){
            if(playerActive === true){
              setPlayerActive(false);
@@ -56,30 +49,16 @@ import JSONops from '../../Logic/JSONops';
            }
          }
 
-       //   const displayCurrentStatus = props => {
-       //     if(props.isCurrentUserActive !== true){
-       //       setPlayerActive(false);
-       //       setStyle('warning');
-       //       setValue('Re-Activate?');
-       //     }else{
-       //       setPlayerActive(true );
-       //       setStyle('success');
-       //       setValue('De-Activate?')
-       //   }
-       // }
-
-
    return (
-       <Button className='deactivatebtn'  data-cy='deactivate'
+       <Button className='deactivatebtn'
+       data-cy='deactivate'
        placeholder="De-Activate?"
        data-testid="activatebtn-input"
-       bsStyle={bsStyle}
+       bsStyle={style}
        onClick={(e) => _handleChangeStatusPlayerBtnText(props.username)}
        >
-         {btnText}
+         {value}
        </Button>
    );
  };
-
-
  export default PlayerStatusBtn
