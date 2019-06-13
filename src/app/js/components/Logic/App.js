@@ -176,9 +176,16 @@ class App extends Component {
    }
 
    //cb from GlobalRankings.js to set the rank state as view only
+   //REVEIW: is this necessary? wasn't working until noticed it ...
    viewingOnlyCB(viewingOnlyCB) {
      console.log('in viewingOnlyCB', viewingOnlyCB)
-       this.setState({viewingOnlyCB})
+       this.setState({viewingOnlyCB:viewingOnlyCB})
+   }
+
+   //cb from PlayerStatusBtn.js to set the state of the button
+   isCurrentUserActiveCB(BtnState) {
+     console.log('in isCurrentUserActive', BtnState)
+       this.setState({isCurrentUserActive:BtnState})
    }
 
    // newrankIdCB (callback, param1, param2) {
@@ -511,6 +518,7 @@ console.log('here 4')
           balance={this.state.balance}
           error={this.state.error}
           isCurrentUserActive={this.state.isCurrentUserActive}
+          isCurrentUserActiveCB={(e) => this.isCurrentUserActiveCB()}
           onChildClick={(e) => this.handleChildClick()}
           onListAllChildClick={(e) => this.handleListAllChildClick()}
           specificRankingOptionBtns={this.state.specificRankingOptionBtns}

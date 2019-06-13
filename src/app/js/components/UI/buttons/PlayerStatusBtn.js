@@ -31,6 +31,8 @@ import JSONops from '../../Logic/JSONops';
              setPlayerActive(false);
              setStyle('warning');
              setValue('Re-Activate?');
+             //send to de-activate component 
+             props.history.push('/delete/@' + username);
            }else{
              setPlayerActive(true );
              setStyle('success');
@@ -38,7 +40,9 @@ import JSONops from '../../Logic/JSONops';
              try {
                console.log('in _handleReactivatePlayer', props.newrankIdCB, props.rankingJSONdata, username, props.account)
                JSONops.reactivatePlayer(props.newrankIdCB, props.rankingJSONdata, username, props.account);
-               this.props.history.push('/home/@' + username);
+               props.isCurrentUserActiveCB(false);
+               props.history.push('/home/@' + username);
+               //this.props.history.push('/home/@' + username);
              } catch (err) {
              // stop loading state and show the error
              console.log(err.message);

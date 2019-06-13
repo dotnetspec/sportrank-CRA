@@ -45,10 +45,8 @@
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.1",
     "jest-dom": "^3.4.0",
-    "react-addons-test-utils": "^15.6.2",
     "react-scripts": "^3.0.1",
-    "riteway": "^6.0.3",
-    "user-event": "^3.0.3"
+    "user-event": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
