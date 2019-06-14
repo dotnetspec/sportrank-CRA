@@ -24,9 +24,9 @@ import { _loadCurrentUserAccountsInsideMapping, _loadExternalBalance } from '../
 //Callback functions:
 //called in DoChallenge.js and used by Header.js to update the external account
 //balance state
-    export function updatedExtAcctBalCB(updatedExtAcctBalCB) {
-        this.setState({updatedExtAcctBalCB})
-    }
+    // export function updatedExtAcctBalCB(updatedExtAcctBalCB) {
+    //     this.setState({updatedExtAcctBalCB})
+    // }
     //these cb functions update the relevant components
     //DoChallenge.js
     export function contactNoCB(contactNoCB) {
@@ -157,7 +157,7 @@ class App extends Component {
       specificRankingOptionBtns: false
     }
     //bind the callback functions
-    updatedExtAcctBalCB = updatedExtAcctBalCB.bind(this);
+    //updatedExtAcctBalCB = updatedExtAcctBalCB.bind(this);
     contactNoCB = contactNoCB.bind(this);
     emailCB = emailCB.bind(this);
     userNameCB = userNameCB.bind(this);

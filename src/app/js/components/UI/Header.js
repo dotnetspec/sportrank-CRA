@@ -7,7 +7,7 @@ import { limitAddressLength } from '../../utils';
 import Spinner from 'react-spinkit';
 import JSONops from '../Logic/JSONops';
 import {updateWarningText} from '../Logic/Home'
-import {updatedExtAcctBalCB} from '../Logic/App'
+//import {updatedExtAcctBalCB} from '../Logic/App'
 import web3 from '../../../../web3';
 import PlayerStatusBtn from './buttons/PlayerStatusBtn';
 import ListAllRankingsBtn from './buttons/ListAllRankingsBtn';
@@ -22,19 +22,8 @@ import {formatBalance} from '../../utils';
 //to update the external account balance
 //http://johnnyji.me/react/2015/06/26/why-setting-props-as-state-in-react-is-blasphemy.html
   class CurrentETHBal extends React.Component {
-    constructor(props) {
-      super(props);
-      // no need to set state here because the balance is passed down
-      //from the parent component through props (and re-set in DoChanllenge using callback)
-      //updatedExtAcctBalCB(this.props.updatedExtAcctBalCB + 10 ** 18);
-
-      updatedExtAcctBalCB(this.props.updatedExtAcctBalCB);
-    }
     combineETHVals(){
       const origETHInt = parseInt(this.props.updatedExtAcctBalCB);
-      //updatedExtAcctBalCB is updated by callback in Home
-      //const newETHInt = parseInt(this.props.ExtAcctBalCB);
-        //const combinedCurrentETHVal = origETHInt + newETHInt;
       return origETHInt;
     }
     render() {
