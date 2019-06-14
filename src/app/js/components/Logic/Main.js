@@ -69,7 +69,7 @@ configPathname(){
           {/*
           REVIEW: The original for Home would be:
           <Route exact path='/' component={Home}  {...this.props} rank={this.props.rank} user={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata}
-          updatedExtAcctBalCB={this.props.updatedExtAcctBalCB} />
+          } />
           It doesn't work. Don't know why
           //NB: below changed to PropsRoute
           <Route exact path='/' component={Home}  {...this.props} />

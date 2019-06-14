@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 //import FieldGroup from './FieldGroup'
 import Spinner from 'react-spinkit'
 import JSONops from './JSONops'
-import {contactNoCB, emailCB, updatedExtAcctBalCB} from './App'
+import {contactNoCB, emailCB} from './App'
 //import sendmail from 'sendmail'
 //import Fortmatic from 'fortmatic';
 import web3 from '../../../../web3';
@@ -92,10 +92,11 @@ displayContactDetails(){
   emailCB(oppoEmailTxt);
   //contactNoCB callback function (Header.js)
   //let tempbalTodisplay = parseInt(this.props.updatedExtAcctBalCB) + (10 ** 18);
-  let tempXternAccountno = parseInt(this.props.updatedExtAcctBalCB)
-  //tempXternAccountno += 10 ** 18;
-  tempXternAccountno += 1;
-  updatedExtAcctBalCB(tempXternAccountno)
+  //REVIEW: not sure what below relates to. Probably not useful ...
+  // let tempXternAccountno = parseInt(this.props.updatedExtAcctBalCB)
+  // //tempXternAccountno += 10 ** 18;
+  // tempXternAccountno += 1;
+  // updatedExtAcctBalCB(tempXternAccountno)
 }
 
   //#region Component events

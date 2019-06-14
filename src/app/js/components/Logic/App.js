@@ -547,7 +547,6 @@ console.log('here 4')
           onError={(err, source) => this._onError(err, source)}
           rankingJSONdata={this.state.data}
           rankingListJSONdata={this.state.rankingListData}
-          updatedExtAcctBalCB={this.state.updatedExtAcctBalCB}
           contactNoCB={this.state.contactNoCB}
           emailCB={this.state.emailCB}
           rank={this.state.rank}

@@ -421,7 +421,6 @@ const { rankingJSONdata } = this.props;
           selectedOpponentName={selectRowPropAfterClickRow.selectedOpponentName}
           user={this.props.user.username}
           updateTextCB={this.updateText}
-          updatedExtAcctBalCB={this.props.updatedExtAcctBalCB}
           newrankIdCB={this.props.newrankIdCB}
           >
           </DoChallenge>

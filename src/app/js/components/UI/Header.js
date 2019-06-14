@@ -92,7 +92,8 @@ class Header extends Component {
    */
   _handleClose() {
     this.setState({ showModal: false });
-    updatedExtAcctBalCB = updatedExtAcctBalCB.bind(this);
+    //REVIEW: unable to see why this is necessary:
+    //updatedExtAcctBalCB = updatedExtAcctBalCB.bind(this);
   }
 
   /**
