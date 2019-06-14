@@ -21,14 +21,11 @@ import { formatEth, executingAt } from '../../../utils';
     //https://medium.com/@bluepnume/learn-about-promises-before-you-start-using-async-await-eb148164a9c8
     //to a (small) degree - anyway it's a useful reference
         export async function _loadExternalBalance(_loadExternalBalance_callback){
-        try {
+        //try/catch was interferring with the test!
           let devAccountBalResult = await web3.eth.getBalance("0xd496e890fcaa0b8453abb17c061003acb3bcc28e");
           devAccountBalResult = web3.utils.fromWei(devAccountBalResult, 'ether');
           devAccountBalResult =  formatEth(devAccountBalResult, 3);
           _loadExternalBalance_callback(devAccountBalResult);
-        }catch (err) {
-          return err;
-          }
       }
 
 // export async function isWeb3Connected(){

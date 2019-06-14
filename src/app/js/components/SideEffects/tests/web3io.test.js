@@ -32,13 +32,12 @@ describe('_loadCurrentUserAccounts in app.js should get account data', () => {
     //const address = ['0x847700B781667abdD98E1393420754E503dca5b7', '0x999900B781667abdD98E1393420754E503dca999'];
     const address = "0x847700B781667abdD98E1393420754E503dca5b7";
     function _loadCurrentUserAccountsInsideMapping_callback(obj) {
-      console.log('data', obj);
+       console.log('data', obj);
        expect(obj.address).toEqual("0x847700B781667abdD98E1393420754E503dca5b7");
-       //REVIEW: balance will change so need a better test here
-       //expect(obj.balance).toEqual(23.746269267999999996);
+       let bal = parseFloat(obj.balance);
+       expect(bal).toBeDefined();
+       expect(bal).toBeGreaterThanOrEqual(0.0);
        expect(obj.user.username).toEqual("player1");
-       //expect(data.id).toMatch('5c36f5422c87fa27306acb52');
-       //done() is the cb(?) function in the declaration (above)
        done();
      }
      //this function mimicks asnyc function in the .map in _loadCurrentUserAccounts()
@@ -48,19 +47,10 @@ describe('_loadCurrentUserAccounts in app.js should get account data', () => {
 
  describe('_loadExternalBalance in web3io.js should get account balance', () => {
    it('_loadExternalBalance', done => {
-     //const rankingDefaultid = '5c36f5422c87fa27306acb52';
-     //const address = ['0x847700B781667abdD98E1393420754E503dca5b7', '0x999900B781667abdD98E1393420754E503dca999'];
-     //const address = "0x847700B781667abdD98E1393420754E503dca5b7";
      function _loadExternalBalance_callback(bal) {
-       console.log('bal', bal);
-        //expect(obj.address).toEqual("0x847700B781667abdD98E1393420754E503dca5b7");
-        //REVIEW: balance will change so need a better test here
-        //expect(obj.balance).toEqual(23.746269267999999996);
-
+        bal = parseFloat(bal);
         expect(bal).toBeDefined();
         expect(bal).toBeGreaterThan(0);
-        //expect(data.id).toMatch('5c36f5422c87fa27306acb52');
-        //done() is the cb(?) function in the declaration (above)
         done();
       }
       _loadExternalBalance(_loadExternalBalance_callback);
