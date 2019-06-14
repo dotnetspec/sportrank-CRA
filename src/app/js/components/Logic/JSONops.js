@@ -39,6 +39,10 @@ const JSONops = {
     _sendCreateNewRankingJSONData
   */
 
+  simple: function(){
+        return false;
+  },
+
 
 //TODO: should be renamed to getJSONValWithUserName
   _getUserValue: function(jsonObj, currentUser, valueToLookup){
@@ -323,6 +327,7 @@ console.log('inside _setUserNameValue')
 
       //this._sendJSONData(updatedUserJSON);
       this._sendJSONDataWithRankingID(updatedUserJSON, rankingID);
+
     },
 
     _setVal: function(update){

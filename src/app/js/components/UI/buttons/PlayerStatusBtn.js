@@ -32,6 +32,7 @@ import JSONops from '../../Logic/JSONops';
    //setHover(!hover) try setHover(hover => !hover)
 
    //REVIEW: use the main props
+   //NB: orig uses 'event': const onChange = event => setValue(event.target.value);
      const _handleChangeStatusPlayerBtnText = () => {
        if(props.username !== null){
            if(props.isCurrentUserActive === true){
