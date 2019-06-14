@@ -158,6 +158,7 @@ class App extends Component {
     this.handleChildClick = this.handleChildClick.bind(this);
     this.handleListAllChildClick = this.handleListAllChildClick.bind(this);
     this.newrankIdCB = this.newrankIdCB.bind(this);
+    this.isCurrentUserActiveCB = this.isCurrentUserActiveCB.bind(this);
   }
 
   //display the ranking specific btn options

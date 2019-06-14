@@ -250,7 +250,7 @@ displayActivationBtns(){
   if(this.props.specificRankingOptionBtns){
         return(
           <>
-          <PlayerStatusBtn isCurrentUserActive={this.props.isCurrentUserActive} data-cy='playerStatus' data-testid='playerStatus' {...this.props} newrankIdCB={this.props.newrankIdCB} user={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
+          <PlayerStatusBtn isCurrentUserActive={this.props.isCurrentUserActive} data-cy='playerStatus' data-testid='playerStatus' {...this.props} newrankIdCB={this.props.newrankIdCB} username={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
           <Button bsStyle="primary" data-cy='reactivate' data-testid='reactivate' onClick={(e) => this._handleReactivatePlayer(this.props.user[1])}>
             Reactivate Player
           </Button>

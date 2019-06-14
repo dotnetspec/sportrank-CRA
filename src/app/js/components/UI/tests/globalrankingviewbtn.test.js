@@ -11,9 +11,6 @@ import { render, fireEvent, cleanup } from '@testing-library/react'
 //https://testing-library.com/docs/dom-testing-library/example-intro
 
 //this is the 'View' btn on the initial glabol rnakings page
-// it('Is View btn rendered?', async () => {
-//
-// })
 
 afterEach(cleanup);
 

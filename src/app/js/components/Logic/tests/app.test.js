@@ -9,6 +9,7 @@ import { render, fireEvent, cleanup,
 import {renderWithRouter} from '../../../utils'
 import 'jest-dom/extend-expect'
 import axiosMock  from 'axios'
+//import { MemoryRouter as Router } from 'react-router-dom';
 // import {
 //   // Tip: all queries are also exposed on an object
 //   // called "queries" which you could import here as well
@@ -137,18 +138,23 @@ describe('App', () => {
    expect(AppMount).toMatchSnapshot();
   });
 
-it.skip('renders App.js state correctly', () => {
-  const wrapper = mount(<BrowserRouter><App /></BrowserRouter>);
-  //console.log(wrapper.instance().state);
-  //const wrapper = shallow(<App />);
-  //const wrapper = mount(<App />);
-  console.log(wrapper.instance().state);
-  //const wrapper = mount(shallow(<BrowserRouter><App /></BrowserRouter>).get(0));
-  // expect(wrapper.state('foo')).to.equal(10);
-  expect(wrapper.state('.specificRankingOptionBtns')).toEqual(false);
-  //expect(wrapper.state().foo).to.equal(10);
-  //expect(wrapper.state().PlayerStatusBtn_clicked).to.equal(false);
-});
+//https://stackoverflow.com/questions/56285755/how-to-fix-typeerror-reactwrapperstatestate-requires-that-state-not
+// xit('renders App.js state correctly', () => {
+//
+//       const mountWithRouter = node => mount(<Router>{node}</Router>);
+//       const wrapper = mountWithRouter(<App />);
+//       const componentInstance = wrapper
+//         .childAt(0)
+//         .childAt(0) // could also be .find(Foo)
+//         .instance();
+//     const mountedState = componentInstance.state.specificRankingOptionBtns;
+//     expect(mountedState).toEqual(false);
+//
+// console.log(wrapper.instance().state);
+//   //expect(wrapper.state('.specificRankingOptionBtns')).toEqual(false);
+//   //expect(wrapper.state().foo).to.equal(10);
+//   //expect(wrapper.state().PlayerStatusBtn_clicked).to.equal(false);
+// });
 
 
 
