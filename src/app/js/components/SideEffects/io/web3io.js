@@ -1,5 +1,6 @@
 import web3 from '../../../../../web3';
 import DSportRank from '../../../../../ABIaddress';
+import { formatEth, executingAt } from '../../../utils';
 
 //NB: this function cannot actually be used in app.js as it's only simulating the one
 //nested inside the mapping function of _loadCurrentUserAccounts
@@ -15,6 +16,20 @@ import DSportRank from '../../../../../ABIaddress';
       const contractObj = {address: address, user: user, balance: balance};
       _loadCurrentUserAccountsInsideMapping_callback(contractObj);
     }
+
+    //REVIEW: below based on
+    //https://medium.com/@bluepnume/learn-about-promises-before-you-start-using-async-await-eb148164a9c8
+    //to a (small) degree - anyway it's a useful reference
+        export async function _loadExternalBalance(_loadExternalBalance_callback){
+        try {
+          let devAccountBalResult = await web3.eth.getBalance("0xd496e890fcaa0b8453abb17c061003acb3bcc28e");
+          devAccountBalResult = web3.utils.fromWei(devAccountBalResult, 'ether');
+          devAccountBalResult =  formatEth(devAccountBalResult, 3);
+          _loadExternalBalance_callback(devAccountBalResult);
+        }catch (err) {
+          return err;
+          }
+      }
 
 // export async function isWeb3Connected(){
 //   console.log('here')

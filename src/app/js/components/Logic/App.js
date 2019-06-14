@@ -9,7 +9,7 @@ import { formatEth, executingAt } from '../../utils';
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
 import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId } from '../SideEffects/io/Jsonio';
-import { _loadCurrentUserAccountsInsideMapping } from '../SideEffects/io/web3io';
+import { _loadCurrentUserAccountsInsideMapping, _loadExternalBalance } from '../SideEffects/io/web3io';
 //import p-iteration from 'p-iteration'
 
 //REVIEW: is the solution to this to write your own api?
@@ -58,6 +58,17 @@ import { _loadCurrentUserAccountsInsideMapping } from '../SideEffects/io/web3io'
     //     _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
     // }
 
+    //cb from web3io.js to set the state of the external balance
+    export function _loadExternalBalance_callback(balance) {
+      //console.log('data account in callback', data[0].ACCOUNT);
+      //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
+       //done();
+       console.log('balance', balance)
+       this.setState({
+                         updatedExtAcctBalCB: balance
+       })
+     }
+
 
     export function _loadsetJSONData_callback(data) {
       console.log('data account in callback', data[0].ACCOUNT);
@@ -71,7 +82,7 @@ import { _loadCurrentUserAccountsInsideMapping } from '../SideEffects/io/web3io'
                          //NB: data in state is slow to keep up, use responseJson!
                          isUserInJson: JSONops.isPlayerListedInJSON(data, this.state.user.username),
                          rank: JSONops._getUserValue(data, this.state.user.username, "RANK"),
-                         updatedExtAcctBalCB: this._loadExternalBalance(),
+                         //updatedExtAcctBalCB: this._loadExternalBalance(),
                          isCurrentUserActive: JSONops._getUserValue(data, this.state.user.username, "ACTIVE"),
                          //isRankingIDInvalid: JSONops.isRankingIDInvalid(responseJson[0])
        })
@@ -155,12 +166,15 @@ class App extends Component {
     _loadsetJSONData_callback = _loadsetJSONData_callback.bind(this);
     _loadsetRankingListJSONData_callback = _loadsetRankingListJSONData_callback.bind(this);
     getNewRankId_callback = getNewRankId_callback.bind(this);
+    _loadExternalBalance_callback = _loadExternalBalance_callback.bind(this);
     this.handleChildClick = this.handleChildClick.bind(this);
     this.handleListAllChildClick = this.handleListAllChildClick.bind(this);
     this.newrankIdCB = this.newrankIdCB.bind(this);
     this.isCurrentUserActiveCB = this.isCurrentUserActiveCB.bind(this);
+
   }
 
+//Below appears to be relevant to user events not e.g. callbacks that fetch data
   //display the ranking specific btn options
   handleChildClick() {
         this.setState({specificRankingOptionBtns:true})
@@ -188,6 +202,8 @@ class App extends Component {
      console.log('in isCurrentUserActive', BtnState)
        this.setState({isCurrentUserActive:BtnState})
    }
+
+
 
    // newrankIdCB (callback, param1, param2) {
    //   console.log('callback', callback,param1, param2)
@@ -431,29 +447,7 @@ console.log('here 4')
       console.log('this.state.loadingAccounts',this.state.loadingAccounts)
   }// end of _loadCurrentUserAccounts
 
-//REVIEW: below based on
-//https://medium.com/@bluepnume/learn-about-promises-before-you-start-using-async-await-eb148164a9c8
-//to a (small) degree - anyway it's a useful reference
-  _loadExternalBalance = async () => {
-    try {
-    let devAccountBalResult = await web3.eth.getBalance("0xd496e890fcaa0b8453abb17c061003acb3bcc28e");
-    devAccountBalResult = web3.utils.fromWei(devAccountBalResult, 'ether');
-    devAccountBalResult =  formatEth(devAccountBalResult, 3);
-    this.setState({
-      updatedExtAcctBalCB: devAccountBalResult
-    });
-    this.setState({ loadingExtBal: false });
-    this.setState({ isLoading: false });
 
-    //the 'return' is not important, the setState is
-    return devAccountBalResult;
-    //REVIEW: don't know what this kind of return statement is currently
-  }catch (err) {
-        return {
-            name: 'default user'
-        };
-    }
-  }
   /**
    * Sets the App state error and redirects the user to the error page
    *
@@ -474,6 +468,9 @@ console.log('here 4')
   //async componentDidMount() {
   componentDidMount() {
       try{
+        //https://medium.com/@bluepnume/learn-about-promises-before-you-start-using-async-await-eb148164a9c8
+        //to a (small) degree - anyway it's a useful reference
+        _loadExternalBalance(_loadExternalBalance_callback);
         //console.log('this.state.newrankIdCB before _loadCurrentUserAccounts', this.state.newrankIdCB)
         if(this.state.newrankIdCB === ''){
           this._loadCurrentUserAccounts();
@@ -487,11 +484,13 @@ console.log('here 4')
     //ListAllRankingss btn
     //console.log('this.state.newrankIdCB', this.state.newrankIdCB)
     if(this.state.newrankIdCB === ''){
+      //uses json.io
       _loadsetRankingListJSONData(this.state.rankingDefault,_loadsetRankingListJSONData_callback);
     }
     console.log('this.state.user.username in componentDidMount in app', this.state.user.username)
     if(this.state.user.username !== undefined){
-      //this.getNewRankId();
+      //uses json.io
+      //REVIEW: shouldn't callback be last arg?
       getNewRankId(getNewRankId_callback, "test description", '123456', 'test@test.com', '67890', 'player1');
     }
   }
