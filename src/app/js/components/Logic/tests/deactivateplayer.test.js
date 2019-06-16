@@ -11,6 +11,7 @@ import DeactivatePlayer from '../DeactivatePlayer'
 import React from 'react'
 import { render, cleanup, fireEvent, getByText } from '@testing-library/react'
 import {renderWithRouter} from '../../../utils'
+//import { render, cleanup, fireEvent, getByText, container, waitForElement, getByLabelText } from '@testing-library/react'
 
 //originally based on example:
 //https://testing-library.com/docs/dom-testing-library/example-intro
@@ -26,36 +27,19 @@ const historyMock = { push: jest.fn() };
     history: historyMock
   }
 
-  const { getByTestId} = renderWithRouter(<DeactivatePlayer
+  const { getByText} = renderWithRouter(<DeactivatePlayer
   {...props}
   />)
 
-  expect(getByTestId('activatebtn-input')).toHaveTextContent(
-    'De-Activate?'
-  )
+  // expect(getByTestId('activatebtn-input')).toHaveTextContent(
+  //   'De-Activate?'
+  // )
+
+  expect (getByText(/De-Activate/i)).toHaveTextContent('De-Activate Player');
 })
 
-it('PlayerStatusBtn text correct with isCurrentUserActive = false', async () => {
-    //const isCurrentUserActiveCB = jest.fn();
-    const historyMock = { push: jest.fn() };
-    const props  = {
-      isCurrentUserActive: false,
-      username: 'player1',
-      //isCurrentUserActiveCB: isCurrentUserActiveCB,
-      history: historyMock
-    }
-
-    const { getByTestId } = renderWithRouter(<DeactivatePlayer
-    {...props}
-    />)
-
-   const inputNode = getByTestId('activatebtn-input')
-
-   expect(inputNode).toHaveTextContent('Re-Activate?')
-   expect(inputNode).toMatchSnapshot()
-})
-
-it('PlayerStatusBtn display on click', async () => {
+//TODO:
+xit('De-activate player on click', async () => {
   const historyMock = { push: jest.fn() };
   const _handleChangeStatusPlayerBtnText = jest.fn();
   const isCurrentUserActiveCB = jest.fn();

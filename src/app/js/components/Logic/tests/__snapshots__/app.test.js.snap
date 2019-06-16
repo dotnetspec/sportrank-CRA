@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App mount <BrowserRouter><App /></BrowserRouter> correctly 1`] = `ReactWrapper {}`;
+exports[`Enzyme tests: App mount <BrowserRouter><App /></BrowserRouter> correctly 1`] = `ReactWrapper {}`;
 
-exports[`App renders whole App.js correctly 1`] = `ShallowWrapper {}`;
+exports[`Enzyme tests: App renders whole App.js correctly 1`] = `ShallowWrapper {}`;
 
-exports[`App shallow <BrowserRouter><App /></BrowserRouter> correctly 1`] = `ShallowWrapper {}`;
+exports[`Enzyme tests: App shallow <BrowserRouter><App /></BrowserRouter> correctly 1`] = `ShallowWrapper {}`;

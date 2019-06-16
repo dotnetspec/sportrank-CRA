@@ -12,38 +12,13 @@ import web3 from '../../../../web3';
 import PlayerStatusBtn from './buttons/PlayerStatusBtn';
 import ListAllRankingsBtn from './buttons/ListAllRankingsBtn';
 import {formatBalance} from '../../utils';
+import CurrentETHBal from './Currentethbal'
 /**
  * Class displaying the accumulated ETH balance from
  *previous transactions
  *
  * @extends React.Component
  */
-//CurrentETHBal works with callbacks in the parent (Header)
-//to update the external account balance
-//http://johnnyji.me/react/2015/06/26/why-setting-props-as-state-in-react-is-blasphemy.html
-  class CurrentETHBal extends React.Component {
-    combineETHVals(){
-      const origETHInt = parseInt(this.props.updatedExtAcctBalCB);
-      return origETHInt;
-    }
-    render() {
-      let htmlTxtToReturn = ''
-      let htmlTxtToReturn2 = ''
-      if(this.props.updatedExtAcctBalCB !== 0){
-       htmlTxtToReturn = 'SportRank has contributed: '
-       htmlTxtToReturn2 = this.combineETHVals() + " ETH to your favourite sport"
-      }
-      return(
-        <div>
-          <small>
-            { htmlTxtToReturn }
-            <br></br>
-            { htmlTxtToReturn2 }
-          </small>
-        </div>
-      );
-    }
-  }
 
 /**
  * Class representing the header of the page that handles
@@ -219,6 +194,14 @@ class Header extends Component {
     }
   }
 
+  //Using functions for the fragments to make them easier to understand than multiple
+  //ternary operators etc...
+
+  getMenuItem(){
+
+    
+  }
+
   // ifUserIsntInJsonGoToCreateUser(){
   //   //REVIEW: Had difficulty placing this code elsewhere without props.history undefined errors etc.
   //   //If the account user doesn't match any record in json go straight to create,
@@ -366,10 +349,11 @@ displayActivationBtns(){
     //TODO: change to states.challenge
 
 
+
     states.challenge = <React.Fragment>
 
     <ListAllRankingsBtn data-testid='ListAllRankings' onListAllChildClick={this.props.onListAllChildClick}/>
-      <Button bsStyle="primary" data-cy='UpdateProfile' onClick={(e) => this._handleUpdateProfile(this.props.user[1])}>
+      <Button bsStyle="primary" data-cy='UpdateProfile' data-testid='UpdateProfile' onClick={(e) => this._handleUpdateProfile(this.props.user[1])}>
         Update Profile
       </Button>
       {this.displayActivationBtns()}

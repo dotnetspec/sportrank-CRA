@@ -7,6 +7,7 @@ import GlobalRankings from '../../Logic/GlobalRankings'
 //import chai from 'chai'
 //import GlobalRankingViewBtn  from '../buttons/GlobalRankingViewBtn'
 import PlayerStatusBtn from '../buttons/PlayerStatusBtn';
+import {renderWithRouter} from '../../../utils'
 
 import Header  from '../Header'
 import renderer from 'react-test-renderer'
@@ -18,6 +19,14 @@ describe('Header UI', () => {
    const header = shallow(<Header />);
   expect(header).toMatchSnapshot();
  });
+
+ xit('RTL - check btn visibility', () => {
+       const { getByTestId, getByText } = renderWithRouter(<Header />);
+       //expect (getByTestId('UpdateProfile')).toBeInTheDocument();
+       expect (getByText(/Update Profile/i)).toBeInTheDocument();
+       //const aboutAnchorNode = getByText(/about/i)
+});
+
 
    it.skip('should handle a child click (View) and change state of specificRankingOptionBtns in app.js', () => {
      const onParentClick = stub();
