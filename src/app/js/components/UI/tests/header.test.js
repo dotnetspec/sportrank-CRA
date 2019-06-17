@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 //import sinon from 'sinon'
 import { stub, sinon } from 'sinon';
 import App from '../../Logic/App'
-import GlobalRankings from '../../Logic/GlobalRankings'
+//import GlobalRankings from '../../Logic/GlobalRankings'
 //import chai from 'chai'
 //import GlobalRankingViewBtn  from '../buttons/GlobalRankingViewBtn'
 import PlayerStatusBtn from '../buttons/PlayerStatusBtn';
@@ -13,6 +13,16 @@ import Header  from '../Header'
 import renderer from 'react-test-renderer'
 import { shallow, mount } from 'enzyme';
 //import icon from './img/ross.png'
+import {
+  render,
+  fireEvent,
+  cleanup,
+  waitForElement,
+} from '@testing-library/react'
+import 'jest-dom/extend-expect'
+
+beforeEach(cleanup)
+
 describe('Header UI', () => {
 
  it('Shallowrenders header.js', () => {
@@ -20,13 +30,47 @@ describe('Header UI', () => {
   expect(header).toMatchSnapshot();
  });
 
- xit('RTL - check btn visibility', () => {
-       const { getByTestId, getByText } = renderWithRouter(<Header />);
-       //expect (getByTestId('UpdateProfile')).toBeInTheDocument();
-       expect (getByText(/Update Profile/i)).toBeInTheDocument();
-       //const aboutAnchorNode = getByText(/about/i)
-});
+ fit('RTL - check initial display', () => {
+   const userAccountsArray =
+   //const firstArrayObject =
+    [
+        { address: '0x847700B781667abdD98E1393420754E503dca5b7',
+          balance: 2.0,
+          user: {
+             username: 'player1',
+             description: "test2",
+             email: "test@test.com",
+             owner: "0x847700B781667abdD98E1393420754E503dca5b7",
+             picture: "Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL",
+             rankingDefault: "5c81c1e944e81057efe3e2c8"
+          }
+        }
+      ];
 
+      const userOjb = {
+                username: 'player1',
+                description: "test2",
+                email: "test@test.com",
+                owner: "0x847700B781667abdD98E1393420754E503dca5b7",
+                picture: "Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL",
+                rankingDefault: "5c81c1e944e81057efe3e2c8"
+           };
+        //seems don't need this now that Array.isArray tells us that it's an array
+        //const dataAsArray = Array.from(firstArrayObject);
+          //const dataAsArray = firstArrayObject;
+
+   const props  = {
+     userAccounts: userAccountsArray,
+     user: userOjb,
+     account: '0x847700B781667abdD98E1393420754E503dca5b7'
+   }
+       const { getByText } = renderWithRouter(<Header {...props}/>);
+       //expect (getByTestId('UpdateProfile')).toBeInTheDocument();
+       //expect (getByText(/address/i)).toBeInTheDocument();
+       //const aboutAnchorNode = getByText(/about/i)
+       expect(getByText(/List All Rankings/i)).toHaveTextContent('List All Rankings')
+       expect (getByText(/Update Profile/i)).toBeInTheDocument();
+});
 
    it.skip('should handle a child click (View) and change state of specificRankingOptionBtns in app.js', () => {
      const onParentClick = stub();

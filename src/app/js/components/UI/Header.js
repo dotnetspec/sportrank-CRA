@@ -199,7 +199,7 @@ class Header extends Component {
 
   getMenuItem(){
 
-    
+
   }
 
   // ifUserIsntInJsonGoToCreateUser(){
@@ -235,6 +235,7 @@ displayActivationBtns(){
   //#region React lifecycle events
   render() {
     if(this.props.userAccounts !== undefined){
+      console.log('this.props.userAccounts', this.props.userAccounts)
     //const { picture, username, usersRankingLists } = this.props.user;
     const { picture, username } = this.props.user;
     // console.log('usersRankingLists')
@@ -260,7 +261,7 @@ displayActivationBtns(){
     const accts = this.props.userAccounts.map((userAccount, index) => {
       const isCurrUser = userAccount.address === this.props.account;
       const hasUser = Boolean(userAccount.user.username);
-        console.log('accts', accts)
+        //console.log('accts', accts)
         console.log('this.props.account', this.props.account)
         console.log('header address inside mapping of account dropdown', userAccount.address)
         console.log('header user name inside mapping of account dropdown', userAccount.user.username)
