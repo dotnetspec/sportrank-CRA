@@ -314,7 +314,7 @@ console.log('inside _setUserNameValue')
 
 
     reactivatePlayer: function(rankingID, data, currentUser, accountno){
-      console.log('in reactivatePlayer', rankingID, data, currentUser, accountno)
+      //console.log('in reactivatePlayer', rankingID, data, currentUser, accountno)
       let updateUserRankToEndObj = {
         jsonRS: data
         };

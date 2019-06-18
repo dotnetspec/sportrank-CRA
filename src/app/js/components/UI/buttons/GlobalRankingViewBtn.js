@@ -45,8 +45,8 @@ class GlobalRankingViewBtn extends Component {
     //tell Header that the view btn has been clicked
     //so it can display the 'Activate?' btn
     this.props.onChildClick();
-    console.log('typeof row', typeof row)
-    console.log('row.RANKINGID', row.RANKINGID)
+    //console.log('typeof row', typeof row)
+    //console.log('row.RANKINGID', row.RANKINGID)
     //NB: this was using 'template literals' backquote or backtick character
     //to find the RANKINGID in the row object
     //I think this means it therefore (together with

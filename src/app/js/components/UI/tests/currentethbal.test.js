@@ -10,7 +10,7 @@ afterEach(cleanup);
 
 describe('CurrentETHBal UI', () => {
 
-     fit('RTL - check CurrentETHBal renders ', () => {
+     xit('RTL - check CurrentETHBal renders ', () => {
        const props  = {
          updatedExtAcctBalCB: 1.0
        }

@@ -13,7 +13,7 @@ const fromJson = JSONops.reactivatePlayer();
 expect(fromJson).toBe(false);
 })
 
-it('JSONops first test ', async () => {
+xit('JSONops first test ', async () => {
 const fromJson = JSONops.simple();
 expect(fromJson).toBe(false);
 })

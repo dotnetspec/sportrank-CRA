@@ -10,7 +10,7 @@ afterEach(cleanup)
 
 jest.mock('axios');
 
-test('Fetch makes an API call and displays the greeting when load-greeting is clicked', async () => {
+it('Fetch makes an API call and displays the greeting when load-greeting is clicked', async () => {
   // Arrange
   axiosMock.get.mockResolvedValueOnce({data: {greeting: 'hello there'}})
   const url = '/greeting'

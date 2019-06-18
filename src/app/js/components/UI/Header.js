@@ -235,7 +235,7 @@ displayActivationBtns(){
   //#region React lifecycle events
   render() {
     if(this.props.userAccounts !== undefined){
-      console.log('this.props.userAccounts', this.props.userAccounts)
+      //console.log('this.props.userAccounts', this.props.userAccounts)
     //const { picture, username, usersRankingLists } = this.props.user;
     const { picture, username } = this.props.user;
     // console.log('usersRankingLists')
@@ -262,11 +262,11 @@ displayActivationBtns(){
       const isCurrUser = userAccount.address === this.props.account;
       const hasUser = Boolean(userAccount.user.username);
         //console.log('accts', accts)
-        console.log('this.props.account', this.props.account)
-        console.log('header address inside mapping of account dropdown', userAccount.address)
-        console.log('header user name inside mapping of account dropdown', userAccount.user.username)
-        console.log('index', index)
-        console.log('isCurrUser', isCurrUser)
+        // console.log('this.props.account', this.props.account)
+        // console.log('header address inside mapping of account dropdown', userAccount.address)
+        // console.log('header user name inside mapping of account dropdown', userAccount.user.username)
+        // console.log('index', index)
+        // console.log('isCurrUser', isCurrUser)
 
 //NB: this return is part of accts mapping above. Not the render return (below)
       return <MenuItem

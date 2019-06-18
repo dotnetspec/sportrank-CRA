@@ -63,7 +63,7 @@ import { _loadCurrentUserAccountsInsideMapping, _loadExternalBalance } from '../
       //console.log('data account in callback', data[0].ACCOUNT);
       //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
        //done();
-       console.log('balance', balance)
+       //console.log('balance', balance)
        this.setState({
                          updatedExtAcctBalCB: balance
        })
@@ -71,7 +71,7 @@ import { _loadCurrentUserAccountsInsideMapping, _loadExternalBalance } from '../
 
 
     export function _loadsetJSONData_callback(data) {
-      console.log('data account in callback', data[0].ACCOUNT);
+      //console.log('data account in callback', data[0].ACCOUNT);
       //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
        //done();
        this.setState({
@@ -89,7 +89,7 @@ import { _loadCurrentUserAccountsInsideMapping, _loadExternalBalance } from '../
      }
 
      export function _loadsetRankingListJSONData_callback(data) {
-       console.log('data account in _loadsetRankingListJSONData_callback', data[0].RANKINGNAME);
+       //console.log('data account in _loadsetRankingListJSONData_callback', data[0].RANKINGNAME);
         this.setState({
               rankingListData: data
               //loadingRankingListJSON: false
@@ -355,7 +355,7 @@ class App extends Component {
         //console.log('web3.eth.defaultAccount', web3.eth.getAccounts(accounts => console.log(accounts[0])))
         //now all these assignments are done on the userAccounts array
         let defaultUserAccount = userAccounts.find((userAccount) => {
-          console.log('about to return default userAccount.address', web3.eth.defaultAccount);
+          //console.log('about to return default userAccount.address', web3.eth.defaultAccount);
           return userAccount.address === web3.eth.defaultAccount;
           //return userAccount.address === web3.eth.getAccounts(accounts => console.log(accounts[0]));
         });
@@ -478,7 +478,7 @@ console.log('here 4')
       //_loadsetJSONData(this.state.newrankIdCB, callback);
       //console.log('this.state.account', this.state.account)
       }catch(e){
-        //console.log('componentDidMount app _loadCurrentUserAccounts()', e)
+        console.log('componentDidMount app _loadCurrentUserAccounts()', e)
       }
     //if newRankId(CB?) is blank a user either has just loaded the app or has clicked the
     //ListAllRankingss btn
@@ -487,11 +487,11 @@ console.log('here 4')
       //uses json.io
       _loadsetRankingListJSONData(this.state.rankingDefault,_loadsetRankingListJSONData_callback);
     }
-    console.log('this.state.user.username in componentDidMount in app', this.state.user.username)
+    //console.log('this.state.user.username in componentDidMount in app', this.state.user.username)
     if(this.state.user.username !== undefined){
       //uses json.io
       //REVIEW: shouldn't callback be last arg?
-      getNewRankId(getNewRankId_callback, "test description", '123456', 'test@test.com', '67890', 'player1');
+      getNewRankId("test description", '123456', 'test@test.com', '67890', 'player1', getNewRankId_callback);
     }
   }
 

@@ -37,17 +37,17 @@ import { formatEth, executingAt } from '../../../utils';
 //     }
 
 export async function connectToWeb3new(connectToWeb3_callback){
-    console.log('connectToWeb3new')
+    //console.log('connectToWeb3new')
   let ethereumObj = {};
     if (typeof web3.ethereum !== 'undefined') {
-      console.log('you have an etherem compatible browser')
+      //console.log('you have an etherem compatible browser')
       if(web3.ethereum.isMetaMask){
-        console.log('you have MM in the browser')
+        //console.log('you have MM in the browser')
         ethereumObj = {networkVersion:  window.ethereum.networkVersion,   // property_# may be an identifier...
                             selectedAddress:  window.ethereum.selectedAddress}
         // console.log('ethereum.networkVersion',  )
         // console.log('ethereum.selectedAddress', )
-        connectToWeb3_callback(ethereumObj);
+        await connectToWeb3_callback(ethereumObj);
         //window.ethereum.enable();
         }
     };
@@ -73,6 +73,7 @@ export async function connectToWeb3(){
     // Legacy dapp browsers...
     else if (window.web3) {
         window.web3 = web3;
+        //window.web3 = await web3.enable();
         //new Web3(web3.currentProvider);
         // Acccounts always exposed
         //web3.eth.sendTransaction({/* ... */});

@@ -40,7 +40,7 @@ export async function _loadsetRankingListJSONData (rankingDefault, _loadsetRanki
 //get a new rankid ready in case user wants/needs to create a new ranking
 //do this after _loadsetJSONData so that we will already have the correct username
 //getNewRankId = async () => {
-export async function getNewRankId(getNewRankId_callback, description, account, email, contactno, user) {
+export async function getNewRankId(description, account, email, contactno, user, getNewRankId_callback) {
   //console.log('userNameCB in getNewRankId in app', this.state.userNameCB)
     try{
     //this.setState({ isLoading: true});
@@ -77,7 +77,7 @@ export async function getNewRankId(getNewRankId_callback, description, account, 
       id: 1 };
 
       let myJSON = JSON.stringify(obj);
-      console.log('getNewRankId using myJSON', myJSON)
+      //console.log('getNewRankId using myJSON', myJSON)
 
       req.open("POST", "https://api.jsonbin.io/b", true);
       //req.open("PUT", "https://api.jsonbin.io/b", true);
@@ -87,7 +87,7 @@ export async function getNewRankId(getNewRankId_callback, description, account, 
       //|| {}
       }catch (err) {
       // stop loading state and show the error
-      console.log(err)
+      //console.log(err)
       //this.setState({ isLoading: false, error: err.message });
     };
       return null;

@@ -13,16 +13,17 @@ import JSONops from '../../Logic/JSONops';
    //const [btnText, setValue] = React.useState('De-Activate?');
    //const [bsStyle, setStyle] = React.useState('success');
    //do this way to avoid 're-render' error
-   let bsStyle = 'success';
+   let bsStyle = {color: 'red'}
    let btnText = 'De-Activate?';
 
    if(props.isCurrentUserActive === true){
-     bsStyle = 'success';
+     bsStyle = {color: 'red'}
      btnText='De-Activate?';
      // setValue('De-Activate?')
      // setStyle('success')
    }else{
-     bsStyle = 'warning';
+     //bsStyle = 'success';
+     bsStyle = {color: 'green'}
      btnText='Re-Activate?';
      // setValue('Re-Activate?')
      // setStyle('warning')
@@ -52,16 +53,16 @@ import JSONops from '../../Logic/JSONops';
              //value='De-Activate?';
              try {
                //REVIEW: isCurrentUserActiveCB needs be called based on JSONops.reactivatePlayer
-               //returning True/False. Put here for now so that test will pass 
+               //returning True/False. Put here for now so that test will pass
                props.isCurrentUserActiveCB(true);
-               console.log('in _handleReactivatePlayer', props.newrankIdCB, props.rankingJSONdata, props.username, props.account)
+               //console.log('in _handleReactivatePlayer', props.newrankIdCB, props.rankingJSONdata, props.username, props.account)
                JSONops.reactivatePlayer(props.newrankIdCB, props.rankingJSONdata, props.username, props.account);
 
                props.history.push('/home/@' + props.username);
                //this.props.history.push('/home/@' + username);
              } catch (err) {
              // stop loading state and show the error
-             console.log('err.message', err.message);
+             //console.log('err.message', err.message);
              };
            }
          }else {
@@ -70,11 +71,12 @@ import JSONops from '../../Logic/JSONops';
          }
 
    return (
-       <Button className='deactivatebtn'
+       <Button
+       className='deactivatebtn'
        data-cy='deactivate'
        placeholder="De-Activate?"
        data-testid="activatebtn-input"
-       bsStyle={bsStyle}
+       style={bsStyle}
        onClick={(e) => _handleChangeStatusPlayerBtnText()}
        >
          {btnText}

@@ -22,6 +22,6 @@ it('tests mockCallback', () => {
  expect(mockCallback.mock.results[0].value).toBe(42);
 });
 
-test('adds 1 + 2 to equal 3', () => {
+it('adds 1 + 2 to equal 3', () => {
   expect(sum(1, 2)).toBe(3);
 });
