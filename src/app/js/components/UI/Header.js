@@ -202,6 +202,88 @@ class Header extends Component {
 
   }
 
+  renderIsNotEditableFragmanet(){
+
+    const tooltipProps = {
+      container: this,
+      target: this.tooltipTarget,
+      show: this.state.showTooltip
+    };
+
+    return(<React.Fragment>
+      <span className='profile-link'>
+        {/*<Glyphicon glyph="question-sign" />*/}
+        <span
+          onMouseEnter={(e) => this._handleToggle(e)}
+          onMouseLeave={(e) => this._handleToggle(e)}
+          className='username'
+          ref={(span) => this.tooltipTarget = span}
+        >{limitAddressLength(this.props.account, 4)}
+        </span>
+      </span>
+      <small className='balance'>{formatBalance(this.props.balance)}</small>
+      <Overlay {...tooltipProps} placement="bottom">
+        <Tooltip id="overload-bottom">{this.props.account}</Tooltip>
+      </Overlay>
+    </React.Fragment>);
+  }
+
+  renderHasUserFragment(userAccount){
+    return(
+      <React.Fragment><Image
+      src={userAccount.user.picture}
+      alt={userAccount.user.username}
+      width={30}
+      circle
+      className='profile'
+      ></Image>
+      <span className='username' data-cy='usernameinprofile'>{userAccount.user.username}</span>
+      </React.Fragment>
+    )
+  }
+
+  renderNoUserFragment(userAccount){
+      return(<React.Fragment>
+        <span className='address'>{limitAddressLength(userAccount.address, 4)}</span>
+      </React.Fragment>
+    )
+  }
+
+  renderBasedOnUserExists(userAccount){
+    const hasUser = Boolean(userAccount.user.username);
+    return hasUser ?
+      this.renderHasUserFragment(userAccount)
+      :
+      this.renderNoUserFragment(userAccount)
+  }
+
+  renderAMenuItem(userAccount, index){
+    const isCurrUser = userAccount.address === this.props.account;
+    return(
+        <MenuItem
+        key={index}
+        eventKey={index}
+        active={isCurrUser}
+        value={userAccount.address}
+        username={userAccount.user.username}
+        onSelect={(key, e) => this._handleAcctChange(e, key)}
+      >
+        {this.renderBasedOnUserExists(userAccount)}
+        <React.Fragment>
+          <small className='balance'>{formatBalance(userAccount.balance)}</small>
+        </React.Fragment>
+      </MenuItem>
+    )
+  }
+
+  mapAndRenderUserAccounts(){
+    // generate the DropdownItems for the accounts to populate
+    // the accounts dropdown
+  return this.props.userAccounts.map((userAccount, index) => {
+      return this.renderAMenuItem(userAccount, index);
+    });
+  }
+
   // ifUserIsntInJsonGoToCreateUser(){
   //   //REVIEW: Had difficulty placing this code elsewhere without props.history undefined errors etc.
   //   //If the account user doesn't match any record in json go straight to create,
@@ -222,12 +304,7 @@ displayActivationBtns(){
   //     if(pathname.includes("home/@")){
   if(this.props.specificRankingOptionBtns){
         return(
-          <>
           <PlayerStatusBtn isCurrentUserActive={this.props.isCurrentUserActive} data-cy='playerStatus' data-testid='playerStatus' {...this.props} newrankIdCB={this.props.newrankIdCB} username={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
-          <Button bsStyle="primary" data-cy='reactivate' data-testid='reactivate' onClick={(e) => this._handleReactivatePlayer(this.props.user[1])}>
-            Reactivate Player
-          </Button>
-          </>
       )
     }else{ return null }
 }
@@ -243,11 +320,7 @@ displayActivationBtns(){
     const isEditable = Boolean(username);
     const isError = this.props.error && this.props.error.message;
     const isLoading = !Boolean(this.props.account) && !isError;
-    const tooltipProps = {
-      container: this,
-      target: this.tooltipTarget,
-      show: this.state.showTooltip
-    };
+
 
     let navClasses = [];
     if (isError) navClasses.push('error');
@@ -258,45 +331,7 @@ displayActivationBtns(){
     //const { picture, username } = this.props.user;
     // generate the DropdownItems for the accounts to populate
     // the accounts dropdown
-    const accts = this.props.userAccounts.map((userAccount, index) => {
-      const isCurrUser = userAccount.address === this.props.account;
-      const hasUser = Boolean(userAccount.user.username);
-        //console.log('accts', accts)
-        // console.log('this.props.account', this.props.account)
-        // console.log('header address inside mapping of account dropdown', userAccount.address)
-        // console.log('header user name inside mapping of account dropdown', userAccount.user.username)
-        // console.log('index', index)
-        // console.log('isCurrUser', isCurrUser)
-
-//NB: this return is part of accts mapping above. Not the render return (below)
-      return <MenuItem
-        key={index}
-        eventKey={index}
-        active={isCurrUser}
-        value={userAccount.address}
-        username={userAccount.user.username}
-        onSelect={(key, e) => this._handleAcctChange(e, key)}
-      >
-        {hasUser ?
-          <React.Fragment><Image
-            src={userAccount.user.picture}
-            alt={userAccount.user.username}
-            width={30}
-            circle
-            className='profile'
-          ></Image>
-            <span className='username' data-cy='usernameinprofile'>{userAccount.user.username}</span></React.Fragment>
-          :
-          <React.Fragment>
-
-            <span className='address'>{limitAddressLength(userAccount.address, 4)}</span>
-          </React.Fragment>
-        }
-        <React.Fragment>
-          <small className='balance'>{formatBalance(userAccount.balance)}</small>
-        </React.Fragment>
-      </MenuItem>
-    });
+    //const accts = this.mapAndRenderUserAccounts();
 
     let states = {};
 
@@ -309,22 +344,7 @@ displayActivationBtns(){
     // state when our account has loaded, and it was determined that that
     // account (address) has not been mapped to an owner/user in the contract
     // (This happens in the App component)
-    states.isNotEditable = <React.Fragment>
-      <span className='profile-link'>
-        {/*<Glyphicon glyph="question-sign" />*/}
-        <span
-          onMouseEnter={(e) => this._handleToggle(e)}
-          onMouseLeave={(e) => this._handleToggle(e)}
-          className='username'
-          ref={(span) => this.tooltipTarget = span}
-        >{limitAddressLength(this.props.account, 4)}
-        </span>
-      </span>
-      <small className='balance'>{formatBalance(this.props.balance)}</small>
-      <Overlay {...tooltipProps} placement="bottom">
-        <Tooltip id="overload-bottom">{this.props.account}</Tooltip>
-      </Overlay>
-    </React.Fragment>;
+    states.isNotEditable = this.renderIsNotEditableFragmanet();
 
     // state when our account has loaded, and it was determined that the
     // account (address) has been mapped to an owner/user in the contract
@@ -423,7 +443,7 @@ displayActivationBtns(){
                       </Dropdown.Toggle>
 
                       <Dropdown.Menu className="accounts-list">
-                        {accts}
+                        {this.mapAndRenderUserAccounts()}
                       </Dropdown.Menu>
                     </Dropdown>
                   </ButtonToolbar>

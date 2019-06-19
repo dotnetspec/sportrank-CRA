@@ -21,7 +21,49 @@ afterEach(cleanup);
 jest.mock('axios');
 
 //ensure describe blocks don't overlap
-describe('RTL - <App/> ', () => {
+//default approach is RTL unless otherwise specified
+describe('<App/> ', () => {
+
+  const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
+
+  const userAccountsArray =
+   [
+       { address: testAccountPlayer1Rinkeby,
+         balance: 2.0,
+         user: {
+            username: 'player1',
+            description: "test2",
+            email: "test@test.com",
+            owner: "0x847700B781667abdD98E1393420754E503dca5b7",
+            picture: "Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL",
+            rankingDefault: "5c81c1e944e81057efe3e2c8"
+         }
+       }
+     ];
+
+     const userOjb = {
+               username: 'player1',
+               description: "test2",
+               email: "test@test.com",
+               owner: testAccountPlayer1Rinkeby,
+               picture: "Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL",
+               rankingDefault: "5c81c1e944e81057efe3e2c8"
+          };
+
+  it('RTL - check initial display', () => {
+    const props  = {
+      userAccounts: userAccountsArray,
+      //user: userOjb,
+      account: testAccountPlayer1Rinkeby,
+      user: 'player1'
+    }
+        const { getByText, debug  } = renderWithRouter(<App {...props}/>);
+        //debug();
+        expect(getByText(/List All Rankings/i)).toHaveTextContent('List All Rankings')
+        expect (getByText(/Update Profile/i)).toBeInTheDocument();
+        expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument();
+ });
+
   xit('loads and displays greeting', async () => {
     const url = '/'
     const { getByText, getByTestId } = renderWithRouter(<App url={url} />)

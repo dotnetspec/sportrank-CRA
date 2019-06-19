@@ -25,7 +25,7 @@ import '@testing-library/dom'
 
 beforeEach(cleanup)
 
-//top level describe
+//ensure descrbe blocks don't overlap
 describe('Header UI', () => {
 
 //setup the user account info passed from app
@@ -34,6 +34,7 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
 
 //currently the app refers to a userAccount and a user so tests
 //setup for both
+//need these setup vars to be within one descrbe block
   const userAccountsArray =
    [
        { address: testAccountPlayer1Rinkeby,
@@ -60,9 +61,6 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
 
       //do the tests
        it('RTL - check initial display', () => {
-              //seems don't need this now that Array.isArray tells us that it's an array
-              //const dataAsArray = Array.from(firstArrayObject);
-                //const dataAsArray = firstArrayObject;
          const props  = {
            userAccounts: userAccountsArray,
            user: userOjb,
@@ -74,71 +72,65 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
              expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument();
       });
 
-        //2nd level describe
-        describe('specificRankingOptionBtns', () => {
-            it('true displays', () => {
-              const props  = {
-                userAccounts: userAccountsArray,
-                user: userOjb,
-                account: testAccountPlayer1Rinkeby,
-                specificRankingOptionBtns: true,
-                isCurrentUserActive: true
-              }
-                  const { getByText } = renderWithRouter(<Header {...props}/>);
-                  expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
-                  expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/De-Activate?/i)
-                  expect(getByText(/Update Profile/i)).toBeInTheDocument();
-                  expect(getByText(/List All Rankings/i)).toBeInTheDocument()
-            });
+    it('specificRankingOptionBtns - true displays', () => {
+      const props  = {
+        userAccounts: userAccountsArray,
+        user: userOjb,
+        account: testAccountPlayer1Rinkeby,
+        specificRankingOptionBtns: true,
+        isCurrentUserActive: true
+      }
+          const { getByText } = renderWithRouter(<Header {...props}/>);
+          expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
+          expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/De-Activate?/i)
+          expect(getByText(/Update Profile/i)).toBeInTheDocument();
+          expect(getByText(/List All Rankings/i)).toBeInTheDocument()
+    });
 
 
-            it('false does not display', () => {
-              const props  = {
-                userAccounts: userAccountsArray,
-                user: userOjb,
-                account: testAccountPlayer1Rinkeby,
-                specificRankingOptionBtns: false,
-                isCurrentUserActive: true
-              }
-                  const { getByText } = renderWithRouter(<Header {...props}/>);
-                  expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument();
-                  expect(getByText(/Update Profile/i)).toBeInTheDocument();
-                  expect(getByText(/List All Rankings/i)).toBeInTheDocument()
-            });
-        });
+    it('specificRankingOptionBtns - false does not display', () => {
+      const props  = {
+        userAccounts: userAccountsArray,
+        user: userOjb,
+        account: testAccountPlayer1Rinkeby,
+        specificRankingOptionBtns: false,
+        isCurrentUserActive: true
+      }
+          const { getByText } = renderWithRouter(<Header {...props}/>);
+          expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument();
+          expect(getByText(/Update Profile/i)).toBeInTheDocument();
+          expect(getByText(/List All Rankings/i)).toBeInTheDocument()
+    });
 
-      //2nd level describe
-      describe('Header UI - User Active Btn Text and Color', () => {
-          it('RTL - isCurrentUserActive false', () => {
-            const props  = {
-              userAccounts: userAccountsArray,
-              user: userOjb,
-              account: testAccountPlayer1Rinkeby,
-              specificRankingOptionBtns: true,
-              isCurrentUserActive: false
-            }
-                renderWithRouter(<Header {...props}/>);
-                //const { debug } = renderWithRouter(<Header {...props}/>);
-                //debug();
-                expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
-                expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/Re-Activate?/i)
-                expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveAttribute("style", 'color: green;');
-          });
+  it('RTL - isCurrentUserActive false', () => {
+    const props  = {
+      userAccounts: userAccountsArray,
+      user: userOjb,
+      account: testAccountPlayer1Rinkeby,
+      specificRankingOptionBtns: true,
+      isCurrentUserActive: false
+    }
+        renderWithRouter(<Header {...props}/>);
+        //const { debug } = renderWithRouter(<Header {...props}/>);
+        //debug();
+        expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
+        expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/Re-Activate?/i)
+        expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveAttribute("style", 'color: green;');
+  });
 
-          it('RTL - isCurrentUserActive true', () => {
-            const props  = {
-              userAccounts: userAccountsArray,
-              user: userOjb,
-              account: testAccountPlayer1Rinkeby,
-              specificRankingOptionBtns: true,
-              isCurrentUserActive: true
-            }
-                renderWithRouter(<Header {...props}/>);
-                //const { debug } = renderWithRouter(<Header {...props}/>);
-                //debug();
-                expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
-                expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/De-Activate?/i)
-                expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveAttribute("style", 'color: red;');
-          });
-        });
+  it('RTL - isCurrentUserActive true', () => {
+    const props  = {
+      userAccounts: userAccountsArray,
+      user: userOjb,
+      account: testAccountPlayer1Rinkeby,
+      specificRankingOptionBtns: true,
+      isCurrentUserActive: true
+    }
+        renderWithRouter(<Header {...props}/>);
+        //const { debug } = renderWithRouter(<Header {...props}/>);
+        //debug();
+        expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
+        expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/De-Activate?/i)
+        expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveAttribute("style", 'color: red;');
+  });
 });
