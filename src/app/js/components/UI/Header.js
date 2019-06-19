@@ -284,20 +284,138 @@ class Header extends Component {
     });
   }
 
-  // ifUserIsntInJsonGoToCreateUser(){
-  //   //REVIEW: Had difficulty placing this code elsewhere without props.history undefined errors etc.
-  //   //If the account user doesn't match any record in json go straight to create,
-  //   //this is mainly useful for dev following Embark reset and json reset
-  //   if(!JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, this.props.user)){
-  //     console.log('isPlayerListedInJSON 1')
-  //     //this.props.history.push('/create');
-  //     //return <NavLink exact to="/create"><small>This account is not currently listed in this ranking. Click to join it?</small></NavLink>
-  //   }
-  // }
+  renderIsEditableFragment(picture, username){
+    return(
+      <React.Fragment>
+        <span className='profile-link'>
+          <Image
+            src={picture}
+            alt={username}
+            width={60}
+            circle
+            className='profile'
+          ></Image>
+          <span className='username' data-cy='usernameinprofilelink'>{username}</span>
+        </span>
+        <small className='balance'>{formatBalance(this.props.balance)}</small>
+      </React.Fragment>
+    )
+  }
 
-componentDidMount(){
-//console.log('header componentDidMount user', this.props.user)
-}
+  renderChallengeFragment(){
+    return(
+      <React.Fragment>
+      <ListAllRankingsBtn data-testid='ListAllRankings' onListAllChildClick={this.props.onListAllChildClick}/>
+        <Button bsStyle="primary" data-cy='UpdateProfile' data-testid='UpdateProfile' onClick={(e) => this._handleUpdateProfile(this.props.user[1])}>
+          Update Profile
+        </Button>
+        {this.displayActivationBtns()}
+        <Button bsStyle="primary" data-cy='CreateNewRanking' onClick={(e) => this._handleCreateNewRanking(this.props.user[1])}>
+          Create New Ranking
+        </Button>
+      </React.Fragment>
+    )
+  }
+
+  determineStatesForDisplay(){
+    const { picture, username } = this.props.user;
+    let states = {};
+    // state when we are waiting for the App component to finish loading
+    // the current account (address) from web3.eth.getAccounts()
+    states.isLoading = <Spinner name="pacman" color="white" fadeIn='none' />;
+    states.isError = <span className='error'>ERROR!</span>;
+    // state when our account has loaded, and it was determined that that
+    // account (address) has not been mapped to an owner/user in the contract
+    // (This happens in the App component)
+    states.isNotEditable = this.renderIsNotEditableFragmanet();
+    // state when our account has loaded, and it was determined that the
+    // account (address) has been mapped to an owner/user in the contract
+    // (This happens in the App component)
+    states.isEditable = this.renderIsEditableFragment(picture, username);
+    //REVIEW: this used to be the tweet button and assoc Modal
+    //potentially confusing - may need to move the code around so that relevant functionality
+    //in same place
+    states.challenge = this.renderChallengeFragment();
+    return states;
+  }
+
+  handleRenderErrorOrCurrentEthBal(states){
+    const isError = this.props.error && this.props.error.message;
+    return isError ?
+      states.isError
+      :
+      <CurrentETHBal updatedExtAcctBalCB={this.props.updatedExtAcctBalCB}
+      />
+  }
+
+  renderNavbarHeader(isLoading, states){
+    return(
+      <Navbar.Header>
+      <Navbar.Brand>
+        {this.navHomeOrToUserUpdate()}
+        {isLoading ? states.isLoading : this.handleRenderErrorOrCurrentEthBal(states)}
+      </Navbar.Brand>
+      <Navbar.Toggle />
+    </Navbar.Header>
+    )
+  }
+
+  renderNavbarCollapse(isLoading, states, isEditable, isError){
+    return(
+    <Navbar.Collapse>
+      <div className='navbar-right'>
+        <Navbar.Form>
+         {/* <Search />*/}
+        </Navbar.Form>
+        {this.handleDropDownIsLoadingOrRender(isLoading,isError, isEditable, states)}
+      </div>
+    </Navbar.Collapse>
+    )
+  }
+
+  handleRenderErrorOrDropDownCollapse(isError, isEditable, states){
+    return isError ? states.isError : this.renderDropDownCollapseNoError(isEditable, states)
+  }
+
+  renderDropDownCollapseNoError(isEditable, states){
+    return(
+        <React.Fragment>
+        <ButtonToolbar>
+          <Dropdown id="dropdown-accounts">
+            <Dropdown.Toggle>
+              {isEditable ?
+                states.isEditable
+                :
+                states.isNotEditable
+              }
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu className="accounts-list">
+              {this.mapAndRenderUserAccounts()}
+            </Dropdown.Menu>
+          </Dropdown>
+        </ButtonToolbar>
+        {isEditable ? states.challenge : ''}
+      </React.Fragment>
+    )
+  }
+
+  handleDropDownIsLoadingOrRender(isLoading,isError, isEditable, states){
+    return(isLoading ? states.isLoading :
+      this.handleRenderErrorOrDropDownCollapse(isError, isEditable, states)
+    )
+  }
+
+  handleNavClasses(isError,isEditable){
+    let navClasses = [];
+    if (isError) navClasses.push('error');
+    if (!isEditable) navClasses.push('logged-out');
+    return navClasses;
+  }
+
+// componentDidMount(){
+// //console.log('header componentDidMount user', this.props.user)
+// }
 
 displayActivationBtns(){
   // const {pathname} = this.props.location;
@@ -312,152 +430,26 @@ displayActivationBtns(){
   //#region React lifecycle events
   render() {
     if(this.props.userAccounts !== undefined){
-      //console.log('this.props.userAccounts', this.props.userAccounts)
-    //const { picture, username, usersRankingLists } = this.props.user;
-    const { picture, username } = this.props.user;
-    // console.log('usersRankingLists')
-    // console.log(usersRankingLists)
-    const isEditable = Boolean(username);
-    const isError = this.props.error && this.props.error.message;
-    const isLoading = !Boolean(this.props.account) && !isError;
+          const isEditable = Boolean(this.props.user.username);
+          const isError = this.props.error && this.props.error.message;
+          const isLoading = !Boolean(this.props.account) && !isError;
 
+          let navClasses = this.handleNavClasses(isError,isEditable);
 
-    let navClasses = [];
-    if (isError) navClasses.push('error');
-    if (!isEditable) navClasses.push('logged-out');
+          let states = this.determineStatesForDisplay();
 
-    //console.log('header user name in account dropdown', this.props.userAccounts)
-
-    //const { picture, username } = this.props.user;
-    // generate the DropdownItems for the accounts to populate
-    // the accounts dropdown
-    //const accts = this.mapAndRenderUserAccounts();
-
-    let states = {};
-
-    // state when we are waiting for the App component to finish loading
-    // the current account (address) from web3.eth.getAccounts()
-    states.isLoading = <Spinner name="pacman" color="white" fadeIn='none' />;
-
-    states.isError = <span className='error'>ERROR!</span>;
-
-    // state when our account has loaded, and it was determined that that
-    // account (address) has not been mapped to an owner/user in the contract
-    // (This happens in the App component)
-    states.isNotEditable = this.renderIsNotEditableFragmanet();
-
-    // state when our account has loaded, and it was determined that the
-    // account (address) has been mapped to an owner/user in the contract
-    // (This happens in the App component)
-    states.isEditable = <React.Fragment>
-      <span className='profile-link'>
-        <Image
-          src={picture}
-          alt={username}
-          width={60}
-          circle
-          className='profile'
-        ></Image>
-        <span className='username' data-cy='usernameinprofilelink'>{username}</span>
-      </span>
-      <small className='balance'>{formatBalance(this.props.balance)}</small>
-    </React.Fragment>;
-
-    // state for showing the update profile button and challenge button modal
-    //REVIEW: this used to be the tweet button and assoc Modal
-    //potentially confusing - may need to move the code around so that relevant functionality
-    //in same place
-    //TODO: change to states.challenge
-
-
-
-    states.challenge = <React.Fragment>
-
-    <ListAllRankingsBtn data-testid='ListAllRankings' onListAllChildClick={this.props.onListAllChildClick}/>
-      <Button bsStyle="primary" data-cy='UpdateProfile' data-testid='UpdateProfile' onClick={(e) => this._handleUpdateProfile(this.props.user[1])}>
-        Update Profile
-      </Button>
-      {this.displayActivationBtns()}
-      <Button bsStyle="primary" data-cy='CreateNewRanking' onClick={(e) => this._handleCreateNewRanking(this.props.user[1])}>
-        Create New Ranking
-      </Button>
-
-
-
-      {/*<Modal show={this.state.showModal} onHide={(e) => this._handleClose(e)}>
-        <Modal.Header closeButton>
-          <Modal.Title>New tweet</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <DoChallenge username={username} onAfterChallenge={(e) => this._handleClose()}></DoChallenge>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={(e) => this._handleClose(e)}>Close</Button>
-        </Modal.Footer>
-      </Modal>*/}
-    </React.Fragment>;
-
-    //console.log('states', states)
-//This is what actually gets rendered to the DOM
-    return (
-      <Navbar collapseOnSelect className={navClasses.join(' ')}>
-        <Navbar.Header>
-          <Navbar.Brand>
-
-            {this.navHomeOrToUserUpdate()}
-
-            {isLoading ?
-              states.isLoading
-              :
-              isError ?
-                states.isError
-                :
-            <CurrentETHBal updatedExtAcctBalCB={this.props.updatedExtAcctBalCB}
-            />
-          }
-          </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
-
-        <Navbar.Collapse>
-          <div className='navbar-right'>
-            <Navbar.Form>
-             {/* <Search />*/}
-            </Navbar.Form>
-
-            {isLoading ?
-              states.isLoading
-              :
-              isError ?
-                states.isError
-                :
-                <React.Fragment>
-                  <ButtonToolbar>
-                    <Dropdown id="dropdown-accounts">
-                      <Dropdown.Toggle>
-                        {isEditable ?
-                          states.isEditable
-                          :
-                          states.isNotEditable
-                        }
-                      </Dropdown.Toggle>
-
-                      <Dropdown.Menu className="accounts-list">
-                        {this.mapAndRenderUserAccounts()}
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </ButtonToolbar>
-                  {isEditable ? states.challenge : ''}
-                </React.Fragment>
-            }
-          </div>
-        </Navbar.Collapse>
-      </Navbar>
-    );
-  }
-  else{
-    return(null)
-  }//end if this.props.userAccounts !== undefined)
+      //This is what actually gets rendered to the DOM
+          return (
+            <Navbar collapseOnSelect className={navClasses.join(' ')}>
+            {this.renderNavbarHeader(isLoading, states)}
+            {this.renderNavbarCollapse(isLoading, states, isEditable, isError)}
+            </Navbar>
+          );
+      }
+      else{
+        //return(null)
+        return 'There is no account currently defined!'
+      }//end if this.props.userAccounts !== undefined)
 }
 
   //#endregion
