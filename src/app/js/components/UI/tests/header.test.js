@@ -25,6 +25,29 @@ import '@testing-library/dom'
 
 beforeEach(cleanup)
 
+//Header props from Main:
+// data-testid='header'
+// user={this.state.user}
+// account={this.state.account}
+// userAccounts={this.state.userAccounts}
+// balance={this.state.balance}
+// error={this.state.error}
+// isCurrentUserActive={this.state.isCurrentUserActive}
+// isCurrentUserActiveCB={(e) => this.isCurrentUserActiveCB()}
+// onChildClick={(e) => this.handleChildClick()}
+// onListAllChildClick={(e) => this.handleListAllChildClick()}
+// specificRankingOptionBtns={this.state.specificRankingOptionBtns}
+// onAfterUserUpdate={(e) => this._loadCurrentUserAccounts()}
+// onError={(err, source) => this._onError(err, source)}
+// rankingJSONdata={this.state.data}
+// rankingListJSONdata={this.state.rankingListData}
+// updatedExtAcctBalCB={this.state.updatedExtAcctBalCB}
+// usersRankingLists={this.state.usersRankingLists}
+// isUserInJson={this.state.isUserInJson}
+// rankingDefault={this.state.rankingDefault}
+// newrankId={this.state.newrankId}
+// newrankIdCB={this.state.newrankIdCB
+
 //ensure descrbe blocks don't overlap
 describe('Header UI', () => {
 

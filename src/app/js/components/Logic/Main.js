@@ -86,7 +86,7 @@ configPathname(){
           <PropsRoute path='/update/@:username' component={UpdateUser} {...this.props} rankingJSONdata={this.props.rankingJSONdata}/>
           <PropsRoute path='/newranking/@:username' component={CreateNewRanking} {...this.props} rankingJSONdata={this.props.rankingJSONdata} rankingListJSONdata={this.props.rankingListJSONdata}/>
           <PropsRoute path='/userrankings/@:username' component={UserRankings} {...this.props} rankingJSONdata={this.props.rankingJSONdata}/>
-          <PropsRoute path='/delete/@:username' component={DeactivatePlayer} {...this.props} user={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata}/>}/>
+          <PropsRoute path='/delete/@:username' component={DeactivatePlayer} {...this.props} user={this.props.user} rankingJSONdata={this.props.rankingJSONdata}/>}/>
           <PropsRoute path='/whoopsie' component={Error} {...this.props}/>
 
         </Switch>

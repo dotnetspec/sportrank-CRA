@@ -9,7 +9,7 @@ import { formatEth, executingAt } from '../../utils';
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
 import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId } from '../SideEffects/io/Jsonio';
-import { _loadCurrentUserAccountsInsideMapping, _loadExternalBalance } from '../SideEffects/io/web3io';
+import { _loadCurrentUserAccountsInsideMapping, _loadExternalBalance, _loadCurrentUserAccounts } from '../SideEffects/io/web3io';
 //import p-iteration from 'p-iteration'
 
 //REVIEW: is the solution to this to write your own api?
@@ -63,11 +63,11 @@ import { _loadCurrentUserAccountsInsideMapping, _loadExternalBalance } from '../
       //console.log('data account in callback', data[0].ACCOUNT);
       //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
        //done();
-       //console.log('balance', balance)
-       this.setState({
-                         updatedExtAcctBalCB: balance
-       })
-     }
+       console.log('balance', balance)
+           if(balance !== undefined){
+             this.setState({ updatedExtAcctBalCB: balance })
+          }
+    }
 
 
     export function _loadsetJSONData_callback(data) {
@@ -107,6 +107,35 @@ import { _loadCurrentUserAccountsInsideMapping, _loadExternalBalance } from '../
         this.setState({ user: data.user});
         this.setState({ balance: data.balance});
       }
+
+      // export function _loadCurrentUserAccounts_callback(state){
+      //   //console.log('state in cb', JSON.parse(JSON.stringify(state.user)))
+      //   if(state !== undefined){
+      //   console.log('state in cb', state)
+      //   this.setState({
+      //     error: state.error,
+      //     rankingDefault: state.rankingDefault,
+      //     //isUserInJson: JSONops.isPlayerListedInJSON(this.state.data, this.state.user.username),
+      //     //isCurrentUserActive: JSONops._getUserValue(this.state.data, this.state.user.username, "ACTIVE"),
+      //     newrankId: state.newrankId,
+      //     user: state.user.username,
+      //     //contactnoCB: state.user.contactno,
+      //     //emailCB: state.user.email,
+      //     //REVEIW: Might need a descriptionDB here:
+      //     //description: state.user.description,
+      //     //account: web3.eth.defaultAccount,
+      //     account: state.address,
+      //     balance: state.balance,
+      //     //rank: JSONops._getUserValue(this.state.data, this.state.user.username, "RANK"),
+      //     contactNoCB: state.contactNoCB,
+      //     emailCB: state.emailCB,
+      //     loadingAccounts: false,
+      //     //newrankId must be cleared so a new one has to be regenerated for each account
+      //     viewingOnlyCB: true
+      //    });
+      //  }
+
+      //}
 
 /**
  * Class representing the highest order component. Any user
@@ -167,10 +196,12 @@ class App extends Component {
     _loadsetRankingListJSONData_callback = _loadsetRankingListJSONData_callback.bind(this);
     getNewRankId_callback = getNewRankId_callback.bind(this);
     _loadExternalBalance_callback = _loadExternalBalance_callback.bind(this);
+    //_loadCurrentUserAccounts_callback = _loadCurrentUserAccounts_callback.bind(this);
     this.handleChildClick = this.handleChildClick.bind(this);
     this.handleListAllChildClick = this.handleListAllChildClick.bind(this);
     this.newrankIdCB = this.newrankIdCB.bind(this);
     this.isCurrentUserActiveCB = this.isCurrentUserActiveCB.bind(this);
+    //this._loadCurrentUserAccounts_callback = this._loadCurrentUserAccounts_callback.bind(this);
 
   }
 
@@ -234,218 +265,218 @@ class App extends Component {
 //_loadCurrentUserAccounts uses an anonymous async function to assign
 //the accounts array from web3.eth.getAccounts() to the State array 'userAccounts'
 //via each address in the map function  (which does: return userAccount.address)
-  _loadCurrentUserAccounts = async () => {
-    //console.log('_loadCurrentUserAccounts')
-      // get all the accounts the node controls
-      //await EmbarkJS.Blockchain.connect(DSportRank);
-      //web3.Blockchain.co
-      // console.log('about to do await on getAccounts(), when done - got accounts after await')
-      // console.log('exec at', executingAt());
-      const accountsFromTheBC = await web3.eth.getAccounts();
-        //console.log('got accounts after await', accountsFromTheBC)
-        //console.log('exec at', executingAt());
-
-        //console.log('the data', this.state.data);
-
-        //accountsFromTheBC just indicates how many times to iterate. It isn't used
-        //otherwise
-
-      // Generates a mapping of users and accounts to be used
-      // for populating the accounts dropdown
-      // map takes 3 args -
-      // current item value (accounts);
-      // current item index (async function (address, next))
-      // the name of the new array that the mapping will create.
-      //not sure if need p-iteration
-      //const { map } = require('p-iteration');
-      // param 1 - current item value (accounts);
-      //accounts should be an array of addresses
-      //when using MetaMask we can only currently access one account at a time
-      //until an MM update changes this
-      await map(accountsFromTheBC,
-        //which are being mapped to the relevant addresses:
-        //param 2 - current item index
-        //map() maps 2 types of indexed item
-        //(labelled address and callback (was originally 'next')), which come back as promises,
-        //to it's 3rd param userAccounts
-
-        //I think this is designed so that the current item value (accountsFromTheBC)
-        //becomes the first param in the async function
-        //callback is the (arbitrary) name that can be called within this
-        //async function
-        //this is an anonymous function (with 2 params) that could be using fat arrow syntax
-        //it can have as many params as it likes
-
-        //I believe address (arbitrary name, could be anything)
-        //is being iteratively extracted from the accountsFromTheBC
-        //array, and then used here to get the user name from the contract
-        //via the usernameHash
-
-        //instead of using an anonymous function will used named one from io/Contractio
-        //async function _loadCurrentUserAccountsInsideMapping(address, _loadCurrentUserAccountsInsideMapping_callback){
-        async function (address, callback) {
-            try {
-              // console.log('callback inside await map', callback)
-              // console.log('address inside await map', address)
-              // // get the owner details for this address from the contract
-              // console.log('about to get usernameHash, when done - got usernameHash after await')
-              //console.log('exec at', executingAt());
-              const usernameHash = await DSportRank.methods.owners(address).call();
-              // console.log('exec at', executingAt());
-              // get user details from contract
-              const user = await DSportRank.methods.users(usernameHash).call();
-
-              // gets the balance of the address
-              let balance = await web3.eth.getBalance(address);
-              balance = web3.utils.fromWei(balance, 'ether');
-              //console.log('balance', balance)
-              //REVIEW: stopped execution here after first account loads
-              //to prevent Callback already called error
-              //return null;
-              // update user picture with ipfs url
-              //user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
-              // add the following mapping to our result
-              //console.log('callback1', callback)
-              //call the callback function and wait for it's promise
-              //(async functions return promises)
-
-              //callback creates obj that is implicitly assigned by the
-              //mapping to userAccounts array (or obj?)
-              //because the callback is the result of this anon
-              //async function
-              //in brackets is the data that's come back from the callback function
-              //and the data as it comes back
-              //from the contract
-              //the 'null' might originally have been the first
-              //argument of the callback function as the currently iterated
-              //value of the array.  that was passed to the cb
-              //it went from being a 'this' to a null because it went out of scope
-
-              //if you use the Contractio code the callback will already give you
-              //a complete obj. No need to make the assignment here then
-
-              //_loadCurrentUserAccountsInsideMapping_callback(contractObj);
-
-              callback(null, {
-                address: address,
-                user: user,
-                balance: balance
-                //,
-                //NB: added by me:
-                //updatedExtAcctBalCB: globalVardevAccountBalResult
-              });
-              //console.log('callback2', callback)
-            }
-            catch (err) {
-              //console.log("Error within current item index", err);
-
-              //next(err);
-            }//end of try/catch within async function definition within await/map
-          }//end of async function definition within await map
-
-          //param 3 - the new name for the array that the mapping will create
-          //this moment (when the accounts have been returned) is used to
-          //do a whole series of state var assignments in another anonymous
-          //function
-      , (err, userAccounts) => {
-        //err is only relevant in the next line
-        if (err) return this._onError(err, 'App._loadCurrentUserAccounts');
-        //console.log('user in 3rd param', user)
-        //console.log('userAccounts array', userAccounts)
-        //console.log('web3.eth.defaultAccount', web3.eth.getAccounts(accounts => console.log(accounts[0])))
-        //now all these assignments are done on the userAccounts array
-        let defaultUserAccount = userAccounts.find((userAccount) => {
-          //console.log('about to return default userAccount.address', web3.eth.defaultAccount);
-          return userAccount.address === web3.eth.defaultAccount;
-          //return userAccount.address === web3.eth.getAccounts(accounts => console.log(accounts[0]));
-        });
-        //now all these assignments are done as the values are added,
-        //one at a time, to the userAccounts array
-        //HACK: I think only works for 1 account
-        //I'm forced to specify array index[0] when it wasn't previously required
-        defaultUserAccount = userAccounts;
-        // console.log('accountsFromTheBC in third param', userAccounts)
-        // console.log('here 1')
-        // console.log('defaultUserAccount', defaultUserAccount)
-        // console.log('defaultUserAccount.user.username', defaultUserAccount[0].user.username)
-        // console.log('here 1a')
-        //check that there is an existing default account user
-        //before setting state, and if there isn't go to create
-        if(defaultUserAccount[0].user.username === '' || defaultUserAccount[0].user.username === undefined){
-          console.log('here 2')
-          this.setState({
-          rankingDefault: '',
-          isUserInJson: false,
-          isCurrentUserActive:false });
-          this.props.history.push('/create');
-        }else{
-          console.log('here 3')
-        //console.log('ready to set state which will prompt re-render')
-        console.log('new rankingDefault to be set in loadingAccounts', defaultUserAccount[0].user.rankingDefault)
-        this.setState({
-          //rank: JSONops._getUserValue(this.state.data, this.state.user.username, "RANK"),
-          //rankingDefault: defaultUserAccount[0].user.rankingDefault,
-          //REVEIW: perhaps change the naming of rankingDefault as it may be confusing
-          //now that it is set by the user selection in GlobalRankings not the default value
-          // in the contract
-
-          newrankId: defaultUserAccount[0].user.rankingDefault,
-          isUserInJson: JSONops.isPlayerListedInJSON(this.state.data, this.state.user.username),
-          isCurrentUserActive: JSONops._getUserValue(this.state.data, this.state.user.username, "ACTIVE")
-        }) //end of the setState
-      }//end of the if
-console.log('here 4')
-//common setState
-//the most important setState is the first one, which is the point of this
+//   _loadCurrentUserAccounts = async () => {
+//     //console.log('_loadCurrentUserAccounts')
+//       // get all the accounts the node controls
+//       //await EmbarkJS.Blockchain.connect(DSportRank);
+//       //web3.Blockchain.co
+//       // console.log('about to do await on getAccounts(), when done - got accounts after await')
+//       // console.log('exec at', executingAt());
+//       const accountsFromTheBC = await web3.eth.getAccounts();
+//         //console.log('got accounts after await', accountsFromTheBC)
+//         //console.log('exec at', executingAt());
 //
-      this.setState({ userAccounts: userAccounts,
-        user: defaultUserAccount[0].user,
-        contactno: defaultUserAccount[0].user.contactno,
-        email: defaultUserAccount[0].user.email,
-        description: defaultUserAccount[0].user.description,
-        //account: web3.eth.defaultAccount,
-        account: defaultUserAccount[0].address,
-        balance: defaultUserAccount[0].balance,
-        //rank: JSONops._getUserValue(this.state.data, this.state.user.username, "RANK"),
-        contactNoCB: '',
-        emailCB: '',
-        loadingAccounts: false,
-        //newrankId must be cleared so a new one has to be regenerated for each account
-        newrankId: '',
-        viewingOnlyCB: true
-      }) //end of the setState
-      console.log('here 5')
-      //console.log('this.state.account', this.state.account)
-        console.log('ready to _loadsetRankingListJSONData after a render')
-        console.log('isUserInJson', this.state.isUserInJson)
-
-        console.log('isCurrentUserActive', this.state.isCurrentUserActive)
-        //json won't be loaded until there is at least a default ranking initially
-        //otherwise we'll be going to createuser
-        //if(this.state.rankingDefault !== ''){
-          //REVIEW: possibly use JSONops._loadsetJSONData here if
-          //will allow setState here
-          //OR use componentDidMount
-        //this._loadsetJSONData();
-
-        console.log('this.state.data', this.state.data)
-
-      }//end of the functionality that has (mysteriously) been added into
-      //what should have been simply passing an array into a map function
-      //however, much critical assignment is done in this stage
-
-    );////end of whole of await map including error Checking
-    //I think a .then() could be added at the end of the await[?]
-      console.log('end of loadingAccounts')
-      //currently forcing loading accounts to end once the
-      //current or first account has been found (to enable app to load)
-      //multiple account loading not currently a priority
-      //actual - didn't work code continues (don't know why)
-      this.setState({
-        loadingAccounts: false
-      })
-      console.log('this.state.loadingAccounts',this.state.loadingAccounts)
-  }// end of _loadCurrentUserAccounts
+//         //console.log('the data', this.state.data);
+//
+//         //accountsFromTheBC just indicates how many times to iterate. It isn't used
+//         //otherwise
+//
+//       // Generates a mapping of users and accounts to be used
+//       // for populating the accounts dropdown
+//       // map takes 3 args -
+//       // current item value (accounts);
+//       // current item index (async function (address, next))
+//       // the name of the new array that the mapping will create.
+//       //not sure if need p-iteration
+//       //const { map } = require('p-iteration');
+//       // param 1 - current item value (accounts);
+//       //accounts should be an array of addresses
+//       //when using MetaMask we can only currently access one account at a time
+//       //until an MM update changes this
+//       await map(accountsFromTheBC,
+//         //which are being mapped to the relevant addresses:
+//         //param 2 - current item index
+//         //map() maps 2 types of indexed item
+//         //(labelled address and callback (was originally 'next')), which come back as promises,
+//         //to it's 3rd param userAccounts
+//
+//         //I think this is designed so that the current item value (accountsFromTheBC)
+//         //becomes the first param in the async function
+//         //callback is the (arbitrary) name that can be called within this
+//         //async function
+//         //this is an anonymous function (with 2 params) that could be using fat arrow syntax
+//         //it can have as many params as it likes
+//
+//         //I believe address (arbitrary name, could be anything)
+//         //is being iteratively extracted from the accountsFromTheBC
+//         //array, and then used here to get the user name from the contract
+//         //via the usernameHash
+//
+//         //instead of using an anonymous function will used named one from io/Contractio
+//         //async function _loadCurrentUserAccountsInsideMapping(address, _loadCurrentUserAccountsInsideMapping_callback){
+//         async function (address, callback) {
+//             try {
+//               // console.log('callback inside await map', callback)
+//               // console.log('address inside await map', address)
+//               // // get the owner details for this address from the contract
+//               // console.log('about to get usernameHash, when done - got usernameHash after await')
+//               //console.log('exec at', executingAt());
+//               const usernameHash = await DSportRank.methods.owners(address).call();
+//               // console.log('exec at', executingAt());
+//               // get user details from contract
+//               const user = await DSportRank.methods.users(usernameHash).call();
+//
+//               // gets the balance of the address
+//               let balance = await web3.eth.getBalance(address);
+//               balance = web3.utils.fromWei(balance, 'ether');
+//               //console.log('balance', balance)
+//               //REVIEW: stopped execution here after first account loads
+//               //to prevent Callback already called error
+//               //return null;
+//               // update user picture with ipfs url
+//               //user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
+//               // add the following mapping to our result
+//               //console.log('callback1', callback)
+//               //call the callback function and wait for it's promise
+//               //(async functions return promises)
+//
+//               //callback creates obj that is implicitly assigned by the
+//               //mapping to userAccounts array (or obj?)
+//               //because the callback is the result of this anon
+//               //async function
+//               //in brackets is the data that's come back from the callback function
+//               //and the data as it comes back
+//               //from the contract
+//               //the 'null' might originally have been the first
+//               //argument of the callback function as the currently iterated
+//               //value of the array.  that was passed to the cb
+//               //it went from being a 'this' to a null because it went out of scope
+//
+//               //if you use the Contractio code the callback will already give you
+//               //a complete obj. No need to make the assignment here then
+//
+//               //_loadCurrentUserAccountsInsideMapping_callback(contractObj);
+//
+//               callback(null, {
+//                 address: address,
+//                 user: user,
+//                 balance: balance
+//                 //,
+//                 //NB: added by me:
+//                 //updatedExtAcctBalCB: globalVardevAccountBalResult
+//               });
+//               //console.log('callback2', callback)
+//             }
+//             catch (err) {
+//               //console.log("Error within current item index", err);
+//
+//               //next(err);
+//             }//end of try/catch within async function definition within await/map
+//           }//end of async function definition within await map
+//
+//           //param 3 - the new name for the array that the mapping will create
+//           //this moment (when the accounts have been returned) is used to
+//           //do a whole series of state var assignments in another anonymous
+//           //function
+//       , (err, userAccounts) => {
+//         //err is only relevant in the next line
+//         if (err) return this._onError(err, 'App._loadCurrentUserAccounts');
+//         //console.log('user in 3rd param', user)
+//         //console.log('userAccounts array', userAccounts)
+//         //console.log('web3.eth.defaultAccount', web3.eth.getAccounts(accounts => console.log(accounts[0])))
+//         //now all these assignments are done on the userAccounts array
+//         let defaultUserAccount = userAccounts.find((userAccount) => {
+//           //console.log('about to return default userAccount.address', web3.eth.defaultAccount);
+//           return userAccount.address === web3.eth.defaultAccount;
+//           //return userAccount.address === web3.eth.getAccounts(accounts => console.log(accounts[0]));
+//         });
+//         //now all these assignments are done as the values are added,
+//         //one at a time, to the userAccounts array
+//         //HACK: I think only works for 1 account
+//         //I'm forced to specify array index[0] when it wasn't previously required
+//         defaultUserAccount = userAccounts;
+//         // console.log('accountsFromTheBC in third param', userAccounts)
+//         // console.log('here 1')
+//         // console.log('defaultUserAccount', defaultUserAccount)
+//         // console.log('defaultUserAccount.user.username', defaultUserAccount[0].user.username)
+//         // console.log('here 1a')
+//         //check that there is an existing default account user
+//         //before setting state, and if there isn't go to create
+//         if(defaultUserAccount[0].user.username === '' || defaultUserAccount[0].user.username === undefined){
+//           console.log('here 2')
+//           this.setState({
+//           rankingDefault: '',
+//           isUserInJson: false,
+//           isCurrentUserActive:false });
+//           this.props.history.push('/create');
+//         }else{
+//           console.log('here 3')
+//         //console.log('ready to set state which will prompt re-render')
+//         console.log('new rankingDefault to be set in loadingAccounts', defaultUserAccount[0].user.rankingDefault)
+//         this.setState({
+//           //rank: JSONops._getUserValue(this.state.data, this.state.user.username, "RANK"),
+//           //rankingDefault: defaultUserAccount[0].user.rankingDefault,
+//           //REVEIW: perhaps change the naming of rankingDefault as it may be confusing
+//           //now that it is set by the user selection in GlobalRankings not the default value
+//           // in the contract
+//
+//           newrankId: defaultUserAccount[0].user.rankingDefault,
+//           isUserInJson: JSONops.isPlayerListedInJSON(this.state.data, this.state.user.username),
+//           isCurrentUserActive: JSONops._getUserValue(this.state.data, this.state.user.username, "ACTIVE")
+//         }) //end of the setState
+//       }//end of the if
+// console.log('here 4')
+// //common setState
+// //the most important setState is the first one, which is the point of this
+// //
+//       this.setState({ userAccounts: userAccounts,
+//         user: defaultUserAccount[0].user,
+//         contactno: defaultUserAccount[0].user.contactno,
+//         email: defaultUserAccount[0].user.email,
+//         description: defaultUserAccount[0].user.description,
+//         //account: web3.eth.defaultAccount,
+//         account: defaultUserAccount[0].address,
+//         balance: defaultUserAccount[0].balance,
+//         //rank: JSONops._getUserValue(this.state.data, this.state.user.username, "RANK"),
+//         contactNoCB: '',
+//         emailCB: '',
+//         loadingAccounts: false,
+//         //newrankId must be cleared so a new one has to be regenerated for each account
+//         newrankId: '',
+//         viewingOnlyCB: true
+//       }) //end of the setState
+//       console.log('here 5')
+//       //console.log('this.state.account', this.state.account)
+//         console.log('ready to _loadsetRankingListJSONData after a render')
+//         console.log('isUserInJson', this.state.isUserInJson)
+//
+//         console.log('isCurrentUserActive', this.state.isCurrentUserActive)
+//         //json won't be loaded until there is at least a default ranking initially
+//         //otherwise we'll be going to createuser
+//         //if(this.state.rankingDefault !== ''){
+//           //REVIEW: possibly use JSONops._loadsetJSONData here if
+//           //will allow setState here
+//           //OR use componentDidMount
+//         //this._loadsetJSONData();
+//
+//         console.log('this.state.data', this.state.data)
+//
+//       }//end of the functionality that has (mysteriously) been added into
+//       //what should have been simply passing an array into a map function
+//       //however, much critical assignment is done in this stage
+//
+//     );////end of whole of await map including error Checking
+//     //I think a .then() could be added at the end of the await[?]
+//       console.log('end of loadingAccounts')
+//       //currently forcing loading accounts to end once the
+//       //current or first account has been found (to enable app to load)
+//       //multiple account loading not currently a priority
+//       //actual - didn't work code continues (don't know why)
+//       this.setState({
+//         loadingAccounts: false
+//       })
+//       console.log('this.state.loadingAccounts',this.state.loadingAccounts)
+//   }// end of _loadCurrentUserAccounts
 
 
   /**
@@ -460,21 +491,70 @@ console.log('here 4')
   }
   //#endregion
 
+  processStateAfter_loadCurrentUserAccounts(state){
+    this.setState({
+      error: state.error,
+      rankingDefault: state.rankingDefault,
+      isUserInJson: JSONops.isPlayerListedInJSON(this.state.data, this.state.user.username),
+      isCurrentUserActive: JSONops._getUserValue(this.state.data, this.state.user.username, "ACTIVE"),
+      newrankId: state.newrankId,
+      user: state.user,
+      contactno: state.user.contactno,
+      email: state.user.email,
+      description: state.user.description,
+      //account: web3.eth.defaultAccount,
+      account: state.address,
+      balance: state.balance,
+      //rank: JSONops._getUserValue(this.state.data, this.state.user.username, "RANK"),
+      contactNoCB: state.contactNoCB,
+      emailCB: state.emailCB,
+      loadingAccounts: false,
+      //newrankId must be cleared so a new one has to be regenerated for each account
+      viewingOnlyCB: true
+     });
+  }
+
   //#region React lifecycle events
   //loading the network functions from here
   //render() has already rendered at least once before
   // componentDidMount runs
   //any change with setState here will re-render app.js
-  //async componentDidMount() {
-  componentDidMount() {
+  async componentDidMount() {
+  //componentDidMount() {
       try{
         //https://medium.com/@bluepnume/learn-about-promises-before-you-start-using-async-await-eb148164a9c8
         //to a (small) degree - anyway it's a useful reference
         _loadExternalBalance(_loadExternalBalance_callback);
         //console.log('this.state.newrankIdCB before _loadCurrentUserAccounts', this.state.newrankIdCB)
         if(this.state.newrankIdCB === ''){
-          this._loadCurrentUserAccounts();
-        }
+
+            const state = await _loadCurrentUserAccounts();
+
+            if(state.user !== undefined){
+              this.setState({
+                    error: state.error,
+                    //rankingDefault: state.rankingDefault,
+                    //isUserInJson: JSONops.isPlayerListedInJSON(this.state.data, this.state.user.username),
+                    //isCurrentUserActive: JSONops._getUserValue(this.state.data, this.state.user.username, "ACTIVE"),
+                    newrankId: state.newrankId,
+                    user: state.user,
+                    contactno: state.user.contactno,
+                    email: state.user.email,
+                    description: state.user.description,
+                    //account: web3.eth.defaultAccount,
+                    account: state.account,
+                    balance: state.balance,
+                    //rank: JSONops._getUserValue(this.state.data, this.state.user.username, "RANK"),
+                    contactNoCB: state.contactNoCB,
+                    emailCB: state.emailCB,
+                    loadingAccounts: false,
+                    //newrankId must be cleared so a new one has to be regenerated for each account
+                    viewingOnlyCB: true
+              })
+              console.log('result in app.js', this.state.user.username)
+            }
+      }
+
       //_loadsetJSONData(this.state.newrankIdCB, callback);
       //console.log('this.state.account', this.state.account)
       }catch(e){
@@ -485,13 +565,14 @@ console.log('here 4')
     //console.log('this.state.newrankIdCB', this.state.newrankIdCB)
     if(this.state.newrankIdCB === ''){
       //uses json.io
+      console.log('rankingDefault', this.state.rankingDefault)
       _loadsetRankingListJSONData(this.state.rankingDefault,_loadsetRankingListJSONData_callback);
     }
     //console.log('this.state.user.username in componentDidMount in app', this.state.user.username)
     if(this.state.user.username !== undefined){
       //uses json.io
       //REVIEW: shouldn't callback be last arg?
-      getNewRankId("test description", '123456', 'test@test.com', '67890', 'player1', getNewRankId_callback);
+      //getNewRankId("test description", '123456', 'test@test.com', '67890', 'player1', getNewRankId_callback);
     }
   }
 
@@ -543,7 +624,7 @@ console.log('here 4')
           error={this.state.error}
           onChildClick={(e) => this.handleChildClick()}
           specificRankingOptionBtns={this.state.specificRankingOptionBtns}
-          onAfterUserUpdate={(e) => this._loadCurrentUserAccounts()}
+          onAfterUserUpdate={(e) => _loadCurrentUserAccounts()}
           onError={(err, source) => this._onError(err, source)}
           rankingJSONdata={this.state.data}
           rankingListJSONdata={this.state.rankingListData}

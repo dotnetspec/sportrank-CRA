@@ -44,12 +44,6 @@ class Header extends Component {
   //#endregion
 }
 
-//display the ranking specific btn options
-// handleChildClick(index) {
-//    this.setState({specificRankingOptionBtns:true})
-//  }
-
-
   //#region Component events
   /**
    * Hides the tweet modal
@@ -76,19 +70,6 @@ class Header extends Component {
       this.props.history.push('/create');
     }
   }
-
-  // _handleDeactivatePlayer(username) {
-  //   if(username !== null){
-  //     //REVIEW: The naming of 'delete/deactivate' etc.
-  //     // redirect user to the deactive player (currently named 'DeactivatePlayer') page
-  //     this.props.history.push('/delete/@' + username);
-  //   }
-  //   else {
-  //     //create a new user
-  //     //TODO: add better handling here
-  //     //this.props.history.push('/create');
-  //   }
-  // }
 
   /**
    * Toggles the current account address tooltip
@@ -374,10 +355,12 @@ class Header extends Component {
   }
 
   handleRenderErrorOrDropDownCollapse(isError, isEditable, states){
+    console.log('handleRenderErrorOrDropDownCollapse')
     return isError ? states.isError : this.renderDropDownCollapseNoError(isEditable, states)
   }
 
   renderDropDownCollapseNoError(isEditable, states){
+    console.log('in renderDropDownCollapseNoError')
     return(
         <React.Fragment>
         <ButtonToolbar>
@@ -400,7 +383,8 @@ class Header extends Component {
     )
   }
 
-  handleDropDownIsLoadingOrRender(isLoading,isError, isEditable, states){
+  handleDropDownIsLoadingOrRender(isLoading, isError, isEditable, states){
+    console.log('in handleDropDownIsLoadingOrRender', isLoading)
     return(isLoading ? states.isLoading :
       this.handleRenderErrorOrDropDownCollapse(isError, isEditable, states)
     )
@@ -434,22 +418,25 @@ displayActivationBtns(){
           const isError = this.props.error && this.props.error.message;
           const isLoading = !Boolean(this.props.account) && !isError;
 
+          console.log('this.props.account', this.props.account)
+          console.log('this.props.user.username', this.props.user.username)
+
           let navClasses = this.handleNavClasses(isError,isEditable);
 
           let states = this.determineStatesForDisplay();
 
-      //This is what actually gets rendered to the DOM
+      //This gets rendered to the DOM
           return (
             <Navbar collapseOnSelect className={navClasses.join(' ')}>
-            {this.renderNavbarHeader(isLoading, states)}
-            {this.renderNavbarCollapse(isLoading, states, isEditable, isError)}
+              {this.renderNavbarHeader(isLoading, states)}
+              {this.renderNavbarCollapse(isLoading, states, isEditable, isError)}
             </Navbar>
           );
       }
       else{
         //return(null)
         return 'There is no account currently defined!'
-      }//end if this.props.userAccounts !== undefined)
+      }
 }
 
   //#endregion
