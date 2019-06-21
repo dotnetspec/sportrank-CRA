@@ -504,13 +504,13 @@ console.log('rankingID, data, currentUser, accountno in deactivatePlayer', ranki
 
       //apart from IN/ACTIVE is player listed at all?
       isPlayerListedInJSON: function(data, currentUser){
-        console.log('data in isPlayerListedInJSON',data)
-        console.log('currentUser in isPlayerListedInJSON', currentUser)
+        //console.log('data in isPlayerListedInJSON',data)
+        //console.log('currentUser in isPlayerListedInJSON', currentUser)
 
         //using ACCOUNT not NAME to test if user is listed in the json
         const result = this._getUserValue(data, currentUser, "ACCOUNT")
 
-        console.log('result', result)
+        //console.log('result', result)
 
         if(result === undefined){return false}
         else

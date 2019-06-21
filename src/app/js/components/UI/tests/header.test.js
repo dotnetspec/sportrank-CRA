@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 //import sinon from 'sinon'
 import { stub, sinon } from 'sinon';
-import App from '../../Logic/App'
+//import App from '../../Logic/App'
 //import GlobalRankings from '../../Logic/GlobalRankings'
 //import chai from 'chai'
 //import GlobalRankingViewBtn  from '../buttons/GlobalRankingViewBtn'
@@ -18,6 +18,7 @@ import {
   fireEvent,
   cleanup,
   waitForElement,
+  debug
 } from '@testing-library/react'
 import 'jest-dom/extend-expect'
 import 'jest-dom'
@@ -82,6 +83,16 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
                rankingDefault: "5c81c1e944e81057efe3e2c8"
           };
 
+          //for the functions that get sent in props
+          function dummyFunction(){
+                  return null;
+                }
+
+          //mock json:
+          const rankingJSONdata =
+          [
+                {"DATESTAMP":1545369526439,"ACTIVE":true,"DESCRIPTION":"alskdfjalj","CURRENTCHALLENGERNAME":"AVAILABLE","CURRENTCHALLENGERID":6,"ACCOUNT":"0xa864Ea9d142C0997572aD7a2077A67a30a853cc0","RANK":2,"EMAIL":"laskdfjlfj","CONTACTNO":"laskdfjlajf","NAME":"player1","id":1},
+          ]
       //do the tests
        it('RTL - check initial display', () => {
          const props  = {
@@ -94,6 +105,24 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
              expect (getByText(/Update Profile/i)).toBeInTheDocument();
              expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument();
       });
+
+      it('Account dropdown display', () => {
+
+        const props  = {
+          userAccounts: userAccountsArray,
+          user: userOjb,
+          account: testAccountPlayer1Rinkeby,
+          onAfterUserUpdate: (e) => dummyFunction(),
+          rankingJSONdata: rankingJSONdata
+        }
+            const { debug, getByRole, getByTestId } = renderWithRouter(<Header {...props}/>);
+
+            fireEvent.click(getByTestId('usernameinprofile'));
+            const dialogContainer = getByRole('menuitem')
+            //debug();
+            //the querySelector (span) has to be nested within the dialogContainer
+            expect(dialogContainer.querySelector('span').innerHTML).toBe('player1')
+     });
 
     it('specificRankingOptionBtns - true displays', () => {
       const props  = {

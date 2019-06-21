@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import { limitAddressLength } from '../../utils';
 import Spinner from 'react-spinkit';
 import JSONops from '../Logic/JSONops';
-import {updateWarningText} from '../Logic/Home'
+//import {updateWarningText} from '../Logic/Home'
 //import {updatedExtAcctBalCB} from '../Logic/App'
 import web3 from '../../../../web3';
 import PlayerStatusBtn from './buttons/PlayerStatusBtn';
@@ -75,7 +75,7 @@ class Header extends Component {
    * Toggles the current account address tooltip
    */
   _handleToggle() {
-    console.log('_handleToggle')
+    //console.log('_handleToggle')
     this.setState({ showTooltip: !this.state.showTooltip });
   }
 
@@ -84,28 +84,30 @@ class Header extends Component {
    * the dropdown
    * @param {Event} e - the DOM event fired when the account was changed
    */
+
   _handleAcctChange(e) {
-    console.log('account change')
+    //console.log('account change')
     if (e.target.tagName !== 'A') e.target = e.target.parentElement;
     web3.eth.defaultAccount = e.target.attributes.value.value;
     this.props.onAfterUserUpdate();
     if (e.target.attributes.username.value && JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, e.target.attributes.username.value)) {
 
       //update the text in the Home.js sibling warkingText
-      updateWarningText('');
+      //updateWarningText('');
       //this used to be:
       //this.props.history.push('/update/@' + e.target.attributes.username.value);
       //if there's already a username just return to home page
       this.props.history.push('/');
     }
+    //REVIEW: Nothing happening here ...
     else if (e.target.attributes.username.value){
       //update the text in the Home.js sibling warkingText
-      updateWarningText('');
+      //updateWarningText('');
       //this.props.history.push('/update/@' + e.target.attributes.username.value);
     }
     else{
       //update the text in the Home.js sibling warkingText
-      updateWarningText('');
+      //updateWarningText('');
       //create a new user
       this.props.history.push('/create');
     }
@@ -127,7 +129,7 @@ class Header extends Component {
 
   _handleReactivatePlayer(user) {
     try {
-      console.log('in _handleReactivatePlayer', this.props.newrankIdCB, this.props.rankingJSONdata, user, this.props.account)
+      //console.log('in _handleReactivatePlayer', this.props.newrankIdCB, this.props.rankingJSONdata, user, this.props.account)
       JSONops.reactivatePlayer(this.props.newrankIdCB, this.props.rankingJSONdata, user, this.props.account);
       this.props.history.push('/home/@' + user);
     } catch (err) {
@@ -150,7 +152,7 @@ class Header extends Component {
     try {
       //TODO: refactor?
       const {pathname} = this.props.location;
-      console.log('pathname in _handleRankingList', pathname)
+      //console.log('pathname in _handleRankingList', pathname)
           // if(JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, this.props.user.username)
           //     ){
       //     if(pathname.includes("/sportrank/")){
@@ -215,7 +217,7 @@ class Header extends Component {
       circle
       className='profile'
       ></Image>
-      <span className='username' data-cy='usernameinprofile'>{userAccount.user.username}</span>
+      <span className='username' data-cy='usernameinprofile' data-testid="usernameinprofile">{userAccount.user.username}</span>
       </React.Fragment>
     )
   }
@@ -228,7 +230,7 @@ class Header extends Component {
   }
 
   renderBasedOnUserExists(userAccount){
-    console.log('renderBasedOnUserExists')
+    //console.log('renderBasedOnUserExists')
     const hasUser = Boolean(userAccount.user.username);
     return hasUser ?
       this.renderHasUserFragment(userAccount)
@@ -237,7 +239,7 @@ class Header extends Component {
   }
 
   renderAMenuItem(userAccount, index){
-    console.log('menuitem')
+    //console.log('menuitem')
     const isCurrUser = userAccount.address === this.props.account;
     return(
         <MenuItem
@@ -257,7 +259,7 @@ class Header extends Component {
   }
 
   mapAndRenderUserAccounts(){
-    console.log('mapAndRenderUserAccounts', this.props.userAccounts)
+    //console.log('mapAndRenderUserAccounts', this.props.userAccounts)
     // generate the DropdownItems for the accounts to populate
     // the accounts dropdown
   return this.props.userAccounts.map((userAccount, index) => {
@@ -356,12 +358,12 @@ class Header extends Component {
   }
 
   handleRenderErrorOrDropDownCollapse(isError, isEditable, states){
-    console.log('handleRenderErrorOrDropDownCollapse')
+    //console.log('handleRenderErrorOrDropDownCollapse')
     return isError ? states.isError : this.renderDropDownCollapseNoError(isEditable, states)
   }
 
   renderDropDownCollapseNoError(isEditable, states){
-    console.log('in renderDropDownCollapseNoError')
+    //console.log('in renderDropDownCollapseNoError')
     return(
         <React.Fragment>
         <ButtonToolbar>
@@ -385,14 +387,14 @@ class Header extends Component {
   }
 
   handleDropDownIsLoadingOrRender(isLoading, isError, isEditable, states){
-    console.log('in handleDropDownIsLoadingOrRender', isLoading)
+    //console.log('in handleDropDownIsLoadingOrRender', isLoading)
     return(isLoading ? states.isLoading :
       this.handleRenderErrorOrDropDownCollapse(isError, isEditable, states)
     )
   }
 
   handleNavClasses(isError,isEditable){
-    console.log('handleNavClasses')
+    //console.log('handleNavClasses')
     let navClasses = [];
     if (isError) navClasses.push('error');
     if (!isEditable) navClasses.push('logged-out');
@@ -420,8 +422,8 @@ displayActivationBtns(){
           const isError = this.props.error && this.props.error.message;
           const isLoading = !Boolean(this.props.account) && !isError;
 
-          console.log('this.props.account', this.props.account)
-          console.log('this.props.user.username', this.props.user.username)
+          //console.log('this.props.account', this.props.account)
+          //console.log('this.props.user.username', this.props.user.username)
 
           let navClasses = this.handleNavClasses(isError,isEditable);
 

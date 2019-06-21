@@ -54,6 +54,7 @@ const selectRowPropAfterClickRow = {
 //based on info from
 //https://www.codeproject.com/Tips/1215984/Update-State-of-a-Component-from-Another-in-React
 export function updateWarningText(warningText) {
+  //if(warningText)
     this.setState({warningText})
 }
 
@@ -103,6 +104,8 @@ class Home extends Component{
    * Shows the challenge modal
    */
   _handleShowChallengeModal() {
+    //clear the warning text initially:
+    this.setState({ warningText: '' });
     const { rankingJSONdata } = this.props;
     if(selectRowPropAfterClickRow.selectedOpponentName === this.props.user.username){
       this.setState({ warningText: ' You cannot challenge yourself!' });
