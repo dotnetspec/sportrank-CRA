@@ -249,6 +249,7 @@ class App extends Component {
             if(state.user !== undefined){
               this.setState({
                     error: state.error,
+                    userAccounts: state.userAccounts,
                     //rankingDefault: state.rankingDefault,
                     //isUserInJson: JSONops.isPlayerListedInJSON(this.state.data, this.state.user.username),
                     //isCurrentUserActive: JSONops._getUserValue(this.state.data, this.state.user.username, "ACTIVE"),

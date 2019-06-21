@@ -75,6 +75,7 @@ class Header extends Component {
    * Toggles the current account address tooltip
    */
   _handleToggle() {
+    console.log('_handleToggle')
     this.setState({ showTooltip: !this.state.showTooltip });
   }
 
@@ -84,6 +85,7 @@ class Header extends Component {
    * @param {Event} e - the DOM event fired when the account was changed
    */
   _handleAcctChange(e) {
+    console.log('account change')
     if (e.target.tagName !== 'A') e.target = e.target.parentElement;
     web3.eth.defaultAccount = e.target.attributes.value.value;
     this.props.onAfterUserUpdate();
@@ -178,11 +180,6 @@ class Header extends Component {
   //Using functions for the fragments to make them easier to understand than multiple
   //ternary operators etc...
 
-  getMenuItem(){
-
-
-  }
-
   renderIsNotEditableFragmanet(){
 
     const tooltipProps = {
@@ -231,6 +228,7 @@ class Header extends Component {
   }
 
   renderBasedOnUserExists(userAccount){
+    console.log('renderBasedOnUserExists')
     const hasUser = Boolean(userAccount.user.username);
     return hasUser ?
       this.renderHasUserFragment(userAccount)
@@ -239,6 +237,7 @@ class Header extends Component {
   }
 
   renderAMenuItem(userAccount, index){
+    console.log('menuitem')
     const isCurrUser = userAccount.address === this.props.account;
     return(
         <MenuItem
@@ -258,9 +257,11 @@ class Header extends Component {
   }
 
   mapAndRenderUserAccounts(){
+    console.log('mapAndRenderUserAccounts', this.props.userAccounts)
     // generate the DropdownItems for the accounts to populate
     // the accounts dropdown
   return this.props.userAccounts.map((userAccount, index) => {
+    //console.log('mapAndRenderUserAccounts')
       return this.renderAMenuItem(userAccount, index);
     });
   }
@@ -391,6 +392,7 @@ class Header extends Component {
   }
 
   handleNavClasses(isError,isEditable){
+    console.log('handleNavClasses')
     let navClasses = [];
     if (isError) navClasses.push('error');
     if (!isEditable) navClasses.push('logged-out');

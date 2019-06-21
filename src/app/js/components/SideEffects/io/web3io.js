@@ -252,7 +252,7 @@ export async function connectToWeb3new(connectToWeb3_callback){
           //before setting state. if there isn't app will go to create
           state = handleStateAccordingToUserExists(defaultUserAccount, state)
 
-            console.log('here 4')
+            console.log('userAccounts', userAccounts)
             //NB: further state management may be required
             //as earlier state settings may be affected
             state = assignToStateObj(userAccounts, defaultUserAccount, state);
