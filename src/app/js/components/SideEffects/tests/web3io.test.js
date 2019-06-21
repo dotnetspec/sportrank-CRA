@@ -11,6 +11,8 @@ import {render, fireEvent, cleanup, wait} from '@testing-library/react'
 //   web3
 // }
 
+//NB: only _loadExternalBalance test currently being applied: implementation tests?
+
 cleanup();
 
 //this test possibly needs jsdom
@@ -28,7 +30,7 @@ describe('isWeb3Connected, connectToWeb3', () => {
 });
 
 describe('_loadCurrentUserAccounts in app.js - complete ', () => {
-  fit('_loadCurrentUserAccountsInsideMapping', async done => {
+  xit('_loadCurrentUserAccountsInsideMapping', async done => {
     //const rankingDefaultid = '5c36f5422c87fa27306acb52';
     //const address = ['0x847700B781667abdD98E1393420754E503dca5b7', '0x999900B781667abdD98E1393420754E503dca999'];
     //const address = "0x847700B781667abdD98E1393420754E503dca5b7";
@@ -47,7 +49,7 @@ describe('_loadCurrentUserAccounts in app.js - complete ', () => {
  });
 
 describe('_loadCurrentUserAccounts in app.js inside mapping should get account data', () => {
-  it('_loadCurrentUserAccountsInsideMapping', async done => {
+  xit('_loadCurrentUserAccountsInsideMapping', async done => {
     //const rankingDefaultid = '5c36f5422c87fa27306acb52';
     //const address = ['0x847700B781667abdD98E1393420754E503dca5b7', '0x999900B781667abdD98E1393420754E503dca999'];
     const address = "0x847700B781667abdD98E1393420754E503dca5b7";

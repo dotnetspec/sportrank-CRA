@@ -96,6 +96,21 @@ export async function connectToWeb3new(connectToWeb3_callback){
     }
   }
 
+  /**
+   * Loads user details from the contract for all accounts on the node.
+   *
+   * For each account on the node, first, the owners mapping is queried using the
+   * owner address key. It returns the hash of the username it maps to. This
+   * username hash is then used to query the users mapping in the contract to
+   * get the details of the user. Once the user details are returned, the state
+   * is updated with the details, which triggers a render in this component and
+   * all child components.
+   * _loadCurrentUserAccounts is triggered by onAfterUserUpdate in e.g. createuser.js
+   * because it is sent as a property to these components
+   *
+   * @returns {null}
+   */
+
   export async function _loadCurrentUserAccounts(_loadCurrentUserAccounts_callback){
     let state = {};
   //try/catch was interferring with the test!
@@ -266,9 +281,6 @@ export async function connectToWeb3new(connectToWeb3_callback){
       return result;
     }
     // end of _loadCurrentUserAccounts
-
-
-
 
 export async function connectToWeb3(){
     window.addEventListener('load', async () => {
