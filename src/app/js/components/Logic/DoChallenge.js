@@ -20,17 +20,9 @@ import DSportRank from '../../../../ABIaddress';
  */
 
 class DoChallenge extends Component{
-
   //#region Constructor
   constructor(props, context) {
     super(props, context);
-
-    //const data = this.props.data;
-    //original code before onAfterChallenge bound
-    //const { username, account, onAfterChallenge } = this.props;
-    //const { username, account } = this.props;
-    //let onAfterChallenge = this.props.onAfterChallenge();
-
     // initial state
     this.state = {
       selection: [],
@@ -47,39 +39,6 @@ class DoChallenge extends Component{
     this.challengeInput = '';
   }
   //#endregion
-
-//REVIEW: Revive this send mail functionality or remove?
-// onClickSendEmail(){
-//
-//   console.log('here in email');
-//
-//   const sendmail = require('sendmail')({logger: {
-//     debug: console.log,
-//     info: console.info,
-//     warn: console.warn,
-//     error: console.error
-//   },
-//   silent: false,
-//   dkim: { // Default: False
-//     // privateKey: fs.readFileSync('./dkim-private.pem', 'utf8'),
-//     // keySelector: 'mydomainkey'
-//   },
-//   devPort: 1025, // Default: False
-//   devHost: 'localhost', // Default: localhost
-//   smtpPort: 2525, // Default: 25
-//   smtpHost: 'localhost' // Default: -1 - extra smtp host after resolveMX);
-//   })
-//
-//       sendmail({
-//           from: 'freerossagora@tutanota.com',
-//           to: 'test@qq.com, test@sohu.com, test@163.com ',
-//           subject: 'test sendmail',
-//           html: 'Mail of test sendmail ',
-//         }, function(err, reply) {
-//           console.log(err && err.stack);
-//           console.dir(reply);
-//       });
-// }
 
 displayContactDetails(){
   const oppoContactNumber = JSONops._getUserValue(this.props.data, this.props.selectedOpponentName, 'CONTACTNO')
@@ -103,7 +62,8 @@ displayContactDetails(){
   /**
    * Handles the 'challenge' button click event which
    * sends a transaction to the contract to store a
-   * challenge for the current user.
+   * challenge for the current user (functionality not complete).
+   * Uses JSONops._updateDoChallengeJSON to updatae the json api
    *
    * @returns {null}
    */
@@ -122,19 +82,6 @@ displayContactDetails(){
     //const { username, account, onAfterChallenge } = this.props;
     //this.challengeInput = "at last!";
     //const sendETHDev = DSportRank.methods.sendETHDev();
-
-    //#region the Fortmatic code
-    // const fm = new Fortmatic('pk_test_4C66C56C65859E66');
-    // window.web3 = new Web3(fm.getProvider());
-
-    // Async functions that triggers login modal, if user not already logged in
-    // web3.eth.getAccounts().then((accounts) => {
-    //   console.log(accounts); // ['0x...']
-    // });
-    // web3.eth.getCoinbase().then((coinbase) => {
-    //   console.log(coinbase) // '0x...'
-    // });
-    //#endregion
 
     // using the callback
     //NB: we are not currently sending challenges to the blockchain

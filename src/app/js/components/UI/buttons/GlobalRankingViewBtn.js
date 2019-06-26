@@ -73,7 +73,7 @@ class GlobalRankingViewBtn extends Component {
 
         <Button
            className='globalrankingviewbtn'
-           data-testid='globalrankingviewbtn'
+           data-testid={this.props.rowIndex}
            data-cy='globalrankingviewbtn'
            //type="button"
            onClick={() =>
@@ -82,7 +82,6 @@ class GlobalRankingViewBtn extends Component {
            //onClick={(e) => this._handleChangeStatusPlayer(this.props.user)}
         >
         View
-
         </Button>
 
     )

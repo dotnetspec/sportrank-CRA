@@ -139,6 +139,14 @@ class GlobalRankings extends Component {
       // } else {
 
 
+      function _tableIndex(indexVal){
+        //let tableIndex = 0;
+        indexVal = parseInt(indexVal);
+         indexVal += 1;
+         return indexVal;
+      }
+
+
       //NB: to enable non-test jsonbin.io data use the following as a property of
       //data={this.props.rankingListJSONdata}
       //original test: data={this.state.data}
@@ -166,6 +174,7 @@ class GlobalRankings extends Component {
               <TableHeaderColumn
               dataField='viewbtn'
               dataFormat={this.rankingViewButton.bind(this)}
+
               //handlerankingViewButton={this.rankingViewButton.bind(this)}
               >
               View

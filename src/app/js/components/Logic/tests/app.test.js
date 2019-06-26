@@ -16,6 +16,9 @@ import axiosMock  from 'axios'
 //   wait,
 // } from '@testing-library/dom'
 
+//NB: There are no 'props' at the <App /> level. Testing using props
+//has to take place in the child components
+
 afterEach(cleanup);
 
 jest.mock('axios');
@@ -24,7 +27,16 @@ jest.mock('axios');
 //default approach is RTL unless otherwise specified
 describe('<App/> ', () => {
 
+  //default values, override in tests if necessary
   const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
+  const globalRankingData = [{RANKINGNAME: "mplayer1rank", RANKINGDESC: "mp1r", ACTIVE: true, RANKINGID: "5c875c79adeb832d3ec6732d"}]
+  const url = '/'
+  //Functions:
+  const historyMock = { push: jest.fn() };
+  const onClick = jest.fn();
+  const onAfterUserUpdate = jest.fn();
+  const newrankIdCB = jest.fn();
+  const viewingOnlyCB = jest.fn();
 
   const userAccountsArray =
    [
@@ -41,7 +53,7 @@ describe('<App/> ', () => {
        }
      ];
 
-     const userOjb = {
+     const userObj = {
                username: 'player1',
                description: "test2",
                email: "test@test.com",
@@ -50,13 +62,40 @@ describe('<App/> ', () => {
                rankingDefault: "5c81c1e944e81057efe3e2c8"
           };
 
+          const props  = {
+            userAccounts: userAccountsArray,
+            rankingListJSONdata: globalRankingData,
+            account: testAccountPlayer1Rinkeby,
+            user: userObj
+          }
+
+
+
+          xit('Displays De-Activate btn when ranking selected', () => {
+
+            const props  = {
+              userAccounts: userAccountsArray,
+              isCurrentUserActive: true,
+              rankingListJSONdata: globalRankingData,
+              account: testAccountPlayer1Rinkeby,
+              user: 'player1',
+              onChildClick: onClick,
+              onAfterUserUpdate:onAfterUserUpdate,
+              newrankIdCB:newrankIdCB,
+              viewingOnlyCB:viewingOnlyCB,
+              history:historyMock,
+              data: globalRankingData
+            }
+                const { getByTestId  } = renderWithRouter(<App url={url} {...props}/>);
+
+                const firstRowOfTableViewBtn = getByTestId("0");
+                fireEvent.click(firstRowOfTableViewBtn);
+                //expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
+                expect (getByTestId('activatebtn-input')).toBeInTheDocument();
+          });
+
   xit('RTL - check initial display', () => {
-    const props  = {
-      userAccounts: userAccountsArray,
-      //user: userOjb,
-      account: testAccountPlayer1Rinkeby,
-      user: 'player1'
-    }
+
         const { getByText, debug  } = renderWithRouter(<App {...props}/>);
         //debug();
         expect(getByText(/List All Rankings/i)).toHaveTextContent('List All Rankings')
@@ -65,13 +104,16 @@ describe('<App/> ', () => {
  });
 
   xit('loads and displays greeting', async () => {
-    const url = '/'
+    //const url = '/'
     const { getByText, getByTestId } = renderWithRouter(<App url={url} />)
-    const globalRankingData = {RANKINGNAME: "mplayer1rank", RANKINGDESC: "mp1r", ACTIVE: true, RANKINGID: "5c875c79adeb832d3ec6732d"}
+    //const globalRankingData = {RANKINGNAME: "mplayer1rank", RANKINGDESC: "mp1r", ACTIVE: true, RANKINGID: "5c875c79adeb832d3ec6732d"}
 
     axiosMock.get.mockResolvedValueOnce({
       data: { rankingListData: globalRankingData },
     })
+
+    // const firstRowOfTableViewBtn = getByTestId("0");
+    // fireEvent.click(firstRowOfTableViewBtn);
 
     //fireEvent.click(getByText('Load Greeting'))
 
