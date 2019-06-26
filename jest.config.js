@@ -1,5 +1,6 @@
 module.exports = {
-  setupFilesAfterEnv: 'src/setupTests.js',
+  setupFilesAfterEnv: ['src/setupTests.js',
+   '@testing-library/react/cleanup-after-each'],
   // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
  // Automatically clear mock calls and instances between every test
