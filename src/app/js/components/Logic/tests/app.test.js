@@ -86,7 +86,7 @@ describe('<App/> ', () => {
               history:historyMock,
               data: globalRankingData
             }
-                const { getByTestId  } = renderWithRouter(<App url={url} {...props}/>);
+                const { getByTestId  } = renderWithRouter(<App url={url}/>);
 
                 const firstRowOfTableViewBtn = getByTestId("0");
                 fireEvent.click(firstRowOfTableViewBtn);
@@ -103,17 +103,19 @@ describe('<App/> ', () => {
         expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument();
  });
 
+//currently unable to mock the globalRankingData
   xit('loads and displays greeting', async () => {
     //const url = '/'
     const { getByText, getByTestId } = renderWithRouter(<App url={url} />)
     //const globalRankingData = {RANKINGNAME: "mplayer1rank", RANKINGDESC: "mp1r", ACTIVE: true, RANKINGID: "5c875c79adeb832d3ec6732d"}
 
     axiosMock.get.mockResolvedValueOnce({
-      data: { rankingListData: globalRankingData },
+      //data: { rankingListData: globalRankingData },
+      rankingListData: globalRankingData
     })
 
-    // const firstRowOfTableViewBtn = getByTestId("0");
-    // fireEvent.click(firstRowOfTableViewBtn);
+    const firstRowOfTableViewBtn = await getByTestId("0");
+    fireEvent.click(firstRowOfTableViewBtn);
 
     //fireEvent.click(getByText('Load Greeting'))
 

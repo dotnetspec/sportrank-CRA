@@ -1,11 +1,28 @@
-import DSportRank from '../../../../../ABIaddress';
-import web3 from '../../../../../web3';
+//Reference:
+//https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+//REVIEW: Possibly implement requestConfig later ...
+const requestConfig = {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+        // ,
+        // body: JSON.stringify({
+        //   'test',
+        //   'test'
+        // })
+      };
 
-
+//asyncFetch abstracted to enable mocking 
+export async function asyncFetch(url) {
+  return await fetch(url);
+}
 
 export async function _loadsetJSONData (newrankIdCB, _loadsetJSONData_callback){
       try {
             let httpStr = 'https://api.jsonbin.io/b/' + newrankIdCB + '/latest';
+
             await fetch(httpStr)
                .then((response) => response.json())
                .then((responseJson) => {
@@ -24,12 +41,12 @@ export async function _loadsetRankingListJSONData (rankingDefault, _loadsetRanki
 //await fetchJSON(rankingDefault, _loadsetRankingListJSONData_callback);
   try {
           let httpStr = 'https://api.jsonbin.io/b/' + rankingDefault + '/latest';
-          await fetch(httpStr)
+          await fetch(httpStr, requestConfig)
            .then((response) => response.json())
            .then((responseJson) => {
              if(responseJson.length !== 0){
                responseJson = checkUndefined(responseJson);
-               _loadsetRankingListJSONData_callback(responseJson);
+               return _loadsetRankingListJSONData_callback(responseJson);
               }
            })
         }catch (err) {

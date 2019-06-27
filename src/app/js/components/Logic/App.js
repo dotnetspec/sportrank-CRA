@@ -159,6 +159,7 @@ class App extends Component {
 
   }
 
+
 //Below appears to be relevant to user events not e.g. callbacks that fetch data
   //display the ranking specific btn options
   handleChildClick() {

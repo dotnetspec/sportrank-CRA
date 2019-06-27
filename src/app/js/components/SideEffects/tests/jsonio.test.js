@@ -1,8 +1,29 @@
-import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId } from '../io/Jsonio';
+import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, asyncFetch } from '../io/Jsonio';
+import {fetchMock} from 'fetch-mock'
 
 // beforeEach(() => {
 //     jest.setTimeout(1000);
 //   });
+
+//Reference:
+//http://www.wheresrhys.co.uk/fetch-mock/
+
+describe('asyncFetch', () => {
+
+  it('can fetch', async () => {
+
+    const rankid = '5bd82af2baccb064c0bdc92a';
+    let httpStr = 'https://api.jsonbin.io/b/' + rankid + '/latest';
+    fetchMock.get(httpStr, { anything: "we like" });
+    //const response = await _loadsetRankingListJSONData(rankid);
+    const response = await asyncFetch(httpStr);
+    const result = await response.json();
+
+    expect(result.anything).toEqual("we like");
+
+    fetchMock.restore();
+  });
+});
 
 test.skip('_loadsetJSONData data is ranking data', done => {
   const rankid = '5bd82af2baccb064c0bdc92a';

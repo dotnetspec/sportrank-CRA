@@ -139,12 +139,12 @@ class GlobalRankings extends Component {
       // } else {
 
 
-      function _tableIndex(indexVal){
-        //let tableIndex = 0;
-        indexVal = parseInt(indexVal);
-         indexVal += 1;
-         return indexVal;
-      }
+      // function _tableIndex(indexVal){
+      //   //let tableIndex = 0;
+      //   indexVal = parseInt(indexVal);
+      //    indexVal += 1;
+      //    return indexVal;
+      // }
 
 
       //NB: to enable non-test jsonbin.io data use the following as a property of
