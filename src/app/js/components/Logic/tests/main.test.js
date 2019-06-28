@@ -9,6 +9,8 @@ import { render, fireEvent, cleanup,
 import {renderWithRouter} from '../../../utils'
 import 'jest-dom/extend-expect'
 import axiosMock  from 'axios'
+import {fetchMock} from 'fetch-mock'
+import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, asyncFetch } from '../../SideEffects/io/Jsonio';
 //import { MemoryRouter as Router } from 'react-router-dom';
 // import {
 //   // Tip: all queries are also exposed on an object
@@ -122,8 +124,23 @@ const viewingOnlyCB = jest.fn();
         expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument();
  });
 
+   it('can fetch', async () => {
+     //renderWithRouter(<Main {...props}/>);
+     //const rankid = '5bd82af2baccb064c0bdc92a';
+     const rankid = '5c81c1e944e81057efe3e2c8';
+     let httpStr = 'https://api.jsonbin.io/b/' + rankid + '/latest';
+     fetchMock.get(httpStr, { anything: "we like" });
+     //const response = await _loadsetRankingListJSONData(rankid);
+     const response = await asyncFetch(httpStr);
+     const result = await response.json();
+
+     expect(result.anything).toEqual("we like");
+
+     fetchMock.restore();
+   });
+
 //NB: ensure go down to the element (<Button>) level not the component (GlobalRankingViewBtn) level
- it('Loads a specific ranking on view click', async () => {
+ xit('Loads a specific ranking on view click', async () => {
        const { getByText, getByTestId, debug  } = renderWithRouter(<Main url={url} {...props}/>);
        // const firstRowOfTableViewBtn = getByTestId("0");
        // fireEvent.click(firstRowOfTableViewBtn);

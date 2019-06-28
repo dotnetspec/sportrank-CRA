@@ -14,7 +14,7 @@ const requestConfig = {
         // })
       };
 
-//asyncFetch abstracted to enable mocking 
+//asyncFetch abstracted to enable mocking
 export async function asyncFetch(url) {
   return await fetch(url);
 }
@@ -46,7 +46,7 @@ export async function _loadsetRankingListJSONData (rankingDefault, _loadsetRanki
            .then((responseJson) => {
              if(responseJson.length !== 0){
                responseJson = checkUndefined(responseJson);
-               return _loadsetRankingListJSONData_callback(responseJson);
+               _loadsetRankingListJSONData_callback(responseJson);
               }
            })
         }catch (err) {

@@ -2,7 +2,7 @@ import Header from '../UI/Header'
 import Main from './Main'
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'
-import imgAvatar from '../../../img/avatar-default.png';
+import ImgAvatar from '../../../img/avatar-default.png';
 import { map } from 'async';
 import JSONops from './JSONops'
 import { formatEth, executingAt } from '../../utils';
@@ -47,7 +47,7 @@ import { _loadCurrentUserAccountsInsideMapping, _loadExternalBalance, _loadCurre
       //console.log('data account in callback', data[0].ACCOUNT);
       //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
        //done();
-       console.log('balance', balance)
+       //console.log('balance', balance)
            if(balance !== undefined){
              this.setState({ updatedExtAcctBalCB: balance })
           }
@@ -207,167 +207,119 @@ class App extends Component {
     this.props.history.push('/whoopsie');
   }
   //#endregion
-
+  //any change with setState here will re-render app.js
   processStateAfter_loadCurrentUserAccounts(state){
-    this.setState({
-      error: state.error,
-      rankingDefault: state.rankingDefault,
-      isUserInJson: JSONops.isPlayerListedInJSON(this.state.data, this.state.user.username),
-      isCurrentUserActive: JSONops._getUserValue(this.state.data, this.state.user.username, "ACTIVE"),
-      newrankId: state.newrankId,
-      user: state.user,
-      contactno: state.user.contactno,
-      email: state.user.email,
-      description: state.user.description,
-      //account: web3.eth.defaultAccount,
-      account: state.address,
-      balance: state.balance,
-      //rank: JSONops._getUserValue(this.state.data, this.state.user.username, "RANK"),
-      contactNoCB: state.contactNoCB,
-      emailCB: state.emailCB,
-      loadingAccounts: false,
-      //newrankId must be cleared so a new one has to be regenerated for each account
-      viewingOnlyCB: true
-     });
+    if(state.user !== undefined){
+        this.setState({
+              error: state.error,
+              userAccounts: state.userAccounts,
+              //rankingDefault: state.rankingDefault,
+              //isUserInJson: JSONops.isPlayerListedInJSON(this.state.data, this.state.user.username),
+              //isCurrentUserActive: JSONops._getUserValue(this.state.data, this.state.user.username, "ACTIVE"),
+              newrankId: state.newrankId,
+              user: state.user,
+              contactno: state.user.contactno,
+              email: state.user.email,
+              description: state.user.description,
+              //account: web3.eth.defaultAccount,
+              account: state.account,
+              balance: state.balance,
+              //rank: JSONops._getUserValue(this.state.data, this.state.user.username, "RANK"),
+              contactNoCB: state.contactNoCB,
+              emailCB: state.emailCB,
+              loadingAccounts: false,
+              //newrankId must be cleared so a new one has to be regenerated for each account
+              viewingOnlyCB: true
+        })
+        console.log('result in app.js', this.state.user.username)
+      }
   }
-
   //#region React lifecycle events
   //loading the network functions from here
   //render() has already rendered at least once before
   // componentDidMount runs
-  //any change with setState here will re-render app.js
   async componentDidMount() {
-  //componentDidMount() {
-      try{
-        //https://medium.com/@bluepnume/learn-about-promises-before-you-start-using-async-await-eb148164a9c8
-        //to a (small) degree - anyway it's a useful reference
-        _loadExternalBalance(_loadExternalBalance_callback);
-        //console.log('this.state.newrankIdCB before _loadCurrentUserAccounts', this.state.newrankIdCB)
         if(this.state.newrankIdCB === ''){
-
-            const state = await _loadCurrentUserAccounts();
-
-            if(state.user !== undefined){
-              this.setState({
-                    error: state.error,
-                    userAccounts: state.userAccounts,
-                    //rankingDefault: state.rankingDefault,
-                    //isUserInJson: JSONops.isPlayerListedInJSON(this.state.data, this.state.user.username),
-                    //isCurrentUserActive: JSONops._getUserValue(this.state.data, this.state.user.username, "ACTIVE"),
-                    newrankId: state.newrankId,
-                    user: state.user,
-                    contactno: state.user.contactno,
-                    email: state.user.email,
-                    description: state.user.description,
-                    //account: web3.eth.defaultAccount,
-                    account: state.account,
-                    balance: state.balance,
-                    //rank: JSONops._getUserValue(this.state.data, this.state.user.username, "RANK"),
-                    contactNoCB: state.contactNoCB,
-                    emailCB: state.emailCB,
-                    loadingAccounts: false,
-                    //newrankId must be cleared so a new one has to be regenerated for each account
-                    viewingOnlyCB: true
-              })
-              console.log('result in app.js', this.state.user.username)
+            this.setState({ isLoading: true });
+            try{
+              _loadExternalBalance(_loadExternalBalance_callback);
+              await  _loadsetRankingListJSONData(this.state.rankingDefault, _loadsetRankingListJSONData_callback);
+              const state = await _loadCurrentUserAccounts();
+              this.processStateAfter_loadCurrentUserAccounts(state);
+            }catch(e){
+              console.log('componentDidMount err in app', e)
             }
-      }
-
-      //_loadsetJSONData(this.state.newrankIdCB, callback);
-      //console.log('this.state.account', this.state.account)
-      }catch(e){
-        console.log('componentDidMount app _loadCurrentUserAccounts()', e)
-      }
-    //if newRankId(CB?) is blank a user either has just loaded the app or has clicked the
-    //ListAllRankingss btn
-    //console.log('this.state.newrankIdCB', this.state.newrankIdCB)
-    if(this.state.newrankIdCB === ''){
-      //uses json.io
-      console.log('rankingDefault', this.state.rankingDefault)
-      _loadsetRankingListJSONData(this.state.rankingDefault,_loadsetRankingListJSONData_callback);
-    }
-    //console.log('this.state.user.username in componentDidMount in app', this.state.user.username)
-    if(this.state.user.username !== undefined){
-      //uses json.io
-      //REVIEW: shouldn't callback be last arg?
-      //getNewRankId("test description", '123456', 'test@test.com', '67890', 'player1', getNewRankId_callback);
-    }
+            this.setState({ isLoading: false });
+          }
+        if(this.state.user.username !== undefined){
+          //uses json.i
+          getNewRankId("test description", '123456', 'test@test.com', '67890', 'player1', getNewRankId_callback);
+        }
   }
 
   render() {
     //from https://medium.com/maxime-heckel/asynchronous-rendering-with-react-c323cda68f41
-    if(this.state.data === null){
-      return <imgAvatar />;
-    }
-//   console.log('rendering now in app render()')
-//   if(!this.state.isLoading){
-//   console.log('this.state.loadingAccounts in app render()', this.state.loadingAccounts)
-//   console.log('rank in app render()', this.state.rank)
-//   console.log('this.state.updatedExtAcctBalCB in app render()', this.state.updatedExtAcctBalCB)
-//   console.log('this.state.isUserInJson in app render()', this.state.isUserInJson)
-//   console.log('this.state.isCurrentUserActive in app render()',this.state.isCurrentUserActive)
-// }
-    return (
-      <div>
-        <Header
-          data-testid='header'
-          user={this.state.user}
-          account={this.state.account}
-          userAccounts={this.state.userAccounts}
-          balance={this.state.balance}
-          error={this.state.error}
-          isCurrentUserActive={this.state.isCurrentUserActive}
-          isCurrentUserActiveCB={(e) => this.isCurrentUserActiveCB()}
-          onChildClick={(e) => this.handleChildClick()}
-          onListAllChildClick={(e) => this.handleListAllChildClick()}
-          specificRankingOptionBtns={this.state.specificRankingOptionBtns}
-          onAfterUserUpdate={(e) => this._loadCurrentUserAccounts()}
-          onError={(err, source) => this._onError(err, source)}
-          rankingJSONdata={this.state.data}
-          rankingListJSONdata={this.state.rankingListData}
-          updatedExtAcctBalCB={this.state.updatedExtAcctBalCB}
-          usersRankingLists={this.state.usersRankingLists}
-          isUserInJson={this.state.isUserInJson}
-          rankingDefault={this.state.rankingDefault}
-          newrankId={this.state.newrankId}
-          newrankIdCB={this.state.newrankIdCB}
-          />
-        <Main
-          user={this.state.user}
-          contactno={this.state.contactno}
-          email={this.state.email}
-          description={this.state.description}
-          account={this.state.account}
-          userAccounts={this.state.userAccounts}
-          error={this.state.error}
-          onChildClick={(e) => this.handleChildClick()}
-          specificRankingOptionBtns={this.state.specificRankingOptionBtns}
-          onAfterUserUpdate={(e) => _loadCurrentUserAccounts()}
-          onError={(err, source) => this._onError(err, source)}
-          rankingJSONdata={this.state.data}
-          rankingListJSONdata={this.state.rankingListData}
-          contactNoCB={this.state.contactNoCB}
-          emailCB={this.state.emailCB}
-          rank={this.state.rank}
-          isCurrentUserActive={this.state.isCurrentUserActive}
-          isRankingIDInvalid={this.state.isRankingIDInvalid}
-          newrankId={this.state.newrankId}
-          rankingDefault={this.state.rankingDefault}
-          getNewRankingID={(e) => this.getNewRankId()}
-          newrankIdCB={this.newrankIdCB.bind(this)}
-          viewingOnlyCB={this.viewingOnlyCB.bind(this)}
-          isUserInJson={this.state.isUserInJson}
-          loadingJSON={this.state.loadingJSON}
-          />
-      </div>
-    );
-  // }else{
-  //   return (
-  //   <div>...loading</div>
-  // );
-  // }
-
-  }
+      if(!this.state.isLoading){
+          return (
+            <div>
+              <Header
+                data-testid='header'
+                user={this.state.user}
+                account={this.state.account}
+                userAccounts={this.state.userAccounts}
+                balance={this.state.balance}
+                error={this.state.error}
+                isCurrentUserActive={this.state.isCurrentUserActive}
+                isCurrentUserActiveCB={(e) => this.isCurrentUserActiveCB()}
+                onChildClick={(e) => this.handleChildClick()}
+                onListAllChildClick={(e) => this.handleListAllChildClick()}
+                specificRankingOptionBtns={this.state.specificRankingOptionBtns}
+                onAfterUserUpdate={(e) => this._loadCurrentUserAccounts()}
+                onError={(err, source) => this._onError(err, source)}
+                rankingJSONdata={this.state.data}
+                rankingListJSONdata={this.state.rankingListData}
+                updatedExtAcctBalCB={this.state.updatedExtAcctBalCB}
+                usersRankingLists={this.state.usersRankingLists}
+                isUserInJson={this.state.isUserInJson}
+                rankingDefault={this.state.rankingDefault}
+                newrankId={this.state.newrankId}
+                newrankIdCB={this.state.newrankIdCB}
+                />
+              <Main
+                user={this.state.user}
+                contactno={this.state.contactno}
+                email={this.state.email}
+                description={this.state.description}
+                account={this.state.account}
+                userAccounts={this.state.userAccounts}
+                error={this.state.error}
+                onChildClick={(e) => this.handleChildClick()}
+                specificRankingOptionBtns={this.state.specificRankingOptionBtns}
+                onAfterUserUpdate={(e) => _loadCurrentUserAccounts()}
+                onError={(err, source) => this._onError(err, source)}
+                rankingJSONdata={this.state.data}
+                rankingListJSONdata={this.state.rankingListData}
+                contactNoCB={this.state.contactNoCB}
+                emailCB={this.state.emailCB}
+                rank={this.state.rank}
+                isCurrentUserActive={this.state.isCurrentUserActive}
+                isRankingIDInvalid={this.state.isRankingIDInvalid}
+                newrankId={this.state.newrankId}
+                rankingDefault={this.state.rankingDefault}
+                getNewRankingID={(e) => this.getNewRankId()}
+                newrankIdCB={this.newrankIdCB.bind(this)}
+                viewingOnlyCB={this.viewingOnlyCB.bind(this)}
+                isUserInJson={this.state.isUserInJson}
+                loadingJSON={this.state.loadingJSON}
+                />
+                </div>
+            );
+          }else{
+            return (
+                <div>...loading</div>
+            );
+          }
+        }
   //#endregion
 }
 

@@ -5,10 +5,12 @@ import renderer from 'react-test-renderer'
 import { shallow, mount } from 'enzyme';
 import { stub } from 'sinon';
 import { render, fireEvent, cleanup,
-   waitForElement, } from '@testing-library/react'
+   waitForElement, wait} from '@testing-library/react'
 import {renderWithRouter} from '../../../utils'
 import 'jest-dom/extend-expect'
 import axiosMock  from 'axios'
+import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, asyncFetch } from '../../SideEffects/io/Jsonio';
+import {fetchMock} from 'fetch-mock'
 //import { MemoryRouter as Router } from 'react-router-dom';
 // import {
 //   // Tip: all queries are also exposed on an object
@@ -21,7 +23,8 @@ import axiosMock  from 'axios'
 
 afterEach(cleanup);
 
-jest.mock('axios');
+//jest.mock('axios');
+jest.mock("../../SideEffects/io/Jsonio");
 
 //ensure describe blocks don't overlap
 //default approach is RTL unless otherwise specified
@@ -70,6 +73,39 @@ describe('<App/> ', () => {
           }
 
 
+
+it("App testing Jsonio fetch call", async () => {
+  //const posts = [{ id: 1, title: "My post", url: "/1" }];
+  _loadsetRankingListJSONData.mockResolvedValueOnce(globalRankingData);
+  const { getByText } = renderWithRouter(<App />);
+  expect(getByText("...loading")).toBeInTheDocument();
+  expect(_loadsetRankingListJSONData).toHaveBeenCalledTimes(1);
+  expect(_loadsetRankingListJSONData).toHaveBeenCalled();
+  //await wait(() => expect(getByText("mp1r")).toBeInTheDocument());
+});
+
+          // it('can fetch', async () => {
+          //   //renderWithRouter(<Main {...props}/>);
+          //   //const rankid = '5bd82af2baccb064c0bdc92a';
+          //   const rankid = '5c81c1e944e81057efe3e2c8';
+          //   let httpStr = 'https://api.jsonbin.io/b/' + rankid + '/latest';
+          //   fetchMock.get(httpStr, { anything: "we like" });
+          //   //let response = await _loadsetRankingListJSONData(rankid);
+          //   const response = await asyncFetch(httpStr);
+          //   //response = JSON.stringify(response)
+          //   // let responseDataAsArray = [];
+          //   // //responseJson = "[" + responseJson + "]";
+          //   // responseDataAsArray[0] = response;
+          //   // response = responseDataAsArray;
+          //   console.log(response)
+          //   //const response = await asyncFetch(httpStr);
+          //   let result = await response.json();
+          //
+          //
+          //   expect(result.anything).toEqual("we like");
+          //
+          //   fetchMock.restore();
+          // });
 
           xit('Displays De-Activate btn when ranking selected', () => {
 
