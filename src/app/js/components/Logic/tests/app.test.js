@@ -76,11 +76,11 @@ describe('<App/> ', () => {
 
 it("App testing Jsonio fetch call", async () => {
   //const posts = [{ id: 1, title: "My post", url: "/1" }];
-  _loadsetRankingListJSONData.mockResolvedValueOnce(globalRankingData);
+//  _loadsetRankingListJSONData.mockResolvedValueOnce(globalRankingData);
   const { getByText } = renderWithRouter(<App />);
   expect(getByText("...loading")).toBeInTheDocument();
-  expect(_loadsetRankingListJSONData).toHaveBeenCalledTimes(1);
-  expect(_loadsetRankingListJSONData).toHaveBeenCalled();
+  // expect(_loadsetRankingListJSONData).toHaveBeenCalledTimes(1);
+  // expect(_loadsetRankingListJSONData).toHaveBeenCalled();
   //await wait(() => expect(getByText("mp1r")).toBeInTheDocument());
 });
 

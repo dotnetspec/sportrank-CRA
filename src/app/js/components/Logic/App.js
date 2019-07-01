@@ -71,13 +71,13 @@ import { _loadCurrentUserAccountsInsideMapping, _loadExternalBalance, _loadCurre
        })
      }
 
-     export function _loadsetRankingListJSONData_callback(data) {
-       //console.log('data account in _loadsetRankingListJSONData_callback', data[0].RANKINGNAME);
-        this.setState({
-              rankingListData: data
-              //loadingRankingListJSON: false
-            })
-      }
+     // export function _loadsetRankingListJSONData_callback(data) {
+     //   //console.log('data account in _loadsetRankingListJSONData_callback', data[0].RANKINGNAME);
+     //    this.setState({
+     //          rankingListData: data
+     //          //loadingRankingListJSON: false
+     //        })
+     //  }
 
       export function getNewRankId_callback(data){
         this.setState({ newrankId: data.id});
@@ -147,7 +147,7 @@ class App extends Component {
     //click List All Rankings and Enter to reset the default ranking to display
     this.viewingOnlyCB = this.viewingOnlyCB.bind(this);
     _loadsetJSONData_callback = _loadsetJSONData_callback.bind(this);
-    _loadsetRankingListJSONData_callback = _loadsetRankingListJSONData_callback.bind(this);
+    //_loadsetRankingListJSONData_callback = _loadsetRankingListJSONData_callback.bind(this);
     getNewRankId_callback = getNewRankId_callback.bind(this);
     _loadExternalBalance_callback = _loadExternalBalance_callback.bind(this);
     //_loadCurrentUserAccounts_callback = _loadCurrentUserAccounts_callback.bind(this);
@@ -243,7 +243,8 @@ class App extends Component {
             this.setState({ isLoading: true });
             try{
               _loadExternalBalance(_loadExternalBalance_callback);
-              await  _loadsetRankingListJSONData(this.state.rankingDefault, _loadsetRankingListJSONData_callback);
+              //await  _loadsetRankingListJSONData(this.state.rankingDefault, _loadsetRankingListJSONData_callback);
+              this.getandSetDefaultRankingList();
               const state = await _loadCurrentUserAccounts();
               this.processStateAfter_loadCurrentUserAccounts(state);
             }catch(e){
@@ -255,6 +256,21 @@ class App extends Component {
           //uses json.i
           getNewRankId("test description", '123456', 'test@test.com', '67890', 'player1', getNewRankId_callback);
         }
+  }
+
+  async getandSetDefaultRankingList() {
+    try {
+      let httpStr = 'https://api.jsonbin.io/b/' + this.state.rankingDefault + '/latest';
+      const response = await fetch(httpStr);
+      const json = await response.json();
+      this.setState({
+            rankingListData: json
+      });
+    } catch (e) {
+      this.setState({ error: e });
+    } finally {
+
+    }
   }
 
   render() {
