@@ -74,7 +74,7 @@ describe('<App/> ', () => {
 
 
 
-it("App testing Jsonio fetch call", async () => {
+it("App testing Jsonio fetch call", () => {
   //const posts = [{ id: 1, title: "My post", url: "/1" }];
 //  _loadsetRankingListJSONData.mockResolvedValueOnce(globalRankingData);
   const { getByText } = renderWithRouter(<App />);
