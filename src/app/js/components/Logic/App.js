@@ -332,7 +332,7 @@ class App extends Component {
             );
           }else{
             return (
-                <div>...loading</div>
+                <div>Loading ...</div>
             );
           }
         }
