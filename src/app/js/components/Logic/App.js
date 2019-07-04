@@ -248,7 +248,7 @@ class App extends Component {
               const state = await _loadCurrentUserAccounts();
               this.processStateAfter_loadCurrentUserAccounts(state);
             }catch(e){
-              console.log('componentDidMount err in app', e)
+              //console.log('componentDidMount err in app', e)
             }
             this.setState({ isLoading: false });
           }
