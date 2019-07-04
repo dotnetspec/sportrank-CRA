@@ -1,15 +1,17 @@
 import React from "react";
-import { FetchMultipleResourceAtOnce } from "../SideEffects/io/FetchMultipleResourceAtOnce";
+//putting curly brackets around this import will prevent it's export ...:
+import FetchMultipleResourceAtOnce from "../SideEffects/io/FetchMultipleResourceAtOnce";
+//import useKeyboardJs from 'react-use/esm/useKeyboardJs';
 import { useAsync } from "react-use";
 
 import { withRouter } from 'react-router-dom'
 
 function Appf(){
-  // const posts = useAsync(FetchMultipleResourceAtOnce, []);
+  const resourceA = useAsync(FetchMultipleResourceAtOnce, []);
   //
-  // if (posts.loading) return "Loading...";
+  //if (resourceA.loading) return "Loading...";
   // if (posts.error) return "Something went wrong.";
-  var resourceA = {error:'Failed to load resource A', loading:'Loading...', value:'A'};
+  //var resourceA = {error:'Failed to load resource A', loading:'Loading...', value:'A'};
   //var car = {type:"Fiat", model:"500", color:"white"};
 
   //const posts = resourceA;
@@ -17,7 +19,7 @@ function Appf(){
   return (
     <>
     <h1>My Posts</h1>
-    {resourceA.loading}
+    {resourceA.value}
 
     </>
   );
