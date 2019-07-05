@@ -8,15 +8,11 @@ import { render, fireEvent, cleanup,
    waitForElement, wait} from '@testing-library/react'
 import {renderWithRouter} from '../../../utils'
 import 'jest-dom/extend-expect'
-import axiosMock  from 'axios'
+//since this is a test it's not actually importing the real 'axios' but
+//rather the axios in the __mocks__ folder
+import axiosMock  from '../../SideEffects/tests/__mocks__/axios'
 import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, asyncFetch } from '../../SideEffects/io/Jsonio';
 import {fetchMock} from 'fetch-mock'
-//import { MemoryRouter as Router } from 'react-router-dom';
-// import {
-//   // Tip: all queries are also exposed on an object
-//   // called "queries" which you could import here as well
-//   wait,
-// } from '@testing-library/dom'
 
 //NB: There are no 'props' at the <App /> level. Testing using props
 //has to take place in the child components
@@ -72,10 +68,12 @@ describe('<App/> ', () => {
             user: userObj
           }
 
+      //using the axiosmock file in __mocks__
       it("App axios mock fetch call", async () => {
+        //override global mockResolvedValue with:
         axiosMock.get.mockResolvedValueOnce({data: globalRankingData});
         const { getByTestId, getByText, debug } = renderWithRouter(<App />);
-        debug();
+        //debug();
         expect(getByTestId("loading")).toHaveTextContent('Loading ...');
         await wait(() => expect(getByText("mplayer1rank")).toBeInTheDocument());
       });
