@@ -10,7 +10,11 @@ import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
 import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId } from '../SideEffects/io/Jsonio';
 import { _loadCurrentUserAccountsInsideMapping, _loadExternalBalance, _loadCurrentUserAccounts } from '../SideEffects/io/web3io';
+import axios  from 'axios'
 //import p-iteration from 'p-iteration'
+
+//const Main = React.lazy(() => import ('./Main'));
+
 
 //REVIEW: is the solution to this to write your own api?
 //import jsonData from '../../json/Rankings.json'
@@ -261,8 +265,24 @@ class App extends Component {
   async getandSetDefaultRankingList() {
     try {
       let httpStr = 'https://api.jsonbin.io/b/' + this.state.rankingDefault + '/latest';
+      axios.get(httpStr)
+      .then(res => {
+        const json = res.data;
+        this.setState({ rankingListData: json });
+      })
+    } catch (e) {
+      this.setState({ error: e });
+    } finally {
+
+    }
+  }
+
+  async getandSetDefaultRankingList_orig() {
+    try {
+      let httpStr = 'https://api.jsonbin.io/b/' + this.state.rankingDefault + '/latest';
       const response = await fetch(httpStr);
       const json = await response.json();
+
       this.setState({
             rankingListData: json
       });
@@ -301,7 +321,9 @@ class App extends Component {
                 newrankId={this.state.newrankId}
                 newrankIdCB={this.state.newrankIdCB}
                 />
+
               <Main
+                data-testid='main'
                 user={this.state.user}
                 contactno={this.state.contactno}
                 email={this.state.email}
@@ -328,11 +350,12 @@ class App extends Component {
                 isUserInJson={this.state.isUserInJson}
                 loadingJSON={this.state.loadingJSON}
                 />
+
                 </div>
             );
           }else{
             return (
-                <div>Loading ...</div>
+                <div data-testid='loading'>Loading ...</div>
             );
           }
         }

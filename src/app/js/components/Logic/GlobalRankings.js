@@ -20,6 +20,7 @@ import React, { Component } from 'react';
 //import {saveJson, loadJson} from '../lib/service'
 //import Grid from 'react-bootstrap/Grid'
 
+
 const selectRowPropAfterClickRow = {
   selectedRankingId: ''
 };
@@ -151,48 +152,49 @@ class GlobalRankings extends Component {
       //data={this.props.rankingListJSONdata}
       //original test: data={this.state.data}
       return (
-        <BootstrapTable  options={ this.tablesortoptions } data={this.props.rankingListJSONdata}
-        className='bstable'
-        >
-              <TableHeaderColumn isKey dataField='RANKINGID'
-              hidden >
-                RANKINGID
-              </TableHeaderColumn>
+          <BootstrapTable  options={ this.tablesortoptions } data={this.props.rankingListJSONdata}
+          className='bstable'
+          >
+                <TableHeaderColumn isKey dataField='RANKINGID'
+                hidden >
+                  RANKINGID
+                </TableHeaderColumn>
 
-              <TableHeaderColumn  dataField='RANKINGNAME'
-              filter={ { type: 'TextFilter', defaultValue: '' } }
+                <TableHeaderColumn  dataField='RANKINGNAME'
+                filter={ { type: 'TextFilter', defaultValue: '' } }
+                >
+                  Ranking Name (Filter)
+                </TableHeaderColumn>
+
+                <TableHeaderColumn dataField='RANKINGDESC'
+                filter={ { type: 'TextFilter',  defaultValue: '' } }
+                >
+                 Ranking Description (Filter)
+                </TableHeaderColumn>
+
+                <TableHeaderColumn
+                dataField='viewbtn'
+                dataFormat={this.rankingViewButton.bind(this)}
+
+                //handlerankingViewButton={this.rankingViewButton.bind(this)}
+                >
+                View
+                </TableHeaderColumn>
+                <TableHeaderColumn
+                dataField='joinbtn'
+                dataFormat={this.rankingButton.bind(this)}
               >
-                Ranking Name (Filter)
-              </TableHeaderColumn>
+                Join
+                </TableHeaderColumn>
 
-              <TableHeaderColumn dataField='RANKINGDESC'
-              filter={ { type: 'TextFilter',  defaultValue: '' } }
-              >
-               Ranking Description (Filter)
-              </TableHeaderColumn>
+                <TableHeaderColumn dataField='ACTIVE'
+                filter={ { type: 'TextFilter', defaultValue: 'true' } }
+                hidden>
+                  Active?
+                </TableHeaderColumn>
 
-              <TableHeaderColumn
-              dataField='viewbtn'
-              dataFormat={this.rankingViewButton.bind(this)}
+              </BootstrapTable>
 
-              //handlerankingViewButton={this.rankingViewButton.bind(this)}
-              >
-              View
-              </TableHeaderColumn>
-              <TableHeaderColumn
-              dataField='joinbtn'
-              dataFormat={this.rankingButton.bind(this)}
-            >
-              Join
-              </TableHeaderColumn>
-
-              <TableHeaderColumn dataField='ACTIVE'
-              filter={ { type: 'TextFilter', defaultValue: 'true' } }
-              hidden>
-                Active?
-              </TableHeaderColumn>
-
-            </BootstrapTable>
           )
 
         }

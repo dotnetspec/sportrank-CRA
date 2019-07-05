@@ -72,40 +72,14 @@ describe('<App/> ', () => {
             user: userObj
           }
 
+      it("App axios mock fetch call", async () => {
+        axiosMock.get.mockResolvedValueOnce({data: globalRankingData});
+        const { getByTestId, getByText, debug } = renderWithRouter(<App />);
+        debug();
+        expect(getByTestId("loading")).toHaveTextContent('Loading ...');
+        await wait(() => expect(getByText("mplayer1rank")).toBeInTheDocument());
+      });
 
-
-it("App testing Jsonio fetch call", () => {
-  //const posts = [{ id: 1, title: "My post", url: "/1" }];
-//  _loadsetRankingListJSONData.mockResolvedValueOnce(globalRankingData);
-  const { getByText } = renderWithRouter(<App />);
-  expect(getByText("Loading ...")).toBeInTheDocument();
-  // expect(_loadsetRankingListJSONData).toHaveBeenCalledTimes(1);
-  // expect(_loadsetRankingListJSONData).toHaveBeenCalled();
-  //await wait(() => expect(getByText("mp1r")).toBeInTheDocument());
-});
-
-          // it('can fetch', async () => {
-          //   //renderWithRouter(<Main {...props}/>);
-          //   //const rankid = '5bd82af2baccb064c0bdc92a';
-          //   const rankid = '5c81c1e944e81057efe3e2c8';
-          //   let httpStr = 'https://api.jsonbin.io/b/' + rankid + '/latest';
-          //   fetchMock.get(httpStr, { anything: "we like" });
-          //   //let response = await _loadsetRankingListJSONData(rankid);
-          //   const response = await asyncFetch(httpStr);
-          //   //response = JSON.stringify(response)
-          //   // let responseDataAsArray = [];
-          //   // //responseJson = "[" + responseJson + "]";
-          //   // responseDataAsArray[0] = response;
-          //   // response = responseDataAsArray;
-          //   console.log(response)
-          //   //const response = await asyncFetch(httpStr);
-          //   let result = await response.json();
-          //
-          //
-          //   expect(result.anything).toEqual("we like");
-          //
-          //   fetchMock.restore();
-          // });
 
           xit('Displays De-Activate btn when ranking selected', () => {
 
