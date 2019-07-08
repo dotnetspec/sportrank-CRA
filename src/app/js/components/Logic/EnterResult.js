@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 //import FieldGroup from './FieldGroup'
 //import Spinner from 'react-spinkit'
 import JSONops from './JSONops'
-import {contactNoCB, emailCB} from './App'
+//import {contactNoCB, emailCB} from './App'
 
 /**
  * Class that renders a form to allow the user to create
@@ -102,8 +102,8 @@ const opponentCurrentlyChallengingUser = JSONops._getUserValue(this.props.data, 
       // remove loading state
       this.setState({ isLoading: false });
       //clear the contact info
-      contactNoCB('');
-      emailCB('');
+      this.props.contactNoCB('');
+      this.props.emailCB('');
       // tell parent we've updated a user and to re-fetch user details from the contract
       //TODO: re-set below to onAfterReslt
       this.props.onAfterChallenge();

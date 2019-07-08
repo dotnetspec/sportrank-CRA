@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 //import FieldGroup from './FieldGroup'
 import Spinner from 'react-spinkit'
 import JSONops from './JSONops'
-import {contactNoCB, emailCB} from './App'
+//import {contactNoCB, emailCB} from './App'
 //import sendmail from 'sendmail'
 //import Fortmatic from 'fortmatic';
 import web3 from '../../../../web3';
@@ -47,8 +47,8 @@ displayContactDetails(){
   const oppoEmailTxt = this.props.selectedOpponentName + "'s email address is : " + oppoEmail;
 
   //contactNoCB callback function (App.js)
-  contactNoCB(oppoContactNumberTxt);
-  emailCB(oppoEmailTxt);
+  this.props.contactNoCB(oppoContactNumberTxt);
+  this.props.emailCB(oppoEmailTxt);
   //contactNoCB callback function (Header.js)
   //let tempbalTodisplay = parseInt(this.props.updatedExtAcctBalCB) + (10 ** 18);
   //REVIEW: not sure what below relates to. Probably not useful ...

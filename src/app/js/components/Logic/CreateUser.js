@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import FieldGroup from '../UI/FieldGroup'
 import JSONops from './JSONops'
-import {userNameCB, contactNoCB, emailCB} from './App'
+//import {userNameCB, emailCB} from './App'
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
 //import Grid from 'react-bootstrap/Grid'
@@ -110,9 +110,9 @@ _continueClick = () => {
     //so that the componentDidUpdate in app.js can do
     //getNewRankId() and set the player name in json
     console.log('this.state.username in _handleClick', this.state.username)
-    userNameCB(this.state.username);
-    contactNoCB(this.state.contactno);
-    emailCB(this.state.email);
+    this.props.userNameCB(this.state.username);
+    this.props.contactNoCB(this.state.contactno);
+    this.props.emailCB(this.state.email);
 
     const { newrankId } = this.props;
     console.log('newrankId in create user', newrankId)
