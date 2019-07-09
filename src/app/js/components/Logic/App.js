@@ -350,9 +350,6 @@ import axios  from 'axios'
        //setState({isCurrentUserActive:BtnState})
        setIsCurrentUserActiveCB(BtnState);
    }
-
-
-
   //#endregion
 
   //#region Helper methods
@@ -413,67 +410,19 @@ import axios  from 'axios'
       }
   }
 
-
   //#region React lifecycle events
-  //loading the network functions from here
-  //render() has already rendered at least once before
-  // componentDidMount runs
-  // async componentDidMount() {
-  //       if(state.newrankIdCB === ''){
-  //           setState({ isLoading: true });
-  //           try{
-  //             _loadExternalBalance(_loadExternalBalance_callback);
-  //             //await  _loadsetRankingListJSONData(state.rankingDefault, _loadsetRankingListJSONData_callback);
-  //             getandSetDefaultRankingList();
-  //             const state = await _loadCurrentUserAccounts();
-  //             processStateAfter_loadCurrentUserAccounts(state);
-  //           }catch(e){
-  //             //console.log('componentDidMount err in app', e)
-  //           }
-  //           setState({ isLoading: false });
-  //         }
-  //       if(state.user.username !== undefined){
-  //         //uses json.i
-  //         getNewRankId("test description", '123456', 'test@test.com', '67890', 'player1', getNewRankId_callback);
-  //       }
-  // }
-
-  //const rankingDefault = '5c36f5422c87fa27306acb52';
-  //let httpStr = 'https://api.jsonbin.io/b/' + rankingDefault + '/latest'
-
-//   useEffect(() => {
-//
-// fetch(`url/${id}`)
-//  .then(res => res.json())
-//  .then(items => setItems(items)
-//  .catch(console.log(err))
-// }, [id])
-
-  //useEffect(() => {
-  //    useEffect(async () => {
-  //               ;
-  //              //setIsLoading(false);
-  // }, [])
-
-
   useEffect(() => {
     async function fetchData() {
-      // You can await here
       //const response = await MyAPI.getData(someId);
-
-      setIsLoading(true);
-      //_loadExternalBalance(_loadExternalBalance_callback);
-      await setIsLoadingExtBal(_loadExternalBalance());
-
-     //await  _loadsetRankingListJSONData(state.rankingDefault, _loadsetRankingListJSONData_callback);
+     setIsLoading(true);
+     setupdatedExtAcctBalCB(await _loadExternalBalance())
+     //await setIsLoadingExtBal();
      getandSetDefaultRankingList();
-     const state = await _loadCurrentUserAccounts();
-     console.log('state', state);
-     await processStateAfter_loadCurrentUserAccounts(state)
+     processStateAfter_loadCurrentUserAccounts(await _loadCurrentUserAccounts());
+     await setIsLoading(false);
     }
     fetchData();
-    setIsLoading(false);
-  }, []); // Or [someId] (sent as a param to a function) if effect needs props or state
+  }, []); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
 
   const getandSetDefaultRankingList = async () => {
     try {
@@ -492,23 +441,23 @@ import axios  from 'axios'
     }
   }
 
-   const getandSetDefaultRankingList_orig = async () => {
-    try {
-      let httpStr = 'https://api.jsonbin.io/b/' + rankingDefault + '/latest';
-      const response = await fetch(httpStr);
-      const json = await response.json();
-
-      // setState({
-      //       rankingListData: json
-      // });
-      setrankingListData(json);
-    } catch (e) {
-      //setState({ error: e });
-      setError(e);
-    } finally {
-
-    }
-  }
+  //  const getandSetDefaultRankingList_orig = async () => {
+  //   try {
+  //     let httpStr = 'https://api.jsonbin.io/b/' + rankingDefault + '/latest';
+  //     const response = await fetch(httpStr);
+  //     const json = await response.json();
+  //
+  //     // setState({
+  //     //       rankingListData: json
+  //     // });
+  //     setrankingListData(json);
+  //   } catch (e) {
+  //     //setState({ error: e });
+  //     setError(e);
+  //   } finally {
+  //
+  //   }
+  // }
 
   // render() {
   //   //from https://medium.com/maxime-heckel/asynchronous-rendering-with-react-c323cda68f41

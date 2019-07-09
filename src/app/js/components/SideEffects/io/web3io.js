@@ -25,7 +25,9 @@ import { map } from 'async';
         //export async function _loadExternalBalance(_loadExternalBalance_callback){
       export async function _loadExternalBalance(){
         //try/catch was interferring with the test!
+          //console.log('_loadExternalBalance')
           let devAccountBalResult = await web3.eth.getBalance("0xd496e890fcaa0b8453abb17c061003acb3bcc28e");
+          //console.log('devAccountBalResult', devAccountBalResult);
           devAccountBalResult = web3.utils.fromWei(devAccountBalResult, 'ether');
           devAccountBalResult =  formatEth(devAccountBalResult, 3);
           //_loadExternalBalance_callback(devAccountBalResult);

@@ -68,20 +68,12 @@ describe('<App/> ', () => {
             user: userObj
           }
 
-
-
           fit("App ETH bal basic render w/o data", async () => {
             //override global mockResolvedValue with:
             axiosMock.get.mockResolvedValueOnce({data: globalRankingData});
             const { getByTestId, getByText, debug, act } = renderWithRouter(<App />);
             //debug();
-            // act(() => {
-            //   /* fire events that update state */
-            // });
-            /* assert on the output */
-
-            expect(getByTestId("CurrentETHBal")).toHaveTextContent('SportRank has contributed:');
-            //await wait(() => expect(getByText("mplayer1rank")).toBeInTheDocument());
+            await wait(() => expect(getByTestId("CurrentETHBal")).toHaveTextContent('SportRank has contributed:'));
           });
 
       //using the axiosmock file in __mocks__
