@@ -113,7 +113,8 @@ export async function connectToWeb3new(connectToWeb3_callback){
    * @returns {null}
    */
 
-  export async function _loadCurrentUserAccounts(_loadCurrentUserAccounts_callback){
+  //export async function _loadCurrentUserAccounts(_loadCurrentUserAccounts_callback){
+  export async function _loadCurrentUserAccounts(){
     let state = {};
   //try/catch was interferring with the test!
   //_loadCurrentUserAccounts uses an anonymous async function to assign

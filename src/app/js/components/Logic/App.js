@@ -449,15 +449,31 @@ import axios  from 'axios'
 //  .catch(console.log(err))
 // }, [id])
 
-  useEffect(() => {
-                //_loadExternalBalance(_loadExternalBalance_callback);
-                _loadExternalBalance();
-               //await  _loadsetRankingListJSONData(state.rankingDefault, _loadsetRankingListJSONData_callback);
-               getandSetDefaultRankingList();
-               const state = _loadCurrentUserAccounts();
-               processStateAfter_loadCurrentUserAccounts(state);
-  }, [])
+  //useEffect(() => {
+  //    useEffect(async () => {
+  //               ;
+  //              //setIsLoading(false);
+  // }, [])
 
+
+  useEffect(() => {
+    async function fetchData() {
+      // You can await here
+      //const response = await MyAPI.getData(someId);
+
+      setIsLoading(true);
+      //_loadExternalBalance(_loadExternalBalance_callback);
+      await setIsLoadingExtBal(_loadExternalBalance());
+
+     //await  _loadsetRankingListJSONData(state.rankingDefault, _loadsetRankingListJSONData_callback);
+     getandSetDefaultRankingList();
+     const state = await _loadCurrentUserAccounts();
+     console.log('state', state);
+     await processStateAfter_loadCurrentUserAccounts(state)
+    }
+    fetchData();
+    setIsLoading(false);
+  }, []); // Or [someId] (sent as a param to a function) if effect needs props or state
 
   const getandSetDefaultRankingList = async () => {
     try {
@@ -496,7 +512,7 @@ import axios  from 'axios'
 
   // render() {
   //   //from https://medium.com/maxime-heckel/asynchronous-rendering-with-react-c323cda68f41
-  //     if(!state.isLoading){
+       if(!isLoading){
           return (
             <div>
               <Header
@@ -554,11 +570,11 @@ import axios  from 'axios'
 
                 </div>
             );
-          // }else{
-          //   return (
-          //       <div data-testid='loading'>Loading ...</div>
-          //   );
-          // }
+          }else{
+            return (
+                <div data-testid='loading'>Loading ...</div>
+            );
+          }
         //}
   //#endregion
 }
