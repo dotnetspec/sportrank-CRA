@@ -15,8 +15,22 @@ import {render, fireEvent, cleanup, wait} from '@testing-library/react'
 
 cleanup();
 
+describe('_loadExternalBalance in web3io.js should get account balance', () => {
+  it('_loadExternalBalance', async () => {
+    async function _loadExternalBalance_callback(bal) {
+       bal = parseFloat(bal);
+       await expect(bal).toBeDefined();
+       await expect(bal).toBeGreaterThan(0);
+       //done();
+     }
+      await wait(() => _loadExternalBalance(_loadExternalBalance_callback));
+   });
+ });
+
 //this test possibly needs jsdom
 describe('isWeb3Connected, connectToWeb3', () => {
+
+
   //make the test async
   it.skip('isWeb3Connected, connectToWeb3 should connect', async (done) => {
   function connectToWeb3_callback(obj) {
@@ -67,15 +81,3 @@ describe('_loadCurrentUserAccounts in app.js inside mapping should get account d
 
    });
  });
-
- describe('_loadExternalBalance in web3io.js should get account balance', () => {
-   it('_loadExternalBalance', async done => {
-     async function _loadExternalBalance_callback(bal) {
-        bal = parseFloat(bal);
-        await expect(bal).toBeDefined();
-        await expect(bal).toBeGreaterThan(0);
-        done();
-      }
-       await wait(() => _loadExternalBalance(_loadExternalBalance_callback));
-    });
-  });

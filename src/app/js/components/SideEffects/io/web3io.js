@@ -4,28 +4,13 @@ import { formatEth, executingAt } from '../../../utils';
 import JSONops from '../../Logic/JSONops'
 import { map } from 'async';
 
-//NB: this function cannot actually be used in app.js as it's only simulating the one
-//nested inside the mapping function of _loadCurrentUserAccounts
-//helped to understand how the mapping works
-  export async function _loadCurrentUserAccountsInsideMapping(address, _loadCurrentUserAccountsInsideMapping_callback){
-
-      const usernameHash = await DSportRank.methods.owners(address).call();
-          // get user details from contract
-      const user = await DSportRank.methods.users(usernameHash).call();
-      // gets the balance of the address
-      let balance = await web3.eth.getBalance(address);
-      balance = web3.utils.fromWei(balance, 'ether');
-      const contractObj = {address: address, user: user, balance: balance};
-      _loadCurrentUserAccountsInsideMapping_callback(contractObj);
-    }
-
     //REVIEW: below based on
     //https://medium.com/@bluepnume/learn-about-promises-before-you-start-using-async-await-eb148164a9c8
     //to a (small) degree - anyway it's a useful reference
-        //export async function _loadExternalBalance(_loadExternalBalance_callback){
-      export async function _loadExternalBalance(){
+        export async function _loadExternalBalance(_loadExternalBalance_callback){
+      //export async function _loadExternalBalance(){
         //try/catch was interferring with the test!
-          //console.log('_loadExternalBalance')
+          console.log('_loadExternalBalance')
           let devAccountBalResult = await web3.eth.getBalance("0xd496e890fcaa0b8453abb17c061003acb3bcc28e");
           //console.log('devAccountBalResult', devAccountBalResult);
           devAccountBalResult = web3.utils.fromWei(devAccountBalResult, 'ether');
@@ -319,3 +304,18 @@ export async function connectToWeb3(){
     }
 });
 }
+
+//NB: this function cannot actually be used in app.js as it's only simulating the one
+//nested inside the mapping function of _loadCurrentUserAccounts
+//helped to understand how the mapping works
+  export async function _loadCurrentUserAccountsInsideMapping(address, _loadCurrentUserAccountsInsideMapping_callback){
+
+      const usernameHash = await DSportRank.methods.owners(address).call();
+          // get user details from contract
+      const user = await DSportRank.methods.users(usernameHash).call();
+      // gets the balance of the address
+      let balance = await web3.eth.getBalance(address);
+      balance = web3.utils.fromWei(balance, 'ether');
+      const contractObj = {address: address, user: user, balance: balance};
+      _loadCurrentUserAccountsInsideMapping_callback(contractObj);
+    }
