@@ -10,22 +10,24 @@ afterEach(cleanup)
 const App = React.lazy(() => import ('../../Logic/App'))
 
 // jest.mock('../../Logic/App', () =>
-//
 // jest.fn
-//
 // )
 
 //currently rendering with real data:
-xit('renders lazy ', async () => {
+it('renders lazy ', async () => {
+  //const _loadCurrentUserAccounts = jest.fn();
+  const getandSetDefaultRankingList = jest.fn();
 const {debug, getByText} = renderWithRouter(
 <React.Suspense fallback='test loading'>
-  <App />
+  <App getandSetDefaultRankingList={jest.fn()}/>
 </React.Suspense>)
 debug();
-const lazyElement = await waitForElement(() => getByText(/Sportrank/i));
-const tableElement = await waitForElement(() => getByText(/mplayer1rank/i));
-//await wait()
-//expect(getByText(/mplayer1rank/i)).toBeInTheDocument();
-expect(lazyElement).toBeInTheDocument();
-expect(tableElement).toBeInTheDocument();
+//following
+//https://stackoverflow.com/questions/55088168/react-useeffect-hook-not-calling-mocked-function
+requestAnimationFrame(() => {
+  //expect(_loadCurrentUserAccounts).toHaveBeenCalled();
+  expect(getandSetDefaultRankingList).toHaveBeenCalled();
+  expect(getByText(/Sportrank/i)).toBeInTheDocument();
+  expect(getByText(/mplayer1rank/i)).toBeInTheDocument();
+  });
 })
