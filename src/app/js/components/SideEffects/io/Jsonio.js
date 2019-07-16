@@ -1,6 +1,7 @@
 //Reference:
 //https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 //REVIEW: Possibly implement requestConfig later ...
+import axios from 'axios';
 const requestConfig = {
         method: 'GET',
         mode: 'cors',
@@ -13,6 +14,28 @@ const requestConfig = {
         //   'test'
         // })
       };
+
+export async function getDefaultRankingList (rankingDefault, getDefaultRankingList_callback) {
+      //export const getDefaultRankingList = async (rankingDefault, getDefaultRankingList_callback) => {
+        try {
+          let httpStr = 'https://api.jsonbin.io/b/' + rankingDefault + '/latest';
+          axios.get(httpStr)
+          .then(res => {
+            const json = res.data;
+            //console.log('json', json)
+            getDefaultRankingList_callback(json)
+            //return checkUndefined(json);
+            //return json;
+            //setrankingListData(json);
+          })
+        } catch (e) {
+          //setState({ error: e });
+          //setError(e);
+          return e;
+        } finally {
+
+        }
+      }
 
 //asyncFetch abstracted to enable mocking
 export async function asyncFetch(url) {

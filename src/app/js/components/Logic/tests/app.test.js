@@ -11,8 +11,10 @@ import 'jest-dom/extend-expect'
 //since this is a test it's not actually importing the real 'axios' but
 //rather the axios in the __mocks__ folder
 import axiosMock  from '../../SideEffects/tests/__mocks__/axios'
+import web3ioMock  from '../../SideEffects/tests/__mocks__/web3io'
 import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, asyncFetch } from '../../SideEffects/io/Jsonio';
 import {fetchMock} from 'fetch-mock'
+import _loadCurrentUserAccounts from '../../SideEffects/io/web3io';
 
 //NB: There are no 'props' at the <App /> level. Testing using props
 //has to take place in the child components
@@ -21,6 +23,7 @@ afterEach(cleanup);
 
 //jest.mock('axios');
 jest.mock("../../SideEffects/io/Jsonio");
+jest.mock('../../SideEffects/io/web3io');
 
 //ensure describe blocks don't overlap
 //default approach is RTL unless otherwise specified
@@ -39,7 +42,7 @@ describe('<App/> ', () => {
 
   const userAccountsArray =
    [
-       { address: testAccountPlayer1Rinkeby,
+       { address: '0x847700B781667abdD98E1393420754E503dca5b7',
          balance: 2.0,
          user: {
             username: 'player1',
@@ -68,12 +71,46 @@ describe('<App/> ', () => {
             user: userObj
           }
 
-          fit("App ETH bal basic render w/o data", async () => {
+
+          fit("_loadCurrentUserAccounts", async () => {
+          //             jest.mock('../helpers/translationsService', () => () => ({
+          //   strings: {
+          //      polish: {
+          //           agree: 'tak',
+          //           disagree: 'nie',
+          //       },
+          //       malaysian: {
+          //           agree: 'ya',
+          //           disagree: 'tidak',
+          //       },
+          //   },
+          // }));
+
+
+            App.useEffect();
+
+            expect(_loadCurrentUserAccounts()).toHaveBeenCalled();
+
+            });
+
+
+          xit("App ETH bal basic render w/o data", async () => {
             //override global mockResolvedValue with:
-            axiosMock.get.mockResolvedValueOnce({data: globalRankingData});
+            //axiosMock.get.mockResolvedValueOnce({data: globalRankingData});
+            //const mockFn = jest.fn();
+            //mockFn.getMockName('_loadCurrentUserAccounts')
+
+
             const { getByTestId, getByText, debug, act } = renderWithRouter(<App />);
+
+            //act(() => {
+                web3ioMock.get.mockResolvedValue({data: userAccountsArray});
+            //});
+   /* assert on the output */
+
             //debug();
-            await wait(() => expect(getByTestId("CurrentETHBal")).toHaveTextContent('SportRank has contributed:'));
+              //await wait(() => expect(getByTestId("CurrentETHBal")).toHaveTextContent('SportRank has contributed:'));
+            await wait(() => expect('_loadCurrentUserAccounts').toHaveBeenCalled());
           });
 
       //using the axiosmock file in __mocks__

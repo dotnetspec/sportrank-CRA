@@ -13,7 +13,7 @@ import {render, fireEvent, cleanup, wait} from '@testing-library/react'
 
 //NB: only _loadExternalBalance test currently being applied: implementation tests?
 
-cleanup();
+
 
 describe('_loadExternalBalance in web3io.js should get account balance', () => {
   it('_loadExternalBalance', async () => {

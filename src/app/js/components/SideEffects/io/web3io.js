@@ -3,6 +3,7 @@ import DSportRank from '../../../../../ABIaddress';
 import { formatEth, executingAt } from '../../../utils';
 import JSONops from '../../Logic/JSONops'
 import { map } from 'async';
+import changeState from '../../SideEffects/StateManager';
 
     //REVIEW: below based on
     //https://medium.com/@bluepnume/learn-about-promises-before-you-start-using-async-await-eb148164a9c8
@@ -71,17 +72,9 @@ export async function connectToWeb3new(connectToWeb3_callback){
   function handleStateAccordingToUserExists(defaultUserAccount, state){
     if(defaultUserAccount[0].user.username === '' || defaultUserAccount[0].user.username === undefined){
       console.log('handleStateAccordingToUserExists no user')
-      state.rankingDefault =  '';
-      state.isUserInJson =  false;
-      state.isCurrentUserActive = false;
-      return state;
+      return changeState('noExistingUser', state,[],[]);
     }else{
-      console.log('new rankingDefault to be set', defaultUserAccount[0].user.rankingDefault)
-      //REVEIW: perhaps change the naming of rankingDefault as it may be confusing
-      //now that it is set by the user selection in GlobalRankings not the default value
-      // in the contract
-      state.newrankId =  defaultUserAccount[0].user.rankingDefault;
-      return state;
+      return changeState('setUserSelectedRanking', state, [], defaultUserAccount);
     }
   }
 
@@ -108,7 +101,7 @@ export async function connectToWeb3new(connectToWeb3_callback){
   //the accounts array from web3.eth.getAccounts() to the State array 'userAccounts'
   //via each address in the map function  (which does: return userAccount.address)
     //_loadCurrentUserAccounts = async () => {
-      //console.log('_loadCurrentUserAccounts')
+      console.log('_loadCurrentUserAccounts')
         // get all the accounts the node controls
         //await EmbarkJS.Blockchain.connect(DSportRank);
         //web3.Blockchain.co

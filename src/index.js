@@ -15,7 +15,9 @@ import './app/css/dapp.css';
 
 ReactDOM.render((
   <BrowserRouter>
-    <App data-testid='app'/>
+    <React.Suspense fallback='... loading'>
+      <App data-testid='app'/>
+    </React.Suspense>
   </BrowserRouter>
 ), document.getElementById('root'));
 
