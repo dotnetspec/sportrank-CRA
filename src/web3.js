@@ -1,9 +1,12 @@
 import Web3 from 'web3';
+//import ganache from 'ganache-cli'
 // use the given Provider, e.g in the browser with Metamask,
 //or instantiate a new websocket provider
 
 //NB: tests don't work with Web3.givenProvider. Will defer to rinkeby.infura node
 const web3 = new Web3(Web3.givenProvider || 'wss://rinkeby.infura.io/ws' || 'ws://localhost:8546', null, {});
+//const web3 = new Web3('ws://localhost:8546', null, {});
+//const web3 = new Web3(ganache.provider());
 
 //going through the MM docs:
 //window = browser. brower must be running ...

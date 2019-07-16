@@ -9,7 +9,8 @@ import { formatEth, executingAt } from '../../utils';
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
 import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, getDefaultRankingList } from '../SideEffects/io/Jsonio';
-import { _loadCurrentUserAccountsInsideMapping, _loadExternalBalance, _loadCurrentUserAccounts } from '../SideEffects/io/web3io';
+import { _loadCurrentUserAccountsInsideMapping, _loadExternalBalance,
+  _mapCurrentUserAccounts, getCurrentUserAccountsFromBlockchain } from '../SideEffects/io/web3io';
 import axios  from 'axios'
 //import p-iteration from 'p-iteration'
 
@@ -350,6 +351,14 @@ import axios  from 'axios'
        //setState({isCurrentUserActive:BtnState})
        setIsCurrentUserActiveCB(BtnState);
    }
+
+//REVEIW: don't think this needs await:
+   const newrankIdCB_callback = async (newrankIdCB) => {
+     //console.log('in isCurrentUserActive', BtnState)
+       //setState({isCurrentUserActive:BtnState})
+       await setnewrankIdCB(newrankIdCB);
+       await _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
+   }
   //#endregion
 
   //#region Helper methods
@@ -425,7 +434,9 @@ import axios  from 'axios'
        setrankingListData(json);
       }
      //from the Blockchain via web3io:
-     processStateAfter_loadCurrentUserAccounts(await _loadCurrentUserAccounts());
+     //processStateAfter_loadCurrentUserAccounts(await _loadCurrentUserAccounts());
+     processStateAfter_loadCurrentUserAccounts(
+       await _mapCurrentUserAccounts(await getCurrentUserAccountsFromBlockchain()));
      await setIsLoading(false);
     }
     fetchData();
@@ -485,7 +496,7 @@ import axios  from 'axios'
                 onChildClick={(e) => handleChildClick()}
                 onListAllChildClick={(e) => handleListAllChildClick()}
                 specificRankingOptionBtns={specificRankingOptionBtns}
-                onAfterUserUpdate={(e) => _loadCurrentUserAccounts()}
+                onAfterUserUpdate={(e) => _mapCurrentUserAccounts()}
                 onError={(err, source) => _onError(err, source)}
                 rankingJSONdata={data}
                 rankingListJSONdata={rankingListData}
@@ -494,7 +505,7 @@ import axios  from 'axios'
                 isUserInJson={isUserInJson}
                 rankingDefault={rankingDefault}
                 newrankId={newrankId}
-                newrankIdCB={newrankIdCB}
+                newrankIdCB={(e) => newrankIdCB_callback()}
                 />
 
               <Main
@@ -508,7 +519,7 @@ import axios  from 'axios'
                 error={error}
                 onChildClick={(e) => handleChildClick()}
                 specificRankingOptionBtns={specificRankingOptionBtns}
-                onAfterUserUpdate={(e) => _loadCurrentUserAccounts()}
+                onAfterUserUpdate={(e) => _mapCurrentUserAccounts()}
                 onError={(err, source) => _onError(err, source)}
                 rankingJSONdata={data}
                 rankingListJSONdata={rankingListData}
@@ -520,8 +531,8 @@ import axios  from 'axios'
                 newrankId={newrankId}
                 rankingDefault={rankingDefault}
                 getNewRankingID={(e) => getNewRankId()}
-                newrankIdCB={newrankIdCB}
-                viewingOnlyCB={viewingOnlyCB}
+                newrankIdCB={(e) => newrankIdCB_callback()}
+                viewingOnlyCB={(e) => setOnCallbackviewingOnlyCB()}
                 isUserInJson={isUserInJson}
                 loadingJSON={isLoadingJSON}
                 />

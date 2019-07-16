@@ -79,6 +79,12 @@ export async function connectToWeb3new(connectToWeb3_callback){
   //   //}
   // }
 
+  export async function getCurrentUserAccountsFromBlockchain(){
+    const userAccountsArray = await web3.eth.getAccounts();
+      console.log('got accounts after await', userAccountsArray[0])
+    return userAccountsArray;
+  }
+
   /**
    * Loads user details from the contract for all accounts on the node.
    *
@@ -95,21 +101,21 @@ export async function connectToWeb3new(connectToWeb3_callback){
    */
 
   //export async function _loadCurrentUserAccounts(_loadCurrentUserAccounts_callback){
-  export async function _loadCurrentUserAccounts(){
+  export async function _mapCurrentUserAccounts(accountsFromTheBC){
     let state = {};
   //try/catch was interferring with the test!
   //_loadCurrentUserAccounts uses an anonymous async function to assign
   //the accounts array from web3.eth.getAccounts() to the State array 'userAccounts'
   //via each address in the map function  (which does: return userAccount.address)
     //_loadCurrentUserAccounts = async () => {
-      console.log('_loadCurrentUserAccounts')
+      //console.log('_loadCurrentUserAccounts')
         // get all the accounts the node controls
         //await EmbarkJS.Blockchain.connect(DSportRank);
         //web3.Blockchain.co
         // console.log('about to do await on getAccounts(), when done - got accounts after await')
         // console.log('exec at', executingAt());
-        const accountsFromTheBC = await web3.eth.getAccounts();
-          //console.log('got accounts after await', accountsFromTheBC)
+        //const accountsFromTheBC = await web3.eth.getAccounts();
+          //console.log('got accounts after await', accountsFromTheBC[0])
           //console.log('exec at', executingAt());
 
           //console.log('the data', this.state.data);
@@ -239,7 +245,7 @@ export async function connectToWeb3new(connectToWeb3_callback){
           //maybe this could become one?:
           state = changeState('setUserSelectedRanking', state, [], defaultUserAccount);
 
-            console.log('userAccounts', userAccounts)
+            console.log('userAccounts', userAccounts[0])
             //NB: further state management may be required
             //as earlier state settings may be affected
             state = assignToStateObj(userAccounts, defaultUserAccount, state);

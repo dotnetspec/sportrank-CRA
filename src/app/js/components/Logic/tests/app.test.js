@@ -72,29 +72,7 @@ describe('<App/> ', () => {
           }
 
 
-          fit("_loadCurrentUserAccounts", async () => {
-          //             jest.mock('../helpers/translationsService', () => () => ({
-          //   strings: {
-          //      polish: {
-          //           agree: 'tak',
-          //           disagree: 'nie',
-          //       },
-          //       malaysian: {
-          //           agree: 'ya',
-          //           disagree: 'tidak',
-          //       },
-          //   },
-          // }));
-
-
-            App.useEffect();
-
-            expect(_loadCurrentUserAccounts()).toHaveBeenCalled();
-
-            });
-
-
-          xit("App ETH bal basic render w/o data", async () => {
+          it("App ETH bal basic render w/o data", async () => {
             //override global mockResolvedValue with:
             //axiosMock.get.mockResolvedValueOnce({data: globalRankingData});
             //const mockFn = jest.fn();

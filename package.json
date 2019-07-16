@@ -12,6 +12,7 @@
     "chance": "^1.0.18",
     "date-fns": "^2.0.0-alpha.25",
     "fortmatic": "^0.7.2",
+    "ganache-cli": "^6.4.5",
     "jquery": "^3.4.1",
     "keyboardjs": "^2.5.1",
     "lodash": "^4.17.11",
