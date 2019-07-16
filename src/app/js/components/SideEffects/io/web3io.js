@@ -69,14 +69,15 @@ export async function connectToWeb3new(connectToWeb3_callback){
             return state;
   }
 
-  function handleStateAccordingToUserExists(defaultUserAccount, state){
-    if(defaultUserAccount[0].user.username === '' || defaultUserAccount[0].user.username === undefined){
-      console.log('handleStateAccordingToUserExists no user')
-      return changeState('noExistingUser', state,[],[]);
-    }else{
-      return changeState('setUserSelectedRanking', state, [], defaultUserAccount);
-    }
-  }
+  // function handleStateAccordingToUserExists(defaultUserAccount, state){
+  //   // if(defaultUserAccount[0].user.username === '' || defaultUserAccount[0].user.username === undefined){
+  //   //   console.log('handleStateAccordingToUserExists no user')
+  //   //   return changeState('noExistingUser', state,[],[]);
+  //   // }else{
+  //   //state will only change if the user exists:
+  //     return changeState('setUserSelectedRanking', state, [], defaultUserAccount);
+  //   //}
+  // }
 
   /**
    * Loads user details from the contract for all accounts on the node.
@@ -233,7 +234,10 @@ export async function connectToWeb3new(connectToWeb3_callback){
 
           //check that there is an existing default account user
           //before setting state. if there isn't app will go to create
-          state = handleStateAccordingToUserExists(defaultUserAccount, state)
+          //state = handleStateAccordingToUserExists(defaultUserAccount, state)
+          //REVIEW: Below currently set to handle the two arrays
+          //maybe this could become one?:
+          state = changeState('setUserSelectedRanking', state, [], defaultUserAccount);
 
             console.log('userAccounts', userAccounts)
             //NB: further state management may be required

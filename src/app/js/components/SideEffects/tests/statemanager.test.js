@@ -33,8 +33,11 @@ const userAccountsArray =
 describe('StateManager tests', () => {
   it('changeState error if no state change sent',  () => {
     const state = {};
-    const newState = changeState('', state, [],[])
-    expect(newState.error).toEqual('No state change has been sent');
+    //if there's no user account array then state
+    //set to no existing user
+    const newState = changeState('', state, [],[]);
+    expect(newState.isCurrentUserActive).toBe(false);
+    //expect(newState.error).toEqual('No state change has been sent');
    });
 
    it('noExistingUser',  () => {

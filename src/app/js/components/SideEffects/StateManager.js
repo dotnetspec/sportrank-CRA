@@ -3,8 +3,12 @@
 //all the private functions) and handle the setting of state from here
 
 export default function changeState(stateToChange, state, userAccounts, defaultUserAccount){
-  //console.log('changeState')
-  if(stateToChange === 'noExistingUser'){
+  //REVIEW: be careful no existing user implies to use
+  //noExistingUser in every case (as re-factor possibly affects logic: to be seen)
+  if(defaultUserAccount[0] === undefined ||
+    defaultUserAccount[0].user.username === ''
+    || defaultUserAccount[0].user.username === undefined){
+  //if(stateToChange === 'noExistingUser'){
     return noExistingUser(state);
   }
   else if(stateToChange === 'setUserSelectedRanking'){
