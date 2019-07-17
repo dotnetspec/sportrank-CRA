@@ -43,6 +43,7 @@ export async function asyncFetch(url) {
 }
 
 export async function _loadsetJSONData (newrankIdCB, _loadsetJSONData_callback){
+  console.log('newrankIdCB IN _loadsetJSONData', newrankIdCB);
       try {
             let httpStr = 'https://api.jsonbin.io/b/' + newrankIdCB + '/latest';
 

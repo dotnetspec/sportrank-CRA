@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 //import {newrankIdCB, viewingOnlyCB} from '../../Logic/App'
 /**
@@ -20,6 +20,8 @@ import { Button } from 'react-bootstrap';
 //   }
 
   export default function GlobalRankingViewBtn(props){
+
+    const [rankingID, setrankingID] = useState('5c6a81756874aa33ba152e56');
 
   // const selectRowPropAfterClickRow = {
   //   selectedRankingId: ''
@@ -56,12 +58,17 @@ import { Button } from 'react-bootstrap';
     //original:
     //var rankingID = `${row['RANKINGID']}`
     console.log('row rank id', row.RANKINGID);
-    props.newrankIdCB(row.RANKINGID);
+    setrankingID(row.RANKINGID);
+    props.newrankIdCB(rankingID);
     props.viewingOnlyCB(true);
     //this.props.onAfterUserUpdate();
     props.history.push('/home/@' + props.username);
     //this.openResultModal();
    }
+
+   useEffect(() => {
+
+   }, [])
 
 
 

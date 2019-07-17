@@ -361,12 +361,23 @@ import axios  from 'axios'
    // }
 
    //function newrankIdCB_callback(newrankIdCB){
-     const newrankIdCB_callback = (newrankIdCB) => {
-     console.log('in newrankIdCB_callback',  newrankIdCB)
-       //setState({isCurrentUserActive:BtnState})
-        setnewrankIdCB(newrankIdCB);
-        _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
-   }
+   //   const newrankIdCB_callback = (newrankId) => {
+   //   console.log('in newrankIdCB_callback',  newrankId)
+   //     //setState({isCurrentUserActive:BtnState})
+   //      setnewrankIdCB("5c6a7cf5a83a2931773847b8");
+   //      console.log('setnewrankIdCB', newrankIdCB)
+   //      _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
+   // }
+
+
+     React.useEffect(() => {
+       console.log('in newrankIdCB_callback',  newrankId)
+         //setState({isCurrentUserActive:BtnState})
+          setnewrankIdCB("5c6a7cf5a83a2931773847b8");
+          console.log('setnewrankIdCB', newrankIdCB)
+          _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
+     }, [newrankIdCB]);
+
   //#endregion
 
   //#region Helper methods
@@ -516,7 +527,7 @@ import axios  from 'axios'
                 isUserInJson={isUserInJson}
                 rankingDefault={rankingDefault}
                 newrankId={newrankId}
-                newrankIdCB={(e) => newrankIdCB_callback()}
+                newrankIdCB={(e) => setnewrankIdCB()}
                 />
 
               <Main
@@ -542,7 +553,7 @@ import axios  from 'axios'
                 newrankId={newrankId}
                 rankingDefault={rankingDefault}
                 getNewRankingID={(e) => getNewRankId()}
-                newrankIdCB={(e) => newrankIdCB_callback()}
+                newrankIdCB={(e) => setnewrankIdCB()}
                 viewingOnlyCB={(e) => setOnCallbackviewingOnlyCB()}
                 isUserInJson={isUserInJson}
                 loadingJSON={isLoadingJSON}
