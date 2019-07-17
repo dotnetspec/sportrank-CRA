@@ -45,40 +45,6 @@ export async function connectToWeb3new(connectToWeb3_callback){
     };
   }
 
-  function assignToStateObj(userAccounts, defaultUserAccount, state){
-
-    console.log('defaultUserAccount[0].address', defaultUserAccount[0].address)
-    //common setState
-    //the most important setState is the first one, which is the point of this
-    //
-          //this.setState({
-            state.userAccounts =  userAccounts;
-            state.user =  defaultUserAccount[0].user;
-            state.contactno =  defaultUserAccount[0].user.contactno;
-            state.email =  defaultUserAccount[0].user.email;
-            state.description =  defaultUserAccount[0].user.description;
-            //account =  web3.eth.defaultAccount;
-            state.account =  defaultUserAccount[0].address;
-            state.balance =  defaultUserAccount[0].balance;
-            state.contactNoCB =  '';
-            state.emailCB =  '';
-            state.loadingAccounts =  false;
-            //newrankId must be cleared so a new one has to be regenerated for each account
-            state.newrankId =  '';
-            state.viewingOnlyCB =  true
-            return state;
-  }
-
-  // function handleStateAccordingToUserExists(defaultUserAccount, state){
-  //   // if(defaultUserAccount[0].user.username === '' || defaultUserAccount[0].user.username === undefined){
-  //   //   console.log('handleStateAccordingToUserExists no user')
-  //   //   return changeState('noExistingUser', state,[],[]);
-  //   // }else{
-  //   //state will only change if the user exists:
-  //     return changeState('setUserSelectedRanking', state, [], defaultUserAccount);
-  //   //}
-  // }
-
   export async function getCurrentUserAccountsFromBlockchain(){
     const userAccountsArray = await web3.eth.getAccounts();
       console.log('got accounts after await', userAccountsArray[0])
@@ -248,7 +214,9 @@ export async function connectToWeb3new(connectToWeb3_callback){
             console.log('userAccounts', userAccounts[0])
             //NB: further state management may be required
             //as earlier state settings may be affected
-            state = assignToStateObj(userAccounts, defaultUserAccount, state);
+            //state = assignToStateObj(userAccounts, defaultUserAccount, state);
+            state = changeState('assignUserAcctStateToStateObj', state, userAccounts, defaultUserAccount);
+
 
         }//end of the functionality that has (mysteriously) been added into
         //what should have been simply passing an array into a map function

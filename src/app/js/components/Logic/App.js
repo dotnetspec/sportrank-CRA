@@ -380,7 +380,8 @@ import axios  from 'axios'
   //#endregion
   //any change with setState here will re-render app.js
   const processStateAfter_loadCurrentUserAccounts = (state) => {
-    console.log('state', state);
+    //console.log('state.user', (state).user);
+    console.log('state stringify', JSON.stringify(state))
     if(state.user !== undefined){
         //setState({
               //error: state.error,
@@ -402,6 +403,7 @@ import axios  from 'axios'
               setdescription(state.user.description);
               //account: web3.eth.defaultAccount,
               //account: state.account,
+              console.log('state.account', state.account);
               setAccount(state.account);
               //balance: state.balance,
               setBalance(state.balance);
@@ -416,7 +418,7 @@ import axios  from 'axios'
               //viewingOnlyCB: true
               setviewingOnlyCB(true);
       //  })
-        console.log('result in app.js', user.username)
+        console.log('state.user.username in app.js', state.user.username)
       }
   }
 
@@ -482,6 +484,7 @@ import axios  from 'axios'
   // render() {
   //   //from https://medium.com/maxime-heckel/asynchronous-rendering-with-react-c323cda68f41
        if(!isLoading){
+         console.log('account in render', account)
           return (
             <div>
               <Header

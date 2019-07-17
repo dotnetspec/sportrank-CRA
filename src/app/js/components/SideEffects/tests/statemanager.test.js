@@ -6,6 +6,8 @@ cleanup();
 
 
 // User Account data:
+//currently this is same for userAccountsArray and defaultUserAccount
+//cos only one account coming through the from the BC
 const userAccountsArray =
  [
      { address: '0x847700B781667abdD98E1393420754E503dca5b7',
@@ -35,6 +37,7 @@ describe('StateManager tests', () => {
     const state = {};
     //if there's no user account array then state
     //set to no existing user
+    //for ref: changeState(stateToChange, state, userAccounts, defaultUserAccount)
     const newState = changeState('', state, [],[]);
     expect(newState.isCurrentUserActive).toBe(false);
     //expect(newState.error).toEqual('No state change has been sent');
@@ -57,5 +60,12 @@ describe('StateManager tests', () => {
       const newState = changeState('setUserSelectedRanking', state,[],userAccountsArray)
       expect(newState.newrankId).toEqual('5c81c1e944e81057efe3e2c8');
      });
+
+       it('assignUserAcctStateToStateObj',  () => {
+         const state = {};
+         state.newrankId = '12345678';
+         const newState = changeState('assignUserAcctStateToStateObj', state, userAccountsArray, userAccountsArray)
+         expect(newState.newrankId).toEqual('');
+        });
 
  });
