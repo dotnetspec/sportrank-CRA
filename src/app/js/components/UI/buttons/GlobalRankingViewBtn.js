@@ -59,7 +59,7 @@ import { Button } from 'react-bootstrap';
     props.newrankIdCB(row.RANKINGID);
     props.viewingOnlyCB(true);
     //this.props.onAfterUserUpdate();
-    props.history.push('/home/@' + this.props.username);
+    props.history.push('/home/@' + props.username);
     //this.openResultModal();
    }
 
