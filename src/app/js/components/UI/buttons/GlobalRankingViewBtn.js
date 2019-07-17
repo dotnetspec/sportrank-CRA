@@ -8,16 +8,18 @@ import { Button } from 'react-bootstrap';
  *
  * @extends React.Component
  */
-class GlobalRankingViewBtn extends Component {
+// class GlobalRankingViewBtn extends Component {
+//
+//   //#region Constructor
+//   constructor(props, context) {
+//     super(props, context);
+//     // initial state
+//     this.state = {
+//       //GlobalRankingViewBtn_clicked: false
+//     };
+//   }
 
-  //#region Constructor
-  constructor(props, context) {
-    super(props, context);
-    // initial state
-    this.state = {
-      //GlobalRankingViewBtn_clicked: false
-    };
-  }
+  export default function GlobalRankingViewBtn(props){
 
   // const selectRowPropAfterClickRow = {
   //   selectedRankingId: ''
@@ -40,11 +42,11 @@ class GlobalRankingViewBtn extends Component {
   //   }
   // }
 
-  onClickRankingViewSelected(row){
+  const onClickRankingViewSelected = (row) => {
     //REVIEW: the naming here.
     //tell Header that the view btn has been clicked
     //so it can display the 'Activate?' btn
-    this.props.onChildClick();
+    props.onChildClick();
     //console.log('typeof row', typeof row)
     //console.log('row.RANKINGID', row.RANKINGID)
     //NB: this was using 'template literals' backquote or backtick character
@@ -53,14 +55,17 @@ class GlobalRankingViewBtn extends Component {
     //the ${}) sees it as a legitimate js object
     //original:
     //var rankingID = `${row['RANKINGID']}`
-    this.props.newrankIdCB(row.RANKINGID);
-    this.props.viewingOnlyCB(true);
-    this.props.onAfterUserUpdate();
-    this.props.history.push('/home/@' + this.props.username);
+    console.log('row rank id', row.RANKINGID);
+    props.newrankIdCB(row.RANKINGID);
+    props.viewingOnlyCB(true);
+    //this.props.onAfterUserUpdate();
+    props.history.push('/home/@' + this.props.username);
     //this.openResultModal();
    }
 
-  render () {
+
+
+  //render () {
     //NB: this.props.user or .username etc. causing much confusion
     //needs to be sorted to be consistent
     return (
@@ -73,12 +78,12 @@ class GlobalRankingViewBtn extends Component {
 
         <Button
            className='globalrankingviewbtn'
-           data-testid={this.props.rowIndex}
+           data-testid={props.rowIndex}
            data-cy='globalrankingviewbtn'
            //type="button"
            onClick={() =>
            //this.onClickRankingViewSelected(this.props.cell, this.props.row, this.props.rowIndex)}
-           this.onClickRankingViewSelected(this.props.row)}
+           onClickRankingViewSelected(props.row)}
            //onClick={(e) => this._handleChangeStatusPlayer(this.props.user)}
         >
         View
@@ -87,5 +92,5 @@ class GlobalRankingViewBtn extends Component {
     )
   }
   //#endregion
-}
-export default GlobalRankingViewBtn
+//}
+//export default GlobalRankingViewBtn

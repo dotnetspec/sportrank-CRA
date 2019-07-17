@@ -172,7 +172,7 @@ import axios  from 'axios'
 
 
     function _loadsetJSONData_callback(data) {
-      //console.log('data account in callback', data[0].ACCOUNT);
+      console.log('data account in callback', data[0].ACCOUNT);
       //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
       setdata(data);
       setisLoadingJSON(false);
@@ -353,11 +353,19 @@ import axios  from 'axios'
    }
 
 //REVEIW: don't think this needs await:
-   const newrankIdCB_callback = async (newrankIdCB) => {
-     //console.log('in isCurrentUserActive', BtnState)
+   // const newrankIdCB_callback = (newrankIdCB) => {
+   //   console.log('in newrankIdCB_callback', newrankIdCB)
+   //     //setState({isCurrentUserActive:BtnState})
+   //      setnewrankIdCB(newrankIdCB);
+   //      _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
+   // }
+
+   //function newrankIdCB_callback(newrankIdCB){
+     const newrankIdCB_callback = (newrankIdCB) => {
+     console.log('in newrankIdCB_callback',  newrankIdCB)
        //setState({isCurrentUserActive:BtnState})
-       await setnewrankIdCB(newrankIdCB);
-       await _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
+        setnewrankIdCB(newrankIdCB);
+        _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
    }
   //#endregion
 

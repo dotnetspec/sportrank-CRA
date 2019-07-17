@@ -207,16 +207,14 @@ export async function connectToWeb3new(connectToWeb3_callback){
           //check that there is an existing default account user
           //before setting state. if there isn't app will go to create
           //state = handleStateAccordingToUserExists(defaultUserAccount, state)
+          //NB: further state management may be required
+          //as earlier state settings may be affected
           //REVIEW: Below currently set to handle the two arrays
           //maybe this could become one?:
-          state = changeState('setUserSelectedRanking', state, [], defaultUserAccount);
+          //state = changeState('setUserSelectedRanking', state, userAccounts, defaultUserAccount);
+          state = changeState('assignUserAcctStateToStateObj', state, userAccounts, defaultUserAccount);
 
             console.log('userAccounts', userAccounts[0])
-            //NB: further state management may be required
-            //as earlier state settings may be affected
-            //state = assignToStateObj(userAccounts, defaultUserAccount, state);
-            state = changeState('assignUserAcctStateToStateObj', state, userAccounts, defaultUserAccount);
-
 
         }//end of the functionality that has (mysteriously) been added into
         //what should have been simply passing an array into a map function

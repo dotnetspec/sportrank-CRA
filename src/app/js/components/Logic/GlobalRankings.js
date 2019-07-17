@@ -56,6 +56,7 @@ class GlobalRankings extends Component {
 
   //REVIEW: change name to onClickRankingJoinSelected?
   onClickRankingSelected(cell, row, rowIndex){
+    console.log('in onClickRankingSelected');
     selectRowPropAfterClickRow.selectedRankingId = `${row['RANKINGID']}`;
     console.log('selectRowPropAfterClickRow.selectedRankingId', selectRowPropAfterClickRow.selectedRankingId)
     this.props.newrankIdCB(selectRowPropAfterClickRow.selectedRankingId);
