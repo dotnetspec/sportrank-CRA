@@ -20,7 +20,6 @@ import axios  from 'axios'
 
 //const Main = React.lazy(() => import ('./Main'));
 
-
 //REVIEW: is the solution to this to write your own api?
 //import jsonData from '../../json/Rankings.json'
 
@@ -68,47 +67,7 @@ import axios  from 'axios'
     //          setBalance(balance);
     //       }
     // }
-    //
-    //
-    // export function _loadsetJSONData_callback(data) {
-    //   //console.log('data account in callback', data[0].ACCOUNT);
-    //   //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
-    //   setData(data);
-    //   setisLoadingJSON(false);
-    //   setIsUserInJson(JSONops.isPlayerListedInJSON(data, user.username));
-    //   setrank(JSONops._getUserValue(data, user.username, "RANK"));
-    //   setIsCurrentUserActive(JSONops._getUserValue(data, user.username, "ACTIVE"));
-    //    // setState({
-    //    //                   data: data,
-    //    //                   //data: responseDataAsArray,
-    //    //                   //REVIEW: loadingJSON not currently being used
-    //    //                   loadingJSON: false,
-    //    //                   //NB: data in state is slow to keep up, use responseJson!
-    //    //                   isUserInJson: JSONops.isPlayerListedInJSON(data, user.username),
-    //    //                   rank: JSONops._getUserValue(data, user.username, "RANK"),
-    //    //                   //updatedExtAcctBalCB: _loadExternalBalance(),
-    //    //                   isCurrentUserActive: JSONops._getUserValue(data, user.username, "ACTIVE"),
-    //    //                   //isRankingIDInvalid: JSONops.isRankingIDInvalid(responseJson[0])
-    //    // })
-    //  }
-    //
-    //  // export function _loadsetRankingListJSONData_callback(data) {
-    //  //   //console.log('data account in _loadsetRankingListJSONData_callback', data[0].RANKINGNAME);
-    //  //    setState({
-    //  //          rankingListData: data
-    //  //          //loadingRankingListJSON: false
-    //  //        })
-    //  //  }
-    //
-    //   export function getNewRankId_callback(data){
-    //     //setState({ newrankId: data.id});
-    //     setnewrankId(data.id);
-    //     //setState({ ranknameHasChanged: true});
-    //     setranknameHasChanged(true);
-    //     //setState({ isLoading: false});
-    //     setIsLoading(false);
-    //   }
-    //
+
     //   export function _loadCurrentUserAccountsInsideMapping_callback(data){
     //     //setState({ address: data.address});
     //     setaddress(data.address);
@@ -170,7 +129,6 @@ import axios  from 'axios'
           }
     }
 
-
     function _loadsetJSONData_callback(data) {
       console.log('data account in callback', data[0].ACCOUNT);
       //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
@@ -179,27 +137,7 @@ import axios  from 'axios'
       setIsUserInJson(JSONops.isPlayerListedInJSON(data, user.username));
       setrank(JSONops._getUserValue(data, user.username, "RANK"));
       setIsCurrentUserActive(JSONops._getUserValue(data, user.username, "ACTIVE"));
-       // setState({
-       //                   data: data,
-       //                   //data: responseDataAsArray,
-       //                   //REVIEW: loadingJSON not currently being used
-       //                   loadingJSON: false,
-       //                   //NB: data in state is slow to keep up, use responseJson!
-       //                   isUserInJson: JSONops.isPlayerListedInJSON(data, user.username),
-       //                   rank: JSONops._getUserValue(data, user.username, "RANK"),
-       //                   //updatedExtAcctBalCB: _loadExternalBalance(),
-       //                   isCurrentUserActive: JSONops._getUserValue(data, user.username, "ACTIVE"),
-       //                   //isRankingIDInvalid: JSONops.isRankingIDInvalid(responseJson[0])
-       // })
      }
-
-     // export function _loadsetRankingListJSONData_callback(data) {
-     //   //console.log('data account in _loadsetRankingListJSONData_callback', data[0].RANKINGNAME);
-     //    setState({
-     //          rankingListData: data
-     //          //loadingRankingListJSON: false
-     //        })
-     //  }
 
       function getNewRankId_callback(data){
         //setState({ newrankId: data.id});
@@ -219,12 +157,6 @@ import axios  from 'axios'
         setBalance(data.balance)
       }
 
-
-  //#region Constructor
-  // constructor(props) {
-  //   super(props);
-  //   state = {
-  //     user: {},
   const [user, setuser] = useState({});
   //     account: '',
   const [account, setAccount] = useState('');
@@ -293,34 +225,6 @@ import axios  from 'axios'
   const [rank, setrank] = useState('1');
   const [ranknameHasChanged, setranknameHasChanged] = useState('');
   const [address, setaddress] = useState('');
-  //const [newRankCallbackValue, setnewRankCallbackValue] = useState
-
-
-  //   }
-  //Review: still need?:
-    //     test: [],
-      //     challenges: [],
-
-    //bind the callback functions
-    //updatedExtAcctBalCB = updatedExtAcctBalCB.bind(this);
-    // contactNoCB = contactNoCB.bind(this);
-    // emailCB = emailCB.bind(this);
-    // userNameCB = userNameCB.bind(this);
-  //   //click List All Rankings and Enter to reset the default ranking to display
-  //   viewingOnlyCB = viewingOnlyCB.bind(this);
-  //   _loadsetJSONData_callback = _loadsetJSONData_callback.bind(this);
-  //   //_loadsetRankingListJSONData_callback = _loadsetRankingListJSONData_callback.bind(this);
-  //   getNewRankId_callback = getNewRankId_callback.bind(this);
-  //   _loadExternalBalance_callback = _loadExternalBalance_callback.bind(this);
-  //   //_loadCurrentUserAccounts_callback = _loadCurrentUserAccounts_callback.bind(this);
-  //   handleChildClick = handleChildClick.bind(this);
-  //   handleListAllChildClick = handleListAllChildClick.bind(this);
-  //   newrankIdCB = newrankIdCB.bind(this);
-  //   isCurrentUserActiveCB = isCurrentUserActiveCB.bind(this);
-  //   //_loadCurrentUserAccounts_callback = _loadCurrentUserAccounts_callback.bind(this);
-  //
-  // }
-
 
 //Below appears to be relevant to user events not e.g. callbacks that fetch data
   //display the ranking specific btn options
@@ -333,12 +237,6 @@ import axios  from 'axios'
      //setState({specificRankingOptionBtns:false})
         setspecificRankingOptionBtns(false);
    }
-
-   //cb from GlobalRankings.js to set the rank id selected by the user
-  // const newrankIdCB = (newRankIdparam) => {
-  //      setState({newrankIdCB:newRankIdparam});
-  //      _loadsetJSONData(newRankIdparam, _loadsetJSONData_callback);
-  //  }
 
    //cb from GlobalRankings.js to set the rank state as view only
    //REVEIW: is this necessary? wasn't working until noticed it ...
@@ -354,72 +252,6 @@ import axios  from 'axios'
        //setState({isCurrentUserActive:BtnState})
        setIsCurrentUserActiveCB(BtnState);
    }
-
-//REVEIW: don't think this needs await:
-   // const newrankIdCB_callback = (newrankIdCB) => {
-   //   console.log('in newrankIdCB_callback', newrankIdCB)
-   //     //setState({isCurrentUserActive:BtnState})
-   //      setnewrankIdCB(newrankIdCB);
-   //      _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
-   // }
-
-   //function newrankIdCB_callback(newrankIdCB){
-   //   const newrankIdCB_callback = (newrankId) => {
-   //   console.log('in newrankIdCB_callback',  newrankId)
-   //     //setState({isCurrentUserActive:BtnState})
-   //      setnewrankIdCB("5c6a7cf5a83a2931773847b8");
-   //      console.log('setnewrankIdCB', newrankIdCB)
-   //      _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
-   // }
-
-   // const newrankIdCBcallback = useCallback((newrankIdCB) => {
-   //   setnewrankIdCB(newrankIdCB);
-   //   console.log('newrankIdCB in useEffect', newrankIdCB)
-   //   _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
-   // },[setnewrankIdCB])
-
-
-// function Main(){
-//   const [count, dispatch] = useReducer((state, action) => {
-//
-//
-//   }, '123456');
-// }
-
-//let componentUsername = "123456";
-
-   // const newrankIdCBcallback = (newrankIdCB) => {
-   //   const test = '123456';
-   //   //componentUsername = newval;
-   //   //setnewrankIdCB({newrankIdCB: '123456'});
-   //
-   //   //setnewrankIdCB([...test, {}]);
-   //   console.log('newrankIdCBcallback has been called', newrankIdCB)
-   //   //_loadsetJSONData(newval, _loadsetJSONData_callback);
-   // };
-
-//    const newrankIdCBcallback = React.useCallback((fromnewrankIdCB) =>{
-//      console.log('newrankIdCBcallback has been called', fromnewrankIdCB)
-// }, []);
-
-
-  //   const newrankIdCBcallback = (val) => {
-  //     //setnewRankCallbackValue(newRankCallbackValue)
-  //     setnewrankIdCB(val);
-  //    console.log('newrankIdCBcallback has been called', {newrankIdCB})
-  // }
-
-
-
-     // React.useEffect(() => {
-     //   //console.log('in newrankIdCB_callback',  newrankId)
-     //     //setState({isCurrentUserActive:BtnState})
-     //     //worked with this hardcoded:
-     //      //setnewrankIdCB("5c6a7cf5a83a2931773847b8");
-     //      //setnewrankIdCB({newrankIdCB:'12345'});
-     //      console.log('newrankIdCB in useEffect', newrankIdCB)
-     //      _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
-     // }, [newrankIdCB]);
 
   //#endregion
 
@@ -505,62 +337,15 @@ import axios  from 'axios'
      await setIsLoading(false);
     }
     fetchData();
-  }, [newrankIdCB]); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
+  }, []); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
 
-  // const getandSetDefaultRankingList = async () => {
-  //   try {
-  //     let httpStr = 'https://api.jsonbin.io/b/' + rankingDefault + '/latest';
-  //     axios.get(httpStr)
-  //     .then(res => {
-  //       const json = res.data;
-  //       //setState({ rankingListData: json });
-  //       console.log('inside getandSetDefaultRankingList', json)
-  //       //return json;
-  //       setrankingListData(json);
-  //     })
-  //   } catch (e) {
-  //     //setState({ error: e });
-  //     setError(e);
-  //   } finally {
-  //
-  //   }
-  // }
-
-  //  const getandSetDefaultRankingList_orig = async () => {
-  //   try {
-  //     let httpStr = 'https://api.jsonbin.io/b/' + rankingDefault + '/latest';
-  //     const response = await fetch(httpStr);
-  //     const json = await response.json();
-  //
-  //     // setState({
-  //     //       rankingListData: json
-  //     // });
-  //     setrankingListData(json);
-  //   } catch (e) {
-  //     //setState({ error: e });
-  //     setError(e);
-  //   } finally {
-  //
-  //   }
-  // }
-
+//count is in GlobalRankingViewBtn. This code uses
+//parentCallback param in <Main below:
   const callback = (count) => {
   console.log('count', count);
   setnewrankIdCB(count);
-
   _loadsetJSONData(count, _loadsetJSONData_callback);
-
-       // do something with value in parent component, like save to state
    }
-
-   // function newrankIdCB_callback(newrankIdCB){
-   //   const newrankIdCB_callback = (newrankId) => {
-   //   console.log('in newrankIdCB_callback',  newrankId)
-   //     //setState({isCurrentUserActive:BtnState})
-   //      setnewrankIdCB("5c6a7cf5a83a2931773847b8");
-   //      console.log('setnewrankIdCB', newrankIdCB)
-   //      _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
-   // }
 
   // render() {
   //   //from https://medium.com/maxime-heckel/asynchronous-rendering-with-react-c323cda68f41
