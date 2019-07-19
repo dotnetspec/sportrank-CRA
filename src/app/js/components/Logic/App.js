@@ -1,6 +1,6 @@
 import Header from '../UI/Header'
 import Main from './Main'
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect, useCallback, useReducer } from 'react';
 import { withRouter } from 'react-router-dom'
 import ImgAvatar from '../../../img/avatar-default.png';
 import { map } from 'async';
@@ -127,7 +127,7 @@ import axios  from 'axios'
  * @extends React.Component
  */
 //class App extends Component {
-  export function App(props){
+  export function App({props, parentCallback}){
 
     //  function contactNoCB(contactNoCB) {
     //     //setState({contactNoCB})
@@ -293,6 +293,9 @@ import axios  from 'axios'
   const [rank, setrank] = useState('1');
   const [ranknameHasChanged, setranknameHasChanged] = useState('');
   const [address, setaddress] = useState('');
+  //const [newRankCallbackValue, setnewRankCallbackValue] = useState
+
+
   //   }
   //Review: still need?:
     //     test: [],
@@ -369,14 +372,54 @@ import axios  from 'axios'
    //      _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
    // }
 
+   // const newrankIdCBcallback = useCallback((newrankIdCB) => {
+   //   setnewrankIdCB(newrankIdCB);
+   //   console.log('newrankIdCB in useEffect', newrankIdCB)
+   //   _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
+   // },[setnewrankIdCB])
 
-     React.useEffect(() => {
-       console.log('in newrankIdCB_callback',  newrankId)
-         //setState({isCurrentUserActive:BtnState})
-          setnewrankIdCB("5c6a7cf5a83a2931773847b8");
-          console.log('setnewrankIdCB', newrankIdCB)
-          _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
-     }, [newrankIdCB]);
+
+// function Main(){
+//   const [count, dispatch] = useReducer((state, action) => {
+//
+//
+//   }, '123456');
+// }
+
+//let componentUsername = "123456";
+
+   // const newrankIdCBcallback = (newrankIdCB) => {
+   //   const test = '123456';
+   //   //componentUsername = newval;
+   //   //setnewrankIdCB({newrankIdCB: '123456'});
+   //
+   //   //setnewrankIdCB([...test, {}]);
+   //   console.log('newrankIdCBcallback has been called', newrankIdCB)
+   //   //_loadsetJSONData(newval, _loadsetJSONData_callback);
+   // };
+
+//    const newrankIdCBcallback = React.useCallback((fromnewrankIdCB) =>{
+//      console.log('newrankIdCBcallback has been called', fromnewrankIdCB)
+// }, []);
+
+
+  //   const newrankIdCBcallback = (val) => {
+  //     //setnewRankCallbackValue(newRankCallbackValue)
+  //     setnewrankIdCB(val);
+  //    console.log('newrankIdCBcallback has been called', {newrankIdCB})
+  // }
+
+
+
+     // React.useEffect(() => {
+     //   //console.log('in newrankIdCB_callback',  newrankId)
+     //     //setState({isCurrentUserActive:BtnState})
+     //     //worked with this hardcoded:
+     //      //setnewrankIdCB("5c6a7cf5a83a2931773847b8");
+     //      //setnewrankIdCB({newrankIdCB:'12345'});
+     //      console.log('newrankIdCB in useEffect', newrankIdCB)
+     //      _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
+     // }, [newrankIdCB]);
 
   //#endregion
 
@@ -443,6 +486,7 @@ import axios  from 'axios'
 
   //#region React lifecycle events
   useEffect(() => {
+    console.log('inside useEffect', newrankIdCB)
     async function fetchData() {
       //const response = await MyAPI.getData(someId);
      setIsLoading(true);
@@ -461,7 +505,7 @@ import axios  from 'axios'
      await setIsLoading(false);
     }
     fetchData();
-  }, []); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
+  }, [newrankIdCB]); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
 
   // const getandSetDefaultRankingList = async () => {
   //   try {
@@ -500,10 +544,29 @@ import axios  from 'axios'
   //   }
   // }
 
+  const callback = (count) => {
+  console.log('count', count);
+  setnewrankIdCB(count);
+
+  _loadsetJSONData(count, _loadsetJSONData_callback);
+
+       // do something with value in parent component, like save to state
+   }
+
+   // function newrankIdCB_callback(newrankIdCB){
+   //   const newrankIdCB_callback = (newrankId) => {
+   //   console.log('in newrankIdCB_callback',  newrankId)
+   //     //setState({isCurrentUserActive:BtnState})
+   //      setnewrankIdCB("5c6a7cf5a83a2931773847b8");
+   //      console.log('setnewrankIdCB', newrankIdCB)
+   //      _loadsetJSONData(newrankIdCB, _loadsetJSONData_callback);
+   // }
+
   // render() {
   //   //from https://medium.com/maxime-heckel/asynchronous-rendering-with-react-c323cda68f41
        if(!isLoading){
          console.log('account in render', account)
+
           return (
             <div>
               <Header
@@ -553,10 +616,12 @@ import axios  from 'axios'
                 newrankId={newrankId}
                 rankingDefault={rankingDefault}
                 getNewRankingID={(e) => getNewRankId()}
-                newrankIdCB={(e) => setnewrankIdCB()}
+                setnewrankIdCB={(e) => setnewrankIdCB()}
                 viewingOnlyCB={(e) => setOnCallbackviewingOnlyCB()}
                 isUserInJson={isUserInJson}
                 loadingJSON={isLoadingJSON}
+                newrankIdCB={newrankIdCB}
+                parentCallback={callback}
                 />
 
                 </div>

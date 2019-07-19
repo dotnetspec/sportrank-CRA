@@ -113,8 +113,10 @@ class GlobalRankings extends Component {
             onAfterUserUpdate={this.props.onAfterUserUpdate}
             history={this.props.history}
             username={this.props.user.username}
-            newrankIdCB={this.props.newrankIdCB}
+            setnewrankIdCB={this.props.setnewrankIdCB}
             viewingOnlyCB={this.props.viewingOnlyCB}
+            newrankIdCB={this.props.newrankIdCB}
+            parentCallback={this.props.parentCallback}
             // onClick={() =>
             //     this.onClickRankingViewSelected(cell, row, rowIndex)}
             />

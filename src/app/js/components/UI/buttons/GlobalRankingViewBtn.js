@@ -18,10 +18,10 @@ import { Button } from 'react-bootstrap';
 //       //GlobalRankingViewBtn_clicked: false
 //     };
 //   }
-
+//newrankIdCB={props.newrankIdCB}
   export default function GlobalRankingViewBtn(props){
-
-    const [rankingID, setrankingID] = useState('5c6a81756874aa33ba152e56');
+  const [count, setCount] = useState('1234');
+    //const [rankingID, setrankingID] = useState('5c6a81756874aa33ba152e56');
 
   // const selectRowPropAfterClickRow = {
   //   selectedRankingId: ''
@@ -49,6 +49,9 @@ import { Button } from 'react-bootstrap';
     //tell Header that the view btn has been clicked
     //so it can display the 'Activate?' btn
     props.onChildClick();
+
+    setCount(row.RANKINGID);
+    props.parentCallback(row.RANKINGID);
     //console.log('typeof row', typeof row)
     //console.log('row.RANKINGID', row.RANKINGID)
     //NB: this was using 'template literals' backquote or backtick character
@@ -58,17 +61,20 @@ import { Button } from 'react-bootstrap';
     //original:
     //var rankingID = `${row['RANKINGID']}`
     console.log('row rank id', row.RANKINGID);
-    setrankingID(row.RANKINGID);
-    props.newrankIdCB(rankingID);
+    //setrankingID(row.RANKINGID);
+    //const newrankIdCB = ;
+    //props.newrankIdCB(row.RANKINGID);
+    //props.newrankIdCB('12345678');
+
     props.viewingOnlyCB(true);
     //this.props.onAfterUserUpdate();
     props.history.push('/home/@' + props.username);
     //this.openResultModal();
    }
 
-   useEffect(() => {
-
-   }, [])
+   // useEffect(() => {
+   //
+   // }, [])
 
 
 
