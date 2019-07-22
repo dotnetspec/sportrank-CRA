@@ -86,7 +86,7 @@ import axios  from 'axios'
  * @extends React.Component
  */
 //class App extends Component {
-  export function App({props, parentCallback}){
+  export function App({props}){
 
     //  function contactNoCB(contactNoCB) {
     //     //setState({contactNoCB})
@@ -275,7 +275,7 @@ import axios  from 'axios'
   //any change with setState here will re-render app.js
   const processStateAfter_loadCurrentUserAccounts = (state) => {
     //console.log('state.user', (state).user);
-    console.log('state stringify', JSON.stringify(state))
+    //console.log('state stringify', JSON.stringify(state))
     if(state.user !== undefined){
         //setState({
               //error: state.error,
@@ -341,8 +341,8 @@ import axios  from 'axios'
 
 //count is in GlobalRankingViewBtn. This code uses
 //parentCallback param in <Main below:
-  const callback = (count) => {
-  console.log('count', count);
+  const parentCallback = (count) => {
+  console.log('count in app.js', count);
   setnewrankIdCB(count);
   _loadsetJSONData(count, _loadsetJSONData_callback);
    }
@@ -406,7 +406,7 @@ import axios  from 'axios'
                 isUserInJson={isUserInJson}
                 loadingJSON={isLoadingJSON}
                 newrankIdCB={newrankIdCB}
-                parentCallback={callback}
+                parentCallback={parentCallback}
                 />
 
                 </div>
