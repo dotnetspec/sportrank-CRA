@@ -226,6 +226,8 @@ import axios  from 'axios'
   const [ranknameHasChanged, setranknameHasChanged] = useState('');
   const [address, setaddress] = useState('');
 
+
+
 //Below appears to be relevant to user events not e.g. callbacks that fetch data
   //display the ranking specific btn options
   const handleChildClick = () => {
@@ -327,10 +329,11 @@ import axios  from 'axios'
 
   //#region React lifecycle events
   useEffect(() => {
+    setIsLoading(true);
     console.log('inside useEffect', newrankIdCB)
     async function fetchData() {
       //const response = await MyAPI.getData(someId);
-     setIsLoading(true);
+
      //from the Blockchain via web3io:
      setupdatedExtAcctBalCB(await _loadExternalBalance())
      //await setIsLoadingExtBal();
@@ -348,13 +351,9 @@ import axios  from 'axios'
     fetchData();
   }, []); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
 
-
-
-  // render() {
-  //   //from https://medium.com/maxime-heckel/asynchronous-rendering-with-react-c323cda68f41
+  //from https://medium.com/maxime-heckel/asynchronous-rendering-with-react-c323cda68f41
        if(!isLoading){
          console.log('account in render', account)
-
           return (
             <div>
               <Header
