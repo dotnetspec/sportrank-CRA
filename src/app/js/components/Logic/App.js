@@ -253,6 +253,15 @@ import axios  from 'axios'
        setIsCurrentUserActiveCB(BtnState);
    }
 
+   //count is in GlobalRankingViewBtn. This code uses
+   //parentCallback param in <Main below
+   //NB: where no (e) => is required in the property attribute:
+     const parentCallback = (count) => {
+     console.log('count in app.js', count);
+     setnewrankIdCB(count);
+     _loadsetJSONData(count, _loadsetJSONData_callback);
+      }
+
   //#endregion
 
   //#region Helper methods
@@ -339,13 +348,7 @@ import axios  from 'axios'
     fetchData();
   }, []); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
 
-//count is in GlobalRankingViewBtn. This code uses
-//parentCallback param in <Main below:
-  const parentCallback = (count) => {
-  console.log('count in app.js', count);
-  setnewrankIdCB(count);
-  _loadsetJSONData(count, _loadsetJSONData_callback);
-   }
+
 
   // render() {
   //   //from https://medium.com/maxime-heckel/asynchronous-rendering-with-react-c323cda68f41

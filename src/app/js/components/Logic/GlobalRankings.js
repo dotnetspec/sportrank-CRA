@@ -108,7 +108,8 @@ class GlobalRankings extends Component {
           // </button>
 
           //REVIEW: Ready to implement:
-            <GlobalRankingViewBtn cell={cell} row={row} rowIndex={rowIndex}
+            <GlobalRankingViewBtn
+            cell={cell} row={row} rowIndex={rowIndex}
             onChildClick={this.props.onChildClick}
             onAfterUserUpdate={this.props.onAfterUserUpdate}
             history={this.props.history}
