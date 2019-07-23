@@ -4,6 +4,8 @@ import { formatEth, executingAt } from '../../../utils';
 import JSONops from '../../Logic/JSONops'
 import { map } from 'async';
 import changeState from '../../SideEffects/StateManager';
+import * as helper from './web3io';
+import { getWeb3defaultAccount } from './web3defaultAccount';
 
     //REVIEW: below based on
     //https://medium.com/@bluepnume/learn-about-promises-before-you-start-using-async-await-eb148164a9c8
@@ -28,22 +30,23 @@ import changeState from '../../SideEffects/StateManager';
 //       return 'in here'
 //     }
 
-export async function connectToWeb3new(connectToWeb3_callback){
-    //console.log('connectToWeb3new')
-  let ethereumObj = {};
-    if (typeof web3.ethereum !== 'undefined') {
-      //console.log('you have an etherem compatible browser')
-      if(web3.ethereum.isMetaMask){
-        //console.log('you have MM in the browser')
-        ethereumObj = {networkVersion:  window.ethereum.networkVersion,   // property_# may be an identifier...
-                            selectedAddress:  window.ethereum.selectedAddress}
-        // console.log('ethereum.networkVersion',  )
-        // console.log('ethereum.selectedAddress', )
-        await connectToWeb3_callback(ethereumObj);
-        //window.ethereum.enable();
-        }
-    };
-  }
+// export async function connectToWeb3new(connectToWeb3_callback){
+//     console.log('typeof web3.ethereum', typeof web3.ethereum)
+//   let ethereumObj = {};
+//     if (typeof web3.ethereum !== 'undefined') {
+//       //console.log('you have an etherem compatible browser')
+//       if(web3.ethereum.isMetaMask){
+//         console.log('you have MM in the browser', web3.ethereum)
+//         console.log('web3', web3 )
+//         ethereumObj = {networkVersion:  window.ethereum.networkVersion,   // property_# may be an identifier...
+//                             selectedAddress:  window.ethereum.selectedAddress}
+//
+//         // console.log('ethereum.selectedAddress', )
+//         await connectToWeb3_callback(ethereumObj);
+//         //window.ethereum.enable();
+//         }
+//     };
+//   }
 
   export async function getCurrentUserAccountsFromBlockchain(){
     const userAccountsArray = await web3.eth.getAccounts();
@@ -69,6 +72,8 @@ export async function connectToWeb3new(connectToWeb3_callback){
   //export async function _loadCurrentUserAccounts(_loadCurrentUserAccounts_callback){
   export async function _mapCurrentUserAccounts(accountsFromTheBC){
     let state = {};
+    const defaultAccount = await getWeb3defaultAccount();
+    console.log('defaultAccount', defaultAccount)
   //try/catch was interferring with the test!
   //_loadCurrentUserAccounts uses an anonymous async function to assign
   //the accounts array from web3.eth.getAccounts() to the State array 'userAccounts'
@@ -193,17 +198,21 @@ export async function connectToWeb3new(connectToWeb3_callback){
           //console.log('userAccounts array', userAccounts)
           //console.log('web3.eth.defaultAccount', web3.eth.getAccounts(accounts => console.log(accounts[0])))
           //now all these assignments are done on the userAccounts array
-          let defaultUserAccount = userAccounts.find((userAccount) => {
-            //console.log('about to return default userAccount.address', web3.eth.defaultAccount);
-            return userAccount.address === web3.eth.defaultAccount;
-            //return userAccount.address === web3.eth.getAccounts(accounts => console.log(accounts[0]));
-          });
+          // let defaultUserAccount = userAccounts.find((userAccount) => {
+          //   //console.log('about to return default userAccount.address', web3.eth.defaultAccount);
+          //   return userAccount.address === web3.eth.defaultAccount;
+          //   //return userAccount.address === web3.eth.getAccounts(accounts => console.log(accounts[0]));
+          // });
+
+          //let defaultUserAccount = getDefaultUserAccountFromAddress(userAccounts);
           //now all these assignments are done as the values are added,
           //one at a time, to the userAccounts array
           //HACK: I think only works for 1 account
           //I'm forced to specify array index[0] when it wasn't previously required
-          defaultUserAccount = userAccounts;
-
+          //let defaultUserAccount = userAccounts;
+          let defaultUserAccount = [];
+          defaultUserAccount[0] = getDefaultUserAccountFromAddress(userAccounts, defaultAccount);
+          console.log('defaultUserAccount', defaultUserAccount)
           //check that there is an existing default account user
           //before setting state. if there isn't app will go to create
           //state = handleStateAccordingToUserExists(defaultUserAccount, state)
@@ -214,7 +223,7 @@ export async function connectToWeb3new(connectToWeb3_callback){
           //state = changeState('setUserSelectedRanking', state, userAccounts, defaultUserAccount);
           state = changeState('assignUserAcctStateToStateObj', state, userAccounts, defaultUserAccount);
 
-            console.log('userAccounts', userAccounts[0])
+            console.log('userAccounts', userAccounts)
 
         }//end of the functionality that has (mysteriously) been added into
         //what should have been simply passing an array into a map function
@@ -240,6 +249,43 @@ export async function connectToWeb3new(connectToWeb3_callback){
       return result;
     }
     // end of _loadCurrentUserAccounts
+
+    //pull one account out of the the userAccounts array that matches
+    //the current connected defaultAccount
+  //  export function getDefaultUserAccountFromAddress(userAccounts){
+  //I think this is used for when user changes account
+  export const getDefaultUserAccountFromAddress = (userAccountsArray, defaultAccount) => {
+    //export async function getDefaultUserAccountFromAddress(userAccountsArray){
+    console.log('userAccountsArray', userAccountsArray)
+    //in the array of userAccounts find a particular matching
+    //specificUserAccount address
+    //all that's needed for the particular array element to be returned
+    //is for this function to return true
+    function checkAddresses(specificAccount) {
+      //console.log('typeof acctNo', typeof acctNo)
+      console.log('specificAccount.address', specificAccount.address);
+      //const arrRes = getWeb3defaultAccount();
+      //const arrResFormat = '[' + arrRes + ']';
+      console.log('defaultAccount', defaultAccount);
+      return specificAccount.address === defaultAccount;
+      //return specificAccount.address === arrResFormat;
+    }
+      //return whatever type is found that matches the search criteria
+      //return acctNos.find(checkAddresses);
+      return userAccountsArray.find(checkAddresses);
+
+      // userAccounts.find((specificUserAccount) => {
+      //   console.log('address of particular element in the array', specificUserAccount.address);
+      //   console.log('the address in the whole array of userAccounts', userAccounts[0].address);
+      //   //return userAccount.address === web3.eth.defaultAccount;
+      //   //return userAccount.address === helper.getWeb3defaultAccount();
+      //   //if the current address matches the one in the particular
+      //   //array element return it :
+      //   //return specificUserAccount.address === getWeb3defaultAccount();
+      //   return specificUserAccount.address === '0x847700B781667abdD98E1393420754E503dca5b7;'
+      //   //return userAccount.address === web3.eth.getAccounts(accounts => console.log(accounts[0]));
+      // });
+    }
 
 export async function connectToWeb3(){
     window.addEventListener('load', async () => {

@@ -15,6 +15,8 @@ if (typeof window.ethereum !== 'undefined') {
   if(window.ethereum.isMetaMask){
     console.log('you have MM in the browser')
     console.log('ethereum.networkVersion',  window.ethereum.networkVersion)
+    console.log('window[ethereum].networkVersion',  window['ethereum'].networkVersion)
+
     console.log('ethereum.selectedAddress', window.ethereum.selectedAddress)
     window.ethereum.enable();
     //window.reload();

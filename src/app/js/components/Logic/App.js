@@ -1,17 +1,39 @@
 import Header from '../UI/Header'
 import Main from './Main'
-import React, { Component, useState, useEffect, useCallback, useReducer } from 'react';
-import { withRouter } from 'react-router-dom'
+import React, {
+  Component,
+  useState,
+  useEffect,
+  useCallback,
+  useReducer
+} from 'react';
+import {
+  withRouter
+} from 'react-router-dom'
 import ImgAvatar from '../../../img/avatar-default.png';
-import { map } from 'async';
+import {
+  map
+} from 'async';
 import JSONops from './JSONops'
-import { formatEth, executingAt } from '../../utils';
+import {
+  formatEth,
+  executingAt
+} from '../../utils';
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
-import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, getDefaultRankingList } from '../SideEffects/io/Jsonio';
-import { _loadCurrentUserAccountsInsideMapping, _loadExternalBalance,
-  _mapCurrentUserAccounts, getCurrentUserAccountsFromBlockchain } from '../SideEffects/io/web3io';
-import axios  from 'axios'
+import {
+  _loadsetJSONData,
+  _loadsetRankingListJSONData,
+  getNewRankId,
+  getDefaultRankingList
+} from '../SideEffects/io/Jsonio';
+import {
+  _loadCurrentUserAccountsInsideMapping,
+  _loadExternalBalance,
+  _mapCurrentUserAccounts,
+  getCurrentUserAccountsFromBlockchain
+} from '../SideEffects/io/web3io';
+import axios from 'axios'
 //import p-iteration from 'p-iteration'
 
 //REVEIW: perhaps change the naming of rankingDefault as it may be confusing
@@ -25,57 +47,57 @@ import axios  from 'axios'
 
 //Callback functions:
 //called in DoChallenge.js and used by Header.js to update the external account
-    //these cb functions update the relevant components
-    //DoChallenge.js
-    // export function contactNoCB(contactNoCB) {
-    //     //setState({contactNoCB})
-    //     setcontactNoCB(contactNoCB);
-    // }
-    // export function emailCB(emailCB) {
-    //     //setState({emailCB})
-    //     setemailCB(emailCB);
-    // }
-    // //cb functions based on the data in the json
-    // export function jsonHasRankingID(jsonHasRankingID) {
-    //     //setState({jsonHasRankingID})
-    //     setjsonHasRankingID(jsonHasRankingID);
-    // }
-    // export function jsonHasData(jsonHasData) {
-    //     //setState({jsonHasData})
-    //     setjsonHasData(jsonHasData);
-    // }
-    // export function currentUserRank(currentUserRank) {
-    //     //setState({currentUserRank})
-    //     setCurrentUserRank(currentUserRank);
-    // }
-    // //cb from createuser.js to set the username
-    // //in time for getNewRankingID() to put it in the json
-    // export function userNameCB(userNameCB) {
-    //   //console.log('in userNameCB', userNameCB)
-    //     //setState({userNameCB})
-    //     setuserNameCB(userNameCB);
-    // }
-    //
-    // //cb from web3io.js to set the state of the external balance
-    // export function _loadExternalBalance_callback(balance) {
-    //   //console.log('data account in callback', data[0].ACCOUNT);
-    //   //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
-    //    //done();
-    //    //console.log('balance', balance)
-    //        if(balance !== undefined){
-    //          //setState({ updatedExtAcctBalCB: balance })
-    //          setBalance(balance);
-    //       }
-    // }
+//these cb functions update the relevant components
+//DoChallenge.js
+// export function contactNoCB(contactNoCB) {
+//     //setState({contactNoCB})
+//     setcontactNoCB(contactNoCB);
+// }
+// export function emailCB(emailCB) {
+//     //setState({emailCB})
+//     setemailCB(emailCB);
+// }
+// //cb functions based on the data in the json
+// export function jsonHasRankingID(jsonHasRankingID) {
+//     //setState({jsonHasRankingID})
+//     setjsonHasRankingID(jsonHasRankingID);
+// }
+// export function jsonHasData(jsonHasData) {
+//     //setState({jsonHasData})
+//     setjsonHasData(jsonHasData);
+// }
+// export function currentUserRank(currentUserRank) {
+//     //setState({currentUserRank})
+//     setCurrentUserRank(currentUserRank);
+// }
+// //cb from createuser.js to set the username
+// //in time for getNewRankingID() to put it in the json
+// export function userNameCB(userNameCB) {
+//   //console.log('in userNameCB', userNameCB)
+//     //setState({userNameCB})
+//     setuserNameCB(userNameCB);
+// }
+//
+// //cb from web3io.js to set the state of the external balance
+// export function _loadExternalBalance_callback(balance) {
+//   //console.log('data account in callback', data[0].ACCOUNT);
+//   //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
+//    //done();
+//    //console.log('balance', balance)
+//        if(balance !== undefined){
+//          //setState({ updatedExtAcctBalCB: balance })
+//          setBalance(balance);
+//       }
+// }
 
-    //   export function _loadCurrentUserAccountsInsideMapping_callback(data){
-    //     //setState({ address: data.address});
-    //     setaddress(data.address);
-    //     //setState({ user: data.user});
-    //     setuser(data.user);
-    //     //setState({ balance: data.balance});
-    //     setBalance(data.balance)
-    //   }
+//   export function _loadCurrentUserAccountsInsideMapping_callback(data){
+//     //setState({ address: data.address});
+//     setaddress(data.address);
+//     //setState({ user: data.user});
+//     setuser(data.user);
+//     //setState({ balance: data.balance});
+//     setBalance(data.balance)
+//   }
 
 /**
  * Class representing the highest order component. Any user
@@ -86,76 +108,78 @@ import axios  from 'axios'
  * @extends React.Component
  */
 //class App extends Component {
-  export function App({props}){
+export function App({
+  props
+}) {
 
-    //  function contactNoCB(contactNoCB) {
-    //     //setState({contactNoCB})
-    //     setcontactNoCB(contactNoCB);
-    // }
-    // function emailCB(emailCB) {
-    //     //setState({emailCB})
-    //     setemailCB(emailCB);
-    // }
-    //cb functions based on the data in the json
-    // function jsonHasRankingID(jsonHasRankingID) {
-    //     //setState({jsonHasRankingID})
-    //     setjsonHasRankingID(jsonHasRankingID);
-    // }
-    // function jsonHasData(jsonHasData) {
-    //     //setState({jsonHasData})
-    //     setjsonHasData(jsonHasData);
-    // }
-    function currentUserRankCB(currentUserRank) {
-        //setState({currentUserRank})
-        setCurrentUserRank(currentUserRank);
+  //  function contactNoCB(contactNoCB) {
+  //     //setState({contactNoCB})
+  //     setcontactNoCB(contactNoCB);
+  // }
+  // function emailCB(emailCB) {
+  //     //setState({emailCB})
+  //     setemailCB(emailCB);
+  // }
+  //cb functions based on the data in the json
+  // function jsonHasRankingID(jsonHasRankingID) {
+  //     //setState({jsonHasRankingID})
+  //     setjsonHasRankingID(jsonHasRankingID);
+  // }
+  // function jsonHasData(jsonHasData) {
+  //     //setState({jsonHasData})
+  //     setjsonHasData(jsonHasData);
+  // }
+  function currentUserRankCB(currentUserRank) {
+    //setState({currentUserRank})
+    setCurrentUserRank(currentUserRank);
+  }
+  //cb from createuser.js to set the username
+  //in time for getNewRankingID() to put it in the json
+  // function userNameCB(userNameCB) {
+  //   //console.log('in userNameCB', userNameCB)
+  //     //setState({userNameCB})
+  //     setuserNameCB(userNameCB);
+  // }
+
+  //cb from web3io.js to set the state of the external balance
+  function _loadExternalBalance_callback(balance) {
+    //console.log('data account in callback', data[0].ACCOUNT);
+    //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
+    //done();
+    //console.log('balance', balance)
+    if (balance !== undefined) {
+      //setState({ updatedExtAcctBalCB: balance })
+      setBalance(balance);
     }
-    //cb from createuser.js to set the username
-    //in time for getNewRankingID() to put it in the json
-    // function userNameCB(userNameCB) {
-    //   //console.log('in userNameCB', userNameCB)
-    //     //setState({userNameCB})
-    //     setuserNameCB(userNameCB);
-    // }
+  }
 
-    //cb from web3io.js to set the state of the external balance
-    function _loadExternalBalance_callback(balance) {
-      //console.log('data account in callback', data[0].ACCOUNT);
-      //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
-       //done();
-       //console.log('balance', balance)
-           if(balance !== undefined){
-             //setState({ updatedExtAcctBalCB: balance })
-             setBalance(balance);
-          }
-    }
+  function _loadsetJSONData_callback(data) {
+    console.log('data account in callback', data[0].ACCOUNT);
+    //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
+    setdata(data);
+    setisLoadingJSON(false);
+    setIsUserInJson(JSONops.isPlayerListedInJSON(data, user.username));
+    setrank(JSONops._getUserValue(data, user.username, "RANK"));
+    setIsCurrentUserActive(JSONops._getUserValue(data, user.username, "ACTIVE"));
+  }
 
-    function _loadsetJSONData_callback(data) {
-      console.log('data account in callback', data[0].ACCOUNT);
-      //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
-      setdata(data);
-      setisLoadingJSON(false);
-      setIsUserInJson(JSONops.isPlayerListedInJSON(data, user.username));
-      setrank(JSONops._getUserValue(data, user.username, "RANK"));
-      setIsCurrentUserActive(JSONops._getUserValue(data, user.username, "ACTIVE"));
-     }
+  function getNewRankId_callback(data) {
+    //setState({ newrankId: data.id});
+    setnewrankId(data.id);
+    //setState({ ranknameHasChanged: true});
+    setranknameHasChanged(true);
+    //setState({ isLoading: false});
+    setIsLoading(false);
+  }
 
-      function getNewRankId_callback(data){
-        //setState({ newrankId: data.id});
-        setnewrankId(data.id);
-        //setState({ ranknameHasChanged: true});
-        setranknameHasChanged(true);
-        //setState({ isLoading: false});
-        setIsLoading(false);
-      }
-
-      function _loadCurrentUserAccountsInsideMapping_callback(data){
-        //setState({ address: data.address});
-        setaddress(data.address);
-        //setState({ user: data.user});
-        setuser(data.user);
-        //setState({ balance: data.balance});
-        setBalance(data.balance)
-      }
+  function _loadCurrentUserAccountsInsideMapping_callback(data) {
+    //setState({ address: data.address});
+    setaddress(data.address);
+    //setState({ user: data.user});
+    setuser(data.user);
+    //setState({ balance: data.balance});
+    setBalance(data.balance)
+  }
 
   const [user, setuser] = useState({});
   //     account: '',
@@ -214,9 +238,9 @@ import axios  from 'axios'
   const [viewingOnlyCB, setviewingOnlyCB] = useState(true);
 
   //     contactno: '',
-    const [contactno, setcontactno] = useState('');
+  const [contactno, setcontactno] = useState('');
   //     email: '',
-    const [email, setemail] = useState('');
+  const [email, setemail] = useState('');
   //     description:'',
   const [description, setdescription] = useState('');
   //     specificRankingOptionBtns: false
@@ -228,48 +252,48 @@ import axios  from 'axios'
 
 
 
-//Below appears to be relevant to user events not e.g. callbacks that fetch data
+  //Below appears to be relevant to user events not e.g. callbacks that fetch data
   //display the ranking specific btn options
   const handleChildClick = () => {
-        //setState({specificRankingOptionBtns:true});
-        setspecificRankingOptionBtns(true);
-      }
+    //setState({specificRankingOptionBtns:true});
+    setspecificRankingOptionBtns(true);
+  }
 
-   const handleListAllChildClick = () => {
-     //setState({specificRankingOptionBtns:false})
-        setspecificRankingOptionBtns(false);
-   }
+  const handleListAllChildClick = () => {
+    //setState({specificRankingOptionBtns:false})
+    setspecificRankingOptionBtns(false);
+  }
 
-   //cb from GlobalRankings.js to set the rank state as view only
-   //REVEIW: is this necessary? wasn't working until noticed it ...
-   const setOnCallbackviewingOnlyCB = (viewingOnlyCB) => {
-     // console.log('in viewingOnlyCB', viewingOnlyCB)
-     //   setState({viewingOnlyCB:viewingOnlyCB})
-       setviewingOnlyCB(viewingOnlyCB);
-   }
+  //cb from GlobalRankings.js to set the rank state as view only
+  //REVEIW: is this necessary? wasn't working until noticed it ...
+  const setOnCallbackviewingOnlyCB = (viewingOnlyCB) => {
+    // console.log('in viewingOnlyCB', viewingOnlyCB)
+    //   setState({viewingOnlyCB:viewingOnlyCB})
+    setviewingOnlyCB(viewingOnlyCB);
+  }
 
-   //cb from PlayerStatusBtn.js to set the state of the button
-   const setOnCallbackisCurrentUserActiveCB = (BtnState) => {
-     console.log('in isCurrentUserActive', BtnState)
-       //setState({isCurrentUserActive:BtnState})
-       setIsCurrentUserActiveCB(BtnState);
-   }
+  //cb from PlayerStatusBtn.js to set the state of the button
+  const setOnCallbackisCurrentUserActiveCB = (BtnState) => {
+    console.log('in isCurrentUserActive', BtnState)
+    //setState({isCurrentUserActive:BtnState})
+    setIsCurrentUserActiveCB(BtnState);
+  }
 
-   //count is in GlobalRankingViewBtn. This code uses
-   //parentCallback param in <Main below
-   //NB: where no (e) => is required in the property attribute:
-     const parentCallback = (count) => {
-     console.log('count in app.js', count);
-     setnewrankIdCB(count);
-     _loadsetJSONData(count, _loadsetJSONData_callback);
-      }
+  //count is in GlobalRankingViewBtn. This code uses
+  //parentCallback param in <Main below
+  //NB: where no (e) => is required in the property attribute:
+  const parentCallback = (count) => {
+    console.log('count in app.js', count);
+    setnewrankIdCB(count);
+    _loadsetJSONData(count, _loadsetJSONData_callback);
+  }
 
   //#endregion
 
   //#region Helper methods
 
-//REVIEW: Possible to getUserRank in App.js (and set state) rather than Home.js?
-//currently no - problem is waiting for username to check against rank
+  //REVIEW: Possible to getUserRank in App.js (and set state) rather than Home.js?
+  //currently no - problem is waiting for username to check against rank
 
   /**
    * Sets the App state error and redirects the user to the error page
@@ -287,44 +311,44 @@ import axios  from 'axios'
   const processStateAfter_loadCurrentUserAccounts = (state) => {
     //console.log('state.user', (state).user);
     //console.log('state stringify', JSON.stringify(state))
-    if(state.user !== undefined){
-        //setState({
-              //error: state.error,
-              setError(state.error);
-              //userAccounts: state.userAccounts,
-              setuserAccounts(state.userAccounts)
-              //rankingDefault: state.rankingDefault,
-              //isUserInJson: JSONops.isPlayerListedInJSON(state.data, state.user.username),
-              //isCurrentUserActive: JSONops._getUserValue(state.data, state.user.username, "ACTIVE"),
-              //newrankId: state.newrankId,
-              setnewrankId(state.newrankId);
-              //user: state.user,
-              setuser(state.user);
-              //contactno: state.user.contactno,
-              setcontactno(state.user.contactno);
-              //email: state.user.email,
-              setemail(state.user.email);
-              //description: state.user.description,
-              setdescription(state.user.description);
-              //account: web3.eth.defaultAccount,
-              //account: state.account,
-              console.log('state.account', state.account);
-              setAccount(state.account);
-              //balance: state.balance,
-              setBalance(state.balance);
-              //rank: JSONops._getUserValue(state.data, state.user.username, "RANK"),
-              //contactNoCB: state.contactNoCB,
-              setcontactNoCB(state.contactNoCB);
-              //emailCB: state.emailCB,
-              setemailCB(state.emailCB);
-              //loadingAccounts: false,
-              setisLoadingAccounts(false);
-              //newrankId must be cleared so a new one has to be regenerated for each account
-              //viewingOnlyCB: true
-              setviewingOnlyCB(true);
+    if (state.user !== undefined) {
+      //setState({
+      //error: state.error,
+      setError(state.error);
+      //userAccounts: state.userAccounts,
+      setuserAccounts(state.userAccounts)
+      //rankingDefault: state.rankingDefault,
+      //isUserInJson: JSONops.isPlayerListedInJSON(state.data, state.user.username),
+      //isCurrentUserActive: JSONops._getUserValue(state.data, state.user.username, "ACTIVE"),
+      //newrankId: state.newrankId,
+      setnewrankId(state.newrankId);
+      //user: state.user,
+      setuser(state.user);
+      //contactno: state.user.contactno,
+      setcontactno(state.user.contactno);
+      //email: state.user.email,
+      setemail(state.user.email);
+      //description: state.user.description,
+      setdescription(state.user.description);
+      //account: web3.eth.defaultAccount,
+      //account: state.account,
+      console.log('state.account', state.account);
+      setAccount(state.account);
+      //balance: state.balance,
+      setBalance(state.balance);
+      //rank: JSONops._getUserValue(state.data, state.user.username, "RANK"),
+      //contactNoCB: state.contactNoCB,
+      setcontactNoCB(state.contactNoCB);
+      //emailCB: state.emailCB,
+      setemailCB(state.emailCB);
+      //loadingAccounts: false,
+      setisLoadingAccounts(false);
+      //newrankId must be cleared so a new one has to be regenerated for each account
+      //viewingOnlyCB: true
+      setviewingOnlyCB(true);
       //  })
-        console.log('state.user.username in app.js', state.user.username)
-      }
+      console.log('state.user.username in app.js', state.user.username)
+    }
   }
 
   //#region React lifecycle events
@@ -334,91 +358,186 @@ import axios  from 'axios'
     async function fetchData() {
       //const response = await MyAPI.getData(someId);
 
-     //from the Blockchain via web3io:
-     setupdatedExtAcctBalCB(await _loadExternalBalance())
-     //await setIsLoadingExtBal();
-     //from jsonbin api via jsonio::
-     await getDefaultRankingList(rankingDefault, getDefaultRankingList_callback);
-     async function getDefaultRankingList_callback(json){
-       setrankingListData(json);
+      //from the Blockchain via web3io:
+      setupdatedExtAcctBalCB(await _loadExternalBalance())
+      //await setIsLoadingExtBal();
+      //from jsonbin api via jsonio::
+      await getDefaultRankingList(rankingDefault, getDefaultRankingList_callback);
+      async function getDefaultRankingList_callback(json) {
+        setrankingListData(json);
       }
-     //from the Blockchain via web3io:
-     //processStateAfter_loadCurrentUserAccounts(await _loadCurrentUserAccounts());
-     processStateAfter_loadCurrentUserAccounts(
-       await _mapCurrentUserAccounts(await getCurrentUserAccountsFromBlockchain()));
-     await setIsLoading(false);
+      //from the Blockchain via web3io:
+      //processStateAfter_loadCurrentUserAccounts(await _loadCurrentUserAccounts());
+      processStateAfter_loadCurrentUserAccounts(
+        await _mapCurrentUserAccounts(await getCurrentUserAccountsFromBlockchain()));
+      await setIsLoading(false);
     }
     fetchData();
   }, []); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
 
   //from https://medium.com/maxime-heckel/asynchronous-rendering-with-react-c323cda68f41
-       if(!isLoading){
-         console.log('account in render', account)
-          return (
-            <div>
-              <Header
-                data-testid='header'
-                user={user}
-                account={account}
-                userAccounts={userAccounts}
-                balance={balance}
-                error={error}
-                isCurrentUserActive={isCurrentUserActive}
-                isCurrentUserActiveCB={(e) => isCurrentUserActiveCB()}
-                onChildClick={(e) => handleChildClick()}
-                onListAllChildClick={(e) => handleListAllChildClick()}
-                specificRankingOptionBtns={specificRankingOptionBtns}
-                onAfterUserUpdate={(e) => _mapCurrentUserAccounts()}
-                onError={(err, source) => _onError(err, source)}
-                rankingJSONdata={data}
-                rankingListJSONdata={rankingListData}
-                updatedExtAcctBalCB={updatedExtAcctBalCB}
-                usersRankingLists={userRankingLists}
-                isUserInJson={isUserInJson}
-                rankingDefault={rankingDefault}
-                newrankId={newrankId}
-                newrankIdCB={(e) => setnewrankIdCB()}
-                />
+  if (!isLoading) {
+    console.log('account in render', account)
+    return ( <
+      div >
+      <
+      Header data-testid = 'header'
+      user = {
+        user
+      }
+      account = {
+        account
+      }
+      userAccounts = {
+        userAccounts
+      }
+      balance = {
+        balance
+      }
+      error = {
+        error
+      }
+      isCurrentUserActive = {
+        isCurrentUserActive
+      }
+      isCurrentUserActiveCB = {
+        (e) => isCurrentUserActiveCB()
+      }
+      onChildClick = {
+        (e) => handleChildClick()
+      }
+      onListAllChildClick = {
+        (e) => handleListAllChildClick()
+      }
+      specificRankingOptionBtns = {
+        specificRankingOptionBtns
+      }
+      onAfterUserUpdate = {
+        (e) => _mapCurrentUserAccounts()
+      }
+      onError = {
+        (err, source) => _onError(err, source)
+      }
+      rankingJSONdata = {
+        data
+      }
+      rankingListJSONdata = {
+        rankingListData
+      }
+      updatedExtAcctBalCB = {
+        updatedExtAcctBalCB
+      }
+      usersRankingLists = {
+        userRankingLists
+      }
+      isUserInJson = {
+        isUserInJson
+      }
+      rankingDefault = {
+        rankingDefault
+      }
+      newrankId = {
+        newrankId
+      }
+      newrankIdCB = {
+        (e) => setnewrankIdCB()
+      }
+      />
 
-              <Main
-                data-testid='main'
-                user={user}
-                contactno={contactno}
-                email={email}
-                description={description}
-                account={account}
-                userAccounts={userAccounts}
-                error={error}
-                onChildClick={(e) => handleChildClick()}
-                specificRankingOptionBtns={specificRankingOptionBtns}
-                onAfterUserUpdate={(e) => _mapCurrentUserAccounts()}
-                onError={(err, source) => _onError(err, source)}
-                rankingJSONdata={data}
-                rankingListJSONdata={rankingListData}
-                contactNoCB={(e) => setcontactNoCB()}
-                emailCB={emailCB}
-                rank={rank}
-                isCurrentUserActive={isCurrentUserActive}
-                isRankingIDInvalid={isRankingIDInvalid}
-                newrankId={newrankId}
-                rankingDefault={rankingDefault}
-                getNewRankingID={(e) => getNewRankId()}
-                setnewrankIdCB={(e) => setnewrankIdCB()}
-                viewingOnlyCB={(e) => setOnCallbackviewingOnlyCB()}
-                isUserInJson={isUserInJson}
-                loadingJSON={isLoadingJSON}
-                newrankIdCB={newrankIdCB}
-                parentCallback={parentCallback}
-                />
+      <
+      Main data-testid = 'main'
+      user = {
+        user
+      }
+      contactno = {
+        contactno
+      }
+      email = {
+        email
+      }
+      description = {
+        description
+      }
+      account = {
+        account
+      }
+      userAccounts = {
+        userAccounts
+      }
+      error = {
+        error
+      }
+      onChildClick = {
+        (e) => handleChildClick()
+      }
+      specificRankingOptionBtns = {
+        specificRankingOptionBtns
+      }
+      onAfterUserUpdate = {
+        (e) => _mapCurrentUserAccounts()
+      }
+      onError = {
+        (err, source) => _onError(err, source)
+      }
+      rankingJSONdata = {
+        data
+      }
+      rankingListJSONdata = {
+        rankingListData
+      }
+      contactNoCB = {
+        (e) => setcontactNoCB()
+      }
+      emailCB = {
+        emailCB
+      }
+      rank = {
+        rank
+      }
+      isCurrentUserActive = {
+        isCurrentUserActive
+      }
+      isRankingIDInvalid = {
+        isRankingIDInvalid
+      }
+      newrankId = {
+        newrankId
+      }
+      rankingDefault = {
+        rankingDefault
+      }
+      getNewRankingID = {
+        (e) => getNewRankId()
+      }
+      setnewrankIdCB = {
+        (e) => setnewrankIdCB()
+      }
+      viewingOnlyCB = {
+        (e) => setOnCallbackviewingOnlyCB()
+      }
+      isUserInJson = {
+        isUserInJson
+      }
+      loadingJSON = {
+        isLoadingJSON
+      }
+      newrankIdCB = {
+        newrankIdCB
+      }
+      parentCallback = {
+        parentCallback
+      }
+      />
 
-                </div>
-            );
-          }else{
-            return (
-                <div data-testid='loading'>Loading ...</div>
-            );
-          }
-        //}
+      <
+      /div>
+    );
+  } else {
+    return ( <
+      div data-testid = 'loading' > Loading... < /div>
+    );
+  }
+  //}
   //#endregion
 }
 
