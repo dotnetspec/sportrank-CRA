@@ -72,7 +72,7 @@ describe('<App/> ', () => {
           }
 
 
-          it("App ETH bal basic render w/o data", async () => {
+          xit("App ETH bal basic render w/o data", async () => {
             //override global mockResolvedValue with:
             //axiosMock.get.mockResolvedValueOnce({data: globalRankingData});
             //const mockFn = jest.fn();

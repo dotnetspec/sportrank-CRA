@@ -13,7 +13,9 @@ import { render, cleanup, fireEvent, getByText, debug  } from '@testing-library/
 import {renderWithRouter} from '../../../utils'
 import {ranking1} from '../../../../../../cypress/fixtures/ranking1'
 //import { render, cleanup, fireEvent, getByText, container, waitForElement, getByLabelText } from '@testing-library/react'
-
+//import { getDefaultUserAccountFromAddress } from '../io/web3io';
+import * as web3defaultAccount from '../../SideEffects/io/web3defaultAccount';
+import * as  sendEthTransaction  from '../../SideEffects/io/sendEthTransaction';
 //originally based on example:
 //https://testing-library.com/docs/dom-testing-library/example-intro
 
@@ -24,8 +26,11 @@ const onAfterChallenge = jest.fn();
 const _handleClick = jest.fn();
 const data = ranking1;
 const selectedOpponentName = 'player3';
+//const closeResultModal = jest.fn();
 // const updateTextCB =
 // const newrankIdCB =
+
+const address = '0x847700B781667abdD98E1393420754E503dca5b7';
 
 const userOjb = {
           username: 'player1',
@@ -58,6 +63,11 @@ it('DoChallenge correctly displays initially', async () => {
 //TODO:
 xit('De-activate player on click', async () => {
 
+  const spy = jest.spyOn(web3defaultAccount, 'getWeb3defaultAccount');
+  spy.mockReturnValue(address);
+  const spy2 = jest.spyOn(sendEthTransaction, 'sendEthTransaction');
+  spy2.mockReturnValue(address);
+
   console.log('data', data);
 
   const { getByText} = renderWithRouter(<DoChallenge
@@ -67,5 +77,6 @@ xit('De-activate player on click', async () => {
 
   //expect(_handleClick.mock.calls.length).toBe(1);
   //expect(_handleClick).toHaveBeenCalled();
-  expect(onAfterChallenge).toHaveBeenCalled();
+  await wait(() => expect(_handleClick).toHaveBeenCalled());
+  //expect(closeResultModal).toHaveBeenCalled();
 })

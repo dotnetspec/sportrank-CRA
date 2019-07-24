@@ -11,6 +11,11 @@ import JSONops from './JSONops'
 //import Fortmatic from 'fortmatic';
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
+import { getWeb3defaultAccount } from '../SideEffects/io/web3defaultAccount';
+import { getWeb3Accounts } from '../SideEffects/io/web3Accounts';
+import { sendEthTransaction } from '../SideEffects/io/sendEthTransaction';
+import { estimateGas } from '../SideEffects/io/estimateGas';
+
 
 /**
  * Class that renders a form to allow the user to create
@@ -98,14 +103,19 @@ displayContactDetails(){
        });
        const challenge = DSportRank.methods.challenge(this.state.challenge);
        // estimate gas before sending challenge transaction
-       const gasEstimate = await web3.eth.estimateGas({ from: web3.eth.defaultAccount });
+       //const gasEstimate = await web3.eth.estimateGas({ from: web3.eth.defaultAccount });
+      //const gasEstimate = await web3.eth.estimateGas({ from: getWeb3defaultAccount() });
+      const gasEstimate = estimateGas();
+      console.log('gasEstimate 1', gasEstimate);
        //REVIEW; Sending ETH code. Account currently hard coded
        //const resultSentExtBal = await web3.eth.sendTransaction({ from: web3.eth.defaultAccount, to: '0xd496e890fcaa0b8453abb17c061003acb3bcc28e', value: 1**17, gas: gasEstimate + 1000 });
        //0xAC5491BB066c98fec13046928a78761c0B1E5603
-       const resultSentExtBal = await web3.eth.sendTransaction({ from: web3.eth.defaultAccount, to: '0xAC5491BB066c98fec13046928a78761c0B1E5603', value: 1**17, gas: gasEstimate + 1000 });
+       //const resultSentExtBal = await web3.eth.sendTransaction({ from: web3.eth.defaultAccount, to: '0xAC5491BB066c98fec13046928a78761c0B1E5603', value: 1**17, gas: gasEstimate + 1000 });
+      //const resultSentExtBal = await web3.eth.sendTransaction({ from: getWeb3defaultAccount(), to: '0xAC5491BB066c98fec13046928a78761c0B1E5603', value: 1**17, gas: gasEstimate + 1000 });
+      const resultSentExtBal = await sendEthTransaction(gasEstimate);
+      console.log('resultSentExtBal', resultSentExtBal)
 
-
-       console.log('web3.eth.defaultAccount', web3.eth.defaultAccount)
+       //console.log('web3.eth.defaultAccount', web3.eth.defaultAccount)
 
        if (resultSentExtBal.status && !Boolean(resultSentExtBal.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
          return this.setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(resultSentExtBal) });
@@ -113,7 +123,8 @@ displayContactDetails(){
        console.log('gasEstimate', gasEstimate)
        //REVIEW: not currently sure why gasEstimate not working the same as for sendTransaction above
        //currently set with addon 10X higher
-       const result = await challenge.send({ from: web3.eth.defaultAccount, gas: gasEstimate + 100000 });
+       //const result = await challenge.send({ from: web3.eth.defaultAccount, gas: gasEstimate + 100000 });
+       const result = await challenge.send({ from: getWeb3Accounts(), gas: gasEstimate + 100000 });
        // check result status. if status is false or '0x0', show user the tx details to debug error
       if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
         //console.log(result)

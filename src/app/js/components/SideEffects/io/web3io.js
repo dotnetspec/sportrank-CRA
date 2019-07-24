@@ -6,6 +6,7 @@ import { map } from 'async';
 import changeState from '../../SideEffects/StateManager';
 import * as helper from './web3io';
 import { getWeb3defaultAccount } from './web3defaultAccount';
+import { getWeb3Accounts } from './web3Accounts';
 
     //REVIEW: below based on
     //https://medium.com/@bluepnume/learn-about-promises-before-you-start-using-async-await-eb148164a9c8
@@ -72,7 +73,7 @@ import { getWeb3defaultAccount } from './web3defaultAccount';
   //export async function _loadCurrentUserAccounts(_loadCurrentUserAccounts_callback){
   export async function _mapCurrentUserAccounts(accountsFromTheBC){
     let state = {};
-    const defaultAccount = await getWeb3defaultAccount();
+    const defaultAccount = await getWeb3Accounts();
     console.log('defaultAccount', defaultAccount)
   //try/catch was interferring with the test!
   //_loadCurrentUserAccounts uses an anonymous async function to assign

@@ -4,9 +4,10 @@ import {
   _loadCurrentUserAccountsInsideMapping,
   _loadExternalBalance,
   getCurrentUserAccountsFromBlockchain,
-  _mapCurrentUserAccounts,
+  _mapCurrentUserAccounts
+  //,
   //getDefaultUserAccountFromAddress,
-  getWeb3defaultAccount
+  //getWeb3defaultAccount
 } from '../io/web3io';
 import web3 from '../../../../../web3';
 import 'jest-dom/extend-expect'
@@ -19,7 +20,8 @@ import {
 import Web3 from 'web3';
 import PrivateKeyProvider from 'truffle-privatekey-provider'
 import { getDefaultUserAccountFromAddress } from '../io/web3io';
-import * as web3defaultAccount from '../io/web3defaultAccount';
+import  *  as web3defaultAccount from '../io/web3defaultAccount';
+import  *  as getWeb3Accounts from '../io/web3Accounts';
 
 //REVIEW: there is no point testing simply getting the accounts array
 //from the BC. Testing starts with the substantial functionality
@@ -216,13 +218,13 @@ describe('web3io.js', () => {
 //jest.mock('../../SideEffects/io/web3io');
 //getWeb3defaultAccount.mockImplementation(address);
 
-const mockgetWeb3defaultAccount = jest.fn(address);
+const mockgetWeb3Accounts = jest.fn(address);
 //getDefaultUserAccountFromAddress(userAccountsArray, getWeb3defaultAccount);
 // The mock function is called twice
 
 
-    getWeb3defaultAccount(mockgetWeb3defaultAccount);
-    expect(mockgetWeb3defaultAccount.mock.calls.length).toBe(1);
+    getWeb3Accounts(mockgetWeb3Accounts);
+    expect(mockgetWeb3Accounts.mock.calls.length).toBe(1);
 
     // expect(obj.address).toEqual(address);
     // let bal = parseFloat(obj.balance);
