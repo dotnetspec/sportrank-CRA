@@ -2,7 +2,7 @@
 //import { Grid, Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, DropdownItem, Overlay, Tooltip, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import { Button, FormGroup} from 'react-bootstrap';
 //import testData from "../../json/Rankings.json";
-import React, { Component } from 'react'
+import React, { Component, useState, useEffect } from 'react'
 //import FieldGroup from './FieldGroup'
 import Spinner from 'react-spinkit'
 import JSONops from './JSONops'
@@ -25,36 +25,51 @@ import { estimateGas } from '../SideEffects/io/estimateGas';
  * @extends React.Component
  */
 
-class DoChallenge extends Component{
+//class DoChallenge extends Component{
+  export default function DoChallenge(props){
   //#region Constructor
-  constructor(props, context) {
-    super(props, context);
+  // constructor(props, context) {
+  //   super(props, context);
     // initial state
-    this.state = {
-      selection: [],
-      data: [],
-      showModal: false,
-      challenge: '',
-      selectedOpponentName: "",
-      challengeHasChanged: false,
-      isLoading: false,
-      error: '',
-      selectedChallengeOption: 'No'
-    };
+    //this.state = {
+      //selection: [],
+      const [selection, setSelection] = useState([])
+      //data: [],
+      const [data, setData] = useState([])
+      //showModal: false,
+      const [showModal, setShowModal] = useState(false)
+      //challenge: '',
+      const [challenge, setChallenge] = useState('')
+      //selectedOpponentName: "",
+      const [selectedOpponentName, setSelectedOpponentName] = useState('')
+      //challengeHasChanged: false,
+      const [challengeHasChanged, setChallengeHasChanged] = useState(false)
+      //isLoading: false,
+      const [isLoading, setIsLoading] = useState(false)
+      //error: '',
+      const [error, setError] = useState('')
+      //selectedChallengeOption: 'No'
+      const [selectedChallengeOption, setSelectedChallengeOption] = useState('No')
 
-    this.challengeInput = '';
-  }
+      const [state, setState] = useState({
+        challenge: ''
+      })
+    //};
+
+    //challengeInput = '';
+    const [challengeInput, setchallengeInput] = useState('')
+  //}
   //#endregion
 
-displayContactDetails(){
-  const oppoContactNumber = JSONops._getUserValue(this.props.data, this.props.selectedOpponentName, 'CONTACTNO')
-  const oppoEmail = JSONops._getUserValue(this.props.data, this.props.selectedOpponentName, 'EMAIL')
-  const oppoContactNumberTxt = this.props.selectedOpponentName + "'s contact number is : " + oppoContactNumber;
-  const oppoEmailTxt = this.props.selectedOpponentName + "'s email address is : " + oppoEmail;
+function displayContactDetails(){
+  const oppoContactNumber = JSONops._getUserValue(props.data, props.selectedOpponentName, 'CONTACTNO')
+  const oppoEmail = JSONops._getUserValue(props.data, props.selectedOpponentName, 'EMAIL')
+  const oppoContactNumberTxt = props.selectedOpponentName + "'s contact number is : " + oppoContactNumber;
+  const oppoEmailTxt = props.selectedOpponentName + "'s email address is : " + oppoEmail;
 
   //contactNoCB callback function (App.js)
-  this.props.contactNoCB(oppoContactNumberTxt);
-  this.props.emailCB(oppoEmailTxt);
+  props.contactNoCB(oppoContactNumberTxt);
+  props.emailCB(oppoEmailTxt);
   //contactNoCB callback function (Header.js)
   //let tempbalTodisplay = parseInt(this.props.updatedExtAcctBalCB) + (10 ** 18);
   //REVIEW: not sure what below relates to. Probably not useful ...
@@ -73,7 +88,7 @@ displayContactDetails(){
    *
    * @returns {null}
    */
-  _handleClick = async (e) => {
+  const _handleClick = async (e) => {
       console.log('in _handleClick');
       //NB: there is now no form to send
     // do not post challenge if there is a form error or user has not typed anything
@@ -83,7 +98,8 @@ displayContactDetails(){
     // }
 
     // show loading state
-    this.setState({ isLoading: true });
+    //setState({ isLoading: true });
+    setIsLoading(true);
     //REVIEW: I don't see how these props from orig are used
     //const { username, account, onAfterChallenge } = this.props;
     //this.challengeInput = "at last!";
@@ -96,12 +112,17 @@ displayContactDetails(){
     try{
       //https://stackoverflow.com/questions/27176838/reactjs-setstate-is-slow
       //await keyword necessary
-      await this.setState(state => {
-      state.challenge= this.props.user + " vs " + this.props.selectedOpponentName;
-       }, ()=>{
-         //after callback
-         console.log('this.state.challenge', this.state.challenge)
-       });
+      //let state = {};
+      // await setState(state => {
+      // state.challenge= props.user + " vs " + props.selectedOpponentName;
+      //  }, ()=>{
+      //    //after callback
+      //    console.log('challenge', challenge)
+      //  });
+      //REVIEW: probably change naming of setState
+      await setState(state.challenge = props.user + " vs " + props.selectedOpponentName);
+
+
        //const challenge = DSportRank.methods.challenge(this.state.challenge);
        // estimate gas before sending challenge transaction
        //const gasEstimate = await web3.eth.estimateGas({ from: web3.eth.defaultAccount });
@@ -119,7 +140,8 @@ displayContactDetails(){
        //console.log('web3.eth.defaultAccount', web3.eth.defaultAccount)
 
        if (resultSentExtBal.status && !Boolean(resultSentExtBal.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
-         return this.setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(resultSentExtBal) });
+          //commented to get functional working for now ...
+         //return setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(resultSentExtBal) });
        }
        console.log('gasEstimate', gasEstimate)
        //REVIEW: not currently sure why gasEstimate not working the same as for sendTransaction above
@@ -127,28 +149,32 @@ displayContactDetails(){
        //const result = await challenge.send({ from: web3.eth.defaultAccount, gas: gasEstimate + 100000 });
        //we're sending this challenge to the contract on Rinkeby:
        //const result = await challenge.send({ from: getWeb3Accounts(), gas: gasEstimate + 100000 });
-       const result = await challengeSendToContract(gasEstimate + 100000, this.state.challenge);
+       const result = await challengeSendToContract(gasEstimate + 100000, challenge);
        // check result status. if status is false or '0x0', show user the tx details to debug error
        console.log('result', result)
       if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
         //console.log(result)
-        return this.setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
+        //commented to get funcitonal working for now ...
+        //return setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
       }
       //REVIEW: Update must come after sendTransaction() in case e.g. there's not enough gas
       //otherwise, if this goes through there could be ranking errors etc.
-      JSONops._updateDoChallengeJSON(this.props.newrankIdCB, this.props.user, this.props.selectedOpponentName, this.props.data);
+      JSONops._updateDoChallengeJSON(props.newrankIdCB, props.user, props.selectedOpponentName, props.data);
       // remove loading state
-      this.setState({ isLoading: false });
+      //setState({ isLoading: false });
+      setIsLoading(false);
       // tell parent we've updated a user and to re-fetch user details from the contract
-      this.props.onAfterChallenge();
+      props.onAfterChallenge();
       //QUESTION: is this the right place for this function?
-      this.displayContactDetails();
+      displayContactDetails();
     }
     catch(err){
       //console.log(result)
       console.log(err)
       // remove loading state and show error message
-      this.setState({ isLoading: false, error: err.message });
+      //setState({ isLoading: false, error: err.message });
+      setIsLoading(false);
+      setError(err.message)
     }
   }
 
@@ -160,14 +186,16 @@ displayContactDetails(){
    *
    * @return {null}
    */
-  _handleChange(e) {
+  function _handleChange(e) {
     //REVIEW: line below was original but not working
     //changed to working code below for challengeHasChanged
     //let state = {challengeHasChanged: true};
     //state[e.target.name] = e.target.value;
-    //this.setState(state);
-    this.setState({ challenge: e.target.value });
-    this.setState({ challengeHasChanged: true });
+    //setState(state);
+    //setState({ challenge: e.target.value });
+    setChallenge(e.target.value)
+    //setState({ challengeHasChanged: true });
+    setChallengeHasChanged(true);
   }
   //#endregion
   //#region Helper methods
@@ -178,18 +206,22 @@ displayContactDetails(){
    * @return {string} null for no state change, 'success'
    * if valid, and error' if invalid
    */
-  _getValidationState() {
-    return ((this.state.challenge === '' && !this.state.challengeHasChanged) || (this.state.challenge.length > 0 && this.state.challenge.length <= 140)) ? null : 'error';
+  function _getValidationState() {
+    return ((challenge === '' && !challengeHasChanged) || (challenge.length > 0 && challenge.length <= 140)) ? null : 'error';
   }
   //#endregion
 
   //#region React lifecycle events
-  componentDidMount(){
-    // set focus to challenge textarea after render
-    if(this.challengeInput) this.challengeInput.focus();
-  }
+  // function componentDidMount(){
+  //   // set focus to challenge textarea after render
+  //   if(challengeInput) challengeInput.focus();
+  // }
 
-  render(){
+  useEffect(() => {
+    if(challengeInput) challengeInput.focus();
+}, [])
+
+  //render(){
     //const userAccountNo = web3.eth.defaultAccount;
     let states = {};
     // state when we are waiting for the App component to finish loading
@@ -197,16 +229,16 @@ displayContactDetails(){
     states.isLoading = <Spinner name="pacman" color="white" fadeIn='none' />;
     states.isError = <span className='error'>ERROR!</span>;
     //determine userName from account no. stored in JSON
-    //with this.getUserNameFromAccount(userName)
-    const validationState = this._getValidationState();
+    //with getUserNameFromAccount(userName)
+    const validationState = _getValidationState();
     //const isValid = validationState !== 'error';
-    //const { isLoading, error, challenge, challengeHasChanged } = this.state
-    const { isLoading } = this.state;
+    //const { isLoading, error, challenge, challengeHasChanged } = state
+    //const { isLoading } = state;
 
     // let feedback = !isValid ? 'challenge details must be 140 characters or less' : '';
-    // if(this.state.error){feedback = error};
+    // if(state.error){feedback = error};
     // let placeholderText = "Please write contact details and suggested court location(s)/time(s)/date(s) you would like to send to ";
-    // placeholderText += this.props.selectedOpponentName;
+    // placeholderText += props.selectedOpponentName;
     // placeholderText += " here:";
 
     return (
@@ -218,12 +250,12 @@ displayContactDetails(){
           type="text"
           value={ challenge }
           placeholder= {placeholderText}
-          onChange={ (e) => this._handleChange(e) }
+          onChange={ (e) => _handleChange(e) }
           name="Information"
           componentClass="textarea"
           hasFeedback={true}
           validationState={validationState}
-          inputRef={(input) => { this.challengeInput = input; }}
+          inputRef={(input) => { challengeInput = input; }}
         />
         */}
         {/* REVIEW: Re-enable this validation functionality? */}
@@ -231,9 +263,9 @@ displayContactDetails(){
         <Button
           bsStyle="primary"
           // disabled={ !isValid || Boolean(error) || !challengeHasChanged }
-          // onClick={ (!isValid || Boolean(error) || !challengeHasChanged) ? null : (e) => this._handleClick(e) }
-            onClick={ (e) => this._handleClick(e) }
-            //onClick={ () => this.onClickSendEmail() }
+          // onClick={ (!isValid || Boolean(error) || !challengeHasChanged) ? null : (e) => _handleClick(e) }
+            onClick={ (e) => _handleClick(e) }
+            //onClick={ () => onClickSendEmail() }
         >{isLoading ? 'Loading...' : 'Post Challenge'}</Button>
         <FormGroup
           controlId="formBasicText"
@@ -243,7 +275,7 @@ displayContactDetails(){
       </form>
       </>
     );
-  }
+  //}
   //#endregion
 }
-export default DoChallenge
+//export default DoChallenge
