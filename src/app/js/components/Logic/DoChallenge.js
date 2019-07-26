@@ -27,6 +27,8 @@ import { estimateGas } from '../SideEffects/io/estimateGas';
 
 //class DoChallenge extends Component{
   export default function DoChallenge(props){
+
+
   //#region Constructor
   // constructor(props, context) {
   //   super(props, context);
@@ -60,6 +62,8 @@ import { estimateGas } from '../SideEffects/io/estimateGas';
     const [challengeInput, setchallengeInput] = useState('')
   //}
   //#endregion
+
+
 
 function displayContactDetails(){
   const oppoContactNumber = JSONops._getUserValue(props.data, props.selectedOpponentName, 'CONTACTNO')
@@ -149,7 +153,8 @@ function displayContactDetails(){
        //const result = await challenge.send({ from: web3.eth.defaultAccount, gas: gasEstimate + 100000 });
        //we're sending this challenge to the contract on Rinkeby:
        //const result = await challenge.send({ from: getWeb3Accounts(), gas: gasEstimate + 100000 });
-       const result = await challengeSendToContract(gasEstimate + 100000, challenge);
+       //const result = await challengeSendToContract(gasEstimate + 100000, challenge);
+       const result = await sendChallengeToContract(gasEstimate + 100000, challenge);
        // check result status. if status is false or '0x0', show user the tx details to debug error
        console.log('result', result)
       if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
@@ -177,7 +182,6 @@ function displayContactDetails(){
       setError(err.message)
     }
   }
-
 
    /**
    * When user changes an input value, record that in the state.
@@ -278,4 +282,25 @@ function displayContactDetails(){
   //}
   //#endregion
 }
+
+//declare this outside the DoChallenge function (if want to export for tests)
+//export const sendChallengeToContract = () => {
+export const sendChallengeToContract = async (gasEstimate, challenge) => {
+  console.log('insdie sendChallengeToContract')
+//const result = await challengeSendToContract(gasEstimate + 100000, challenge);
+  // function callback(result) {
+  //   //console.log('typeof acctNo', typeof acctNo)
+  //   console.log('result', result);
+  //   //const arrRes = getWeb3defaultAccount();
+  //   //const arrResFormat = '[' + arrRes + ']';
+  //   //console.log('defaultAccount', defaultAccount);
+  //   return result;
+  //   //return specificAccount.address === arrResFormat;
+  // }
+    //return whatever type is found that matches the search criteria
+    //return acctNos.find(checkAddresses);
+    //use the imported function to talk to BC
+    //challengeSendToContract(gasEstimate, challenge, callback);
+    return challengeSendToContract(gasEstimate, challenge);
+  }
 //export default DoChallenge

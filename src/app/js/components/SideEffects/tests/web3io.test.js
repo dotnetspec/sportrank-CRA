@@ -4,7 +4,8 @@ import {
   _loadCurrentUserAccountsInsideMapping,
   _loadExternalBalance,
   getCurrentUserAccountsFromBlockchain,
-  _mapCurrentUserAccounts
+  _mapCurrentUserAccounts,
+  getDefaultUserAccountFromAddress
   //,
   //getDefaultUserAccountFromAddress,
   //getWeb3defaultAccount
@@ -19,7 +20,6 @@ import {
 } from '@testing-library/react'
 import Web3 from 'web3';
 import PrivateKeyProvider from 'truffle-privatekey-provider'
-import { getDefaultUserAccountFromAddress } from '../io/web3io';
 import  *  as web3defaultAccount from '../io/web3defaultAccount';
 import  *  as getWeb3Accounts from '../io/web3Accounts';
 
@@ -177,6 +177,7 @@ xit('test getWeb3defaultAccount', () => {
 
     //const obj = getDefaultUserAccountFromAddress(userAccountsArray);
     let obj = [];
+    //REVEIW: this isn't using a call to web3defaultAccount
     obj[0] = getDefaultUserAccountFromAddress(userAccountsArray, address);
     //console.log('type of objArr', typeof objArr)
     //const obj = userAccountsArray[0];
