@@ -14,6 +14,7 @@ import DSportRank from '../../../../ABIaddress';
 import { getWeb3defaultAccount } from '../SideEffects/io/web3defaultAccount';
 import { getWeb3Accounts } from '../SideEffects/io/web3Accounts';
 import { sendEthTransaction } from '../SideEffects/io/sendEthTransaction';
+import { challengeSendToContract } from '../SideEffects/io/challengeSendToContract';
 import { estimateGas } from '../SideEffects/io/estimateGas';
 
 
@@ -101,7 +102,7 @@ displayContactDetails(){
          //after callback
          console.log('this.state.challenge', this.state.challenge)
        });
-       const challenge = DSportRank.methods.challenge(this.state.challenge);
+       //const challenge = DSportRank.methods.challenge(this.state.challenge);
        // estimate gas before sending challenge transaction
        //const gasEstimate = await web3.eth.estimateGas({ from: web3.eth.defaultAccount });
       //const gasEstimate = await web3.eth.estimateGas({ from: getWeb3defaultAccount() });
@@ -124,8 +125,11 @@ displayContactDetails(){
        //REVIEW: not currently sure why gasEstimate not working the same as for sendTransaction above
        //currently set with addon 10X higher
        //const result = await challenge.send({ from: web3.eth.defaultAccount, gas: gasEstimate + 100000 });
-       const result = await challenge.send({ from: getWeb3Accounts(), gas: gasEstimate + 100000 });
+       //we're sending this challenge to the contract on Rinkeby:
+       //const result = await challenge.send({ from: getWeb3Accounts(), gas: gasEstimate + 100000 });
+       const result = await challengeSendToContract(gasEstimate + 100000, this.state.challenge);
        // check result status. if status is false or '0x0', show user the tx details to debug error
+       console.log('result', result)
       if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
         //console.log(result)
         return this.setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
@@ -147,6 +151,8 @@ displayContactDetails(){
       this.setState({ isLoading: false, error: err.message });
     }
   }
+
+
    /**
    * When user changes an input value, record that in the state.
    *
