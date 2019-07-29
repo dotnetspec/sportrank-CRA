@@ -401,7 +401,7 @@ export function App({
         isCurrentUserActive
       }
       isCurrentUserActiveCB = {
-        (e) => isCurrentUserActiveCB()
+        (e) => setOnCallbackisCurrentUserActiveCB()
       }
       onChildClick = {
         (e) => handleChildClick()

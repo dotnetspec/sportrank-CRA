@@ -40,12 +40,14 @@ class DeactivatePlayer extends Component {
    //QUESTION: why does below not work with this.props.history.push('/');?
   //_handleClick = async () => {
   _handleClick(e) {
-    //console.log('this.props.user in deactivateplayer', this.props.user);
+
     try {
       console.log('this.props.newrankIdCB',this.props.newrankIdCB)
-    JSONops.deactivatePlayer(this.props.newrankIdCB, this.props.rankingJSONdata, this.props.user, this.props.account);
+      console.log('this.props.user.userName',this.props.user.username)
+
+    JSONops.deactivatePlayer(this.props.newrankIdCB, this.props.rankingJSONdata, this.props.user.username, this.props.account);
     this.props.isCurrentUserActiveCB(false);
-    this.props.history.push('/home/@' + this.props.user);
+    this.props.history.push('/home/@' + this.props.user.username);
     } catch (err) {
     // stop loading state and show the error
     console.log(err.message);
@@ -65,6 +67,7 @@ class DeactivatePlayer extends Component {
 
   //#region React lifecycle events
   render() {
+    console.log('this.props.user in deactivateplayer', this.props.user.username);
     const { isLoading } = this.state;
     // let validationState = this._getValidationState();
     // let isValid = validationState === 'success' && !isLoading && !this.state.error;

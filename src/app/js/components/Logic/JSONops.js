@@ -179,6 +179,7 @@ console.log('inside _setUserNameValue')
     },
 
     _updateDoChallengeJSON: function(rankingID, currentUser, selectedOpponent, data){
+      console.log('_updateDoChallengeJSON')
       //get the user's id number
       const userIDNumber = this._getUserValue(data, currentUser, "id");
       //NB: selectedOpponentIDNumber not currently used but possible it may be needed
@@ -342,8 +343,20 @@ console.log('inside _setUserNameValue')
           }
     },
 
+    //de-couple function from sending
     deactivatePlayer: function(rankingID, data, currentUser, accountno){
-console.log('rankingID, data, currentUser, accountno in deactivatePlayer', rankingID, data, currentUser, accountno)
+      console.log('rankingID', rankingID);
+      console.log('data', data);
+      console.log('currentUser', currentUser);
+      console.log('accountno', accountno);
+      const result = this.deactivatePlayerInJson(rankingID, data, currentUser, accountno);
+      console.log('result in deactivatePlayer', result);
+      this._sendJSONDataWithRankingID(result, rankingID);
+    },
+
+    deactivatePlayerInJson: function(rankingID, data, currentUser, accountno){
+//console.log('rankingID, data, currentUser, accountno in deactivatePlayer', rankingID, data, currentUser, accountno)
+//console.log('data', data)
         let shiftUpRankingUpdateObj = {
           jsonRS: data,
           lookupField: "",
@@ -404,9 +417,10 @@ console.log('rankingID, data, currentUser, accountno in deactivatePlayer', ranki
       //re-set my opponents 'current opponent' to AVAILABLE
       //updatedUserJSON = this._setUserValue(data, currentUsersOppenentPlayerValue, "CURRENTCHALLENGERNAME", "AVAILABLE");
 
-      //console.log(updatedUserJSON)
+      //console.log('deactivatePlayer updatedUserJSON', updatedUserJSON)
       //this._sendJSONData(updatedUserJSON);
-      this._sendJSONDataWithRankingID(updatedUserJSON, rankingID);
+      //this._sendJSONDataWithRankingID(updatedUserJSON, rankingID);
+      return updatedUserJSON;
     },
 
     // getCurrentUsersOppenentPlayerValue: function((data, currentUser){
@@ -683,6 +697,7 @@ console.log('rankingID, data, currentUser, accountno in deactivatePlayer', ranki
 //one that includes the rankingID
   _sendJSONDataWithRankingID: function(data, rankingID){
     console.log('rankingID inside _sendJSONDataWithRankingID',rankingID)
+    console.log('data inside _sendJSONDataWithRankingID',data)
     //console.log('inside _sendJSONDataWithRankingID')
     let httpString = "https://api.jsonbin.io/b/";
     //httpString += rankingID + '"';

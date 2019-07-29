@@ -336,7 +336,8 @@ class Home extends Component {
 
         //NB: none of this code is currently running on a re-set
         preprocessDataBeforeRender() {
-          //if there is a username but it's not listed in the json, add this user to the current list
+          //if there is a username but it's not listed in the json,
+          //add this user to the current list
           //REVIEW: This test may be more consistently handled
           console.log('this.props.loadingJSON', this.props.loadingJSON)
           if (this.props.user.username !== '' &&

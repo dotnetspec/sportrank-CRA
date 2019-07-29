@@ -123,25 +123,21 @@ function displayContactDetails(){
       //    //after callback
       //    console.log('challenge', challenge)
       //  });
-      //REVIEW: probably change naming of setState
+      //REVIEW: probably change naming of setState as that confuses with object components
       await setState(state.challenge = props.user + " vs " + props.selectedOpponentName);
-
-
        //const challenge = DSportRank.methods.challenge(this.state.challenge);
        // estimate gas before sending challenge transaction
        //const gasEstimate = await web3.eth.estimateGas({ from: web3.eth.defaultAccount });
       //const gasEstimate = await web3.eth.estimateGas({ from: getWeb3defaultAccount() });
       const gasEstimate = await estimateGas();
       console.log('gasEstimate 1', gasEstimate);
+      async function callback(result) {
+        //console.log('data', obj);
+        await console.log('result', result)
+      }
        //REVIEW; Sending ETH code. Account currently hard coded
-       //const resultSentExtBal = await web3.eth.sendTransaction({ from: web3.eth.defaultAccount, to: '0xd496e890fcaa0b8453abb17c061003acb3bcc28e', value: 1**17, gas: gasEstimate + 1000 });
-       //0xAC5491BB066c98fec13046928a78761c0B1E5603
-       //const resultSentExtBal = await web3.eth.sendTransaction({ from: web3.eth.defaultAccount, to: '0xAC5491BB066c98fec13046928a78761c0B1E5603', value: 1**17, gas: gasEstimate + 1000 });
-      //const resultSentExtBal = await web3.eth.sendTransaction({ from: getWeb3defaultAccount(), to: '0xAC5491BB066c98fec13046928a78761c0B1E5603', value: 1**17, gas: gasEstimate + 1000 });
-      const resultSentExtBal = await sendEthTransaction(gasEstimate);
+      const resultSentExtBal = await sendEthTransaction(gasEstimate, callback);
       console.log('resultSentExtBal', resultSentExtBal)
-
-       //console.log('web3.eth.defaultAccount', web3.eth.defaultAccount)
 
        if (resultSentExtBal.status && !Boolean(resultSentExtBal.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
           //commented to get functional working for now ...
@@ -154,14 +150,23 @@ function displayContactDetails(){
        //we're sending this challenge to the contract on Rinkeby:
        //const result = await challenge.send({ from: getWeb3Accounts(), gas: gasEstimate + 100000 });
        //const result = await challengeSendToContract(gasEstimate + 100000, challenge);
-       const result = await sendChallengeToContract(gasEstimate + 100000, challenge);
+       // function callback(result){
+       //   console.log('result', result)
+       // }
+       // async function callback(result) {
+       //   //console.log('data', obj);
+       //   await console.log('result', result)
+       // }
+       //const result =  sendChallengeToContract(gasEstimate + 100000, challenge, callback);
+       console.log('props.newrankIdCB, props.user, props.selectedOpponentName, props.data', props.newrankIdCB)
+       //result should be a trxhash
        // check result status. if status is false or '0x0', show user the tx details to debug error
-       console.log('result', result)
-      if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
-        //console.log(result)
-        //commented to get funcitonal working for now ...
-        //return setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
-      }
+
+      // if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
+      //   console.log('if result', result)
+      //   //commented to get funcitonal working for now ...
+      //   //return setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
+      // }
       //REVIEW: Update must come after sendTransaction() in case e.g. there's not enough gas
       //otherwise, if this goes through there could be ranking errors etc.
       JSONops._updateDoChallengeJSON(props.newrankIdCB, props.user, props.selectedOpponentName, props.data);
@@ -284,23 +289,7 @@ function displayContactDetails(){
 }
 
 //declare this outside the DoChallenge function (if want to export for tests)
-//export const sendChallengeToContract = () => {
+//just giving the function a different name so it can be mocked
 export const sendChallengeToContract = async (gasEstimate, challenge) => {
-  console.log('insdie sendChallengeToContract')
-//const result = await challengeSendToContract(gasEstimate + 100000, challenge);
-  // function callback(result) {
-  //   //console.log('typeof acctNo', typeof acctNo)
-  //   console.log('result', result);
-  //   //const arrRes = getWeb3defaultAccount();
-  //   //const arrResFormat = '[' + arrRes + ']';
-  //   //console.log('defaultAccount', defaultAccount);
-  //   return result;
-  //   //return specificAccount.address === arrResFormat;
-  // }
-    //return whatever type is found that matches the search criteria
-    //return acctNos.find(checkAddresses);
-    //use the imported function to talk to BC
-    //challengeSendToContract(gasEstimate, challenge, callback);
     return challengeSendToContract(gasEstimate, challenge);
   }
-//export default DoChallenge

@@ -8,7 +8,7 @@ import JSONops from '../../Logic/JSONops';
  */
 
  const PlayerStatusBtn = props => {
-
+   console.log('PlayerStatusBtn username', props.username)
    //const [playerActive, setPlayerActive] = React.useState(true);
    //const [btnText, setValue] = React.useState('De-Activate?');
    //const [bsStyle, setStyle] = React.useState('success');
