@@ -84,7 +84,7 @@ import JSONops from './JSONops'
     // let feedback = isValid ? 'Username is available' : state.error || 'Usernames must be 6 or more characters and cannot include @ or spaces.';
     //
     // if (!state.usernameHasChanged) feedback = '';
-    return withRouter(
+    return(
       <>
         <Grid>
           <Row className="show-Grid">

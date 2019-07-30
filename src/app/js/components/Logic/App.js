@@ -283,7 +283,7 @@ export function App({
 
   //count is in GlobalRankingViewBtn. This code uses
   //parentCallback param in <Main below
-  //NB: where no (e) => is required in the property attribute:
+  //NB: where you DON'T want (e) => in the property attribute:
   const parentCallback = (count) => {
     console.log('count in app.js', count);
     setnewrankIdCB(count);
@@ -445,7 +445,7 @@ export function App({
         newrankId
       }
       newrankIdCB = {
-        (e) => setnewrankIdCB()
+        newrankIdCB
       }
       />
 
