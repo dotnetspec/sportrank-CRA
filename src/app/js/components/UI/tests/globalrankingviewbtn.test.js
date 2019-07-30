@@ -20,7 +20,7 @@ it('calls "onClick" prop on button click', () => {
   const onClick = jest.fn();
   const onAfterUserUpdate = jest.fn();
   const newrankIdCB = jest.fn();
-  const viewingOnlyCB = jest.fn();
+  const setviewingOnlyCB = jest.fn();
   const parentCallback = jest.fn();
 
   const row = {RANKINGNAME: "mplayer1rank", RANKINGDESC: "mp1r", ACTIVE: true, RANKINGID: "5c875c79adeb832d3ec6732d"}
@@ -29,7 +29,7 @@ it('calls "onClick" prop on button click', () => {
     row={row}
     onAfterUserUpdate={onAfterUserUpdate}
     newrankIdCB={newrankIdCB}
-    viewingOnlyCB={viewingOnlyCB}
+    setviewingOnlyCB={setviewingOnlyCB}
     history={historyMock}
     parentCallback={parentCallback}
     />);
@@ -38,6 +38,6 @@ it('calls "onClick" prop on button click', () => {
   expect(onClick).toHaveBeenCalled();
   //expect(onAfterUserUpdate).toHaveBeenCalled();
   //expect(newrankIdCB).toHaveBeenCalled();
-  expect(viewingOnlyCB).toHaveBeenCalled();
+  expect(setviewingOnlyCB).toHaveBeenCalled();
   expect(parentCallback).toHaveBeenCalled();
 });
