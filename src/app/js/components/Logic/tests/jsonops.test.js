@@ -33,6 +33,18 @@ const fromJson = JSONops.deactivatePlayerInJson(rankingID, data, currentUser, ac
 expect(playerObjToTest[0].NAME).toBe('player1');
 })
 
+it('JSONops reactivatePlayerInJson test ', async () => {
+const player1Deactivated = JSONops.deactivatePlayerInJson(rankingID, data, currentUser, accountNumber);
+const fromJson = JSONops.reactivatePlayerInJson(rankingID, player1Deactivated, currentUser, accountNumber);
+//console.log(fromJson);
+//var lucky = numbers.filter(function(number) {
+  var playerObjToTest = fromJson.filter(function(playerObj) {
+  return playerObj.NAME === 'player1';
+});
+//console.log(playerObjToTest)
+expect(playerObjToTest[0].ACTIVE).toBe(true);
+})
+
 xit('JSONops reactivatePlayer test ', async () => {
 const fromJson = JSONops.reactivatePlayer();
 expect(fromJson).toBe(false);

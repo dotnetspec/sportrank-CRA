@@ -313,8 +313,13 @@ console.log('inside _setUserNameValue')
 
     },
 
-
     reactivatePlayer: function(rankingID, data, currentUser, accountno){
+        const result = this.reactivatePlayerInJson(rankingID, data, currentUser, accountno);
+        console.log('rankingID in deactivatePlayer', rankingID);
+        this._sendJSONDataWithRankingID(result, rankingID);
+      },
+
+      reactivatePlayerInJson: function(rankingID, data, currentUser, accountno){
       //console.log('in reactivatePlayer', rankingID, data, currentUser, accountno)
       let updateUserRankToEndObj = {
         jsonRS: data
@@ -327,7 +332,8 @@ console.log('inside _setUserNameValue')
       updatedUserJSON = this._setUserValue(updateUserRankToEndObj.jsonRS, currentUser, "RANK", currentNumberOfActivePlayers);
 
       //this._sendJSONData(updatedUserJSON);
-      this._sendJSONDataWithRankingID(updatedUserJSON, rankingID);
+      //this._sendJSONDataWithRankingID(updatedUserJSON, rankingID);
+      return updatedUserJSON;
 
     },
 
@@ -345,12 +351,8 @@ console.log('inside _setUserNameValue')
 
     //de-couple function from sending
     deactivatePlayer: function(rankingID, data, currentUser, accountno){
-      console.log('rankingID', rankingID);
-      console.log('data', data);
-      console.log('currentUser', currentUser);
-      console.log('accountno', accountno);
       const result = this.deactivatePlayerInJson(rankingID, data, currentUser, accountno);
-      console.log('result in deactivatePlayer', result);
+      //console.log('result in deactivatePlayer', result);
       this._sendJSONDataWithRankingID(result, rankingID);
     },
 

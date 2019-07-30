@@ -273,10 +273,12 @@ export function App({
   }
 
   //cb from PlayerStatusBtn.js to set the state of the button
-  const setOnCallbackisCurrentUserActiveCB = (BtnState) => {
-    console.log('in isCurrentUserActive', BtnState)
+  //from (e) => setOnCallbackisCurrentUserActiveCB()
+  //to just setOnCallbackisCurrentUserActiveCB in <Header ...
+  const setOnCallbackisCurrentUserActiveCB = (btnState) => {
+    console.log('in isCurrentUserActive', btnState)
     //setState({isCurrentUserActive:BtnState})
-    setIsCurrentUserActiveCB(BtnState);
+    setIsCurrentUserActive(btnState);
   }
 
   //count is in GlobalRankingViewBtn. This code uses
@@ -401,7 +403,10 @@ export function App({
         isCurrentUserActive
       }
       isCurrentUserActiveCB = {
-        (e) => setOnCallbackisCurrentUserActiveCB()
+        isCurrentUserActiveCB
+      }
+      setOnCallbackisCurrentUserActiveCB = {
+        setOnCallbackisCurrentUserActiveCB
       }
       onChildClick = {
         (e) => handleChildClick()

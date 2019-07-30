@@ -411,6 +411,7 @@ class Header extends Component {
 displayActivationBtns(){
   // const {pathname} = this.props.location;
   //     if(pathname.includes("home/@")){
+  console.log('in header isCurrentUserActive', this.props.isCurrentUserActive)
   if(this.props.specificRankingOptionBtns){
         return(
           <PlayerStatusBtn isCurrentUserActive={this.props.isCurrentUserActive} data-cy='playerStatus' data-testid='playerStatus' {...this.props} newrankIdCB={this.props.newrankIdCB} username={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>

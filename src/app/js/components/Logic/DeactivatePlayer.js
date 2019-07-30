@@ -1,7 +1,7 @@
 import { Grid, Button, Row, Col } from 'react-bootstrap';
 //import Grid from 'react-bootstrap/Grid'
 import { withRouter } from 'react-router-dom'
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 //import FieldGroup from './FieldGroup'
 import JSONops from './JSONops'
 //import Grid from 'react-bootstrap/Grid'
@@ -12,21 +12,30 @@ import JSONops from './JSONops'
  *
  * @extends React.Component
  */
-class DeactivatePlayer extends Component {
+//class DeactivatePlayer extends Component {
+  export default function DeactivatePlayer(props){
+  //const DeactivatePlayer = withRouter(({ history, ...props }) => (
+
 
   //#region Constructor
-  constructor(props, context) {
-    super(props, context);
+  // constructor(props, context) {
+  //   super(props, context);
+  //
+  //   // initial state
+  //   state = {
+      //isLoading: false,
 
-    // initial state
-    this.state = {
-      isLoading: false,
-      username: '',
-      description: '',
-      usernameHasChanged: false,
-      error: ''
-    };
-  }
+      const [isLoading, setisLoading] = useState(false)
+      //username: '',
+      const [username, setusername] = useState('')
+      //description: '',
+      const [description, setdescription] = useState('')
+      //usernameHasChanged: false,
+      const [usernameHasChanged, setusernameHasChanged] = useState('')
+      //error: ''
+      const [iserror, setiserror] = useState(false)
+  //   };
+  // }
   //#endregion
 
   //#region Component events
@@ -37,26 +46,27 @@ class DeactivatePlayer extends Component {
    * @returns {null}
    */
 
-   //QUESTION: why does below not work with this.props.history.push('/');?
+   //QUESTION: why does below not work with props.history.push('/');?
   //_handleClick = async () => {
-  _handleClick(e) {
-
+  const _handleClick = () => {
     try {
-      console.log('this.props.newrankIdCB',this.props.newrankIdCB)
-      console.log('this.props.user.userName',this.props.user.username)
+      console.log('props.newrankIdCB',props.newrankIdCB)
+      console.log('props.user.userName',props.user.username)
+      console.log('props.user.userName',props.user.username)
 
-    JSONops.deactivatePlayer(this.props.newrankIdCB, this.props.rankingJSONdata, this.props.user.username, this.props.account);
-    this.props.isCurrentUserActiveCB(false);
-    this.props.history.push('/home/@' + this.props.user.username);
+    JSONops.deactivatePlayer(props.newrankIdCB, props.rankingJSONdata, props.user.username, props.account);
+    //props.isCurrentUserActiveCB(false);
+    props.setOnCallbackisCurrentUserActiveCB(false);
+    props.history.push('/home/@' + props.user.username);
     } catch (err) {
     // stop loading state and show the error
     console.log(err.message);
     };
   }
 
-  _cancelClick(e) {
+  const _cancelClick = () => {
     try {
-    this.props.history.push('/');
+    props.history.push('/');
     } catch (err) {
     // stop loading state and show the error
     console.log(err.message);
@@ -66,15 +76,15 @@ class DeactivatePlayer extends Component {
   //#endregion
 
   //#region React lifecycle events
-  render() {
-    console.log('this.props.user in deactivateplayer', this.props.user.username);
-    const { isLoading } = this.state;
-    // let validationState = this._getValidationState();
-    // let isValid = validationState === 'success' && !isLoading && !this.state.error;
-    // let feedback = isValid ? 'Username is available' : this.state.error || 'Usernames must be 6 or more characters and cannot include @ or spaces.';
+  //render() {
+    console.log('props.user in deactivateplayer', props.user.username);
+    //const { isLoading } = state;
+    // let validationState = _getValidationState();
+    // let isValid = validationState === 'success' && !isLoading && !state.error;
+    // let feedback = isValid ? 'Username is available' : state.error || 'Usernames must be 6 or more characters and cannot include @ or spaces.';
     //
-    // if (!this.state.usernameHasChanged) feedback = '';
-    return (
+    // if (!state.usernameHasChanged) feedback = '';
+    return withRouter(
       <>
         <Grid>
           <Row className="show-Grid">
@@ -89,8 +99,8 @@ class DeactivatePlayer extends Component {
               <Button
                 bsStyle="primary"
                 //disabled={ !isValid }
-                //onClick={ !isValid ? null : (e) => this._handleClick(e) }
-                onClick={ (e) => this._handleClick(e) }
+                //onClick={ !isValid ? null : (e) => _handleClick(e) }
+                onClick={ () => _handleClick() }
               >
               { isLoading ? 'Loading...' : 'De-Activate Player' }
               </Button>
@@ -102,8 +112,8 @@ class DeactivatePlayer extends Component {
               <Button
                 bsStyle="primary"
                 //disabled={ !isValid }
-                //onClick={ !isValid ? null : (e) => this._handleClick(e) }
-                onClick={ (e) => this._cancelClick(e) }
+                //onClick={ !isValid ? null : (e) => _handleClick(e) }
+                onClick={ () => _cancelClick() }
               >
               { isLoading ? 'Loading...' : 'Cancel' }
               </Button>
@@ -112,8 +122,8 @@ class DeactivatePlayer extends Component {
         </Grid>
       </>
     );
-  }
+//  }
   //#endregion
 }
 
-export default withRouter(DeactivatePlayer);
+//export default withRouter(DeactivatePlayer);

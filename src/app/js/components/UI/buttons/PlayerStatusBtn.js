@@ -7,8 +7,9 @@ import JSONops from '../../Logic/JSONops';
  * an @external "BrowserRouter"
  */
 
- const PlayerStatusBtn = props => {
+ export default function PlayerStatusBtn(props){
    console.log('PlayerStatusBtn username', props.username)
+   console.log('PlayerStatusBtn props.isCurrentUserActive ', props.isCurrentUserActive )
    //const [playerActive, setPlayerActive] = React.useState(true);
    //const [btnText, setValue] = React.useState('De-Activate?');
    //const [bsStyle, setStyle] = React.useState('success');
@@ -51,12 +52,14 @@ import JSONops from '../../Logic/JSONops';
              //setValue('De-Activate?')
              //style = 'success';
              //value='De-Activate?';
+             props.setOnCallbackisCurrentUserActiveCB(true);
              try {
                //REVIEW: isCurrentUserActiveCB needs be called based on JSONops.reactivatePlayer
                //returning True/False. Put here for now so that test will pass
-               props.isCurrentUserActiveCB(true);
+
                //console.log('in _handleReactivatePlayer', props.newrankIdCB, props.rankingJSONdata, props.username, props.account)
                JSONops.reactivatePlayer(props.newrankIdCB, props.rankingJSONdata, props.username, props.account);
+               //props.isCurrentUserActiveCB(true);
 
                props.history.push('/home/@' + props.username);
                //this.props.history.push('/home/@' + username);
@@ -77,10 +80,10 @@ import JSONops from '../../Logic/JSONops';
        placeholder="De-Activate?"
        data-testid="activatebtn-input"
        style={bsStyle}
-       onClick={(e) => _handleChangeStatusPlayerBtnText()}
+       onClick={() => _handleChangeStatusPlayerBtnText()}
        >
          {btnText}
        </Button>
    );
  };
- export default PlayerStatusBtn
+ //export default PlayerStatusBtn
