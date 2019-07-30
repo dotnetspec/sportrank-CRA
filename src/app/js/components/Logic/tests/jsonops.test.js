@@ -19,6 +19,7 @@ const data = [
   {"id":6,"NAME":"player6","CONTACTNO":"","EMAIL":"","RANK":4,"ACCOUNT":"0x23fCa109110F043847bb0Ca87805f3642D8B7Dc7","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301853807}
 ]
 const currentUser = 'player1';
+const selectedOpponent = 'player3';
 const accountNumber = '0x847700B781667abdD98E1393420754E503dca5b7';
 
 
@@ -43,6 +44,20 @@ const fromJson = JSONops.reactivatePlayerInJson(rankingID, player1Deactivated, c
 });
 //console.log(playerObjToTest)
 expect(playerObjToTest[0].ACTIVE).toBe(true);
+})
+
+
+it('JSONops _updateDoChallengeJSONinJson test ', async () => {
+//const player1Deactivated = JSONops._updateDoChallengeJSONinJson(rankingID, data, currentUser, accountNumber);
+//(rankingID, currentUser, selectedOpponent, data)
+const fromJson = JSONops._updateDoChallengeJSONinJson(rankingID, currentUser, selectedOpponent, data);
+//console.log(fromJson);
+//var lucky = numbers.filter(function(number) {
+  var playerObjToTest = fromJson.filter(function(playerObj) {
+  return playerObj.NAME === 'player1';
+});
+//console.log(playerObjToTest)
+expect(playerObjToTest[0].CURRENTCHALLENGERNAME).toEqual('player3');
 })
 
 xit('JSONops reactivatePlayer test ', async () => {

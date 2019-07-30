@@ -118,6 +118,7 @@ class GlobalRankings extends Component {
             viewingOnlyCB={this.props.viewingOnlyCB}
             newrankIdCB={this.props.newrankIdCB}
             parentCallback={this.props.parentCallback}
+            setviewingOnlyCB={this.props.setviewingOnlyCB}
             // onClick={() =>
             //     this.onClickRankingViewSelected(cell, row, rowIndex)}
             />

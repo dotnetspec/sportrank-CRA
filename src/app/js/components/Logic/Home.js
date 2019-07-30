@@ -113,6 +113,7 @@ class Home extends Component {
    * Hides the challenge modal
    */
   _handleClose() {
+    console.log('_handleClose')
     this.setState({
       showModal: false
     });
@@ -343,7 +344,8 @@ class Home extends Component {
           if (this.props.user.username !== '' &&
             !JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, this.props.user.username) &&
             this.props.loadingJSON === false &&
-            this.props.viewingOnlyCB === false
+            //this.props.viewingOnlyCB === false
+            this.props.setviewingOnlyCB(false)
           ) {
             console.log('createNewUserInJSON in preprocessDataBeforeRender in home.js')
             console.log('this.props.rankingID in preprocessDataBeforeRender in home.js', this.props.newrankIdCB)
@@ -532,7 +534,7 @@ class Home extends Component {
             <nbsp/> who is ranked {
               selectRowPropAfterClickRow.selectedOpponentRank
             } ? < p > < /p> <
-            DoChallenge onAfterChallenge = {
+            DoChallenge closeModalOnAfterChallenge = {
               (e) => this._handleClose()
             }
             data = {

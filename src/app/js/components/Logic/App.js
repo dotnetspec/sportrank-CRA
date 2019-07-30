@@ -129,12 +129,12 @@ export function App({
   //     //setState({jsonHasData})
   //     setjsonHasData(jsonHasData);
   // }
-  function currentUserRankCB(currentUserRank) {
-    //setState({currentUserRank})
-    setCurrentUserRank(currentUserRank);
-  }
-  //cb from createuser.js to set the username
-  //in time for getNewRankingID() to put it in the json
+  // function currentUserRankCB(currentUserRank) {
+  //   //setState({currentUserRank})
+  //   setCurrentUserRank(currentUserRank);
+  // }
+  // //cb from createuser.js to set the username
+  // //in time for getNewRankingID() to put it in the json
   // function userNameCB(userNameCB) {
   //   //console.log('in userNameCB', userNameCB)
   //     //setState({userNameCB})
@@ -193,7 +193,7 @@ export function App({
   //     data: [],
   const [data, setdata] = useState([])
   //     currentUserRank: 0,
-  const [currentUserRank, setCurrentUserRank] = useState(0)
+  //const [currentUserRank, setCurrentUserRank] = useState(0)
   //     updatedExtAcctBalCB: 0,
   const [updatedExtAcctBalCB, setupdatedExtAcctBalCB] = useState(0)
   //     isLoading: true,
@@ -203,33 +203,33 @@ export function App({
   //     emailCB:'',
   const [emailCB, setemailCB] = useState('')
   //     usersRankingLists: [],
-  const [userRankingLists, setuserRankingLists] = useState([]);
+  const [userRankingLists] = useState([]);
   //     isUserInJson: false,
   const [isUserInJson, setIsUserInJson] = useState(false);
   //     jsonHasRankingID: false,
-  const [jsonHasRankingID, setjsonHasRankingID] = useState(false);;
+  //const [jsonHasRankingID, setjsonHasRankingID] = useState(false);;
   //     jsonHasData: false,
-  const [jsonHasData, setjsonHasData] = useState(false);
+  //const [jsonHasData, setjsonHasData] = useState(false);
   //     loadingAccounts: true,
-  const [isLoadingAccounts, setisLoadingAccounts] = useState(true);
+  //const [isLoadingAccounts, setisLoadingAccounts] = useState(true);
   //     loadingJSON: true,
   const [isLoadingJSON, setisLoadingJSON] = useState(true);
   //     loadingExtBal: true,
-  const [isLoadingExtBal, setIsLoadingExtBal] = useState(true);
+  //const [isLoadingExtBal, setIsLoadingExtBal] = useState(true);
   //     isCurrentUserActive: false,
   const [isCurrentUserActive, setIsCurrentUserActive] = useState(false);
   const [isCurrentUserActiveCB, setIsCurrentUserActiveCB] = useState(false);
   //     isRankingIDInvalid: false,
-  const [isRankingIDInvalid, setisRankingIDInvalid] = useState(false);
+  const [isRankingIDInvalid] = useState(false);
   //     newrankId: '',
   const [newrankId, setnewrankId] = useState('');
   //     //rankingDefault is the global ranking list json
   //     rankingDefault: '5c36f5422c87fa27306acb52',
-  const [rankingDefault, setrankingDefault] = useState('5c36f5422c87fa27306acb52');
+  const [rankingDefault] = useState('5c36f5422c87fa27306acb52');
   //     userNameCB: '',
-  const [userNameCB, setuserNameCB] = useState('');
+  //const [userNameCB, setuserNameCB] = useState('');
   //     loadingRankingListJSON: true,
-  const [isLoadingRankingListJSON, setisLoadingRankingListJSON] = useState(true);
+  //const [isLoadingRankingListJSON, setisLoadingRankingListJSON] = useState(true);
   //     rankingListData: [],
   const [rankingListData, setrankingListData] = useState([]);
   //     newrankIdCB:'',
@@ -266,10 +266,10 @@ export function App({
 
   //cb from GlobalRankings.js to set the rank state as view only
   //REVEIW: is this necessary? wasn't working until noticed it ...
-  const setOnCallbackviewingOnlyCB = (viewingOnlyCB) => {
+  const setOnCallbackviewingOnlyCB = (viewingOnlyCBval) => {
     // console.log('in viewingOnlyCB', viewingOnlyCB)
     //   setState({viewingOnlyCB:viewingOnlyCB})
-    setviewingOnlyCB(viewingOnlyCB);
+    setviewingOnlyCB(viewingOnlyCBval);
   }
 
   //cb from PlayerStatusBtn.js to set the state of the button
@@ -344,7 +344,8 @@ export function App({
       //emailCB: state.emailCB,
       setemailCB(state.emailCB);
       //loadingAccounts: false,
-      setisLoadingAccounts(false);
+      //not currently used:
+      //setisLoadingAccounts(false);
       //newrankId must be cleared so a new one has to be regenerated for each account
       //viewingOnlyCB: true
       setviewingOnlyCB(true);
@@ -457,8 +458,17 @@ export function App({
       contactno = {
         contactno
       }
-      email = {
-        email
+      contactNoCB = {
+        contactNoCB
+      }
+      setcontactNoCB = {
+        setcontactNoCB
+      }
+      emailCB = {
+        emailCB
+      }
+      setemailCB = {
+        setemailCB
       }
       description = {
         description
@@ -491,12 +501,6 @@ export function App({
       rankingListJSONdata = {
         rankingListData
       }
-      contactNoCB = {
-        contactNoCB
-      }
-      emailCB = {
-        emailCB
-      }
       rank = {
         rank
       }
@@ -519,6 +523,9 @@ export function App({
         setnewrankIdCB
       }
       viewingOnlyCB = {
+        viewingOnlyCB
+      }
+      setviewingOnlyCB = {
         setOnCallbackviewingOnlyCB
       }
       isUserInJson = {

@@ -22,10 +22,10 @@ afterEach(cleanup);
 
 it('PlayerStatusBtn calls isCurrentUserActiveCB on click when user active is false', async () => {
   const historyMock = { push: jest.fn() };
-  const isCurrentUserActiveCB = jest.fn();
+  const setOnCallbackisCurrentUserActiveCB = jest.fn();
   const props  = {
     isCurrentUserActive: false,
-    isCurrentUserActiveCB: isCurrentUserActiveCB,
+    setOnCallbackisCurrentUserActiveCB: setOnCallbackisCurrentUserActiveCB,
     username: 'player1',
     history: historyMock
   }
@@ -33,7 +33,7 @@ it('PlayerStatusBtn calls isCurrentUserActiveCB on click when user active is fal
   {...props}
   />)
   fireEvent.click(getByTestId('activatebtn-input'));
-  expect(isCurrentUserActiveCB).toHaveBeenCalled();
+  expect(setOnCallbackisCurrentUserActiveCB).toHaveBeenCalled();
 })
 
 

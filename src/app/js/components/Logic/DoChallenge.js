@@ -170,13 +170,14 @@ function displayContactDetails(){
       //REVIEW: Update must come after sendTransaction() in case e.g. there's not enough gas
       //otherwise, if this goes through there could be ranking errors etc.
       JSONops._updateDoChallengeJSON(props.newrankIdCB, props.user, props.selectedOpponentName, props.data);
+      displayContactDetails();
       // remove loading state
       //setState({ isLoading: false });
       setIsLoading(false);
       // tell parent we've updated a user and to re-fetch user details from the contract
-      props.onAfterChallenge();
+      props.closeModalOnAfterChallenge();
       //QUESTION: is this the right place for this function?
-      displayContactDetails();
+
     }
     catch(err){
       //console.log(result)
