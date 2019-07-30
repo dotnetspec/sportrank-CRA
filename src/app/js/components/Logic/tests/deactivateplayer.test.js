@@ -23,8 +23,8 @@ const historyMock = { push: jest.fn() };
 
   const props  = {
     isCurrentUserActive: true,
-    username: 'player1',
-    history: historyMock
+    history: historyMock,
+    user: {username: 'player1'}
   }
 
   const { getByText} = renderWithRouter(<DeactivatePlayer

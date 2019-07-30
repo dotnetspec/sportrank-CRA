@@ -180,12 +180,12 @@ console.log('inside _setUserNameValue')
 
     _updateDoChallengeJSON: function(rankingID, data, currentUser, accountno){
         const result = this._updateDoChallengeJSONinJson(rankingID, data, currentUser, accountno);
-        console.log('rankingID in _updateDoChallengeJSONinJson', rankingID);
+        //console.log('rankingID in _updateDoChallengeJSONinJson', rankingID);
         this._sendJSONDataWithRankingID(result, rankingID);
       },
 
     _updateDoChallengeJSONinJson: function(rankingID, currentUser, selectedOpponent, data){
-      console.log('_updateDoChallengeJSON')
+      //console.log('_updateDoChallengeJSON')
       //get the user's id number
       const userIDNumber = this._getUserValue(data, currentUser, "id");
       //NB: selectedOpponentIDNumber not currently used but possible it may be needed

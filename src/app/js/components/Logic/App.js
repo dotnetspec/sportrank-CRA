@@ -154,7 +154,7 @@ export function App({
   }
 
   function _loadsetJSONData_callback(data) {
-    console.log('data account in callback', data[0].ACCOUNT);
+    //console.log('data account in callback', data[0].ACCOUNT);
     //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
     setdata(data);
     setisLoadingJSON(false);
@@ -276,7 +276,7 @@ export function App({
   //from (e) => setOnCallbackisCurrentUserActiveCB()
   //to just setOnCallbackisCurrentUserActiveCB in <Header ...
   const setOnCallbackisCurrentUserActiveCB = (btnState) => {
-    console.log('in isCurrentUserActive', btnState)
+    //console.log('in isCurrentUserActive', btnState)
     //setState({isCurrentUserActive:BtnState})
     setIsCurrentUserActive(btnState);
   }
@@ -285,7 +285,7 @@ export function App({
   //parentCallback param in <Main below
   //NB: where you DON'T want (e) => in the property attribute:
   const parentCallback = (count) => {
-    console.log('count in app.js', count);
+    //console.log('count in app.js', count);
     setnewrankIdCB(count);
     _loadsetJSONData(count, _loadsetJSONData_callback);
   }
@@ -334,7 +334,7 @@ export function App({
       setdescription(state.user.description);
       //account: web3.eth.defaultAccount,
       //account: state.account,
-      console.log('state.account', state.account);
+      //console.log('state.account', state.account);
       setAccount(state.account);
       //balance: state.balance,
       setBalance(state.balance);
@@ -350,14 +350,14 @@ export function App({
       //viewingOnlyCB: true
       setviewingOnlyCB(true);
       //  })
-      console.log('state.user.username in app.js', state.user.username)
+      //console.log('state.user.username in app.js', state.user.username)
     }
   }
 
   //#region React lifecycle events
   useEffect(() => {
     setIsLoading(true);
-    console.log('inside useEffect', newrankIdCB)
+    //console.log('inside useEffect', newrankIdCB)
     async function fetchData() {
       //const response = await MyAPI.getData(someId);
 
@@ -380,7 +380,7 @@ export function App({
 
   //from https://medium.com/maxime-heckel/asynchronous-rendering-with-react-c323cda68f41
   if (!isLoading) {
-    console.log('account in render', account)
+    //console.log('account in render', account)
     return ( <
       div >
       <
