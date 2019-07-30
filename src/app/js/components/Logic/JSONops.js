@@ -725,9 +725,10 @@ console.log('inside _setUserNameValue')
         req.open("PUT", httpString, true);
         req.setRequestHeader("Content-type", "application/json");
         let myJsonString = JSON.stringify(data);
-        console.log('httpString, data, data.id in _sendJSONDataWithRankingID', httpString, data, data.id);
+        console.log('httpString, data in _sendJSONDataWithRankingID', httpString, data);
 
-        console.log('data.id alone in _sendJSONDataWithRankingID', data.id)
+        //console.log('data.id alone in _sendJSONDataWithRankingID', data.id)
+        //I think data.id will only be defined IF this is a new ranking
         //if this is a new ranking send an array, not just an object
         //if this is a new ranking id will be 1
         //HACK: there may be a better way to test that this is a new ranking and user

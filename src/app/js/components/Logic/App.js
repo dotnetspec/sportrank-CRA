@@ -532,6 +532,9 @@ export function App({
       parentCallback = {
         parentCallback
       }
+      setOnCallbackisCurrentUserActiveCB = {
+        setOnCallbackisCurrentUserActiveCB
+      }
       />
 
       <
