@@ -409,19 +409,19 @@ export function App({
         setOnCallbackisCurrentUserActiveCB
       }
       onChildClick = {
-        (e) => handleChildClick()
+        handleChildClick
       }
       onListAllChildClick = {
-        (e) => handleListAllChildClick()
+        handleListAllChildClick
       }
       specificRankingOptionBtns = {
         specificRankingOptionBtns
       }
       onAfterUserUpdate = {
-        (e) => _mapCurrentUserAccounts()
+        _mapCurrentUserAccounts
       }
       onError = {
-        (err, source) => _onError(err, source)
+        _onError
       }
       rankingJSONdata = {
         data
@@ -473,16 +473,17 @@ export function App({
         error
       }
       onChildClick = {
-        (e) => handleChildClick()
+        handleChildClick
       }
       specificRankingOptionBtns = {
         specificRankingOptionBtns
       }
+
       onAfterUserUpdate = {
-        (e) => _mapCurrentUserAccounts()
+        _mapCurrentUserAccounts
       }
       onError = {
-        (err, source) => _onError(err, source)
+        _onError
       }
       rankingJSONdata = {
         data
@@ -491,7 +492,7 @@ export function App({
         rankingListData
       }
       contactNoCB = {
-        (e) => setcontactNoCB()
+        contactNoCB
       }
       emailCB = {
         emailCB
@@ -512,13 +513,13 @@ export function App({
         rankingDefault
       }
       getNewRankingID = {
-        (e) => getNewRankId()
+        getNewRankId
       }
       setnewrankIdCB = {
-        (e) => setnewrankIdCB()
+        setnewrankIdCB
       }
       viewingOnlyCB = {
-        (e) => setOnCallbackviewingOnlyCB()
+        setOnCallbackviewingOnlyCB
       }
       isUserInJson = {
         isUserInJson
