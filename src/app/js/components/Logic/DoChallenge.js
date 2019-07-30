@@ -72,8 +72,8 @@ function displayContactDetails(){
   const oppoEmailTxt = props.selectedOpponentName + "'s email address is : " + oppoEmail;
 
   //contactNoCB callback function (App.js)
-  props.contactNoCB(oppoContactNumberTxt);
-  props.emailCB(oppoEmailTxt);
+  props.setcontactNoCB(oppoContactNumberTxt);
+  props.setemailCB(oppoEmailTxt);
   //contactNoCB callback function (Header.js)
   //let tempbalTodisplay = parseInt(this.props.updatedExtAcctBalCB) + (10 ** 18);
   //REVIEW: not sure what below relates to. Probably not useful ...
@@ -130,20 +130,20 @@ function displayContactDetails(){
        //const gasEstimate = await web3.eth.estimateGas({ from: web3.eth.defaultAccount });
       //const gasEstimate = await web3.eth.estimateGas({ from: getWeb3defaultAccount() });
       const gasEstimate = await estimateGas();
-      console.log('gasEstimate 1', gasEstimate);
+      await console.log('gasEstimate 1', gasEstimate);
       async function callback(result) {
         //console.log('data', obj);
         await console.log('result', result)
       }
        //REVIEW; Sending ETH code. Account currently hard coded
-      const resultSentExtBal = await sendEthTransaction(gasEstimate, callback);
-      console.log('resultSentExtBal', resultSentExtBal)
+      //const resultSentExtBal = await sendEthTransaction(gasEstimate, callback);
+      //await console.log('resultSentExtBal', resultSentExtBal)
 
-       if (resultSentExtBal.status && !Boolean(resultSentExtBal.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
+       //if (resultSentExtBal.status && !Boolean(resultSentExtBal.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
           //commented to get functional working for now ...
          //return setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(resultSentExtBal) });
-       }
-       console.log('gasEstimate', gasEstimate)
+       //}
+       await console.log('gasEstimate', gasEstimate)
        //REVIEW: not currently sure why gasEstimate not working the same as for sendTransaction above
        //currently set with addon 10X higher
        //const result = await challenge.send({ from: web3.eth.defaultAccount, gas: gasEstimate + 100000 });

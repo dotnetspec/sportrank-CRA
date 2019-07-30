@@ -199,9 +199,9 @@ export function App({
   //     isLoading: true,
   const [isLoading, setIsLoading] = useState(true)
   //     contactNoCB:'',
-  const [contactNoCB, setcontactNoCB] = useState('')
+  //const [contactNoCB, setcontactNoCB] = useState('')
   //     emailCB:'',
-  const [emailCB, setemailCB] = useState('')
+  //const [emailCB, setemailCB] = useState('')
   //     usersRankingLists: [],
   const [userRankingLists] = useState([]);
   //     isUserInJson: false,
@@ -290,6 +290,16 @@ export function App({
     _loadsetJSONData(count, _loadsetJSONData_callback);
   }
 
+
+  const setcontactNoCB = (number) => {
+    //console.log('count in app.js', count);
+    setcontactno(number);
+}
+
+const setemailCB = (oppoEmailTxt) => {
+  //console.log('count in app.js', count);
+  setemail(oppoEmailTxt);
+}
   //#endregion
 
   //#region Helper methods
@@ -340,9 +350,10 @@ export function App({
       setBalance(state.balance);
       //rank: JSONops._getUserValue(state.data, state.user.username, "RANK"),
       //contactNoCB: state.contactNoCB,
-      setcontactNoCB(state.contactNoCB);
+      //setcontactNoCB(state.contactNoCB);
+      setcontactno(state.contactno)
       //emailCB: state.emailCB,
-      setemailCB(state.emailCB);
+      setemail(state.email);
       //loadingAccounts: false,
       //not currently used:
       //setisLoadingAccounts(false);
@@ -458,14 +469,8 @@ export function App({
       contactno = {
         contactno
       }
-      contactNoCB = {
-        contactNoCB
-      }
       setcontactNoCB = {
         setcontactNoCB
-      }
-      emailCB = {
-        emailCB
       }
       setemailCB = {
         setemailCB

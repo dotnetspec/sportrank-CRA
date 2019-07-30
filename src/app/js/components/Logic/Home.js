@@ -551,7 +551,14 @@ class Home extends Component {
             }
             newrankIdCB = {
               this.props.newrankIdCB
-            } >
+            }
+            setcontactNoCB= {
+              this.props.setcontactNoCB
+            }
+            setemailCB= {
+              this.props.setemailCB
+            }
+            >
             <
             /DoChallenge> <
             /Modal.Body> <
