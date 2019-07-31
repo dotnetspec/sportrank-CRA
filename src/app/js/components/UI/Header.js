@@ -129,8 +129,8 @@ class Header extends Component {
 
   _handleReactivatePlayer(user) {
     try {
-      //console.log('in _handleReactivatePlayer', this.props.newrankIdCB, this.props.rankingJSONdata, user, this.props.account)
-      JSONops.reactivatePlayer(this.props.newrankIdCB, this.props.rankingJSONdata, user, this.props.account);
+      //console.log('in _handleReactivatePlayer', this.props.newrankId, this.props.rankingJSONdata, user, this.props.account)
+      JSONops.reactivatePlayer(this.props.newrankId, this.props.rankingJSONdata, user, this.props.account);
       this.props.history.push('/home/@' + user);
     } catch (err) {
     // stop loading state and show the error
@@ -414,7 +414,7 @@ displayActivationBtns(){
   console.log('in header isCurrentUserActive', this.props.isCurrentUserActive)
   if(this.props.specificRankingOptionBtns){
         return(
-          <PlayerStatusBtn isCurrentUserActive={this.props.isCurrentUserActive} data-cy='playerStatus' data-testid='playerStatus' {...this.props} newrankIdCB={this.props.newrankIdCB} username={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
+          <PlayerStatusBtn isCurrentUserActive={this.props.isCurrentUserActive} data-cy='playerStatus' data-testid='playerStatus' {...this.props} newrankId={this.props.newrankId} username={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
       )
     }else{ return null }
 }

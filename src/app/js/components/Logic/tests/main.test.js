@@ -42,7 +42,7 @@ isRankingIDInvalid={this.state.isRankingIDInvalid}
 newrankId={this.state.newrankId}
 rankingDefault={this.state.rankingDefault}
 getNewRankingID={(e) => this.getNewRankId()}
-newrankIdCB={this.newrankIdCB.bind(this)}
+newrankId={this.newrankId.bind(this)}
 viewingOnlyCB={this.viewingOnlyCB.bind(this)}
 isUserInJson={this.state.isUserInJson}
 loadingJSON={this.state.loadingJSON}
@@ -98,7 +98,7 @@ describe('<Main/> ', () => {
 const historyMock = { push: jest.fn() };
 const onClick = jest.fn();
 const onAfterUserUpdate = jest.fn();
-const newrankIdCB = jest.fn();
+const newrankId = jest.fn();
 const viewingOnlyCB = jest.fn();
 
 //Properties:
@@ -111,7 +111,7 @@ const viewingOnlyCB = jest.fn();
             user: 'player1',
             onChildClick: onClick,
             onAfterUserUpdate:onAfterUserUpdate,
-            newrankIdCB:newrankIdCB,
+            newrankId:newrankId,
             viewingOnlyCB:viewingOnlyCB,
             history:historyMock,
             rankingJSONdata: specificRankingData

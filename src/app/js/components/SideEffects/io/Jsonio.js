@@ -42,10 +42,10 @@ export async function asyncFetch(url) {
   return await fetch(url);
 }
 
-export async function _loadsetJSONData (newrankIdCB, _loadsetJSONData_callback){
-  console.log('newrankIdCB IN _loadsetJSONData', newrankIdCB);
+export async function _loadsetJSONData (newrankId, _loadsetJSONData_callback){
+  console.log('newrankId IN _loadsetJSONData', newrankId);
       try {
-            let httpStr = 'https://api.jsonbin.io/b/' + newrankIdCB + '/latest';
+            let httpStr = 'https://api.jsonbin.io/b/' + newrankId + '/latest';
 
             await fetch(httpStr)
                .then((response) => response.json())

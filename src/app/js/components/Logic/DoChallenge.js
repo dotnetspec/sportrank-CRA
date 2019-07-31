@@ -146,8 +146,8 @@ function displayContactDetails(){
       // }
       //REVIEW: Update must come after sendTransaction() in case e.g. there's not enough gas
       //otherwise, if this goes through there could be ranking errors etc.
-      console.log('props.newrankIdCB', props.newrankIdCB)
-      JSONops._updateDoChallengeJSON(props.newrankIdCB, props.user, props.selectedOpponentName, props.data);
+      console.log('props.newrankId', props.newrankId)
+      JSONops._updateDoChallengeJSON(props.newrankId, props.user, props.selectedOpponentName, props.data);
       displayContactDetails();
       // remove loading state
       //setState({ isLoading: false });

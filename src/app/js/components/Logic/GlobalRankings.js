@@ -16,7 +16,7 @@ import React, { Component } from 'react';
 // import JSONops from './JSONops'
 // import CreateNewRanking from './CreateNewRanking';
 //import UserRankings from './UserRankings'
-//import {newrankIdCB, viewingOnlyCB} from './App'
+//import {newrankId, viewingOnlyCB} from './App'
 //import {saveJson, loadJson} from '../lib/service'
 //import Grid from 'react-bootstrap/Grid'
 
@@ -59,8 +59,10 @@ class GlobalRankings extends Component {
     console.log('in onClickRankingSelected');
     selectRowPropAfterClickRow.selectedRankingId = `${row['RANKINGID']}`;
     console.log('selectRowPropAfterClickRow.selectedRankingId', selectRowPropAfterClickRow.selectedRankingId)
-    this.props.newrankIdCB(selectRowPropAfterClickRow.selectedRankingId);
-    this.props.viewingOnlyCB(false);
+    //this.props.newrankId(selectRowPropAfterClickRow.selectedRankingId);
+    this.props.setnewrankIdCB(selectRowPropAfterClickRow.selectedRankingId);
+
+    this.props.setviewingOnlyCB(false);
     this.props.onAfterUserUpdate();
     //if joining and not yet a member of the ranking home will add the new player to the bottom
     //of the rankings in the selected ladder
@@ -76,7 +78,7 @@ class GlobalRankings extends Component {
    //   //console.log('Product #', rowIndex);
    //   selectRowPropAfterClickRow.selectedRankingId = `${row['RANKINGID']}`;
    //   console.log('selectRowPropAfterClickRow.selectedRankingId', selectRowPropAfterClickRow.selectedRankingId)
-   //   newrankIdCB(selectRowPropAfterClickRow.selectedRankingId);
+   //   newrankId(selectRowPropAfterClickRow.selectedRankingId);
    //   viewingOnlyCB(true);
    //   this.props.onAfterUserUpdate();
    //   this.props.history.push('/home/@' + this.props.user.username);
@@ -116,8 +118,8 @@ class GlobalRankings extends Component {
             username={this.props.user.username}
             setnewrankIdCB={this.props.setnewrankIdCB}
             viewingOnlyCB={this.props.viewingOnlyCB}
-            newrankIdCB={this.props.newrankIdCB}
-            parentCallback={this.props.parentCallback}
+            newrankId={this.props.newrankId}
+            setnewrankIdCB={this.props.setnewrankIdCB}
             setviewingOnlyCB={this.props.setviewingOnlyCB}
             // onClick={() =>
             //     this.onClickRankingViewSelected(cell, row, rowIndex)}

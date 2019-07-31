@@ -47,7 +47,7 @@ beforeEach(cleanup)
 // isUserInJson={this.state.isUserInJson}
 // rankingDefault={this.state.rankingDefault}
 // newrankId={this.state.newrankId}
-// newrankIdCB={this.state.newrankIdCB
+// newrankId={this.state.newrankId
 
 //ensure descrbe blocks don't overlap
 describe('Header UI', () => {

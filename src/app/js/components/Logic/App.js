@@ -218,7 +218,7 @@ export function App({
   //const [isLoadingExtBal, setIsLoadingExtBal] = useState(true);
   //     isCurrentUserActive: false,
   const [isCurrentUserActive, setIsCurrentUserActive] = useState(false);
-  const [isCurrentUserActiveCB, setIsCurrentUserActiveCB] = useState(false);
+  const [isCurrentUserActiveCB] = useState(false);
   //     isRankingIDInvalid: false,
   const [isRankingIDInvalid] = useState(false);
   //     newrankId: '',
@@ -232,8 +232,8 @@ export function App({
   //const [isLoadingRankingListJSON, setisLoadingRankingListJSON] = useState(true);
   //     rankingListData: [],
   const [rankingListData, setrankingListData] = useState([]);
-  //     newrankIdCB:'',
-  const [newrankIdCB, setnewrankIdCB] = useState('');
+  //     newrankId:'',
+  //const [newrankId, setnewrankIdCB] = useState('');
   //     viewingOnlyCB: true,
   const [viewingOnlyCB, setviewingOnlyCB] = useState(true);
 
@@ -282,11 +282,11 @@ export function App({
   }
 
   //count is in GlobalRankingViewBtn. This code uses
-  //parentCallback param in <Main below
+  //setnewrankIdCB param in <Main below
   //NB: where you DON'T want (e) => in the property attribute:
-  const parentCallback = (count) => {
+  const setnewrankIdCB = (count) => {
     //console.log('count in app.js', count);
-    setnewrankIdCB(count);
+    setnewrankId(count);
     _loadsetJSONData(count, _loadsetJSONData_callback);
   }
 
@@ -368,7 +368,7 @@ const setemailCB = (oppoEmailTxt) => {
   //#region React lifecycle events
   useEffect(() => {
     setIsLoading(true);
-    //console.log('inside useEffect', newrankIdCB)
+    //console.log('inside useEffect', newrankId)
     async function fetchData() {
       //const response = await MyAPI.getData(someId);
 
@@ -457,8 +457,8 @@ const setemailCB = (oppoEmailTxt) => {
       newrankId = {
         newrankId
       }
-      newrankIdCB = {
-        newrankIdCB
+      setnewrankId = {
+        setnewrankId
       }
       />
 
@@ -519,14 +519,14 @@ const setemailCB = (oppoEmailTxt) => {
       newrankId = {
         newrankId
       }
-      rankingDefault = {
-        rankingDefault
+      setnewrankIdCB = {
+        setnewrankIdCB
       }
       getNewRankingID = {
         getNewRankId
       }
-      setnewrankIdCB = {
-        setnewrankIdCB
+      rankingDefault = {
+        rankingDefault
       }
       viewingOnlyCB = {
         viewingOnlyCB
@@ -539,12 +539,6 @@ const setemailCB = (oppoEmailTxt) => {
       }
       loadingJSON = {
         isLoadingJSON
-      }
-      newrankIdCB = {
-        newrankIdCB
-      }
-      parentCallback = {
-        parentCallback
       }
       setOnCallbackisCurrentUserActiveCB = {
         setOnCallbackisCurrentUserActiveCB

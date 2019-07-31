@@ -39,7 +39,7 @@ class UpdateUser extends Component {
     //delete after a while
     //
     // if (!JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, user.username)){
-    //     JSONops.createNewUserInJSON(this.props.rankingJSONdata, user.username, this.props.account, this.state.description, this.props.newrankIdCB);
+    //     JSONops.createNewUserInJSON(this.props.rankingJSONdata, user.username, this.props.account, this.state.description, this.props.newrankId);
     //     this.props.history.push('/');
     // }
     // // OPTIMIZE:
@@ -51,7 +51,7 @@ class UpdateUser extends Component {
     //   console.log('this.state.email')
     //   console.log(this.state.email)
     //
-    //   JSONops.updateUserInJSON(this.props.newrankIdCB, this.props.rankingJSONdata, user.username, this.state.contactno, this.state.email, this.state.description);
+    //   JSONops.updateUserInJSON(this.props.newrankId, this.props.rankingJSONdata, user.username, this.state.contactno, this.state.email, this.state.description);
     // }
 
     //REVIEW: currently unused legacy user profile pic upload code

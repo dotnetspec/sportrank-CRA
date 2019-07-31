@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-//import {newrankIdCB, viewingOnlyCB} from '../../Logic/App'
+//import {newrankId, viewingOnlyCB} from '../../Logic/App'
 /**
  * Functional component representing global ranking view button(s) in the BootstrapTable.
  * The component rendering in this area is controlled by
@@ -34,7 +34,7 @@ import { Button } from 'react-bootstrap';
     //so it can display the 'Activate?' btn
     props.onChildClick();
 
-    props.parentCallback(row.RANKINGID);
+    props.setnewrankIdCB(row.RANKINGID);
 
     props.setviewingOnlyCB(true);
     //this.props.onAfterUserUpdate();

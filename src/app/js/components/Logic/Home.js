@@ -268,8 +268,8 @@ class Home extends Component {
   //REVIEW: Managing display here might be handled differently:
   //this was originally a component - perhaps it still should be [?]
   userPlayerJsonDataDisplay() {
-      const textToDisplayRankName = JSONops._getGlobalRankingVal(this.props.rankingListJSONdata, this.props.newrankIdCB, 'RANKINGNAME')
-      const textToDisplayRankDesc = JSONops._getGlobalRankingVal(this.props.rankingListJSONdata, this.props.newrankIdCB, 'RANKINGDESC')
+      const textToDisplayRankName = JSONops._getGlobalRankingVal(this.props.rankingListJSONdata, this.props.newrankId, 'RANKINGNAME')
+      const textToDisplayRankDesc = JSONops._getGlobalRankingVal(this.props.rankingListJSONdata, this.props.newrankId, 'RANKINGDESC')
       let textToDisplayRank = '';
       let textToDisplayChallenger = '';
       let textToDisplayContinue = '';
@@ -348,8 +348,8 @@ class Home extends Component {
             this.props.setviewingOnlyCB(false)
           ) {
             console.log('createNewUserInJSON in preprocessDataBeforeRender in home.js')
-            console.log('this.props.rankingID in preprocessDataBeforeRender in home.js', this.props.newrankIdCB)
-            JSONops.createNewUserInJSON(this.props.rankingJSONdata, this.props.user.username, this.props.contactno, this.props.email, this.props.account, this.props.description, this.props.newrankIdCB);
+            console.log('this.props.rankingID in preprocessDataBeforeRender in home.js', this.props.newrankId)
+            JSONops.createNewUserInJSON(this.props.rankingJSONdata, this.props.user.username, this.props.contactno, this.props.email, this.props.account, this.props.description, this.props.newrankId);
             console.log('player created')
           }
           const {
@@ -376,7 +376,7 @@ class Home extends Component {
           if (!JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, this.props.user.username) &&
             this.props.viewingOnlyCB === false) {
             //originalData, username, contactno, email, accountno, description, rankingID)
-            JSONops.createNewUserInJSON(this.props.rankingJSONdata, this.props.user.username, this.props.contactno, this.props.email, this.props.account, this.props.description, this.props.newrankIdCB)
+            JSONops.createNewUserInJSON(this.props.rankingJSONdata, this.props.user.username, this.props.contactno, this.props.email, this.props.account, this.props.description, this.props.newrankId)
           }
 
         }
@@ -549,8 +549,8 @@ class Home extends Component {
             updateTextCB = {
               this.updateText
             }
-            newrankIdCB = {
-              this.props.newrankIdCB
+            newrankId = {
+              this.props.newrankId
             }
             setcontactNoCB= {
               this.props.setcontactNoCB
@@ -598,8 +598,8 @@ class Home extends Component {
             onAfterChallenge = {
               this.closeResultModal
             }
-            newrankIdCB = {
-              this.props.newrankIdCB
+            newrankId = {
+              this.props.newrankId
             } >
             <
             /EnterResult> <

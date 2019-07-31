@@ -59,25 +59,25 @@ const opponentCurrentlyChallengingUser = JSONops._getUserValue(this.props.data, 
              const selectedOpponentRankInt = parseInt(checkedOpponentRank);
 
              if (resultEntered === 'undecided' ){
-               JSONops._updateEnterResultUnchangedJSON(this.props.newrankIdCB, currentUser,opponentCurrentlyChallengingUser, this.props.data);
+               JSONops._updateEnterResultUnchangedJSON(this.props.newrankId, currentUser,opponentCurrentlyChallengingUser, this.props.data);
                return "Thank you. No changes have been made. Your ranking is unchanged"
              }
              else if (resultEntered === 'won' && currentUserRankInt < selectedOpponentRankInt){
-              JSONops._updateEnterResultUnchangedJSON(this.props.newrankIdCB, currentUser,opponentCurrentlyChallengingUser, this.props.data);
-              JSONops.updateDateStampsInJSON(this.props.newrankIdCB, this.props.data, currentUser, opponentCurrentlyChallengingUser);
+              JSONops._updateEnterResultUnchangedJSON(this.props.newrankId, currentUser,opponentCurrentlyChallengingUser, this.props.data);
+              JSONops.updateDateStampsInJSON(this.props.newrankId, this.props.data, currentUser, opponentCurrentlyChallengingUser);
               console.log('result send to _updateEnterResultUnchangedJSON');
               return "Thank you. Your result has been entered. Your ranking is unchanged"
 
             }else if (resultEntered === 'lost' && currentUserRankInt > selectedOpponentRankInt){
 
-              JSONops._updateEnterResultUnchangedJSON(this.props.newrankIdCB, currentUser,opponentCurrentlyChallengingUser, this.props.data);
-              JSONops.updateDateStampsInJSON(this.props.newrankIdCB, this.props.data, currentUser, opponentCurrentlyChallengingUser);
+              JSONops._updateEnterResultUnchangedJSON(this.props.newrankId, currentUser,opponentCurrentlyChallengingUser, this.props.data);
+              JSONops.updateDateStampsInJSON(this.props.newrankId, this.props.data, currentUser, opponentCurrentlyChallengingUser);
               console.log('result send to _updateEnterResultUnchangedJSON');
               return "Thank you. Your result has been entered. Your ranking is unchanged"
 
             }else{
-              JSONops._updateEnterResultJSON(this.props.newrankIdCB, currentUser, checkedUserRank, opponentCurrentlyChallengingUser, checkedOpponentRank, this.props.data);
-              JSONops.updateDateStampsInJSON(this.props.newrankIdCB, this.props.data, currentUser,opponentCurrentlyChallengingUser);
+              JSONops._updateEnterResultJSON(this.props.newrankId, currentUser, checkedUserRank, opponentCurrentlyChallengingUser, checkedOpponentRank, this.props.data);
+              JSONops.updateDateStampsInJSON(this.props.newrankId, this.props.data, currentUser,opponentCurrentlyChallengingUser);
               console.log('result send to _updateEnterResultJSON');
               return "Thank you. Your result has been entered. Your ranking has been changed"
             }

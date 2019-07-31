@@ -28,7 +28,7 @@ const data = ranking1;
 const selectedOpponentName = 'player3';
 //const closeResultModal = jest.fn();
 // const updateTextCB =
-// const newrankIdCB =
+// const newrankId =
 
 const address = '0x847700B781667abdD98E1393420754E503dca5b7';
 
@@ -50,7 +50,7 @@ const userOjb = {
         user: userOjb
         // ,
         // updateTextCB:
-        // newrankIdCB:
+        // newrankId:
      }
 
 it('DoChallenge correctly displays initially', async () => {

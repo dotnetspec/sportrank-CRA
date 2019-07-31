@@ -19,25 +19,25 @@ it('calls "onClick" prop on button click', () => {
   const historyMock = { push: jest.fn() };
   const onClick = jest.fn();
   const onAfterUserUpdate = jest.fn();
-  const newrankIdCB = jest.fn();
+  const newrankId = jest.fn();
   const setviewingOnlyCB = jest.fn();
-  const parentCallback = jest.fn();
+  const setnewrankIdCB = jest.fn();
 
   const row = {RANKINGNAME: "mplayer1rank", RANKINGDESC: "mp1r", ACTIVE: true, RANKINGID: "5c875c79adeb832d3ec6732d"}
   const { getByText } = render(<GlobalRankingViewBtn
     onChildClick={onClick}
     row={row}
     onAfterUserUpdate={onAfterUserUpdate}
-    newrankIdCB={newrankIdCB}
+    newrankId={newrankId}
     setviewingOnlyCB={setviewingOnlyCB}
     history={historyMock}
-    parentCallback={parentCallback}
+    setnewrankIdCB={setnewrankIdCB}
     />);
 
   fireEvent.click(getByText(/View/i));
   expect(onClick).toHaveBeenCalled();
   //expect(onAfterUserUpdate).toHaveBeenCalled();
-  //expect(newrankIdCB).toHaveBeenCalled();
+  //expect(newrankId).toHaveBeenCalled();
   expect(setviewingOnlyCB).toHaveBeenCalled();
-  expect(parentCallback).toHaveBeenCalled();
+  expect(setnewrankIdCB).toHaveBeenCalled();
 });

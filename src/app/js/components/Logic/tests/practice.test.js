@@ -121,8 +121,8 @@ xit("trying jest.mock with Practise", () => {
   //app.doAdd(1, 2);
   //getIdNoFromJsonbinResponse
   //app._loadsetJSONData_callback(data);
-  //App.newrankIdCB(1234567);
-  //app.newrankIdCB(1234567);
+  //App.newrankId(1234567);
+  //app.newrankId(1234567);
   // var user = {};
   // user.username = 'player1';
   // const app = shallow(<Home user={user}/>)

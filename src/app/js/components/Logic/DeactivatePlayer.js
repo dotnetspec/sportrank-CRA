@@ -50,11 +50,11 @@ import JSONops from './JSONops'
   //_handleClick = async () => {
   const _handleClick = () => {
     try {
-      console.log('props.newrankIdCB',props.newrankIdCB)
+      console.log('props.newrankId',props.newrankId)
       console.log('props.user.userName',props.user.username)
       console.log('props.user.userName',props.user.username)
 
-    JSONops.deactivatePlayer(props.newrankIdCB, props.rankingJSONdata, props.user.username, props.account);
+    JSONops.deactivatePlayer(props.newrankId, props.rankingJSONdata, props.user.username, props.account);
     //props.isCurrentUserActiveCB(false);
     props.setOnCallbackisCurrentUserActiveCB(false);
     props.history.push('/home/@' + props.user.username);

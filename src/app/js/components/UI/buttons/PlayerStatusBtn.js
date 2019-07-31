@@ -57,8 +57,8 @@ import JSONops from '../../Logic/JSONops';
                //REVIEW: isCurrentUserActiveCB needs be called based on JSONops.reactivatePlayer
                //returning True/False. Put here for now so that test will pass
 
-               //console.log('in _handleReactivatePlayer', props.newrankIdCB, props.rankingJSONdata, props.username, props.account)
-               JSONops.reactivatePlayer(props.newrankIdCB, props.rankingJSONdata, props.username, props.account);
+               //console.log('in _handleReactivatePlayer', props.newrankId, props.rankingJSONdata, props.username, props.account)
+               JSONops.reactivatePlayer(props.newrankId, props.rankingJSONdata, props.username, props.account);
                //props.isCurrentUserActiveCB(true);
 
                props.history.push('/home/@' + props.username);

@@ -37,7 +37,7 @@ describe('<App/> ', () => {
   const historyMock = { push: jest.fn() };
   const onClick = jest.fn();
   const onAfterUserUpdate = jest.fn();
-  const newrankIdCB = jest.fn();
+  const newrankId = jest.fn();
   const viewingOnlyCB = jest.fn();
 
   const userAccountsArray =
@@ -112,7 +112,7 @@ describe('<App/> ', () => {
               user: 'player1',
               onChildClick: onClick,
               onAfterUserUpdate:onAfterUserUpdate,
-              newrankIdCB:newrankIdCB,
+              newrankId:newrankId,
               viewingOnlyCB:viewingOnlyCB,
               history:historyMock,
               data: globalRankingData
@@ -174,7 +174,7 @@ xit('RTL - check btn visibility', () => {
       // const historyMock = { push: jest.fn() };
       // const onClick = jest.fn();
       // const onAfterUserUpdate = jest.fn();
-      // const newrankIdCB = jest.fn();
+      // const newrankId = jest.fn();
       // const viewingOnlyCB = jest.fn();
       //
       // const row = {RANKINGNAME: "mplayer1rank", RANKINGDESC: "mp1r", ACTIVE: true, RANKINGID: "5c875c79adeb832d3ec6732d"}
@@ -214,7 +214,7 @@ expect (getByText(/Update Profile/i)).toHaveTextContent('Update Profile');
       // fireEvent.click(getByText(/View/i));
       // expect(onClick).toHaveBeenCalled();
       // expect(onAfterUserUpdate).toHaveBeenCalled();
-      // expect(newrankIdCB).toHaveBeenCalled();
+      // expect(newrankId).toHaveBeenCalled();
       // expect(viewingOnlyCB).toHaveBeenCalled();
     });
 
