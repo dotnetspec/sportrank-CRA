@@ -131,13 +131,26 @@ function displayContactDetails(){
       //const gasEstimate = await web3.eth.estimateGas({ from: getWeb3defaultAccount() });
       const gasEstimate = await estimateGas();
       await console.log('gasEstimate 1', gasEstimate);
-      async function callback(result) {
-        //console.log('data', obj);
-        await console.log('result', result)
-      }
-       //REVIEW; Sending ETH code. Account currently hard coded
-      //const resultSentExtBal = await sendEthTransaction(gasEstimate, callback);
-      //await console.log('resultSentExtBal', resultSentExtBal)
+      // async function callback(result) {
+      //   //console.log('data', obj);
+      //   await console.log('result', result)
+      // }
+      //  //REVIEW; Sending ETH code. Account currently hard coded
+      // const resultSentExtBal = await sendEthTransaction(gasEstimate, callback);
+      // await console.log('resultSentExtBal', resultSentExtBal)
+
+      web3.eth.sendTransaction({
+        from: '0x847700B781667abdD98E1393420754E503dca5b7', to: '0xAC5491BB066c98fec13046928a78761c0B1E5603', value: 1**17, gas: gasEstimate + 1000
+
+})
+.on('transactionHash', function(hash){
+    console.log('hash', hash);
+})
+.on('receipt', function(receipt){
+    console.log('receipt', receipt);
+})
+.on('confirmation', function(confirmationNumber, receipt){ console.log('confirmationNumber', confirmationNumber); })
+.on('error', console.error); // If a out of gas error, the second parameter is the receipt.
 
        //if (resultSentExtBal.status && !Boolean(resultSentExtBal.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
           //commented to get functional working for now ...
