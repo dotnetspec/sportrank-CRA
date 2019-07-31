@@ -118,7 +118,7 @@ function displayContactDetails(){
       //await keyword necessary
       //let state = {};
       // await setState(state => {
-      // state.challenge= props.user + " vs " + props.selectedOpponentName;
+      //state.challenge= props.user + " vs " + props.selectedOpponentName;
       //  }, ()=>{
       //    //after callback
       //    console.log('challenge', challenge)
@@ -130,58 +130,23 @@ function displayContactDetails(){
        //const gasEstimate = await web3.eth.estimateGas({ from: web3.eth.defaultAccount });
       //const gasEstimate = await web3.eth.estimateGas({ from: getWeb3defaultAccount() });
       const gasEstimate = await estimateGas();
-      await console.log('gasEstimate 1', gasEstimate);
-      // async function callback(result) {
-      //   //console.log('data', obj);
-      //   await console.log('result', result)
-      // }
-      //  //REVIEW; Sending ETH code. Account currently hard coded
-      // const resultSentExtBal = await sendEthTransaction(gasEstimate, callback);
-      // await console.log('resultSentExtBal', resultSentExtBal)
-
-      web3.eth.sendTransaction({
-        from: '0x847700B781667abdD98E1393420754E503dca5b7', to: '0xAC5491BB066c98fec13046928a78761c0B1E5603', value: 1**17, gas: gasEstimate + 1000
-
-})
-.on('transactionHash', function(hash){
-    console.log('hash', hash);
-})
-.on('receipt', function(receipt){
-    console.log('receipt', receipt);
-})
-.on('confirmation', function(confirmationNumber, receipt){ console.log('confirmationNumber', confirmationNumber); })
-.on('error', console.error); // If a out of gas error, the second parameter is the receipt.
-
-       //if (resultSentExtBal.status && !Boolean(resultSentExtBal.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
-          //commented to get functional working for now ...
-         //return setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(resultSentExtBal) });
-       //}
-       await console.log('gasEstimate', gasEstimate)
-       //REVIEW: not currently sure why gasEstimate not working the same as for sendTransaction above
-       //currently set with addon 10X higher
-       //const result = await challenge.send({ from: web3.eth.defaultAccount, gas: gasEstimate + 100000 });
-       //we're sending this challenge to the contract on Rinkeby:
-       //const result = await challenge.send({ from: getWeb3Accounts(), gas: gasEstimate + 100000 });
-       //const result = await challengeSendToContract(gasEstimate + 100000, challenge);
-       // function callback(result){
-       //   console.log('result', result)
-       // }
-       // async function callback(result) {
-       //   //console.log('data', obj);
-       //   await console.log('result', result)
-       // }
-       //const result =  sendChallengeToContract(gasEstimate + 100000, challenge, callback);
-       console.log('props.newrankIdCB, props.user, props.selectedOpponentName, props.data', props.newrankIdCB)
-       //result should be a trxhash
+      await challengeSendToContract(gasEstimate, state.challenge);
+      //await console.log('gasEstimate', gasEstimate);
+      //REVIEW; Account currently hard coded
+      //const result = await sendEthTransaction(gasEstimate);
+      await sendEthTransaction(gasEstimate);
        // check result status. if status is false or '0x0', show user the tx details to debug error
-
+       //only error handling now in sendEthTransaction
       // if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
       //   console.log('if result', result)
       //   //commented to get funcitonal working for now ...
       //   //return setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
+      //   setIsLoading(false);
+      //   setError('Error executing transaction, transaction details: ' + JSON.stringify(result));
       // }
       //REVIEW: Update must come after sendTransaction() in case e.g. there's not enough gas
       //otherwise, if this goes through there could be ranking errors etc.
+      console.log('props.newrankIdCB', props.newrankIdCB)
       JSONops._updateDoChallengeJSON(props.newrankIdCB, props.user, props.selectedOpponentName, props.data);
       displayContactDetails();
       // remove loading state
