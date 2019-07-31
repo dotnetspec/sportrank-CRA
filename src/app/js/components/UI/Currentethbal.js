@@ -12,11 +12,13 @@ import React from 'react';
 //REVIEW: Re-factor to function component?
 
   class CurrentETHBal extends React.Component {
+
     combineETHVals(){
       const origETHInt = parseInt(this.props.updatedExtAcctBalCB);
       return origETHInt;
     }
     render() {
+      console.log('extbal', this.props.updatedExtAcctBalCB);
       let htmlTxtToReturn = ''
       let htmlTxtToReturn2 = ''
       if(this.props.updatedExtAcctBalCB !== 0){

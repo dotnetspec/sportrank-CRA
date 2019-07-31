@@ -12,15 +12,19 @@ import { getWeb3Accounts } from './web3Accounts';
     //https://medium.com/@bluepnume/learn-about-promises-before-you-start-using-async-await-eb148164a9c8
     //to a (small) degree - anyway it's a useful reference
         export async function _loadExternalBalance(_loadExternalBalance_callback){
-      //export async function _loadExternalBalance(){
         //try/catch was interferring with the test!
-          console.log('_loadExternalBalance')
-          let devAccountBalResult = await web3.eth.getBalance("0xd496e890fcaa0b8453abb17c061003acb3bcc28e");
-          //console.log('devAccountBalResult', devAccountBalResult);
-          devAccountBalResult = web3.utils.fromWei(devAccountBalResult, 'ether');
-          devAccountBalResult =  formatEth(devAccountBalResult, 3);
-          //_loadExternalBalance_callback(devAccountBalResult);
-          return devAccountBalResult;
+          await web3.eth.getBalance("0xAC5491BB066c98fec13046928a78761c0B1E5603")
+          .then(devAccountBalResult => {
+            devAccountBalResult = web3.utils.fromWei(devAccountBalResult, 'ether');
+            devAccountBalResult =  formatEth(devAccountBalResult, 3);
+            _loadExternalBalance_callback(devAccountBalResult);
+          })
+      }
+
+      export async function getCurrentUserAccountsFromBlockchain(){
+        const userAccountsArray = await web3.eth.getAccounts();
+          console.log('got accounts after await', userAccountsArray[0])
+        return userAccountsArray;
       }
 
 // export async function isWeb3Connected(){
@@ -49,11 +53,7 @@ import { getWeb3Accounts } from './web3Accounts';
 //     };
 //   }
 
-  export async function getCurrentUserAccountsFromBlockchain(){
-    const userAccountsArray = await web3.eth.getAccounts();
-      console.log('got accounts after await', userAccountsArray[0])
-    return userAccountsArray;
-  }
+
 
   /**
    * Loads user details from the contract for all accounts on the node.

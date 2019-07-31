@@ -142,14 +142,14 @@ export function App({
   // }
 
   //cb from web3io.js to set the state of the external balance
-  function _loadExternalBalance_callback(balance) {
+  function _loadExternalBalance_callback(externalbalance) {
     //console.log('data account in callback', data[0].ACCOUNT);
     //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
     //done();
-    //console.log('balance', balance)
-    if (balance !== undefined) {
+    //console.log('externalbalance', externalbalance)
+    if (externalbalance !== undefined) {
       //setState({ updatedExtAcctBalCB: balance })
-      setBalance(balance);
+      setupdatedExtAcctBalCB(externalbalance);
     }
   }
 
@@ -373,7 +373,8 @@ const setemailCB = (oppoEmailTxt) => {
       //const response = await MyAPI.getData(someId);
 
       //from the Blockchain via web3io:
-      setupdatedExtAcctBalCB(await _loadExternalBalance())
+      //setupdatedExtAcctBalCB(await _loadExternalBalance())
+      await _loadExternalBalance(_loadExternalBalance_callback);
       //await setIsLoadingExtBal();
       //from jsonbin api via jsonio::
       await getDefaultRankingList(rankingDefault, getDefaultRankingList_callback);

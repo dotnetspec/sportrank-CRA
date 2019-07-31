@@ -330,7 +330,7 @@ class Header extends Component {
     return isError ?
       states.isError
       :
-      <CurrentETHBal data-testid='CurrentETHBal' updatedExtAcctBalCB={this.props.updatedExtAcctBalCB}
+      <CurrentETHBal data-testid='CurrentETHBal' balance={this.props.balance} updatedExtAcctBalCB={this.props.updatedExtAcctBalCB}
       />
   }
 
