@@ -294,7 +294,7 @@ getNewRankId = async () => {
         if (req.readyState === XMLHttpRequest.DONE) {
           const resulttxt = JSON.parse(req.responseText);
           //only here can set state (once result is back)
-          this.props.newrankId(resulttxt.id)
+          this.props.setnewrankIdCB(resulttxt.id)
           this.setState({ rankId: resulttxt.id});
           this.setState({ ranknameHasChanged: true});
           this.setState({ isLoading: false});
