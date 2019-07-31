@@ -473,6 +473,9 @@ const setemailCB = (oppoEmailTxt) => {
       setcontactNoCB = {
         setcontactNoCB
       }
+      email = {
+        email
+      }
       setemailCB = {
         setemailCB
       }

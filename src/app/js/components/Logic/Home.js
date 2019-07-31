@@ -268,10 +268,13 @@ class Home extends Component {
   //REVIEW: Managing display here might be handled differently:
   //this was originally a component - perhaps it still should be [?]
   userPlayerJsonDataDisplay() {
+    console.log('userPlayerJsonDataDisplay');
       const textToDisplayRankName = JSONops._getGlobalRankingVal(this.props.rankingListJSONdata, this.props.newrankId, 'RANKINGNAME')
       const textToDisplayRankDesc = JSONops._getGlobalRankingVal(this.props.rankingListJSONdata, this.props.newrankId, 'RANKINGDESC')
       let textToDisplayRank = '';
       let textToDisplayChallenger = '';
+      let textToDisplayChallengerContactNo = '';
+      let textToDisplayChallengerEmail = '';
       let textToDisplayContinue = '';
       //if the json is empty do nothing
       if (this.props.rankingJSONdata[0] === null) {
@@ -281,6 +284,8 @@ class Home extends Component {
 
       const currentUserRank = JSONops._getUserValue(this.props.rankingJSONdata, this.props.user.username, "RANK");
       const currentChallengerName = JSONops._getUserValue(this.props.rankingJSONdata, this.props.user.username, "CURRENTCHALLENGERNAME");
+      const currentChallengerContactNo = JSONops._getUserValue(this.props.rankingJSONdata, currentChallengerName, "CONTACTNO");
+      const currentChallengerEmail = JSONops._getUserValue(this.props.rankingJSONdata, currentChallengerName, "EMAIL");
 
       textToDisplayRank = 'Your current rank is: ' + currentUserRank;
 
@@ -290,6 +295,8 @@ class Home extends Component {
         //console.log(details.RANK);
         if (currentChallengerName !== 'AVAILABLE') {
           textToDisplayChallenger = 'Your current challenge is VS ' + currentChallengerName;
+          textToDisplayChallengerContactNo = 'Your challenger contact number is  ' + currentChallengerContactNo
+          textToDisplayChallengerEmail = 'Your challenger email is  ' + currentChallengerEmail
           textToDisplayContinue = 'Enter a result against ' + currentChallengerName + ' to continue'
 
         } else {
@@ -316,7 +323,16 @@ class Home extends Component {
           p > < /p> {
             textToDisplayChallenger
           } <
-          p > < /p> {
+          p > < /p>
+          {
+           textToDisplayChallengerContactNo
+          } <
+          p > < /p>
+          {
+           textToDisplayChallengerEmail
+          } <
+          p > < /p>
+          {
             textToDisplayContinue
           } <
           /div>)
@@ -648,7 +664,7 @@ class Home extends Component {
               /* http://allenfang.github.io/react-bootstrap-table/example.html#sort */ } <
             h3 > {
               this.props.contactNoCB
-            } < /h3> <
+            } here?< /h3> <
             h3 > {
               this.props.emailCB
             } < /h3> {
