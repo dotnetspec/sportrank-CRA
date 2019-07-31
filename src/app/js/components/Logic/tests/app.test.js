@@ -110,7 +110,7 @@ describe('<App/> ', () => {
               rankingListJSONdata: globalRankingData,
               account: testAccountPlayer1Rinkeby,
               user: 'player1',
-              onChildClick: onClick,
+              setspecificRankingOptionBtnsCB: onClick,
               onAfterUserUpdate:onAfterUserUpdate,
               newrankId:newrankId,
               viewingOnlyCB:viewingOnlyCB,

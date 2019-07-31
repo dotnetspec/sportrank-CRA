@@ -55,13 +55,13 @@ class GlobalRankings extends Component {
 
 
   //REVIEW: change name to onClickRankingJoinSelected?
-  onClickRankingSelected(cell, row, rowIndex){
+  onClickRankingJoinSelected(cell, row, rowIndex){
     console.log('in onClickRankingSelected');
     selectRowPropAfterClickRow.selectedRankingId = `${row['RANKINGID']}`;
     console.log('selectRowPropAfterClickRow.selectedRankingId', selectRowPropAfterClickRow.selectedRankingId)
     //this.props.newrankId(selectRowPropAfterClickRow.selectedRankingId);
     this.props.setnewrankIdCB(selectRowPropAfterClickRow.selectedRankingId);
-
+    //this.props.setisCurrentUserActiveCB()
     this.props.setviewingOnlyCB(false);
     this.props.onAfterUserUpdate();
     //if joining and not yet a member of the ranking home will add the new player to the bottom
@@ -70,28 +70,13 @@ class GlobalRankings extends Component {
     //this.openResultModal();
    }
 
-   // onClickRankingViewSelected(cell, row, rowIndex){
-   //   //REVIEW: the naming here.
-   //   //tell Header that the view btn has been clicked
-   //   //so it can display the 'Activate?' btn
-   //   this.props.onChildClick();
-   //   //console.log('Product #', rowIndex);
-   //   selectRowPropAfterClickRow.selectedRankingId = `${row['RANKINGID']}`;
-   //   console.log('selectRowPropAfterClickRow.selectedRankingId', selectRowPropAfterClickRow.selectedRankingId)
-   //   newrankId(selectRowPropAfterClickRow.selectedRankingId);
-   //   viewingOnlyCB(true);
-   //   this.props.onAfterUserUpdate();
-   //   this.props.history.push('/home/@' + this.props.user.username);
-   //   //this.openResultModal();
-   //  }
-
   rankingButton(cell, row, enumObject, rowIndex) {
       return (
          <button
             bsstyle="primary"
             //type="button"
             onClick={() =>
-            this.onClickRankingSelected(cell, row, rowIndex)}
+            this.onClickRankingJoinSelected(cell, row, rowIndex)}
          >
          Join
          </button>
@@ -100,29 +85,16 @@ class GlobalRankings extends Component {
 
    rankingViewButton(cell, row, enumObject, rowIndex) {
        return (
-          // <button
-          //    bsstyle="primary"
-          //    //type="button"
-          //    onClick={() =>
-          //    this.onClickRankingViewSelected(cell, row, rowIndex)}
-          // >
-          // View
-          // </button>
-
-          //REVIEW: Ready to implement:
             <GlobalRankingViewBtn
             cell={cell} row={row} rowIndex={rowIndex}
-            onChildClick={this.props.onChildClick}
+            setspecificRankingOptionBtnsCB={this.props.setspecificRankingOptionBtnsCB}
             onAfterUserUpdate={this.props.onAfterUserUpdate}
             history={this.props.history}
             username={this.props.user.username}
             setnewrankIdCB={this.props.setnewrankIdCB}
             viewingOnlyCB={this.props.viewingOnlyCB}
             newrankId={this.props.newrankId}
-            setnewrankIdCB={this.props.setnewrankIdCB}
             setviewingOnlyCB={this.props.setviewingOnlyCB}
-            // onClick={() =>
-            //     this.onClickRankingViewSelected(cell, row, rowIndex)}
             />
        )
     }
@@ -139,22 +111,16 @@ class GlobalRankings extends Component {
       // if (JSONops.isJSONEmpty(this.props.rankingJSONdata) && this.props.user.username === null){
       //
       //console.log('inside globalBSTableDisplay');
-
-
       //   this.props.history.push('/create');
       //   return null;
       //   //(<div>No Data To Display - Please select an account (top right) to create a player</div>);
       // } else {
-
-
       // function _tableIndex(indexVal){
       //   //let tableIndex = 0;
       //   indexVal = parseInt(indexVal);
       //    indexVal += 1;
       //    return indexVal;
       // }
-
-
       //NB: to enable non-test jsonbin.io data use the following as a property of
       //data={this.props.rankingListJSONdata}
       //original test: data={this.state.data}
@@ -182,8 +148,6 @@ class GlobalRankings extends Component {
                 <TableHeaderColumn
                 dataField='viewbtn'
                 dataFormat={this.rankingViewButton.bind(this)}
-
-                //handlerankingViewButton={this.rankingViewButton.bind(this)}
                 >
                 View
                 </TableHeaderColumn>
@@ -199,13 +163,9 @@ class GlobalRankings extends Component {
                 hidden>
                   Active?
                 </TableHeaderColumn>
-
               </BootstrapTable>
-
           )
-
         }
-
 
   //REVIEW: Home page may be unnecessarily re-rendering with this approach to passing props
   //but need to pass the username and display it as a greeting and to link account with json data

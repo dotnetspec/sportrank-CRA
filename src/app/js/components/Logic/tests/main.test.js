@@ -28,7 +28,7 @@ description={this.state.description}
 account={this.state.account}
 userAccounts={this.state.userAccounts}
 error={this.state.error}
-onChildClick={(e) => this.handleChildClick()}
+setspecificRankingOptionBtnsCB={(e) => this.handleChildClick()}
 specificRankingOptionBtns={this.state.specificRankingOptionBtns}
 onAfterUserUpdate={(e) => _loadCurrentUserAccounts()}
 onError={(err, source) => this._onError(err, source)}
@@ -109,7 +109,7 @@ const viewingOnlyCB = jest.fn();
             rankingListJSONdata: globalRankingData,
             account: testAccountPlayer1Rinkeby,
             user: 'player1',
-            onChildClick: onClick,
+            setspecificRankingOptionBtnsCB: onClick,
             onAfterUserUpdate:onAfterUserUpdate,
             newrankId:newrankId,
             viewingOnlyCB:viewingOnlyCB,

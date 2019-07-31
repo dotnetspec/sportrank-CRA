@@ -35,7 +35,7 @@ beforeEach(cleanup)
 // error={this.state.error}
 // isCurrentUserActive={this.state.isCurrentUserActive}
 // isCurrentUserActiveCB={(e) => this.isCurrentUserActiveCB()}
-// onChildClick={(e) => this.handleChildClick()}
+// setspecificRankingOptionBtnsCB={(e) => this.handleChildClick()}
 // onListAllChildClick={(e) => this.handleListAllChildClick()}
 // specificRankingOptionBtns={this.state.specificRankingOptionBtns}
 // onAfterUserUpdate={(e) => this._loadCurrentUserAccounts()}
@@ -154,7 +154,7 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
           expect(getByText(/List All Rankings/i)).toBeInTheDocument()
     });
 
-  it('RTL - isCurrentUserActive false', () => {
+  it('RTL - isCurrentUserActive false - Display Re-Activate', () => {
     const props  = {
       userAccounts: userAccountsArray,
       user: userOjb,
@@ -170,7 +170,23 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
         expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveAttribute("style", 'color: green;');
   });
 
-  it('RTL - isCurrentUserActive true', () => {
+  it('RTL - isCurrentUserActive true - Display De-Activate', () => {
+    const props  = {
+      userAccounts: userAccountsArray,
+      user: userOjb,
+      account: testAccountPlayer1Rinkeby,
+      specificRankingOptionBtns: true,
+      isCurrentUserActive: true
+    }
+        renderWithRouter(<Header {...props}/>);
+        //const { debug } = renderWithRouter(<Header {...props}/>);
+        //debug();
+        expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
+        expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/De-Activate?/i)
+        expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveAttribute("style", 'color: red;');
+  });
+
+  fit('RTL - isCurrentUserActive true', () => {
     const props  = {
       userAccounts: userAccountsArray,
       user: userOjb,

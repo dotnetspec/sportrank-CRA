@@ -254,7 +254,7 @@ export function App({
 
   //Below appears to be relevant to user events not e.g. callbacks that fetch data
   //display the ranking specific btn options
-  const handleChildClick = () => {
+  const setspecificRankingOptionBtnsCB = () => {
     //setState({specificRankingOptionBtns:true});
     setspecificRankingOptionBtns(true);
   }
@@ -421,8 +421,8 @@ const setemailCB = (oppoEmailTxt) => {
       setOnCallbackisCurrentUserActiveCB = {
         setOnCallbackisCurrentUserActiveCB
       }
-      onChildClick = {
-        handleChildClick
+      setspecificRankingOptionBtnsCB = {
+        setspecificRankingOptionBtnsCB
       }
       onListAllChildClick = {
         handleListAllChildClick
@@ -488,8 +488,8 @@ const setemailCB = (oppoEmailTxt) => {
       error = {
         error
       }
-      onChildClick = {
-        handleChildClick
+      setspecificRankingOptionBtnsCB = {
+        setspecificRankingOptionBtnsCB
       }
       specificRankingOptionBtns = {
         specificRankingOptionBtns

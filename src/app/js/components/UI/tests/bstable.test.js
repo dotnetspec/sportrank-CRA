@@ -20,7 +20,7 @@ describe('Bootstrap Table UI', () => {
          const handleClickStub = sinon.spy()
          const tableHeaderColumnwrapper = shallow(
            //<BrowserRouter>
-             //<BootstrapTable  onChildClick={handleClickStub} rankingListJSONdata={json}/>
+             //<BootstrapTable  setspecificRankingOptionBtnsCB={handleClickStub} rankingListJSONdata={json}/>
              <TableHeaderColumn dataField='viewbtn'
              dataFormat={this.rankingViewButton.bind(this)}
              handlerankingViewButton={this.rankingViewButton.bind(this)} />

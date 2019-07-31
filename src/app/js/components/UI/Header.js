@@ -159,7 +159,7 @@ class Header extends Component {
       // //this.props.history.push('/userrankings/@' + user);
       //       this.props.history.push('/sportrank/');
       //     }else{
-      //REVIEW: Better naming for onChildClick
+      //REVIEW: Better naming for setspecificRankingOptionBtnsCB
             this.props.onListAllChildClick();
             this.props.history.push('/');
           //}
