@@ -378,7 +378,6 @@ class Home extends Component {
             //originalData, username, contactno, email, accountno, description, rankingID)
             JSONops.createNewUserInJSON(this.props.rankingJSONdata, this.props.user.username, this.props.contactno, this.props.email, this.props.account, this.props.description, this.props.newrankId)
           }
-
         }
 
         bootstrapTableDisplay() {

@@ -1,6 +1,6 @@
-import {
-  wait,
-} from '@testing-library/dom'
+// import {
+//   wait,
+// } from '@testing-library/dom'
 // adds special assertions like toHaveTextContent
 import 'jest-dom/extend-expect'
 import GlobalRankingJoinBtn from '../buttons/GlobalRankingJoinBtn'
@@ -10,11 +10,10 @@ import { render, fireEvent, cleanup } from '@testing-library/react'
 //originally based on example:
 //https://testing-library.com/docs/dom-testing-library/example-intro
 
-//this is the 'View' btn on the initial glabol rnakings page
-
+//this is the 'Join' btn on the initial glabol rankings page
 afterEach(cleanup);
 
-it('GlobalRankingJoinwBtn - calls "onClick" prop on button click', () => {
+it('GlobalRankingJoinBtn - calls "onClick" prop on button click', () => {
   // Render new instance in every test to prevent leaking state
   const historyMock = { push: jest.fn() };
   const onClick = jest.fn();
@@ -40,7 +39,6 @@ it('GlobalRankingJoinwBtn - calls "onClick" prop on button click', () => {
   expect(onClick).toHaveBeenCalled();
   //expect(onClickRankingJoinSelected).toHaveBeenCalled();
   //expect(onAfterUserUpdate).toHaveBeenCalled();
-  //expect(newrankId).toHaveBeenCalled();
   expect(setviewingOnlyCB).toHaveBeenCalled();
   expect(setnewrankIdCB).toHaveBeenCalled();
 });
