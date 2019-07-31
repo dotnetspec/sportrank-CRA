@@ -4,22 +4,8 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import { Grid, Row } from 'react-bootstrap';
 import { isEmpty } from '../../utils';
 import GlobalRankingViewBtn from '../UI/buttons/GlobalRankingViewBtn';
-
-//import PropsRoute from './PropsRoute';
-//import Home from './Home';
-//import Userchallenges from './Userchallenges';
-// import CreateUser from './CreateUser';
-// import UpdateUser from './UpdateUser';
-// import DeactivatePlayer from './DeactivatePlayer';
-//import Error from './Error';
+import GlobalRankingJoinBtn from '../UI/buttons/GlobalRankingJoinBtn';
 import React, { Component } from 'react';
-// import JSONops from './JSONops'
-// import CreateNewRanking from './CreateNewRanking';
-//import UserRankings from './UserRankings'
-//import {newrankId, viewingOnlyCB} from './App'
-//import {saveJson, loadJson} from '../lib/service'
-//import Grid from 'react-bootstrap/Grid'
-
 
 const selectRowPropAfterClickRow = {
   selectedRankingId: ''
@@ -54,34 +40,34 @@ class GlobalRankings extends Component {
   //#endregion
 
 
-  //REVIEW: change name to onClickRankingJoinSelected?
-  onClickRankingJoinSelected(cell, row, rowIndex){
-    console.log('in onClickRankingSelected');
-    selectRowPropAfterClickRow.selectedRankingId = `${row['RANKINGID']}`;
-    console.log('selectRowPropAfterClickRow.selectedRankingId', selectRowPropAfterClickRow.selectedRankingId)
-    //this.props.newrankId(selectRowPropAfterClickRow.selectedRankingId);
-    this.props.setnewrankIdCB(selectRowPropAfterClickRow.selectedRankingId);
-    //this.props.setisCurrentUserActiveCB()
-    this.props.setviewingOnlyCB(false);
-    this.props.onAfterUserUpdate();
-    //if joining and not yet a member of the ranking home will add the new player to the bottom
-    //of the rankings in the selected ladder
-    this.props.history.push('/home/@' + this.props.user.username);
-    //this.openResultModal();
-   }
-
-  rankingButton(cell, row, enumObject, rowIndex) {
-      return (
-         <button
-            bsstyle="primary"
-            //type="button"
-            onClick={() =>
-            this.onClickRankingJoinSelected(cell, row, rowIndex)}
-         >
-         Join
-         </button>
-      )
-   }
+  // //REVIEW: change name to onClickRankingJoinSelected?
+  // onClickRankingJoinSelected(cell, row, rowIndex){
+  //   console.log('in onClickRankingSelected');
+  //   selectRowPropAfterClickRow.selectedRankingId = `${row['RANKINGID']}`;
+  //   console.log('selectRowPropAfterClickRow.selectedRankingId', selectRowPropAfterClickRow.selectedRankingId)
+  //   //this.props.newrankId(selectRowPropAfterClickRow.selectedRankingId);
+  //   this.props.setnewrankIdCB(selectRowPropAfterClickRow.selectedRankingId);
+  //   //this.props.setisCurrentUserActiveCB()
+  //   this.props.setviewingOnlyCB(false);
+  //   this.props.onAfterUserUpdate();
+  //   //if joining and not yet a member of the ranking home will add the new player to the bottom
+  //   //of the rankings in the selected ladder
+  //   this.props.history.push('/home/@' + this.props.user.username);
+  //   //this.openResultModal();
+  //  }
+  //
+  // rankingButton(cell, row, enumObject, rowIndex) {
+  //     return (
+  //        <button
+  //           bsstyle="primary"
+  //           //type="button"
+  //           onClick={() =>
+  //           this.onClickRankingJoinSelected(cell, row, rowIndex)}
+  //        >
+  //        Join
+  //        </button>
+  //     )
+  //  }
 
    rankingViewButton(cell, row, enumObject, rowIndex) {
        return (
@@ -99,12 +85,28 @@ class GlobalRankings extends Component {
        )
     }
 
+    rankingJoinButton(cell, row, rowIndex){
+      return (
+           <GlobalRankingJoinBtn
+           cell={cell} row={row} rowIndex={rowIndex}
+           setspecificRankingOptionBtnsCB={this.props.setspecificRankingOptionBtnsCB}
+           onAfterUserUpdate={this.props.onAfterUserUpdate}
+           history={this.props.history}
+           username={this.props.user.username}
+           setnewrankIdCB={this.props.setnewrankIdCB}
+           viewingOnlyCB={this.props.viewingOnlyCB}
+           newrankId={this.props.newrankId}
+           setviewingOnlyCB={this.props.setviewingOnlyCB}
+           />
+      )
+    }
+
 //#region React lifecycle events
 //QUESTION: why does componentDidMount not have the data from this.props.rankingJSONdata
 //when it clearly gets passed to Home.js?
-  componentDidMount() {
-
-  }
+  // componentDidMount() {
+  //
+  // }
 
   globalBSTableDisplay(){
       //if (this.props.rankingJSONdata[0] === null && this.props.user.username === null){
@@ -153,7 +155,7 @@ class GlobalRankings extends Component {
                 </TableHeaderColumn>
                 <TableHeaderColumn
                 dataField='joinbtn'
-                dataFormat={this.rankingButton.bind(this)}
+                dataFormat={this.rankingJoinButton.bind(this)}
               >
                 Join
                 </TableHeaderColumn>
