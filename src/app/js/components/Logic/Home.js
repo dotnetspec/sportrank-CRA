@@ -531,7 +531,7 @@ class Home extends Component {
             Would you like to challenge {
               selectRowPropAfterClickRow.selectedOpponentName
             }
-            <nbsp/> who is ranked {
+            {' '}who is ranked {
               selectRowPropAfterClickRow.selectedOpponentRank
             } ? < p > < /p> <
             DoChallenge closeModalOnAfterChallenge = {
