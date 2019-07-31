@@ -77,7 +77,7 @@ import JSONops from './JSONops'
 
   //#region React lifecycle events
   //render() {
-    console.log('props.user in deactivateplayer', props.user.username);
+    //console.log('props.user in deactivateplayer', props.user.username);
     //const { isLoading } = state;
     // let validationState = _getValidationState();
     // let isValid = validationState === 'success' && !isLoading && !state.error;

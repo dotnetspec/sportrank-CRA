@@ -171,7 +171,7 @@ class Header extends Component {
   }
 
   navHomeOrToUserUpdate(){
-    console.log('navHomeOrToUserUpdate');
+    //console.log('navHomeOrToUserUpdate');
     //TODO: display SportRank Home in white without small tag
     if(this.props.user.username !== ''){
       return  <NavLink exact to="/"><small>Sportrank HOME</small><small>Decentralized Sport</small></NavLink>
@@ -326,7 +326,7 @@ class Header extends Component {
 
   handleRenderErrorOrCurrentEthBal(states){
     const isError = this.props.error && this.props.error.message;
-    console.log('handleRenderErrorOrCurrentEthBal iserror?', isError);
+    //console.log('handleRenderErrorOrCurrentEthBal iserror?', isError);
     return isError ?
       states.isError
       :
@@ -335,7 +335,7 @@ class Header extends Component {
   }
 
   renderNavbarHeader(isLoading, states){
-    console.log('renderNavbarHeader isLoading', isLoading);
+    //console.log('renderNavbarHeader isLoading', isLoading);
     return(
       <Navbar.Header>
       <Navbar.Brand>
@@ -411,7 +411,7 @@ class Header extends Component {
 displayActivationBtns(){
   // const {pathname} = this.props.location;
   //     if(pathname.includes("home/@")){
-  console.log('in header isCurrentUserActive', this.props.isCurrentUserActive)
+  //console.log('in header isCurrentUserActive', this.props.isCurrentUserActive)
   if(this.props.specificRankingOptionBtns){
         return(
           <PlayerStatusBtn isCurrentUserActive={this.props.isCurrentUserActive} data-cy='playerStatus' data-testid='playerStatus' {...this.props} newrankId={this.props.newrankId} username={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
@@ -424,8 +424,8 @@ displayActivationBtns(){
     if(this.props.userAccounts !== undefined){
           const isEditable = Boolean(this.props.user.username);
           const isError = this.props.error && this.props.error.message;
-          console.log('this.props.account', this.props.account)
-          console.log('this.props.error', this.props.error)
+          //console.log('this.props.account', this.props.account)
+          //console.log('this.props.error', this.props.error)
           //console.log('this.props.error.message', this.props.error.message)
           const isLoading = !Boolean(this.props.account) && !isError;
 

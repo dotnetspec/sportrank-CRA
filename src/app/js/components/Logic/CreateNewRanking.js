@@ -5,7 +5,7 @@ import { Grid, Button, Row, Col, Modal } from 'react-bootstrap';
 import React, { Component } from 'react'
 import FieldGroup from '../UI/FieldGroup'
 import JSONops from './JSONops'
-//import {newrankId} from './App'
+//import {newrankIdCB} from './App'
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
 //import PageHeader from 'react-bootstrap/PageHeader'
@@ -210,10 +210,10 @@ _continueClick = () => {
 
               //const  newrankId  = this.props.getNewRankId();
 
-              console.log('newRankingId in CreateNewRanking', this.props.newrankId)
+              console.log('newRankingId in CreateNewRanking', this.props.newrankIdCB)
 
               // set up our contract method with the input values from the form
-                  const editAccount = DSportRank.methods.editAccount(usernameHash, updatedDescription, this.props.newrankId, updatedImageHash);
+                  const editAccount = DSportRank.methods.editAccount(usernameHash, updatedDescription, this.props.newrankIdCB, updatedImageHash);
 
                   // get a gas estimate before sending the transaction
                   const gasEstimate = await editAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
@@ -238,13 +238,13 @@ _continueClick = () => {
                // "RANKINGID": "123456789012345"
 
 
-               console.log('before _sendCreateNewRankingJSONData this.props.newrankId', this.props.newrankId)
-              const resultOfSendJsonToGlobalList = JSONops._sendCreateNewRankingJSONData(this.props.rankingListJSONdata, this.props.newrankId,this.state.rankName,this.state.rankDescription )
+               console.log('before _sendCreateNewRankingJSONData this.props.newrankIdCB', this.props.newrankIdCB)
+              const resultOfSendJsonToGlobalList = JSONops._sendCreateNewRankingJSONData(this.props.rankingListJSONdata, this.props.newrankIdCB,this.state.rankName,this.state.rankDescription )
               console.log('resultOfSendJsonToGlobalList', resultOfSendJsonToGlobalList)
               //add current user to the new ranking list as the first player
-              JSONops.createNewUserInNewJSON(this.props.user.username, this.props.contactNoCB, this.props.emailCB, this.props.account, 'squash player', this.props.newrankId)
+              JSONops.createNewUserInNewJSON(this.props.user.username, this.props.contactNoCB, this.props.emailCB, this.props.account, 'squash player', this.props.newrankIdCB)
 
-              //JSONops.createNewUserInJSON(originalData, this.props.user.username, this.props.contactNoCB, this.props.emailCB, this.props.account, 'squash player', this.props.newrankId)
+              //JSONops.createNewUserInJSON(originalData, this.props.user.username, this.props.contactNoCB, this.props.emailCB, this.props.account, 'squash player', this.props.newrankIdCB)
                // Completed of async action, set loading state back
                //this.setState({ isLoading: false });
                // tell our parent (app.js) that we've created a user so it
@@ -294,7 +294,7 @@ getNewRankId = async () => {
         if (req.readyState === XMLHttpRequest.DONE) {
           const resulttxt = JSON.parse(req.responseText);
           //only here can set state (once result is back)
-          this.props.setnewrankIdCB(resulttxt.id)
+          this.props.newrankIdCB(resulttxt.id)
           this.setState({ rankId: resulttxt.id});
           this.setState({ ranknameHasChanged: true});
           this.setState({ isLoading: false});

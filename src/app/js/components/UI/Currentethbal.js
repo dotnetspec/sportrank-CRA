@@ -18,7 +18,7 @@ import React from 'react';
       return origETHInt;
     }
     render() {
-      console.log('extbal', this.props.updatedExtAcctBalCB);
+      //console.log('extbal', this.props.updatedExtAcctBalCB);
       let htmlTxtToReturn = ''
       let htmlTxtToReturn2 = ''
       if(this.props.updatedExtAcctBalCB !== 0){

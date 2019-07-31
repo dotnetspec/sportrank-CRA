@@ -8,8 +8,8 @@ import JSONops from '../../Logic/JSONops';
  */
 
  export default function PlayerStatusBtn(props){
-   console.log('PlayerStatusBtn username', props.username)
-   console.log('PlayerStatusBtn props.isCurrentUserActive ', props.isCurrentUserActive )
+   //console.log('PlayerStatusBtn username', props.username)
+   //console.log('PlayerStatusBtn props.isCurrentUserActive ', props.isCurrentUserActive )
    //const [playerActive, setPlayerActive] = React.useState(true);
    //const [btnText, setValue] = React.useState('De-Activate?');
    //const [bsStyle, setStyle] = React.useState('success');

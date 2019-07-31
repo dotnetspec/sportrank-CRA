@@ -14,7 +14,7 @@ import { Button } from 'react-bootstrap';
     //REVIEW: change name to onClickRankingJoinSelected?
     //onClickRankingJoinSelected(cell, row, rowIndex){
   const onClickRankingJoinSelected = (row) => {
-      console.log('in onClickRankingJoinSelected');
+      //console.log('in onClickRankingJoinSelected');
 
       props.setnewrankIdCB(row.RANKINGID);
       //this.props.setisCurrentUserActiveCB()

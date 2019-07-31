@@ -664,7 +664,7 @@ class Home extends Component {
               /* http://allenfang.github.io/react-bootstrap-table/example.html#sort */ } <
             h3 > {
               this.props.contactNoCB
-            } here?< /h3> <
+            } < /h3> <
             h3 > {
               this.props.emailCB
             } < /h3> {
