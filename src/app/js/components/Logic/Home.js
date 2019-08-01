@@ -105,6 +105,7 @@ class Home extends Component {
     console.log('rankingDefault in home', rankingDefault)
     //bind the callbacks (defined above) to this parent component Home
     //so that DoChallenge changes are updated in UI:
+    //REVIEW: Probably not necessary ...
     updateWarningText = updateWarningText.bind(this);
     this.closeResultModal = this.closeResultModal.bind(this);
   }

@@ -38,9 +38,25 @@ const JSONops = {
     _sendJSONDataWithRankingID
     _sendCreateNewRankingJSONData
   */
-
+  //use this to create new functions ...
   simple: function(){
         return false;
+  },
+
+  isValidRankingOrder: function(data){
+        //sort the array into ranking order first...
+        data.sort(function(a,b){
+          return parseInt(a.RANK)  - parseInt(b.RANK);
+        })
+        //check the array is valid ...
+        for (var i = 1, len = data.length; i < len; i++) {
+        //if current value smaller than or equal previous value
+        //then the ranking order isn't valid...
+          if (data[i].RANK <= data[i - 1].RANK) {
+            return false;
+          }
+        }
+      return true;
   },
 
   processResult: function (resultEntered, currentUser, data, newrankId) {
