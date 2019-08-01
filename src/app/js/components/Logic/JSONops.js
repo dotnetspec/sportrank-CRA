@@ -60,6 +60,7 @@ const JSONops = {
   },
 
   processResult: function (resultEntered, currentUser, data, newrankId) {
+    let updatedUserJSON = {};
     let checkedUserRank, checkedOpponentRank = 0;
     const opponentCurrentlyChallengingUser = JSONops._getUserValue(data, currentUser, "CURRENTCHALLENGERNAME");
 
@@ -68,10 +69,15 @@ const JSONops = {
 
                  const currentUserRankInt = parseInt(checkedUserRank);
                  const selectedOpponentRankInt = parseInt(checkedOpponentRank);
-
+                 //TODO: use switch here:
                  if (resultEntered === 'undecided' ){
-                   JSONops._updateEnterResultUnchangedJSON(newrankId, currentUser,opponentCurrentlyChallengingUser, data);
-                   return "Thank you. No changes have been made. Your ranking is unchanged"
+                   let updatedUserJSONnew = JSONops._updateEnterResultUnchangedJSON(newrankId, currentUser,opponentCurrentlyChallengingUser, data);
+                   if(JSONops.isValidRankingOrder(updatedUserJSONnew)){
+                     JSONops._sendJSONDataWithRankingID(updatedUserJSON, newrankId);
+                     return "Thank you. No changes have been made. Your ranking is unchanged";
+                   }else{
+                     return "Ranking order PROBLEM. No changes have been made. Your ranking is unchanged";
+                   }
                  }
                  else if (resultEntered === 'won' && currentUserRankInt < selectedOpponentRankInt){
                   JSONops._updateEnterResultUnchangedJSON(newrankId, currentUser,opponentCurrentlyChallengingUser, data);
@@ -223,16 +229,18 @@ console.log('inside _setUserNameValue')
     _updateEnterResultUnchangedJSON: function(rankingID, currentUser, selectedOpponent, data){
         //set both player to AVAILABLE
         const opponentCurrentlyChallengingUser = this._getUserValue(data, currentUser, "CURRENTCHALLENGERNAME");
-        console.log(opponentCurrentlyChallengingUser)
-        let updatedUserJSON = this._setUserValue(data, opponentCurrentlyChallengingUser, "CURRENTCHALLENGERNAME", "AVAILABLE");
+        //console.log(opponentCurrentlyChallengingUser)
+        let updatedUserJSON = data;
+        if(opponentCurrentlyChallengingUser !== 'AVAILABLE'){
+            updatedUserJSON = this._setUserValue(data, opponentCurrentlyChallengingUser, "CURRENTCHALLENGERNAME", "AVAILABLE");
+            //console.log('updatedUserJSON1', updatedUserJSON);
             updatedUserJSON = this._setUserValue(data, currentUser, "CURRENTCHALLENGERNAME", "AVAILABLE");
             updatedUserJSON = this._setUserValue(data, selectedOpponent, "CURRENTCHALLENGERNAME", "AVAILABLE");
             //case where opponent's row isn't the one clicked on (user clicks own row to enter result)
             updatedUserJSON = this._setUserValue(data, opponentCurrentlyChallengingUser, "CURRENTCHALLENGERNAME", "AVAILABLE");
-
-
-        //this._sendJSONData(updatedUserJSON);
-        this._sendJSONDataWithRankingID(updatedUserJSON, rankingID);
+            //console.log('updatedUserJSON', updatedUserJSON);
+          }
+        return updatedUserJSON;
     },
 
     _updateDoChallengeJSON: function(rankingID, data, currentUser, accountno){
