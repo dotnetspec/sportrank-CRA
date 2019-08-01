@@ -6,6 +6,9 @@ import JSONops from '../JSONops'
 //import React from 'react'
 import { render, cleanup, fireEvent, getByText, container, waitForElement, getByLabelText } from '@testing-library/react'
 
+//NB: a higher ranking has a lower ranking number
+//app is thinking in terms of integers (not rankings like a squash player!)
+
 afterEach(cleanup);
 
 const rankingID = '5c6a81756874aa33ba152e56';
@@ -65,22 +68,65 @@ describe('jsonio - pure', () => {
   //   spy_sendJSONDataWithRankingID.mockRestore();
   // })
 
-  it('JSONops processResult', () => {
+  it('JSONops processResult - undecided', () => {
     const spy_sendJSONDataWithRankingID = jest.spyOn(JSONops, '_sendJSONDataWithRankingID');
     spy_sendJSONDataWithRankingID.mockReturnValue(dataFalse);
-    let resultEntered = 'undecided';
     let currentUser = 'player1';
+    //'undecided' but unchanged (data has to be reset to 'AVAILABLE'):
     //bad data
+    let resultEntered = 'undecided';
     let result = JSONops.processResult(resultEntered, currentUser, dataFalse, rankingID);
     expect(result).toEqual('Ranking order PROBLEM. No changes have been made. Your ranking is unchanged');
     //good data
-    //'undecided' but unchanged (data has to be reset to 'AVAILABLE'):
     result = JSONops.processResult(resultEntered, currentUser, dataTrue, rankingID);
     expect(result).toEqual('Thank you. No changes have been made. Your ranking is unchanged');
     expect(spy_sendJSONDataWithRankingID).toHaveBeenCalled();
-    resultEntered = 'won';
-    result = JSONops.processResult(resultEntered, currentUser, dataTrue, rankingID);
-    //'Won' but unchanged:
+
+    //'Won':
+    // resultEntered = 'won';
+    // //bad data - no change
+    // result = JSONops.processResult(resultEntered, currentUser, dataFalse, rankingID);
+    // expect(result).toEqual('Ranking order PROBLEM. No changes have been made. Your ranking is unchanged');
+    // //good data
+    // result = JSONops.processResult(resultEntered, currentUser, dataTrue, rankingID);
+    // expect(result).toEqual('Thank you. Your result has been entered. Your ranking has been changed');
+    // //expect(result).toEqual('Thank you. Your result has been entered. Your ranking is unchanged');
+    // expect(spy_sendJSONDataWithRankingID).toHaveBeenCalled();
+
+    spy_sendJSONDataWithRankingID.mockRestore();
+  })
+
+  fit('JSONops processResult - won', () => {
+    const dataTrueWithUserLowerInRanking = [
+      {id: 7, STATUS: "NEW", RANKING: "NEWRANKING"},
+      {"DATESTAMP":1545369526439,"ACTIVE":true,"DESCRIPTION":"alskdfjalj","CURRENTCHALLENGERNAME":"player4","CURRENTCHALLENGERID":4,"ACCOUNT":"0xa864Ea9d142C0997572aD7a2077A67a30a853cc0","RANK":2,"EMAIL":"laskdfjlfj","CONTACTNO":"laskdfjlajf","NAME":"player1","id":3},
+      {"DATESTAMP":1545301903330,"ACTIVE":true,"DESCRIPTION":"laskjfljk","CURRENTCHALLENGERNAME":"AVAILABLE","CURRENTCHALLENGERID":0,"ACCOUNT":"0x2dCC1bd7852819026981B48479b8C3BE5056C0cd","RANK":3,"EMAIL":"aslkdfj","CONTACTNO":"alskjdflaj","NAME":"player2","id":2},
+      {"id":1,"NAME":"player3","CONTACTNO":"","EMAIL":"","RANK":5,"ACCOUNT":"0x0f124b4C7Ccb22c79B3A95BB92188a810802ea26","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545369526437},
+      {"id":4,"NAME":"player4","CONTACTNO":"","EMAIL":"","RANK":1,"ACCOUNT":"0xA87b6b69C139d414D2ca80744dB16172f997a7f7","CURRENTCHALLENGERID":5,"CURRENTCHALLENGERNAME":"player5","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
+      {"id":5,"NAME":"player5","CONTACTNO":"","EMAIL":"","RANK":6,"ACCOUNT":"0x3dA1f7f1937985Da9baf87a9b934A50B55981E8E","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"player4","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
+      {"id":6,"NAME":"player6","CONTACTNO":"","EMAIL":"","RANK":4,"ACCOUNT":"0x23fCa109110F043847bb0Ca87805f3642D8B7Dc7","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301853807}
+    ];
+    const dataFalseWithUserLowerInRanking = [
+      {id: 7, STATUS: "NEW", RANKING: "NEWRANKING"},
+      {"DATESTAMP":1545369526439,"ACTIVE":true,"DESCRIPTION":"alskdfjalj","CURRENTCHALLENGERNAME":"player4","CURRENTCHALLENGERID":4,"ACCOUNT":"0xa864Ea9d142C0997572aD7a2077A67a30a853cc0","RANK":1,"EMAIL":"laskdfjlfj","CONTACTNO":"laskdfjlajf","NAME":"player1","id":3},
+      {"DATESTAMP":1545301903330,"ACTIVE":true,"DESCRIPTION":"laskjfljk","CURRENTCHALLENGERNAME":"AVAILABLE","CURRENTCHALLENGERID":0,"ACCOUNT":"0x2dCC1bd7852819026981B48479b8C3BE5056C0cd","RANK":3,"EMAIL":"aslkdfj","CONTACTNO":"alskjdflaj","NAME":"player2","id":2},
+      {"id":1,"NAME":"player3","CONTACTNO":"","EMAIL":"","RANK":5,"ACCOUNT":"0x0f124b4C7Ccb22c79B3A95BB92188a810802ea26","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545369526437},
+      {"id":4,"NAME":"player4","CONTACTNO":"","EMAIL":"","RANK":2,"ACCOUNT":"0xA87b6b69C139d414D2ca80744dB16172f997a7f7","CURRENTCHALLENGERID":5,"CURRENTCHALLENGERNAME":"player5","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
+      {"id":5,"NAME":"player5","CONTACTNO":"","EMAIL":"","RANK":6,"ACCOUNT":"0x3dA1f7f1937985Da9baf87a9b934A50B55981E8E","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"player4","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
+      {"id":6,"NAME":"player6","CONTACTNO":"","EMAIL":"","RANK":6,"ACCOUNT":"0x23fCa109110F043847bb0Ca87805f3642D8B7Dc7","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301853807}
+    ];
+    const spy_sendJSONDataWithRankingID = jest.spyOn(JSONops, '_sendJSONDataWithRankingID');
+    spy_sendJSONDataWithRankingID.mockReturnValue(dataFalse);
+    let currentUser = 'player1';
+
+    //bad data
+    //'Won':
+    let resultEntered = 'won';
+    //bad data - no change
+    let result = JSONops.processResult(resultEntered, currentUser, dataFalseWithUserLowerInRanking, rankingID);
+    expect(result).toEqual('Ranking order PROBLEM. No changes have been made. Your ranking is unchanged');
+    //good data
+    result = JSONops.processResult(resultEntered, currentUser, dataTrueWithUserLowerInRanking, rankingID);
     expect(result).toEqual('Thank you. Your result has been entered. Your ranking has been changed');
     //expect(result).toEqual('Thank you. Your result has been entered. Your ranking is unchanged');
     expect(spy_sendJSONDataWithRankingID).toHaveBeenCalled();
