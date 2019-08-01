@@ -1,4 +1,4 @@
-import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, asyncFetch } from '../io/Jsonio';
+import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, asyncFetch, processResult } from '../io/Jsonio';
 import {fetchMock} from 'fetch-mock'
 
 // beforeEach(() => {

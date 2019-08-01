@@ -15,6 +15,7 @@ const requestConfig = {
         // })
       };
 
+
 export async function getDefaultRankingList (rankingDefault, getDefaultRankingList_callback) {
       //export const getDefaultRankingList = async (rankingDefault, getDefaultRankingList_callback) => {
         try {

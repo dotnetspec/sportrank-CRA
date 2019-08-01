@@ -257,17 +257,17 @@ import { getWeb3Accounts } from './web3Accounts';
   //I think this is used for when user changes account
   export const getDefaultUserAccountFromAddress = (userAccountsArray, defaultAccount) => {
     //export async function getDefaultUserAccountFromAddress(userAccountsArray){
-    console.log('userAccountsArray', userAccountsArray)
+    //console.log('userAccountsArray', userAccountsArray)
     //in the array of userAccounts find a particular matching
     //specificUserAccount address
     //all that's needed for the particular array element to be returned
     //is for this function to return true
     function checkAddresses(specificAccount) {
       //console.log('typeof acctNo', typeof acctNo)
-      console.log('specificAccount.address', specificAccount.address);
+      //console.log('specificAccount.address', specificAccount.address);
       //const arrRes = getWeb3defaultAccount();
       //const arrResFormat = '[' + arrRes + ']';
-      console.log('defaultAccount', defaultAccount);
+      //console.log('defaultAccount', defaultAccount);
       return specificAccount.address === defaultAccount;
       //return specificAccount.address === arrResFormat;
     }

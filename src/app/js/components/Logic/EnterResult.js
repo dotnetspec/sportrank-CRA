@@ -46,6 +46,7 @@ class EnterResult extends Component{
   }
   //#endregion
 
+
 _processResult(resultEntered, currentUser){
 
 //Handle the opponent's row being clicked as well as user's row
@@ -97,8 +98,10 @@ const opponentCurrentlyChallengingUser = JSONops._getUserValue(this.props.data, 
   //_handleClick = async (e) => {
     _handleClick(e){
     try{
-      //const result = this._processResult(this.selectedOption, this.props.user);
-      this._processResult(this.selectedOption, this.props.user);
+      //onAfterResult didn't work at the end of this function ...
+      this.props.onAfterResult();
+      console.log('data in handleclick', this.props.data);
+      JSONops.processResult(this.selectedOption, this.props.user, this.props.data, this.props.newrankId);
       // remove loading state
       this.setState({ isLoading: false });
       //clear the contact info
@@ -106,7 +109,7 @@ const opponentCurrentlyChallengingUser = JSONops._getUserValue(this.props.data, 
       this.props.emailCB('');
       // tell parent we've updated a user and to re-fetch user details from the contract
       //TODO: re-set below to onAfterReslt
-      this.props.onAfterChallenge();
+
     }
     catch(err){
       // remove loading state and show error message

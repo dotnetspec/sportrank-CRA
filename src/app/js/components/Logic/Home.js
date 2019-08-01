@@ -106,6 +106,7 @@ class Home extends Component {
     //bind the callbacks (defined above) to this parent component Home
     //so that DoChallenge changes are updated in UI:
     updateWarningText = updateWarningText.bind(this);
+    this.closeResultModal = this.closeResultModal.bind(this);
   }
   //#endregion
 
@@ -610,7 +611,7 @@ class Home extends Component {
             selectedOpponentName = {
               selectRowPropAfterClickRow.selectedOpponentName
             }
-            onAfterChallenge = {
+            onAfterResult = {
               this.closeResultModal
             }
             newrankId = {

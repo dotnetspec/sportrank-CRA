@@ -22,6 +22,25 @@ const currentUser = 'player1';
 const selectedOpponent = 'player3';
 const accountNumber = '0x847700B781667abdD98E1393420754E503dca5b7';
 
+describe('jsonio - pure', () => {
+//REVIEW: there are currently too many functions to mock
+//need to determine base io functions that can be mocked before
+//writing these jsonio tests
+  it('JSONops processResult ', () => {
+    const spy_sendJSONDataWithRankingID = jest.spyOn(JSONops, '_sendJSONDataWithRankingID');
+    spy_sendJSONDataWithRankingID.mockReturnValue(data);
+    const resultEntered = 'won';
+    const currentUser = 'player1';
+    const result = JSONops.processResult(resultEntered, currentUser, data, rankingID);
+    //'Won' but unchanged:
+    expect(result).toEqual('Thank you. Your result has been entered. Your ranking has been changed');
+    //expect(result).toEqual('Thank you. Your result has been entered. Your ranking is unchanged');
+    expect(spy_sendJSONDataWithRankingID).toHaveBeenCalled();
+
+    spy_sendJSONDataWithRankingID.mockRestore();
+  })
+});
+
 
 it('JSONops deactivatePlayerInJson test ', async () => {
 const fromJson = JSONops.deactivatePlayerInJson(rankingID, data, currentUser, accountNumber);

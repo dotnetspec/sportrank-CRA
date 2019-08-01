@@ -43,6 +43,47 @@ const JSONops = {
         return false;
   },
 
+  processResult: function (resultEntered, currentUser, data, newrankId) {
+    let checkedUserRank, checkedOpponentRank = 0;
+    const opponentCurrentlyChallengingUser = JSONops._getUserValue(data, currentUser, "CURRENTCHALLENGERNAME");
+
+      checkedUserRank = JSONops._getUserValue(data, currentUser, "RANK");
+      checkedOpponentRank = JSONops._getUserValue(data, opponentCurrentlyChallengingUser, "RANK");
+
+                 const currentUserRankInt = parseInt(checkedUserRank);
+                 const selectedOpponentRankInt = parseInt(checkedOpponentRank);
+
+                 if (resultEntered === 'undecided' ){
+                   JSONops._updateEnterResultUnchangedJSON(newrankId, currentUser,opponentCurrentlyChallengingUser, data);
+                   return "Thank you. No changes have been made. Your ranking is unchanged"
+                 }
+                 else if (resultEntered === 'won' && currentUserRankInt < selectedOpponentRankInt){
+                  JSONops._updateEnterResultUnchangedJSON(newrankId, currentUser,opponentCurrentlyChallengingUser, data);
+                  JSONops.updateDateStampsInJSON(newrankId, data, currentUser, opponentCurrentlyChallengingUser);
+                  console.log('result send to _updateEnterResultUnchangedJSON');
+                  return "Thank you. Your result has been entered. Your ranking is unchanged"
+
+                }else if (resultEntered === 'lost' && currentUserRankInt > selectedOpponentRankInt){
+
+                  JSONops._updateEnterResultUnchangedJSON(newrankId, currentUser,opponentCurrentlyChallengingUser, data);
+                  JSONops.updateDateStampsInJSON(newrankId, data, currentUser, opponentCurrentlyChallengingUser);
+                  console.log('result send to _updateEnterResultUnchangedJSON');
+                  return "Thank you. Your result has been entered. Your ranking is unchanged"
+
+                }else{
+                  JSONops._updateEnterResultJSON(newrankId, currentUser, checkedUserRank, opponentCurrentlyChallengingUser, checkedOpponentRank, data);
+                  JSONops.updateDateStampsInJSON(newrankId, data, currentUser,opponentCurrentlyChallengingUser);
+                  //console.log('result send to _updateEnterResultJSON');
+                  return "Thank you. Your result has been entered. Your ranking has been changed"
+                }
+  },
+
+
+  //export function processResult(resultEntered, currentUser) {
+    //_processResult(resultEntered, currentUser){
+
+    //Handle the opponent's row being clicked as well as user's row
+
 
 //TODO: should be renamed to getJSONValWithUserName
   _getUserValue: function(jsonObj, currentUser, valueToLookup){
@@ -294,9 +335,9 @@ console.log('inside _setUserNameValue')
 
     updateDateStampsInJSON: function(rankingID, data, username, opponent){
       let updatedUserJSON = this._setUserValue(data, username, "DATESTAMP", Date.now());
-      console.log(updatedUserJSON)
+      //console.log(updatedUserJSON)
       updatedUserJSON = this._setUserValue(data, opponent, "DATESTAMP", Date.now());
-      console.log(updatedUserJSON)
+      //console.log(updatedUserJSON)
       //this._sendJSONData(updatedUserJSON);
       this._sendJSONDataWithRankingID(updatedUserJSON, rankingID);
     },
