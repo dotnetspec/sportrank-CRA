@@ -287,7 +287,7 @@ class Home extends Component {
   //REVIEW: Managing display here might be handled differently:
   //this was originally a component - perhaps it still should be [?]
   userPlayerJsonDataDisplay() {
-    console.log('userPlayerJsonDataDisplay');
+    //console.log('userPlayerJsonDataDisplay');
       const textToDisplayRankName = JSONops._getGlobalRankingVal(this.props.rankingListJSONdata, this.props.newrankId, 'RANKINGNAME')
       const textToDisplayRankDesc = JSONops._getGlobalRankingVal(this.props.rankingListJSONdata, this.props.newrankId, 'RANKINGDESC')
       let textToDisplayRank = '';
@@ -376,7 +376,6 @@ class Home extends Component {
           //if there is a username but it's not listed in the json,
           //add this user to the current list
           //REVIEW: This test may be more consistently handled
-          console.log('this.props.loadingJSON', this.props.loadingJSON)
           if (this.props.user.username !== '' &&
             !JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, this.props.user.username) &&
             this.props.loadingJSON === false &&
@@ -388,15 +387,7 @@ class Home extends Component {
             JSONops.createNewUserInJSON(this.props.rankingJSONdata, this.props.user.username, this.props.contactno, this.props.email, this.props.account, this.props.description, this.props.newrankId);
             console.log('player created')
           }
-          // const {
-          //   rankingDefault
-          // } = this.props;
-          // console.log('rankingDefault in home/preprocessDataBeforeRender', rankingDefault)
-          // if (rankingDefault === '5c36f5422c87fa27306acb52') {
-          //   console.log('returning null in home/preprocessDataBeforeRender')
-          //   return null;
-          // }
-          console.log('this.props.isRankingIDInvalid in preprocessDataBeforeRender in home', this.props.isRankingIDInvalid)
+    
           if (this.props.isRankingIDInvalid) {
             this.props.history.push('/create');
           }
@@ -418,7 +409,7 @@ class Home extends Component {
 
         bootstrapTableDisplay() {
           //if the json is empty and no account re-direct to create user
-          console.log('this.props.rankingJSONdata', this.props.rankingJSONdata)
+          //console.log('this.props.rankingJSONdata', this.props.rankingJSONdata)
           //REVIEW: this should only occur after an Embark re-set and there's no
           //inital account or data - there may be a better way to test for this
 

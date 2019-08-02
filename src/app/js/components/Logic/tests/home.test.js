@@ -80,7 +80,8 @@ describe('<Home/> ', () => {
             rankingListJSONdata: globalRankingData,
             rankingJSONdata: dataTrue,
             account: testAccountPlayer1Rinkeby,
-            user: userObj
+            user: userObj,
+            isRankingIDInvalid: false
           }
 
 
@@ -94,8 +95,8 @@ describe('<Home/> ', () => {
 
 
             const { getByTestId, getByText, debug, act } = renderWithRouter(<Home {...props}/>);
-            await wait(() => expect(getByTestId('BootstrapTableTestId')).toHaveTextContent('Player Name(Filter)'));
-
+            //await wait(() => expect(getByTestId('BootstrapTableTestId')).toHaveTextContent('Player Name(Filter)'));
+            await wait(() => expect(getByText('player3')).toBeInTheDocument());
             spy_sendJSONDataWithRankingID.mockRestore();
             //act(() => {
                 //web3ioMock.get.mockResolvedValue({data: userAccountsArray});
