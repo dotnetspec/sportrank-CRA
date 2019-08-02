@@ -153,7 +153,7 @@ const JSONops = {
   },
 
   _getGlobalRankingVal: function(jsonObj, rankingID, valueToLookup){
-    console.log('inside lookupGlobalRankingValue', jsonObj)
+    //console.log('inside lookupGlobalRankingValue', jsonObj)
     let lookupGlobalRankingValue = {
       jsonRS: jsonObj,
       lookupField: 'RANKINGID',
@@ -162,7 +162,7 @@ const JSONops = {
       //targetData: "",
       checkAllRows: false
       };
-      console.log('lookupGlobalRankingValue', lookupGlobalRankingValue)
+      //console.log('lookupGlobalRankingValue', lookupGlobalRankingValue)
       //const currentGlobalRankingVal = this._getVal(lookupGlobalRankingValue);
 
         return this._getVal(lookupGlobalRankingValue);

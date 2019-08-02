@@ -77,6 +77,7 @@ describe('<Home/> ', () => {
 
           const props  = {
             userAccounts: userAccountsArray,
+            rankingListJSONdata: globalRankingData,
             rankingJSONdata: dataTrue,
             account: testAccountPlayer1Rinkeby,
             user: userObj

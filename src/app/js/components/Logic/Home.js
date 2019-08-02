@@ -296,7 +296,8 @@ class Home extends Component {
       let textToDisplayChallengerEmail = '';
       let textToDisplayContinue = '';
       //if the json is empty do nothing
-      if (this.props.rankingJSONdata[0] === null) {
+      //if (this.props.rankingJSONdata[0] === null) {
+      if (this.props.rankingJSONdata === undefined) {
         console.log('json is empty inside userPlayerJsonDataDisplay');
         return null;
       }
