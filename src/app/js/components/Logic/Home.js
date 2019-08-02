@@ -1,5 +1,5 @@
 import React, {
-  Component
+  Component, useState, useEffect
 } from 'react';
 //import { Grid, Row, Col, PageHeader, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, MenuItem, Overlay, Tooltip } from 'react-bootstrap';
 import {
@@ -27,7 +27,7 @@ import JSONops from './JSONops'
 //import PageHeader from 'react-bootstrap/PageHeader'
 
 //REVIEW: May be able to improve setting rank with similar to:
-//this.setState((state, props) => ({
+//setState((state, props) => ({
 //   counter: state.counter + props.increment
 // }));
 //i.e. setting state by passing a function
@@ -67,7 +67,7 @@ const selectRowPropAfterClickRow = {
 // export function updateWarningText(warningText) {
 //   console.log('warningText', warningText)
 //   //if(warningText)
-//   this.setState({
+//   setState({
 //     warningText
 //   })
 // }
@@ -79,137 +79,154 @@ const selectRowPropAfterClickRow = {
  *
  * @extends React.Component
  */
-class Home extends Component {
+//class Home extends Component {
+  export default function Home(props){
 
   //#region Constructor
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      showModal: false,
-      ResultModalIsOpen: false,
-      WarningModalIsOpen: false,
-      warningText: '',
-      rank: 0,
-      contactNoCB: '',
-      emailCB: '',
-      data: ''
-    }
+  // constructor(props, context) {
+  //   super(props, context);
+  //   state = {
 
-    this.tablesortoptions = {
+      const [showModal, setshowModal] = useState(false)
+      const [resultModalIsOpen, setResultModalIsOpen] = useState(false)
+      const [warningModalIsOpen, setWarningModalIsOpen] = useState(false)
+      const [warningText, setWarningText] = useState('')
+      const [rank, setRank] = useState(0)
+      const [contactNoCB, setcontactNoCB] = useState('')
+      const [emailCB, setEmailCB] = useState('')
+      const [data, setData] = useState('')
+    //}
+
+    const tablesortoptions = {
       defaultSortName: 'RANK', // default sort column name
       defaultSortOrder: 'asc' // default sort order
     };
 
     // const {
     //   rankingDefault
-    // } = this.props;
+    // } = props;
     // console.log('rankingDefault in home', rankingDefault)
     //bind the callbacks (defined above) to this parent component Home
     //so that DoChallenge (and EnterResult?) changes are updated in UI:
     //REVIEW: Probably not necessary ...
-    //this.updateWarningText = this.updateWarningText.bind(this);
-    this.closeResultModal = this.closeResultModal.bind(this);
-  }
+    //updateWarningText = updateWarningText.bind(this);
+    //closeResultModal = closeResultModal.bind(this);
+  //}
   //#endregion
 
   /**
    * Hides the challenge modal
    */
-  _handleClose() {
+  const _handleClose = () => {
     console.log('_handleClose')
-    this.setState({
-      showModal: false
-    });
+    setshowModal(false);
+    // setState({
+    //   showModal: false
+    // });
   }
 
   // updateWarningText(warningText) {
   //   console.log('updateWarningText', warningText)
-  //   this.setState({
+  //   setState({
   //     warningText: warningText
   //   });
   // }
-  updateWarningText = (warningText) => {
-       this.setState({warningText: warningText});
+  const updateWarningText = (warningText) => {
+      setWarningText(warningText);
+       //setState({warningText: warningText});
    }
   /**
    * Shows the challenge modal
    */
-  _handleShowChallengeModal() {
+  const _handleShowChallengeModal = () => {
     //clear the warning text initially:
-    this.setState({
-      warningText: ''
-    });
+    setWarningText('');
+    // setState({
+    //   warningText: ''
+    // });
     const {
       rankingJSONdata
-    } = this.props;
-    if (selectRowPropAfterClickRow.selectedOpponentName === this.props.user.username) {
-      this.setState({
-        warningText: ' You cannot challenge yourself!'
-      });
-      this.setState({
-        WarningModalIsOpen: true
-      });
-    } else if (!JSONops.isPlayerLowerRankThanChallengeOpponent(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, this.props.user.username)) {
-      this.setState({
-        warningText: ' This opponent is lower than you in the rankings - aim high!'
-      });
-      this.setState({
-        WarningModalIsOpen: true
-      });
-    } else if (JSONops.isPlayerAlreadyChallengingThisOpp(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, this.props.user.username)) {
-      this.setState({
-        warningText: ' You are already challenging this player!'
-      });
-      this.setState({
-        WarningModalIsOpen: true
-      });
-    } else if (!JSONops.isPlayerAvailableToChallenge(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, this.props.user.username)) {
-      this.setState({
-        warningText: ' Please allow ongoing challenge(s) to complete ...'
-      });
-      this.setState({
-        WarningModalIsOpen: true
-      });
+    } = props;
+    if (selectRowPropAfterClickRow.selectedOpponentName === props.user.username) {
+      setWarningText(' You cannot challenge yourself!');
+      // setState({
+      //   warningText: ' You cannot challenge yourself!'
+      // });
+      setWarningModalIsOpen(true);
+      // setState({
+      //   warningModalIsOpen: true
+      // });
+    } else if (!JSONops.isPlayerLowerRankThanChallengeOpponent(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.user.username)) {
+      setWarningText(' This opponent is lower than you in the rankings - aim high!');
+      // setState({
+      //   warningText: ' This opponent is lower than you in the rankings - aim high!'
+      // });
+      setWarningModalIsOpen(true);
+      // setState({
+      //   warningModalIsOpen: true
+      // });
+    } else if (JSONops.isPlayerAlreadyChallengingThisOpp(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.user.username)) {
+      setWarningText(' You are already challenging this player!')
+      // setState({
+      //   warningText: ' You are already challenging this player!'
+      // });
+      setWarningModalIsOpen(true);
+      // setState({
+      //   warningModalIsOpen: true
+      // });
+    } else if (!JSONops.isPlayerAvailableToChallenge(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.user.username)) {
+      setWarningText(' Please allow ongoing challenge(s) to complete ...')
+      // setState({
+      //   warningText: ' Please allow ongoing challenge(s) to complete ...'
+      // });
+      setWarningModalIsOpen(true);
+      // setState({
+      //   warningModalIsOpen: true
+      // });
     } else {
-      this.setState({
-        showModal: true
-      });
-      this.setState({
-        warningText: ''
-      });
+      setshowModal(true);
+      // setState({
+      //   showModal: true
+      // });
+      setWarningText('');
+      // setState({
+      //   warningText: ''
+      // });
     }
   }
 
   //TODO: use https://reactjs.org/docs/faq-state.html
   //and code below for better setting of rank in state (perhaps?)
   // setStateOfRank() {
-  //   this.setState((state) => {
-  //     // Important: read `state` instead of `this.state` when updating.
+  //   setState((state) => {
+  //     // Important: read `state` instead of `state` when updating.
   //     return {rank: state.count + 1}
   //   });
   // }
 
-  onClickChallengeSelected(cell, row, rowIndex) {
+  const onClickChallengeSelected = (cell, row, rowIndex) => {
     selectRowPropAfterClickRow.selectedOpponentName = `${row['NAME']}`;
     selectRowPropAfterClickRow.selectedOpponentRank = `${row['RANK']}`;
-    // console.log('this.props.user.rankings')
-    // console.log(this.props.user.chanllenges)
-    if (this.props.user.username !== '') {
-      this._handleShowChallengeModal();
+    // console.log('props.user.rankings')
+    // console.log(props.user.chanllenges)
+    if (props.user.username !== '') {
+      _handleShowChallengeModal();
     } else {
-      this.setState({
-        warningText: 'Error: Sorry your account is not recognized'
-      });
-      this.setState({
-        openWarningModal: true
-      });
+      setWarningText('Error: Sorry your account is not recognized');
+      // setState({
+      //   warningText: 'Error: Sorry your account is not recognized'
+      // });
+      setWarningModalIsOpen(true);
+      // setState({
+      //   openWarningModal: true
+      // });
     }
   }
 
-  onClickResultSelected(cell, row, rowIndex) {
+  const onClickResultSelected = (cell, row, rowIndex) => {
     selectRowPropAfterClickRow.selectedOpponentName = `${row['NAME']}`;
     selectRowPropAfterClickRow.selectedOpponentRank = `${row['RANK']}`;
-    this.openResultModal();
+    openResultModal();
   }
 
   // TODO: Challenge/Enter button should be part of onrowselect, not a separate button
@@ -218,26 +235,26 @@ class Home extends Component {
   //better understood
   //https://github.com/AllenFang/react-bootstrap-table/issues/1035
 
-  challengeButton(cell, row, enumObject, rowIndex) {
+  const challengeButton = (cell, row, enumObject, rowIndex) => {
     return ( <
       button bsstyle = "primary"
       //type="button"
       onClick = {
         () =>
-        this.onClickChallengeSelected(cell, row, rowIndex)
+        onClickChallengeSelected(cell, row, rowIndex)
       } >
       Challenge <
       /button>
     )
   }
 
-  resultButton(cell, row, enumObject, rowIndex) {
+  const resultButton = (cell, row, enumObject, rowIndex) => {
     return ( <
       button bsstyle = "primary"
       //type="button"
       onClick = {
         () =>
-        this.onClickResultSelected(cell, row, rowIndex)
+        onClickResultSelected(cell, row, rowIndex)
       } >
       Result <
       /button>
@@ -245,73 +262,79 @@ class Home extends Component {
   }
 
   // updateWarningText = (warningText) => {
-  //   this.setState({
+  //   setState({
   //     warningText: warningText
   //   });
   // };
 
-  openResultModal = () => {
+  const openResultModal = () => {
     //NB: this is a NOT operation!
     const {
       rankingJSONdata
-    } = this.props;
-    if (!JSONops.isPlayerAvailableToEnterResultAgainst(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, this.props.user.username)) {
-      this.setState({
-        warningText: 'You must challenge an opponent before attempting to enter a result!'
-      });
-      this.setState({
-        WarningModalIsOpen: true
-      });
+    } = props;
+    if (!JSONops.isPlayerAvailableToEnterResultAgainst(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.user.username)) {
+      setWarningText('You must challenge an opponent before attempting to enter a result!');
+      // setState({
+      //   warningText: 'You must challenge an opponent before attempting to enter a result!'
+      // });
+      setWarningModalIsOpen(true);
+      // setState({
+      //   warningModalIsOpen: true
+      // });
     } else {
-      this.setState({
-        ResultModalIsOpen: true
-      });
-      this.setState({
-        warningText: ''
-      });
+      setResultModalIsOpen(true)
+      // setState({
+      //   resultModalIsOpen: true
+      // });
+      setWarningText('');
+      // setState({
+      //   warningText: ''
+      // });
     }
   };
 
-  closeResultModal = () => {
-    this.setState({
-      ResultModalIsOpen: false
-    });
+  const closeResultModal = () => {
+    setResultModalIsOpen(false);
+    // setState({
+    //   resultModalIsOpen: false
+    // });
   };
 
-  closeWarningModal = () => {
-    this.setState({
-      WarningModalIsOpen: false
-    });
+  const closeWarningModal = () => {
+    setWarningModalIsOpen(false);
+    // setState({
+    //   warningModalIsOpen: false
+    // });
   };
 
   //REVIEW: Managing display here might be handled differently:
   //this was originally a component - perhaps it still should be [?]
-  userPlayerJsonDataDisplay() {
+  const userPlayerJsonDataDisplay = () => {
     //console.log('userPlayerJsonDataDisplay');
-      const textToDisplayRankName = JSONops._getGlobalRankingVal(this.props.rankingListJSONdata, this.props.newrankId, 'RANKINGNAME')
-      const textToDisplayRankDesc = JSONops._getGlobalRankingVal(this.props.rankingListJSONdata, this.props.newrankId, 'RANKINGDESC')
+      const textToDisplayRankName = JSONops._getGlobalRankingVal(props.rankingListJSONdata, props.newrankId, 'RANKINGNAME')
+      const textToDisplayRankDesc = JSONops._getGlobalRankingVal(props.rankingListJSONdata, props.newrankId, 'RANKINGDESC')
       let textToDisplayRank = '';
       let textToDisplayChallenger = '';
       let textToDisplayChallengerContactNo = '';
       let textToDisplayChallengerEmail = '';
       let textToDisplayContinue = '';
       //if the json is empty do nothing
-      //if (this.props.rankingJSONdata[0] === null) {
-      if (this.props.rankingJSONdata === undefined) {
+      //if (props.rankingJSONdata[0] === null) {
+      if (props.rankingJSONdata === undefined) {
         console.log('json is empty inside userPlayerJsonDataDisplay');
         return null;
       }
 
-      const currentUserRank = JSONops._getUserValue(this.props.rankingJSONdata, this.props.user.username, "RANK");
-      const currentChallengerName = JSONops._getUserValue(this.props.rankingJSONdata, this.props.user.username, "CURRENTCHALLENGERNAME");
-      const currentChallengerContactNo = JSONops._getUserValue(this.props.rankingJSONdata, currentChallengerName, "CONTACTNO");
-      const currentChallengerEmail = JSONops._getUserValue(this.props.rankingJSONdata, currentChallengerName, "EMAIL");
+      const currentUserRank = JSONops._getUserValue(props.rankingJSONdata, props.user.username, "RANK");
+      const currentChallengerName = JSONops._getUserValue(props.rankingJSONdata, props.user.username, "CURRENTCHALLENGERNAME");
+      const currentChallengerContactNo = JSONops._getUserValue(props.rankingJSONdata, currentChallengerName, "CONTACTNO");
+      const currentChallengerEmail = JSONops._getUserValue(props.rankingJSONdata, currentChallengerName, "EMAIL");
 
       textToDisplayRank = 'Your current rank is: ' + currentUserRank;
 
-      const currentUserName = JSONops._getUserValue(this.props.rankingJSONdata, this.props.user.username, "NAME");
-      const activeBool = JSONops._getUserValue(this.props.rankingJSONdata, this.props.user.username, "ACTIVE");
-      if (currentUserName === this.props.user.username && activeBool) {
+      const currentUserName = JSONops._getUserValue(props.rankingJSONdata, props.user.username, "NAME");
+      const activeBool = JSONops._getUserValue(props.rankingJSONdata, props.user.username, "ACTIVE");
+      if (currentUserName === props.user.username && activeBool) {
         //console.log(details.RANK);
         if (currentChallengerName !== 'AVAILABLE') {
           textToDisplayChallenger = 'Your current challenge is VS ' + currentChallengerName;
@@ -335,7 +358,7 @@ class Home extends Component {
             textToDisplayRankDesc
           } <
           /h4> {
-            this.props.user.username
+            props.user.username
           } <
           p > < /p> {
             textToDisplayRank
@@ -358,7 +381,7 @@ class Home extends Component {
           /div>)
         }
         else
-        if (currentUserName === this.props.user.username && !activeBool) {
+        if (currentUserName === props.user.username && !activeBool) {
           return ( <
             div >
             Your player is currently deactivated! < p > < /p>
@@ -372,51 +395,51 @@ class Home extends Component {
         }
 
         //NB: none of this code is currently running on a re-set
-        preprocessDataBeforeRender() {
+        const preprocessDataBeforeRender = () => {
           //if there is a username but it's not listed in the json,
           //add this user to the current list
           //REVIEW: This test may be more consistently handled
-          if (this.props.user.username !== '' &&
-            !JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, this.props.user.username) &&
-            this.props.loadingJSON === false &&
-            //this.props.viewingOnlyCB === false
-            this.props.setviewingOnlyCB(false)
+          if (props.user.username !== '' &&
+            !JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.user.username) &&
+            props.loadingJSON === false &&
+            //props.viewingOnlyCB === false
+            props.setviewingOnlyCB(false)
           ) {
             console.log('createNewUserInJSON in preprocessDataBeforeRender in home.js')
-            console.log('this.props.rankingID in preprocessDataBeforeRender in home.js', this.props.newrankId)
-            JSONops.createNewUserInJSON(this.props.rankingJSONdata, this.props.user.username, this.props.contactno, this.props.email, this.props.account, this.props.description, this.props.newrankId);
+            console.log('props.rankingID in preprocessDataBeforeRender in home.js', props.newrankId)
+            JSONops.createNewUserInJSON(props.rankingJSONdata, props.user.username, props.contactno, props.email, props.account, props.description, props.newrankId);
             console.log('player created')
           }
-    
-          if (this.props.isRankingIDInvalid) {
-            this.props.history.push('/create');
+
+          if (props.isRankingIDInvalid) {
+            props.history.push('/create');
           }
 
-          if (JSONops.isJSONEmpty(this.props.rankingJSONdata) && this.props.user.username === null) {
+          if (JSONops.isJSONEmpty(props.rankingJSONdata) && props.user.username === null) {
 
             console.log('json is empty and there is no username');
-            this.props.history.push('/create');
+            props.history.push('/create');
             return null;
             //(<div>No Data To Display - Please select an account (top right) to create a player</div>);
           }
           //if the player isn't listed in the json then add them (only if user clicked 'join')
-          if (!JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, this.props.user.username) &&
-            this.props.viewingOnlyCB === false) {
+          if (!JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.user.username) &&
+            props.viewingOnlyCB === false) {
             //originalData, username, contactno, email, accountno, description, rankingID)
-            JSONops.createNewUserInJSON(this.props.rankingJSONdata, this.props.user.username, this.props.contactno, this.props.email, this.props.account, this.props.description, this.props.newrankId)
+            JSONops.createNewUserInJSON(props.rankingJSONdata, props.user.username, props.contactno, props.email, props.account, props.description, props.newrankId)
           }
         }
 
-        bootstrapTableDisplay() {
+        const bootstrapTableDisplay = () => {
           //if the json is empty and no account re-direct to create user
-          //console.log('this.props.rankingJSONdata', this.props.rankingJSONdata)
+          //console.log('props.rankingJSONdata', props.rankingJSONdata)
           //REVIEW: this should only occur after an Embark re-set and there's no
           //inital account or data - there may be a better way to test for this
 
-          if (JSONops.isJSONEmpty(this.props.rankingJSONdata) && this.props.user.username === null) {
+          if (JSONops.isJSONEmpty(props.rankingJSONdata) && props.user.username === null) {
 
             console.log('json is empty and there is no username');
-            this.props.history.push('/create');
+            props.history.push('/create');
             return null;
             //(<div>No Data To Display - Please select an account (top right) to create a player</div>);
           } else {
@@ -424,10 +447,10 @@ class Home extends Component {
               BootstrapTable
               data-testid="BootstrapTableTestId"
               options = {
-                this.tablesortoptions
+                tablesortoptions
               }
               data = {
-                this.props.rankingJSONdata
+                props.rankingJSONdata
               } >
               <
               TableHeaderColumn isKey = {
@@ -472,7 +495,7 @@ class Home extends Component {
               <
               TableHeaderColumn dataField = 'button'
               dataFormat = {
-                this.challengeButton.bind(this)
+                challengeButton.bind(this)
               } >
               Challenge <
               /TableHeaderColumn>
@@ -480,7 +503,7 @@ class Home extends Component {
               <
               TableHeaderColumn dataField = 'button'
               dataFormat = {
-                this.resultButton.bind(this)
+                resultButton.bind(this)
               } >
               Enter Result <
               /TableHeaderColumn>
@@ -504,12 +527,16 @@ class Home extends Component {
           }
         }
 
-        componentDidMount() {
-          this.preprocessDataBeforeRender();
-        }
+        // const componentDidMount = () => {
+        //   preprocessDataBeforeRender();
+        // }
+
+      useEffect(() => {
+         preprocessDataBeforeRender();
+        }, [])
 
 
-        render() {
+        //render() {
           // const selectRowProp = {
           //   mode: 'radio',
           //   clickToSelect: true,
@@ -518,13 +545,13 @@ class Home extends Component {
           //   bgColor: 'gold'
           // };
 
-          //const { username } = this.props.user;
+          //const { username } = props.user;
 
-          let isError = this.props.error && this.props.error.message;
+          let isError = props.error && props.error.message;
           //XXX: temp to run
           isError = false;
-          //NB: Boolean forces this.props.account to be a Boolean
-          const isLoading = !Boolean(this.props.account) && !isError;
+          //NB: Boolean forces props.account to be a Boolean
+          const isLoading = !Boolean(props.account) && !isError;
 
           let states = {};
 
@@ -537,19 +564,19 @@ class Home extends Component {
           states.isError = < span className = 'error' > ERROR! < /span>;
 
 
-          //const { rankingJSONdata, contactNoCB, emailCB } = this.props;
+          //const { rankingJSONdata, contactNoCB, emailCB } = props;
           const {
             rankingJSONdata
-          } = this.props;
+          } = props;
           return ( <
             div >
 
             <
             Modal show = {
-              this.state.showModal
+              showModal
             }
             onHide = {
-              (e) => this._handleClose(e)
+              (e) => _handleClose(e)
             } >
             <
             Modal.Header closeButton >
@@ -564,7 +591,7 @@ class Home extends Component {
               selectRowPropAfterClickRow.selectedOpponentRank
             } ? < p > < /p> <
             DoChallenge closeModalOnAfterChallenge = {
-              (e) => this._handleClose()
+              (e) => _handleClose()
             }
             data = {
               rankingJSONdata
@@ -573,19 +600,19 @@ class Home extends Component {
               selectRowPropAfterClickRow.selectedOpponentName
             }
             user = {
-              this.props.user.username
+              props.user.username
             }
             updateTextCB = {
-              this.updateText
+              updateWarningText
             }
             newrankId = {
-              this.props.newrankId
+              props.newrankId
             }
             setcontactNoCB= {
-              this.props.setcontactNoCB
+              props.setcontactNoCB
             }
             setemailCB= {
-              this.props.setemailCB
+              props.setemailCB
             }
             >
             <
@@ -594,14 +621,14 @@ class Home extends Component {
             Modal.Footer >
             <
             Button onClick = {
-              (e) => this._handleClose(e)
+              (e) => _handleClose(e)
             } > Close < /Button> <
             /Modal.Footer> <
             /Modal>
 
             <
             Modal show = {
-              this.state.ResultModalIsOpen
+              resultModalIsOpen
             } >
             <
             Modal.Header closeButton >
@@ -619,18 +646,20 @@ class Home extends Component {
               selectRowPropAfterClickRow.selectedOpponentRank
             }
             user = {
-              this.props.user.username
+              props.user.username
             }
             selectedOpponentName = {
               selectRowPropAfterClickRow.selectedOpponentName
             }
             onAfterResult = {
-              this.closeResultModal
+              closeResultModal
             }
             newrankId = {
-              this.props.newrankId
+              props.newrankId
             }
-            updateWarningText={this.updateWarningText}
+            updateWarningText={
+              updateWarningText
+            }
             >
             <
             /EnterResult> <
@@ -638,14 +667,14 @@ class Home extends Component {
             Modal.Footer >
             <
             Button onClick = {
-              this.closeResultModal
+              closeResultModal
             } > Close < /Button> <
             /Modal.Footer> <
             /Modal>
 
             <
             Modal show = {
-              this.state.WarningModalIsOpen
+              warningModalIsOpen
             } >
             <
             Modal.Header closeButton >
@@ -655,13 +684,13 @@ class Home extends Component {
             Modal.Body >
             <
             font color = "red" > {
-              this.state.warningText
+              warningText
             } < /font> <
             /Modal.Body> <
             Modal.Footer >
             <
             Button onClick = {
-              this.closeWarningModal
+              closeWarningModal
             } > Close < /Button> <
             /Modal.Footer> <
             /Modal>
@@ -674,17 +703,17 @@ class Home extends Component {
               states.isLoading :
                 isError ?
                 states.isError :
-                this.userPlayerJsonDataDisplay()
+                userPlayerJsonDataDisplay()
             } <
             div > {
               /* http://allenfang.github.io/react-bootstrap-table/example.html#sort */ } <
             h3 > {
-              this.props.contactNoCB
+              props.contactNoCB
             } < /h3> <
             h3 > {
-              this.props.emailCB
+              props.emailCB
             } < /h3> {
-              this.bootstrapTableDisplay()
+              bootstrapTableDisplay()
             } <
             /div>
 
@@ -713,6 +742,6 @@ class Home extends Component {
           );
         }
         //#endregion
-      }
+      //}
 
-      export default Home
+      //export default Home
