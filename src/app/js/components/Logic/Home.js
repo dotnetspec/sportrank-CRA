@@ -100,10 +100,10 @@ class Home extends Component {
       defaultSortOrder: 'asc' // default sort order
     };
 
-    const {
-      rankingDefault
-    } = this.props;
-    console.log('rankingDefault in home', rankingDefault)
+    // const {
+    //   rankingDefault
+    // } = this.props;
+    // console.log('rankingDefault in home', rankingDefault)
     //bind the callbacks (defined above) to this parent component Home
     //so that DoChallenge (and EnterResult?) changes are updated in UI:
     //REVIEW: Probably not necessary ...
@@ -387,14 +387,14 @@ class Home extends Component {
             JSONops.createNewUserInJSON(this.props.rankingJSONdata, this.props.user.username, this.props.contactno, this.props.email, this.props.account, this.props.description, this.props.newrankId);
             console.log('player created')
           }
-          const {
-            rankingDefault
-          } = this.props;
-          console.log('rankingDefault in home/preprocessDataBeforeRender', rankingDefault)
-          if (rankingDefault === '5c36f5422c87fa27306acb52') {
-            console.log('returning null in home/preprocessDataBeforeRender')
-            return null;
-          }
+          // const {
+          //   rankingDefault
+          // } = this.props;
+          // console.log('rankingDefault in home/preprocessDataBeforeRender', rankingDefault)
+          // if (rankingDefault === '5c36f5422c87fa27306acb52') {
+          //   console.log('returning null in home/preprocessDataBeforeRender')
+          //   return null;
+          // }
           console.log('this.props.isRankingIDInvalid in preprocessDataBeforeRender in home', this.props.isRankingIDInvalid)
           if (this.props.isRankingIDInvalid) {
             this.props.history.push('/create');
@@ -429,7 +429,9 @@ class Home extends Component {
             //(<div>No Data To Display - Please select an account (top right) to create a player</div>);
           } else {
             return ( <
-              BootstrapTable options = {
+              BootstrapTable
+              data-testid="BootstrapTableTestId"
+              options = {
                 this.tablesortoptions
               }
               data = {
@@ -445,7 +447,8 @@ class Home extends Component {
               /TableHeaderColumn>
 
               <
-              TableHeaderColumn dataField = 'NAME'
+              TableHeaderColumn
+              dataField = 'NAME'
               filter = {
                 {
                   type: 'TextFilter',
