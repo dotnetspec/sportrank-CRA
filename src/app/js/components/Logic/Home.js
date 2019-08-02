@@ -602,6 +602,7 @@ const selectRowPropAfterClickRow = {
             user = {
               props.user.username
             }
+            //REVIEW: updateTextCB not doing anything 
             updateTextCB = {
               updateWarningText
             }
