@@ -60,7 +60,7 @@ const JSONops = {
   },
 
   processResult: function (resultEntered, currentUser, data, newrankId) {
-    let updatedUserJSON = {};
+    //let updatedUserJSON = {};
     let checkedUserRank, checkedOpponentRank = 0;
     const opponentCurrentlyChallengingUser = JSONops._getUserValue(data, currentUser, "CURRENTCHALLENGERNAME");
 

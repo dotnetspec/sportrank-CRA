@@ -314,7 +314,7 @@ getNewRankId = async () => {
       //REVIEW: may handle below differently but getting rankingid involves
       //chicken and egg problem getting an initiial json
       //req.send('{"RANKING": "NEWRANKING", "STATUS":"NEW", "id":1}') || {}
-      req.send('{"RANKING": "NEWRANKING", "STATUS":"NEW", "id":1}')
+      req.send('{"RANKING": "NEWRANKING", "STATUS":"NEW", "id":1, "ACTIVE": false,"RANK": 0,"CURRENTCHALLENGERNAME": "AVAILABLE"}')
       }catch (err) {
       // stop loading state and show the error
       console.log(err)

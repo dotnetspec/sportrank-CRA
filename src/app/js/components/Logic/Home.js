@@ -64,12 +64,13 @@ const selectRowPropAfterClickRow = {
 //to clear the warning text when user changes account
 //based on info from
 //https://www.codeproject.com/Tips/1215984/Update-State-of-a-Component-from-Another-in-React
-export function updateWarningText(warningText) {
-  //if(warningText)
-  this.setState({
-    warningText
-  })
-}
+// export function updateWarningText(warningText) {
+//   console.log('warningText', warningText)
+//   //if(warningText)
+//   this.setState({
+//     warningText
+//   })
+// }
 
 /**
  * Class representing the home page rendering
@@ -104,9 +105,9 @@ class Home extends Component {
     } = this.props;
     console.log('rankingDefault in home', rankingDefault)
     //bind the callbacks (defined above) to this parent component Home
-    //so that DoChallenge changes are updated in UI:
+    //so that DoChallenge (and EnterResult?) changes are updated in UI:
     //REVIEW: Probably not necessary ...
-    updateWarningText = updateWarningText.bind(this);
+    //this.updateWarningText = this.updateWarningText.bind(this);
     this.closeResultModal = this.closeResultModal.bind(this);
   }
   //#endregion
@@ -120,6 +121,16 @@ class Home extends Component {
       showModal: false
     });
   }
+
+  // updateWarningText(warningText) {
+  //   console.log('updateWarningText', warningText)
+  //   this.setState({
+  //     warningText: warningText
+  //   });
+  // }
+  updateWarningText = (warningText) => {
+       this.setState({warningText: warningText});
+   }
   /**
    * Shows the challenge modal
    */
@@ -232,6 +243,12 @@ class Home extends Component {
       /button>
     )
   }
+
+  // updateWarningText = (warningText) => {
+  //   this.setState({
+  //     warningText: warningText
+  //   });
+  // };
 
   openResultModal = () => {
     //NB: this is a NOT operation!
@@ -617,7 +634,9 @@ class Home extends Component {
             }
             newrankId = {
               this.props.newrankId
-            } >
+            }
+            updateWarningText={this.updateWarningText}
+            >
             <
             /EnterResult> <
             /Modal.Body> <

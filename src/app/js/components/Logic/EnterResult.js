@@ -96,12 +96,22 @@ const opponentCurrentlyChallengingUser = JSONops._getUserValue(this.props.data, 
    //REVIEW: changed from fat arrow to avoid 'this'
    //obj reference issues (and used bind in the constructor)
   //_handleClick = async (e) => {
+
+  // handleUpdateWarningText(result) {
+  //      //var lang = this.refs.dropdown.value;
+  //      this.props.updateWarningText(result);
+  //  }
+
     _handleClick(e){
     try{
       //onAfterResult didn't work at the end of this function ...
-      this.props.onAfterResult();
+      //this.props.updateWarningText();
+      //this.props.onAfterResult();
       console.log('data in handleclick', this.props.data);
-      JSONops.processResult(this.selectedOption, this.props.user, this.props.data, this.props.newrankId);
+      const result = JSONops.processResult(this.selectedOption, this.props.user, this.props.data, this.props.newrankId);
+      this.props.updateWarningText(result);
+      //this.handleUpdateWarningText(result);
+      this.props.onAfterResult();
       // remove loading state
       this.setState({ isLoading: false });
       //clear the contact info
