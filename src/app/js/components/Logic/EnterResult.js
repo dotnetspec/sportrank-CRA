@@ -47,42 +47,42 @@ class EnterResult extends Component{
   //#endregion
 
 
-_processResult(resultEntered, currentUser){
-
-//Handle the opponent's row being clicked as well as user's row
-let checkedUserRank, checkedOpponentRank = 0;
-const opponentCurrentlyChallengingUser = JSONops._getUserValue(this.props.data, currentUser, "CURRENTCHALLENGERNAME");
-
-  checkedUserRank = JSONops._getUserValue(this.props.data, currentUser, "RANK");
-  checkedOpponentRank = JSONops._getUserValue(this.props.data, opponentCurrentlyChallengingUser, "RANK");
-
-             const currentUserRankInt = parseInt(checkedUserRank);
-             const selectedOpponentRankInt = parseInt(checkedOpponentRank);
-
-             if (resultEntered === 'undecided' ){
-               JSONops._updateEnterResultUnchangedJSON(this.props.newrankId, currentUser,opponentCurrentlyChallengingUser, this.props.data);
-               return "Thank you. No changes have been made. Your ranking is unchanged"
-             }
-             else if (resultEntered === 'won' && currentUserRankInt < selectedOpponentRankInt){
-              JSONops._updateEnterResultUnchangedJSON(this.props.newrankId, currentUser,opponentCurrentlyChallengingUser, this.props.data);
-              JSONops.updateDateStampsInJSON(this.props.newrankId, this.props.data, currentUser, opponentCurrentlyChallengingUser);
-              console.log('result send to _updateEnterResultUnchangedJSON');
-              return "Thank you. Your result has been entered. Your ranking is unchanged"
-
-            }else if (resultEntered === 'lost' && currentUserRankInt > selectedOpponentRankInt){
-
-              JSONops._updateEnterResultUnchangedJSON(this.props.newrankId, currentUser,opponentCurrentlyChallengingUser, this.props.data);
-              JSONops.updateDateStampsInJSON(this.props.newrankId, this.props.data, currentUser, opponentCurrentlyChallengingUser);
-              console.log('result send to _updateEnterResultUnchangedJSON');
-              return "Thank you. Your result has been entered. Your ranking is unchanged"
-
-            }else{
-              JSONops._updateEnterResultJSON(this.props.newrankId, currentUser, checkedUserRank, opponentCurrentlyChallengingUser, checkedOpponentRank, this.props.data);
-              JSONops.updateDateStampsInJSON(this.props.newrankId, this.props.data, currentUser,opponentCurrentlyChallengingUser);
-              console.log('result send to _updateEnterResultJSON');
-              return "Thank you. Your result has been entered. Your ranking has been changed"
-            }
-    }
+// _processResult(resultEntered, currentUser){
+//
+// //Handle the opponent's row being clicked as well as user's row
+// let checkedUserRank, checkedOpponentRank = 0;
+// const opponentCurrentlyChallengingUser = JSONops._getUserValue(this.props.data, currentUser, "CURRENTCHALLENGERNAME");
+//
+//   checkedUserRank = JSONops._getUserValue(this.props.data, currentUser, "RANK");
+//   checkedOpponentRank = JSONops._getUserValue(this.props.data, opponentCurrentlyChallengingUser, "RANK");
+//
+//              const currentUserRankInt = parseInt(checkedUserRank);
+//              const selectedOpponentRankInt = parseInt(checkedOpponentRank);
+//
+//              if (resultEntered === 'undecided' ){
+//                JSONops._updateEnterResultUnchangedJSON(this.props.newrankId, currentUser,opponentCurrentlyChallengingUser, this.props.data);
+//                return "Thank you. No changes have been made. Your ranking is unchanged"
+//              }
+//              else if (resultEntered === 'won' && currentUserRankInt < selectedOpponentRankInt){
+//               JSONops._updateEnterResultUnchangedJSON(this.props.newrankId, currentUser,opponentCurrentlyChallengingUser, this.props.data);
+//               JSONops.updateDateStampsInJSON(this.props.newrankId, this.props.data, currentUser, opponentCurrentlyChallengingUser);
+//               console.log('result send to _updateEnterResultUnchangedJSON');
+//               return "Thank you. Your result has been entered. Your ranking is unchanged"
+//
+//             }else if (resultEntered === 'lost' && currentUserRankInt > selectedOpponentRankInt){
+//
+//               JSONops._updateEnterResultUnchangedJSON(this.props.newrankId, currentUser,opponentCurrentlyChallengingUser, this.props.data);
+//               JSONops.updateDateStampsInJSON(this.props.newrankId, this.props.data, currentUser, opponentCurrentlyChallengingUser);
+//               console.log('result send to _updateEnterResultUnchangedJSON');
+//               return "Thank you. Your result has been entered. Your ranking is unchanged"
+//
+//             }else{
+//               JSONops._updateEnterResultJSON(this.props.newrankId, currentUser, checkedUserRank, opponentCurrentlyChallengingUser, checkedOpponentRank, this.props.data);
+//               JSONops.updateDateStampsInJSON(this.props.newrankId, this.props.data, currentUser,opponentCurrentlyChallengingUser);
+//               console.log('result send to _updateEnterResultJSON');
+//               return "Thank you. Your result has been entered. Your ranking has been changed"
+//             }
+//     }
 
   //#region Component events
   /**
@@ -104,22 +104,18 @@ const opponentCurrentlyChallengingUser = JSONops._getUserValue(this.props.data, 
 
     _handleClick(e){
     try{
+
       //onAfterResult didn't work at the end of this function ...
       //this.props.updateWarningText();
       //this.props.onAfterResult();
       console.log('data in handleclick', this.props.data);
       const result = JSONops.processResult(this.selectedOption, this.props.user, this.props.data, this.props.newrankId);
-      this.props.updateWarningText(result);
-      //this.handleUpdateWarningText(result);
-      this.props.onAfterResult();
+      this.props.setResultInfoForDisplayCB(result);
       // remove loading state
       this.setState({ isLoading: false });
-      //clear the contact info
-      this.props.contactNoCB('');
-      this.props.emailCB('');
       // tell parent we've updated a user and to re-fetch user details from the contract
       //TODO: re-set below to onAfterReslt
-
+      this.props.setResultModalIsOpenCB(false);
     }
     catch(err){
       // remove loading state and show error message

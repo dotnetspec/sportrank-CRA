@@ -249,7 +249,7 @@ export function App({
   const [rank, setrank] = useState('1');
   const [ranknameHasChanged, setranknameHasChanged] = useState('');
   const [address, setaddress] = useState('');
-
+  const [resultInfoForDisplay, setResultInfoForDisplay] = useState('');
 
 
   //Below appears to be relevant to user events not e.g. callbacks that fetch data
@@ -284,20 +284,26 @@ export function App({
   //count is in GlobalRankingViewBtn. This code uses
   //setnewrankIdCB param in <Main below
   //NB: where you DON'T want (e) => in the property attribute:
-  const setnewrankIdCB = (count) => {
+  const setnewrankIdCB = (newrankIdtxt) => {
     //console.log('count in app.js', count);
-    setnewrankId(count);
-    _loadsetJSONData(count, _loadsetJSONData_callback);
+    setnewrankId(newrankIdtxt);
+    //_loadsetJSONData(count, _loadsetJSONData_callback);
+    _loadsetJSONData(newrankIdtxt, _loadsetJSONData_callback);
+  }
+
+  const setResultInfoForDisplayCB = (text) => {
+    console.log('setResultInfoForDisplayCB in app.js', text);
+    setResultInfoForDisplay(text);
   }
 
 
   const setcontactNoCB = (number) => {
-    //console.log('count in app.js', count);
+    //console.log('number in app.js', number);
     setcontactno(number);
 }
 
 const setemailCB = (oppoEmailTxt) => {
-  //console.log('count in app.js', count);
+  //console.log('oppoEmailTxt in app.js', oppoEmailTxt);
   setemail(oppoEmailTxt);
 }
   //#endregion
@@ -460,6 +466,12 @@ const setemailCB = (oppoEmailTxt) => {
       setnewrankId = {
         setnewrankId
       }
+      resultInfoForDisplay = {
+        resultInfoForDisplay
+      }
+      setResultInfoForDisplayCB = {
+        setResultInfoForDisplayCB
+      }
       />
 
       <
@@ -478,6 +490,12 @@ const setemailCB = (oppoEmailTxt) => {
       }
       setemailCB = {
         setemailCB
+      }
+      resultInfoForDisplay = {
+        resultInfoForDisplay
+      }
+      setResultInfoForDisplayCB = {
+        setResultInfoForDisplayCB
       }
       description = {
         description

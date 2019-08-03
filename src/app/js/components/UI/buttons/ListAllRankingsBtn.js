@@ -13,6 +13,7 @@ import { withRouter } from 'react-router-dom';
    const ListAllRankingssBtn = props => {
           //REVIEW: is 'user' necessary
            const _handleRankingList = (user) => {
+                   props.setResultInfoForDisplayCB('');
                    props.onListAllChildClick();
                    props.history.push('/');
          }

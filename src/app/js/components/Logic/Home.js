@@ -92,15 +92,25 @@ const selectRowPropAfterClickRow = {
       const [warningModalIsOpen, setWarningModalIsOpen] = useState(false)
       const [warningText, setWarningText] = useState('')
       const [rank, setRank] = useState(0)
-      const [contactNoCB, setcontactNoCB] = useState('')
+      //const [contactNoCB, setcontactNoCB] = useState('')
       const [emailCB, setEmailCB] = useState('')
       const [data, setData] = useState('')
+      const [resultInfoForDisplay, setResultInfoForDisplay] = useState('')
     //}
 
     const tablesortoptions = {
       defaultSortName: 'RANK', // default sort column name
       defaultSortOrder: 'asc' // default sort order
     };
+
+
+    const setResultModalIsOpenCB = (openOrCloseBool) => {
+      console.log('setResultModalIsOpenCB', openOrCloseBool)
+      setResultModalIsOpen(openOrCloseBool);
+      // setState({
+      //   showModal: false
+      // });
+    }
 
     // const {
     //   rankingDefault
@@ -306,6 +316,12 @@ const selectRowPropAfterClickRow = {
     //   warningModalIsOpen: false
     // });
   };
+
+  // const postResultInfoForDisplayCB = () => {
+  //   console.log('inside postResultInfoForDisplayCB')
+  //   //return 'it would go here';
+  //   setResultInfoForDisplay('set from postResultInfoForDisplayCB');
+  // }
 
   //REVIEW: Managing display here might be handled differently:
   //this was originally a component - perhaps it still should be [?]
@@ -602,7 +618,7 @@ const selectRowPropAfterClickRow = {
             user = {
               props.user.username
             }
-            //REVIEW: updateTextCB not doing anything 
+            //REVIEW: updateTextCB not doing anything
             updateTextCB = {
               updateWarningText
             }
@@ -652,14 +668,23 @@ const selectRowPropAfterClickRow = {
             selectedOpponentName = {
               selectRowPropAfterClickRow.selectedOpponentName
             }
-            onAfterResult = {
-              closeResultModal
+            // onAfterResult = {
+            //   closeResultModal
+            // }
+            setResultModalIsOpenCB = {
+              setResultModalIsOpenCB
             }
             newrankId = {
               props.newrankId
             }
             updateWarningText={
               updateWarningText
+            }
+            resultInfoForDisplay={
+              props.resultInfoForDisplay
+            }
+            setResultInfoForDisplayCB={
+              props.setResultInfoForDisplayCB
             }
             >
             <
@@ -713,7 +738,10 @@ const selectRowPropAfterClickRow = {
             } < /h3> <
             h3 > {
               props.emailCB
-            } < /h3> {
+            } < /h3> <
+            h3 > {
+              props.resultInfoForDisplay
+            } < /h3>{
               bootstrapTableDisplay()
             } <
             /div>

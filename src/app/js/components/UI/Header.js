@@ -290,7 +290,7 @@ class Header extends Component {
   renderChallengeFragment(){
     return(
       <React.Fragment>
-      <ListAllRankingsBtn data-testid='ListAllRankings' onListAllChildClick={this.props.onListAllChildClick}/>
+      <ListAllRankingsBtn data-testid='ListAllRankings' onListAllChildClick={this.props.onListAllChildClick} setResultInfoForDisplayCB={this.props.setResultInfoForDisplayCB}/>
         <Button bsStyle="primary" data-cy='UpdateProfile' data-testid='UpdateProfile' onClick={(e) => this._handleUpdateProfile(this.props.user[1])}>
           Update Profile
         </Button>

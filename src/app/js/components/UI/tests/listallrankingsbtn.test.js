@@ -8,7 +8,8 @@ afterEach(cleanup);
 
 it('calls onListAllChildClick cb function prop on button click', () => {
   const props  = {
-onListAllChildClick: jest.fn()
+onListAllChildClick: jest.fn(),
+setResultInfoForDisplayCB: jest.fn()
 }
 
   const { getByText } = render(<BrowserRouter>
