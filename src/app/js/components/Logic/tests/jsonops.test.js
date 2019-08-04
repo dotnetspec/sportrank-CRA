@@ -46,7 +46,7 @@ const dataTrue = [
   {"id":6,"NAME":"player6","CONTACTNO":"","EMAIL":"","RANK":4,"ACCOUNT":"0x23fCa109110F043847bb0Ca87805f3642D8B7Dc7","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301853807}
 ];
 
-describe('jsonio - pure', () => {
+describe('JSONops - pure', () => {
   it('JSONops isValidRankingOrder ', () => {
 
     let result = JSONops.isValidRankingOrder(dataFalse);
@@ -71,6 +71,7 @@ describe('jsonio - pure', () => {
 
   it('JSONops processResult - undecided', () => {
     const spy_sendJSONDataWithRankingID = jest.spyOn(JSONops, '_sendJSONDataWithRankingID');
+    //NB:return value only given to ensure the function is mocked and not called
     spy_sendJSONDataWithRankingID.mockReturnValue(dataFalse);
     let currentUser = 'player1';
     //'undecided' but unchanged (data has to be reset to 'AVAILABLE'):
