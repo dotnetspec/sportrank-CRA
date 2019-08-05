@@ -6,6 +6,7 @@ import React, { Component } from 'react'
 //import Spinner from 'react-spinkit'
 import JSONops from './JSONops'
 //import {contactNoCB, emailCB} from './App'
+import _sendJSONDataWithRankingID from '../SideEffects/io/Jsonio'
 
 /**
  * Class that renders a form to allow the user to create
@@ -110,7 +111,8 @@ class EnterResult extends Component{
       //this.props.onAfterResult();
       console.log('data in handleclick', this.props.data);
       const result = JSONops.processResult(this.selectedOption, this.props.user, this.props.data, this.props.newrankId);
-      this.props.setResultInfoForDisplayCB(result);
+      _sendJSONDataWithRankingID(result.updatedUserJSON, this.props.newrankId);
+      this.props.setResultInfoForDisplayCB(result.text);
       // remove loading state
       this.setState({ isLoading: false });
       // tell parent we've updated a user and to re-fetch user details from the contract

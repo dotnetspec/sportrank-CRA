@@ -5,7 +5,7 @@ import axios from 'axios';
   // export function Jsonio({
   //   props
   // }) {
-    export async function _sendJSONDataWithRankingID (data, rankingID) {
+    export default async function _sendJSONDataWithRankingID (data, rankingID) {
     console.log('rankingID inside _sendJSONDataWithRankingID',rankingID)
     console.log('data inside _sendJSONDataWithRankingID',data)
     //console.log('inside _sendJSONDataWithRankingID')
@@ -245,7 +245,7 @@ const requestConfig = {
 //              return console.error(err);
 //           }
 // }
-          //private function not for export 
+          //private function not for export
           function checkUndefined(responseJson){
               let responseDataAsArray = [];
             if(responseJson.length === undefined){

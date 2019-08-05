@@ -23,6 +23,7 @@ import Spinner from 'react-spinkit';
 import DoChallenge from './DoChallenge'
 import EnterResult from './EnterResult'
 import JSONops from './JSONops'
+import _sendJSONDataWithRankingID from '../SideEffects/io/Jsonio'
 //import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
 
@@ -423,7 +424,8 @@ const selectRowPropAfterClickRow = {
           ) {
             console.log('createNewUserInJSON in preprocessDataBeforeRender in home.js')
             console.log('props.rankingID in preprocessDataBeforeRender in home.js', props.newrankId)
-            JSONops.createNewUserInJSON(props.rankingJSONdata, props.user.username, props.contactno, props.email, props.account, props.description, props.newrankId);
+            const newUserJsonObj = JSONops.createNewUserInJSON(props.rankingJSONdata, props.user.username, props.contactno, props.email, props.account, props.description, props.newrankId);
+            _sendJSONDataWithRankingID(newUserJsonObj, props.newrankId);
             console.log('player created')
           }
 
@@ -441,8 +443,10 @@ const selectRowPropAfterClickRow = {
           //if the player isn't listed in the json then add them (only if user clicked 'join')
           if (!JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.user.username) &&
             props.viewingOnlyCB === false) {
+              console.log('preprocessDataBeforeRender player not listed, join clicked')
             //originalData, username, contactno, email, accountno, description, rankingID)
-            JSONops.createNewUserInJSON(props.rankingJSONdata, props.user.username, props.contactno, props.email, props.account, props.description, props.newrankId)
+            const newUserJsonObj = JSONops.createNewUserInJSON(props.rankingJSONdata, props.user.username, props.contactno, props.email, props.account, props.description, props.newrankId)
+            _sendJSONDataWithRankingID(newUserJsonObj, props.newrankId);
           }
         }
 
