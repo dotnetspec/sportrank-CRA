@@ -71,11 +71,11 @@ describe('JSONops - pure', () => {
     //     return result.NAME === 'player1';
     //   }
     // }
-    //const filteredResult = filterJson(result, 'player1');
+    const filteredResult = filterJson(result, 'player1');
     //getDetailsByNameFromJson is a helper function (at the bottom)
-    const newArray = result.updatedUserJSON.filter(getDetailsByNameFromJson);
+    //const newArray = result.updatedUserJSON.filter(getDetailsByNameFromJson);
 
-    expect(newArray[0].CURRENTCHALLENGERNAME).toEqual('AVAILABLE');
+    expect(filteredResult[0].CURRENTCHALLENGERNAME).toEqual('AVAILABLE');
     //expect(_sendJSONDataWithRankingID).toHaveBeenCalled();
 
     //'Won':
@@ -217,12 +217,15 @@ it('JSONops _updateDoChallengeJSONinJson test ', async () => {
 })
 
 //helper functions
-function getDetailsByNameFromJson(result) {
-  console.log('result', result)
-  //avoid the first (anomolous object in the array)
-  if(result.STATUS !== 'NEW'){
-  //   return null;
-  // }else{
-    return result.NAME === 'player1';
+function filterJson(json, filterText){
+  return json.updatedUserJSON.filter(getDetailsByNameFromJson);
+  function getDetailsByNameFromJson(result) {
+    //console.log('result', result)
+    //avoid the first (anomolous object in the array)
+    if(result.STATUS !== 'NEW'){
+    //   return null;
+    // }else{
+      return result.NAME === filterText;
+    }
   }
 }

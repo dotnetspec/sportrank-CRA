@@ -64,7 +64,8 @@ const JSONops = {
   processResult: function (resultEntered, currentUser, data, newrankId) {
     //let updatedUserJSON = {};
     //responseObj created to deal with testing/logic etc. issues of returning
-    //both the text and the obj
+    //both the text and the obj so that _sendJSONDataWithRankingID can be extracted
+    //from this logic
     let responseObj = {text:'', updatedUserJSON: []};
     let checkedUserRank, checkedOpponentRank = 0;
     const opponentCurrentlyChallengingUser = JSONops._getUserValue(data, currentUser, "CURRENTCHALLENGERNAME");
@@ -368,13 +369,13 @@ console.log('inside _setUserNameValue')
         // nextIDObj.lookupField = "NAME";
         // //TODO: this is 'currentuser' elasewhere
         // nextIDObj.lookupKey = username;
-        console.log('createNewJSONuserObj.jsonRS.length in createNewUserInJSON', createNewJSONuserObj.jsonRS.length)
+        //console.log('createNewJSONuserObj.jsonRS.length in createNewUserInJSON', createNewJSONuserObj.jsonRS.length)
         //REVIEW: Does this line correctly handle a blockchain reset in dev?
         let nextID = createNewJSONuserObj.jsonRS.length + 1;
-        console.log('createNewJSONuserObj.jsonRS.length', createNewJSONuserObj.jsonRS.length)
+        //console.log('createNewJSONuserObj.jsonRS.length', createNewJSONuserObj.jsonRS.length)
         //if it's a completely new json length will be 0
         if(createNewJSONuserObj.jsonRS.length < 1){
-          console.log('json was new and had no existing data')
+          //console.log('json was new and had no existing data')
           //ensure nextID is correctly initialized to 1
           nextID = 1;
         }
@@ -395,7 +396,7 @@ console.log('inside _setUserNameValue')
                           "id":nextID
                         }
         createNewJSONuserObj.jsonRS.push(newData);
-        console.log('rankingID in createNewUserInJSON', rankingID)
+        //console.log('rankingID in createNewUserInJSON', rankingID)
         return createNewJSONuserObj;
         //_sendJSONDataWithRankingID(createNewJSONuserObj.jsonRS, rankingID);
     },

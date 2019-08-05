@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import Home  from '../Home'
 import JSONops from '../JSONops'
+//import {Jsonio, _sendJSONDataWithRankingID}  from '../../SideEffects/io/Jsonio'
 // import renderer from 'react-test-renderer'
 // import { shallow, mount } from 'enzyme';
 // import { stub } from 'sinon';
@@ -86,8 +87,8 @@ describe('<Home/> ', () => {
 
 
           it("Home", async () => {
-            const spy_sendJSONDataWithRankingID = jest.spyOn(JSONops, '_sendJSONDataWithRankingID');
-            spy_sendJSONDataWithRankingID.mockReturnValue(dataTrue);
+            //const spy_sendJSONDataWithRankingID = jest.spyOn(JSONops, '_sendJSONDataWithRankingID');
+            //spy_sendJSONDataWithRankingID.mockReturnValue(dataTrue);
             //override global mockResolvedValue with:
             //axiosMock.get.mockResolvedValueOnce({data: globalRankingData});
             //const mockFn = jest.fn();
@@ -97,7 +98,7 @@ describe('<Home/> ', () => {
             const { getByTestId, getByText, debug, act } = renderWithRouter(<Home {...props}/>);
             //await wait(() => expect(getByTestId('BootstrapTableTestId')).toHaveTextContent('Player Name(Filter)'));
             await wait(() => expect(getByText('player3')).toBeInTheDocument());
-            spy_sendJSONDataWithRankingID.mockRestore();
+            //spy_sendJSONDataWithRankingID.mockRestore();
             //act(() => {
                 //web3ioMock.get.mockResolvedValue({data: userAccountsArray});
             //});
