@@ -1,3 +1,5 @@
+import { _sendJSONDataWithRankingID } from '../SideEffects/io/Jsonio'
+
 //TODO: refactor
 const JSONops = {
 
@@ -75,7 +77,7 @@ const JSONops = {
   if (resultEntered === 'undecided' ){
        let updatedUserJSONnew = JSONops._updateEnterResultUnchangedJSON(newrankId, currentUser,opponentCurrentlyChallengingUser, data);
        if(JSONops.isValidRankingOrder(updatedUserJSONnew)){
-         JSONops._sendJSONDataWithRankingID(updatedUserJSONnew, newrankId);
+         _sendJSONDataWithRankingID(updatedUserJSONnew, newrankId);
          return "Thank you. No changes have been made. Your ranking is unchanged";
        }else{
          return "Ranking order PROBLEM. No changes have been made. Your ranking is unchanged";
@@ -88,7 +90,7 @@ const JSONops = {
       let updatedUserJSONnew = JSONops._updateEnterResultUnchangedJSON(newrankId, currentUser,opponentCurrentlyChallengingUser, data);
       if(JSONops.isValidRankingOrder(updatedUserJSONnew)){
         JSONops.updateDateStampsInJSON(newrankId, updatedUserJSONnew, currentUser, opponentCurrentlyChallengingUser);
-        JSONops._sendJSONDataWithRankingID(updatedUserJSONnew, newrankId);
+        _sendJSONDataWithRankingID(updatedUserJSONnew, newrankId);
         return "Thank you. Your result has been entered. Your ranking is unchanged"
       }else{
         return "Ranking order PROBLEM. No changes have been made. Your ranking is unchanged";
@@ -98,7 +100,7 @@ const JSONops = {
         let updatedUserJSONnew = JSONops._updateEnterResultUnchangedJSON(newrankId, currentUser,opponentCurrentlyChallengingUser, data);
         if(JSONops.isValidRankingOrder(updatedUserJSONnew)){
           JSONops.updateDateStampsInJSON(newrankId, updatedUserJSONnew, currentUser, opponentCurrentlyChallengingUser);
-          JSONops._sendJSONDataWithRankingID(updatedUserJSONnew, newrankId);
+          _sendJSONDataWithRankingID(updatedUserJSONnew, newrankId);
           //console.log('result send to _updateEnterResultUnchangedJSON');
           return "Thank you. Your result has been entered. Your ranking is unchanged"
         }else{
@@ -109,7 +111,7 @@ const JSONops = {
       let updatedUserJSONnew = JSONops._updateEnterResultJSON(newrankId, currentUser, checkedUserRank, opponentCurrentlyChallengingUser, checkedOpponentRank, data);
       if(JSONops.isValidRankingOrder(updatedUserJSONnew)){
       JSONops.updateDateStampsInJSON(newrankId, data, currentUser,opponentCurrentlyChallengingUser);
-      JSONops._sendJSONDataWithRankingID(updatedUserJSONnew, newrankId);
+      _sendJSONDataWithRankingID(updatedUserJSONnew, newrankId);
       //console.log('result send to _updateEnterResultJSON');
         return "Thank you. Your result has been entered. Your ranking has been changed"
       }else{
@@ -214,7 +216,7 @@ console.log('inside _setUserNameValue')
       checkAllRows: false
       };
       const newUserValue = this._setVal(setNewUserValue);
-      this._sendJSONDataWithRankingID(newUserValue, rankingID);
+      _sendJSONDataWithRankingID(newUserValue, rankingID);
 
       return newUserValue;
   },
@@ -278,7 +280,7 @@ console.log('inside _setUserNameValue')
     _updateDoChallengeJSON: function(rankingID, data, currentUser, accountno){
         const result = this._updateDoChallengeJSONinJson(rankingID, data, currentUser, accountno);
         //console.log('rankingID in _updateDoChallengeJSONinJson', rankingID);
-        this._sendJSONDataWithRankingID(result, rankingID);
+        _sendJSONDataWithRankingID(result, rankingID);
       },
 
     _updateDoChallengeJSONinJson: function(rankingID, currentUser, selectedOpponent, data){
@@ -362,7 +364,7 @@ console.log('inside _setUserNameValue')
                         }
         createNewJSONuserObj.jsonRS.push(newData);
         console.log('rankingID in createNewUserInJSON', rankingID)
-        this._sendJSONDataWithRankingID(createNewJSONuserObj.jsonRS, rankingID);
+        _sendJSONDataWithRankingID(createNewJSONuserObj.jsonRS, rankingID);
     },
 
     createNewUserInNewJSON: function(username, contactno, email, accountno, description, rankingID){
@@ -386,7 +388,7 @@ console.log('inside _setUserNameValue')
         //createNewJSONuserObj.jsonRS.push(newData);
         //this._sendJSONData(createNewJSONuserObj.jsonRS);
         //this._sendJSONDataWithRankingID(createNewJSONuserObj.jsonRS, rankingID);
-        return this._sendJSONDataWithRankingID(newData, rankingID);
+        return _sendJSONDataWithRankingID(newData, rankingID);
     },
 
     updateDateStampsInJSON: function(rankingID, data, username, opponent){
@@ -413,14 +415,14 @@ console.log('inside _setUserNameValue')
       updatedUserJSON = this._setUserValue(data, username, "DESCRIPTION", description);
 
       //this._sendJSONData(updatedUserJSON);
-        this._sendJSONDataWithRankingID(updatedUserJSON, rankingID);
+        _sendJSONDataWithRankingID(updatedUserJSON, rankingID);
 
     },
 
     reactivatePlayer: function(rankingID, data, currentUser, accountno){
         const result = this.reactivatePlayerInJson(rankingID, data, currentUser, accountno);
         console.log('rankingID in deactivatePlayer', rankingID);
-        this._sendJSONDataWithRankingID(result, rankingID);
+        _sendJSONDataWithRankingID(result, rankingID);
       },
 
       reactivatePlayerInJson: function(rankingID, data, currentUser, accountno){
@@ -457,7 +459,7 @@ console.log('inside _setUserNameValue')
     deactivatePlayer: function(rankingID, data, currentUser, accountno){
       const result = this.deactivatePlayerInJson(rankingID, data, currentUser, accountno);
       //console.log('result in deactivatePlayer', result);
-      this._sendJSONDataWithRankingID(result, rankingID);
+      _sendJSONDataWithRankingID(result, rankingID);
     },
 
     deactivatePlayerInJson: function(rankingID, data, currentUser, accountno){
@@ -799,53 +801,53 @@ console.log('inside _setUserNameValue')
           return jsonresult.id;
       },
 
-//TODO: all functions using _sendJSONData will need to be updated to use this
-//one that includes the rankingID
-  _sendJSONDataWithRankingID: function(data, rankingID){
-    console.log('rankingID inside _sendJSONDataWithRankingID',rankingID)
-    console.log('data inside _sendJSONDataWithRankingID',data)
-    //console.log('inside _sendJSONDataWithRankingID')
-    let httpString = "https://api.jsonbin.io/b/";
-    //httpString += rankingID + '"';
-    httpString += rankingID;
-    let req = new XMLHttpRequest();
-
-        req.onreadystatechange = () => {
-          if (req.readyState === XMLHttpRequest.DONE) {
-            console.log('httpString in req.onreadystatechange', httpString);
-            //NB. when checking on jsonbin.io e.g. https://jsonbin.io/5c340b667b31f426f8531274/1
-            //ensure you include the version number to see that the array has been 'PUT'
-            console.log('req.responseText in _sendJSONDataWithRankingID', req.responseText);
-            //console.log(req.responseText);
-            return req.responseText;
-          }
-        };
-        //NOTE: it is the api.jsonbin NOT the jsonbin.io!
-        //JSON data can and should be in ANY order
-        //bin id is: https://jsonbin.io/5bd82af2baccb064c0bdc92a/
-        //use above to edit manually.
-        //to view latest https://api.jsonbin.io/b/5bd82af2baccb064c0bdc92a/latest
-
-        req.open("PUT", httpString, true);
-        req.setRequestHeader("Content-type", "application/json");
-        let myJsonString = JSON.stringify(data);
-        console.log('httpString, data in _sendJSONDataWithRankingID', httpString, data);
-
-        //console.log('data.id alone in _sendJSONDataWithRankingID', data.id)
-        //I think data.id will only be defined IF this is a new ranking
-        //if this is a new ranking send an array, not just an object
-        //if this is a new ranking id will be 1
-        //HACK: there may be a better way to test that this is a new ranking and user
-        //the first entry to jsonbin must have array brackets so that responseJson can be
-        //correctly displayed in BootstrapTable
-        if(data.id === 1){
-        const myJsonStringAsArray = "[" + myJsonString + "]";
-          req.send(myJsonStringAsArray);
-        }else{
-          req.send(myJsonString);
-        }
-        //return null;
-},
+// //TODO: all functions using _sendJSONData will need to be updated to use this
+// //one that includes the rankingID
+//   _sendJSONDataWithRankingID: function(data, rankingID){
+//     console.log('rankingID inside _sendJSONDataWithRankingID',rankingID)
+//     console.log('data inside _sendJSONDataWithRankingID',data)
+//     //console.log('inside _sendJSONDataWithRankingID')
+//     let httpString = "https://api.jsonbin.io/b/";
+//     //httpString += rankingID + '"';
+//     httpString += rankingID;
+//     let req = new XMLHttpRequest();
+//
+//         req.onreadystatechange = () => {
+//           if (req.readyState === XMLHttpRequest.DONE) {
+//             console.log('httpString in req.onreadystatechange', httpString);
+//             //NB. when checking on jsonbin.io e.g. https://jsonbin.io/5c340b667b31f426f8531274/1
+//             //ensure you include the version number to see that the array has been 'PUT'
+//             console.log('req.responseText in _sendJSONDataWithRankingID', req.responseText);
+//             //console.log(req.responseText);
+//             return req.responseText;
+//           }
+//         };
+//         //NOTE: it is the api.jsonbin NOT the jsonbin.io!
+//         //JSON data can and should be in ANY order
+//         //bin id is: https://jsonbin.io/5bd82af2baccb064c0bdc92a/
+//         //use above to edit manually.
+//         //to view latest https://api.jsonbin.io/b/5bd82af2baccb064c0bdc92a/latest
+//
+//         req.open("PUT", httpString, true);
+//         req.setRequestHeader("Content-type", "application/json");
+//         let myJsonString = JSON.stringify(data);
+//         console.log('httpString, data in _sendJSONDataWithRankingID', httpString, data);
+//
+//         //console.log('data.id alone in _sendJSONDataWithRankingID', data.id)
+//         //I think data.id will only be defined IF this is a new ranking
+//         //if this is a new ranking send an array, not just an object
+//         //if this is a new ranking id will be 1
+//         //HACK: there may be a better way to test that this is a new ranking and user
+//         //the first entry to jsonbin must have array brackets so that responseJson can be
+//         //correctly displayed in BootstrapTable
+//         if(data.id === 1){
+//         const myJsonStringAsArray = "[" + myJsonString + "]";
+//           req.send(myJsonStringAsArray);
+//         }else{
+//           req.send(myJsonString);
+//         }
+//         //return null;
+// },
 
 //NB: currently this is sent to the hardcoded global ranking list at 5c36f5422c87fa27306acb52
   _sendCreateNewRankingJSONData:  function(origGlobalRankingData, rankingID, rankName, rankDescription){
@@ -862,7 +864,7 @@ console.log('inside _setUserNameValue')
                         "RANKINGNAME": rankName
                       }
       createNewJSONrankingObj.jsonRS.push(newData);
-      return this._sendJSONDataWithRankingID(createNewJSONrankingObj.jsonRS, globalRankingsDefaultId);
+      return _sendJSONDataWithRankingID(createNewJSONrankingObj.jsonRS, globalRankingsDefaultId);
     }
 }
 

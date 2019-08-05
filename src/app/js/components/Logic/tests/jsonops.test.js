@@ -3,9 +3,10 @@ import {
 } from '@testing-library/dom'
 import 'jest-dom/extend-expect'
 import JSONops from '../JSONops'
+import {Jsonio, _sendJSONDataWithRankingID}  from '../../SideEffects/io/Jsonio'
 //import React from 'react'
 import { render, cleanup, fireEvent, getByText, container, waitForElement, getByLabelText } from '@testing-library/react'
-
+jest.mock("../../SideEffects/io/Jsonio");
 //NB: a higher ranking has a lower ranking number
 //app is thinking in terms of integers (not rankings like a squash player!)
 //the integer has to be higher for the ranking to be lower
@@ -70,9 +71,10 @@ describe('JSONops - pure', () => {
   // })
 
   it('JSONops processResult - undecided', () => {
-    const spy_sendJSONDataWithRankingID = jest.spyOn(JSONops, '_sendJSONDataWithRankingID');
-    //NB:return value only given to ensure the function is mocked and not called
-    spy_sendJSONDataWithRankingID.mockReturnValue(dataFalse);
+    // const spy_sendJSONDataWithRankingID = jest.spyOn(Jsonio, '_sendJSONDataWithRankingID');
+    // //NB:return value only given to ensure the function is mocked and not called
+    // spy_sendJSONDataWithRankingID.mockReturnValue(dataFalse);
+    //const _sendJSONDataWithRankingID = jest.fn();
     let currentUser = 'player1';
     //'undecided' but unchanged (data has to be reset to 'AVAILABLE'):
     //bad data
@@ -82,7 +84,8 @@ describe('JSONops - pure', () => {
     //good data
     result = JSONops.processResult(resultEntered, currentUser, dataTrue, rankingID);
     expect(result).toEqual('Thank you. No changes have been made. Your ranking is unchanged');
-    expect(spy_sendJSONDataWithRankingID).toHaveBeenCalled();
+    //expect(spy_sendJSONDataWithRankingID).toHaveBeenCalled();
+    expect(_sendJSONDataWithRankingID).toHaveBeenCalled();
 
     //'Won':
     // resultEntered = 'won';
@@ -95,7 +98,7 @@ describe('JSONops - pure', () => {
     // //expect(result).toEqual('Thank you. Your result has been entered. Your ranking is unchanged');
     // expect(spy_sendJSONDataWithRankingID).toHaveBeenCalled();
 
-    spy_sendJSONDataWithRankingID.mockRestore();
+    //spy_sendJSONDataWithRankingID.mockRestore();
   })
 
   it('JSONops processResult - won', () => {
@@ -117,8 +120,8 @@ describe('JSONops - pure', () => {
       {"id":5,"NAME":"player5","CONTACTNO":"","EMAIL":"","RANK":6,"ACCOUNT":"0x3dA1f7f1937985Da9baf87a9b934A50B55981E8E","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"player4","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
       {"id":6,"NAME":"player6","CONTACTNO":"","EMAIL":"","RANK":6,"ACCOUNT":"0x23fCa109110F043847bb0Ca87805f3642D8B7Dc7","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301853807}
     ];
-    const spy_sendJSONDataWithRankingID = jest.spyOn(JSONops, '_sendJSONDataWithRankingID');
-    spy_sendJSONDataWithRankingID.mockReturnValue(dataFalse);
+    // const spy_sendJSONDataWithRankingID = jest.spyOn(Jsonio, '_sendJSONDataWithRankingID');
+    // spy_sendJSONDataWithRankingID.mockReturnValue(dataFalse);
     let currentUser = 'player1';
 
     //bad data
@@ -131,9 +134,10 @@ describe('JSONops - pure', () => {
     result = JSONops.processResult(resultEntered, currentUser, dataTrueWithUserLowerInRanking, rankingID);
     expect(result).toEqual('Thank you. Your result has been entered. Your ranking has been changed');
     //expect(result).toEqual('Thank you. Your result has been entered. Your ranking is unchanged');
-    expect(spy_sendJSONDataWithRankingID).toHaveBeenCalled();
-
-    spy_sendJSONDataWithRankingID.mockRestore();
+    // expect(spy_sendJSONDataWithRankingID).toHaveBeenCalled();
+    //
+    // spy_sendJSONDataWithRankingID.mockRestore();
+    expect(_sendJSONDataWithRankingID).toHaveBeenCalled();
   })
 
   it('JSONops processResult - lost', () => {
@@ -155,8 +159,8 @@ describe('JSONops - pure', () => {
       {"id":5,"NAME":"player5","CONTACTNO":"","EMAIL":"","RANK":6,"ACCOUNT":"0x3dA1f7f1937985Da9baf87a9b934A50B55981E8E","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"player4","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
       {"id":6,"NAME":"player6","CONTACTNO":"","EMAIL":"","RANK":6,"ACCOUNT":"0x23fCa109110F043847bb0Ca87805f3642D8B7Dc7","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301853807}
     ];
-    const spy_sendJSONDataWithRankingID = jest.spyOn(JSONops, '_sendJSONDataWithRankingID');
-    spy_sendJSONDataWithRankingID.mockReturnValue(dataFalse);
+    // const spy_sendJSONDataWithRankingID = jest.spyOn(Jsonio, '_sendJSONDataWithRankingID');
+    // spy_sendJSONDataWithRankingID.mockReturnValue(dataFalse);
     let currentUser = 'player1';
     //bad data
     //'Won':
@@ -168,9 +172,10 @@ describe('JSONops - pure', () => {
     result = JSONops.processResult(resultEntered, currentUser, dataTrueWithUserLowerInRanking, rankingID);
     expect(result).toEqual("Thank you. Your result has been entered. Your ranking is unchanged");
     //expect(result).toEqual('Thank you. Your result has been entered. Your ranking is unchanged');
-    expect(spy_sendJSONDataWithRankingID).toHaveBeenCalled();
-
-    spy_sendJSONDataWithRankingID.mockRestore();
+    // expect(spy_sendJSONDataWithRankingID).toHaveBeenCalled();
+    //
+    // spy_sendJSONDataWithRankingID.mockRestore();
+    expect(_sendJSONDataWithRankingID).toHaveBeenCalled();
   })
 });
 
@@ -200,24 +205,19 @@ expect(playerObjToTest[0].ACTIVE).toBe(true);
 
 
 it('JSONops _updateDoChallengeJSONinJson test ', async () => {
-//const player1Deactivated = JSONops._updateDoChallengeJSONinJson(rankingID, dataTrue, currentUser, accountNumber);
-//(rankingID, currentUser, selectedOpponent, dataTrue)
-const fromJson = JSONops._updateDoChallengeJSONinJson(rankingID, currentUser, selectedOpponent, dataTrue);
-//console.log(fromJson);
-//var lucky = numbers.filter(function(number) {
-  var playerObjToTest = fromJson.filter(function(playerObj) {
-  return playerObj.NAME === 'player1';
-});
-//console.log(playerObjToTest)
-expect(playerObjToTest[0].CURRENTCHALLENGERNAME).toEqual('player3');
+  //const player1Deactivated = JSONops._updateDoChallengeJSONinJson(rankingID, dataTrue, currentUser, accountNumber);
+  //(rankingID, currentUser, selectedOpponent, dataTrue)
+  const fromJson = JSONops._updateDoChallengeJSONinJson(rankingID, currentUser, selectedOpponent, dataTrue);
+  //console.log(fromJson);
+  //var lucky = numbers.filter(function(number) {
+    var playerObjToTest = fromJson.filter(function(playerObj) {
+    return playerObj.NAME === 'player1';
+  });
+  //console.log(playerObjToTest)
+  expect(playerObjToTest[0].CURRENTCHALLENGERNAME).toEqual('player3');
 })
 
-xit('JSONops reactivatePlayer test ', async () => {
-const fromJson = JSONops.reactivatePlayer();
-expect(fromJson).toBe(false);
-})
-
-xit('JSONops first test ', async () => {
-const fromJson = JSONops.simple();
-expect(fromJson).toBe(false);
+it('JSONops first test ', async () => {
+  const fromJson = JSONops.simple();
+  expect(fromJson).toBe(false);
 })

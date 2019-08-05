@@ -1,7 +1,61 @@
+import axios from 'axios';
+//TODO: all functions using _sendJSONData will need to be updated to use this
+//one that includes the rankingID
+  //_sendJSONDataWithRankingID: function(data, rankingID){
+  // export function Jsonio({
+  //   props
+  // }) {
+    export async function _sendJSONDataWithRankingID (data, rankingID) {
+    console.log('rankingID inside _sendJSONDataWithRankingID',rankingID)
+    console.log('data inside _sendJSONDataWithRankingID',data)
+    //console.log('inside _sendJSONDataWithRankingID')
+    let httpString = "https://api.jsonbin.io/b/";
+    //httpString += rankingID + '"';
+    httpString += rankingID;
+    let req = new XMLHttpRequest();
+
+        req.onreadystatechange = () => {
+          if (req.readyState === XMLHttpRequest.DONE) {
+            console.log('httpString in req.onreadystatechange', httpString);
+            //NB. when checking on jsonbin.io e.g. https://jsonbin.io/5c340b667b31f426f8531274/1
+            //ensure you include the version number to see that the array has been 'PUT'
+            console.log('req.responseText in _sendJSONDataWithRankingID', req.responseText);
+            //console.log(req.responseText);
+            return req.responseText;
+          }
+        };
+        //NOTE: it is the api.jsonbin NOT the jsonbin.io!
+        //JSON data can and should be in ANY order
+        //bin id is: https://jsonbin.io/5bd82af2baccb064c0bdc92a/
+        //use above to edit manually.
+        //to view latest https://api.jsonbin.io/b/5bd82af2baccb064c0bdc92a/latest
+
+        req.open("PUT", httpString, true);
+        req.setRequestHeader("Content-type", "application/json");
+        let myJsonString = JSON.stringify(data);
+        console.log('httpString, data in _sendJSONDataWithRankingID', httpString, data);
+
+        //console.log('data.id alone in _sendJSONDataWithRankingID', data.id)
+        //I think data.id will only be defined IF this is a new ranking
+        //if this is a new ranking send an array, not just an object
+        //if this is a new ranking id will be 1
+        //HACK: there may be a better way to test that this is a new ranking and user
+        //the first entry to jsonbin must have array brackets so that responseJson can be
+        //correctly displayed in BootstrapTable
+        if(data.id === 1){
+        const myJsonStringAsArray = "[" + myJsonString + "]";
+          req.send(myJsonStringAsArray);
+        }else{
+          req.send(myJsonString);
+        }
+        //return null;
+}
+
+
 //Reference:
 //https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 //REVIEW: Possibly implement requestConfig later ...
-import axios from 'axios';
+
 const requestConfig = {
         method: 'GET',
         mode: 'cors',
@@ -16,7 +70,7 @@ const requestConfig = {
       };
 
 
-export async function getDefaultRankingList (rankingDefault, getDefaultRankingList_callback) {
+ export async function getDefaultRankingList (rankingDefault, getDefaultRankingList_callback) {
       //export const getDefaultRankingList = async (rankingDefault, getDefaultRankingList_callback) => {
         try {
           let httpStr = 'https://api.jsonbin.io/b/' + rankingDefault + '/latest';
@@ -39,11 +93,11 @@ export async function getDefaultRankingList (rankingDefault, getDefaultRankingLi
       }
 
 //asyncFetch abstracted to enable mocking
-export async function asyncFetch(url) {
+ export async function asyncFetch(url) {
   return await fetch(url);
 }
 
-export async function _loadsetJSONData (newrankId, _loadsetJSONData_callback){
+ export async function _loadsetJSONData (newrankId, _loadsetJSONData_callback){
   console.log('newrankId IN _loadsetJSONData', newrankId);
       try {
             let httpStr = 'https://api.jsonbin.io/b/' + newrankId + '/latest';
@@ -61,7 +115,7 @@ export async function _loadsetJSONData (newrankId, _loadsetJSONData_callback){
             }
 }
 
-export async function _loadsetRankingListJSONData (rankingDefault, _loadsetRankingListJSONData_callback){
+ export async function _loadsetRankingListJSONData (rankingDefault, _loadsetRankingListJSONData_callback){
 //REVIEW: following is attempt to refactor fetchjson
 //await fetchJSON(rankingDefault, _loadsetRankingListJSONData_callback);
   try {
@@ -82,7 +136,7 @@ export async function _loadsetRankingListJSONData (rankingDefault, _loadsetRanki
 //get a new rankid ready in case user wants/needs to create a new ranking
 //do this after _loadsetJSONData so that we will already have the correct username
 //getNewRankId = async () => {
-export async function getNewRankId(description, account, email, contactno, user, getNewRankId_callback) {
+ export async function getNewRankId(description, account, email, contactno, user, getNewRankId_callback) {
   //console.log('userNameCB in getNewRankId in app', this.state.userNameCB)
     try{
     //this.setState({ isLoading: true});
@@ -137,7 +191,7 @@ export async function getNewRankId(description, account, email, contactno, user,
 
 //NB: this function cannot actually be used in app.js as it's only simulating the one
 //nested inside the mapping function of _loadCurrentUserAccounts
-//   export async function _loadCurrentUserAccountsInsideMapping(address, _loadCurrentUserAccountsInsideMapping_callback){
+//    async function _loadCurrentUserAccountsInsideMapping(address, _loadCurrentUserAccountsInsideMapping_callback){
 //     // var MyContract = web3.eth.contract(ABI);
 //     // var contractInstance = MyContract.at(address);
 //     //const contractInstance = new DSportRank();
@@ -191,17 +245,18 @@ export async function getNewRankId(description, account, email, contactno, user,
 //              return console.error(err);
 //           }
 // }
-
-function checkUndefined(responseJson){
-    let responseDataAsArray = [];
-  if(responseJson.length === undefined){
-    //on creation of a new user the [] isn't recognized
-    //turn the object into an array for use by BSTable
-    //responseJson = "[" + responseJson + "]";
-    responseDataAsArray[0] = responseJson;
-    responseJson = responseDataAsArray;
-    return responseJson;
-  } else {
-    return responseJson;
-  }
-}
+          //private function not for export 
+          function checkUndefined(responseJson){
+              let responseDataAsArray = [];
+            if(responseJson.length === undefined){
+              //on creation of a new user the [] isn't recognized
+              //turn the object into an array for use by BSTable
+              //responseJson = "[" + responseJson + "]";
+              responseDataAsArray[0] = responseJson;
+              responseJson = responseDataAsArray;
+              return responseJson;
+            } else {
+              return responseJson;
+            }
+          }
+//}
