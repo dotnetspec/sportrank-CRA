@@ -86,7 +86,7 @@ const JSONops = {
      //for 'won' if e.g. current user is ranked 2 (a lower integer) and oppenent is ranked 4
      // (a higher integer)
      //this will just set 'AVAILABLE' and NO ranking change will be made
-  else if (resultEntered === 'won' && currentUserRankInt < selectedOpponentRankInt){
+  else if (resultEntered === 'won' && this.isUserAlreadyHigherRankedThanOpponent(currentUserRankInt, selectedOpponentRankInt)){
       let updatedUserJSONnew = JSONops._updateEnterResultUnchangedJSON(newrankId, currentUser,opponentCurrentlyChallengingUser, data);
       if(JSONops.isValidRankingOrder(updatedUserJSONnew)){
         JSONops.updateDateStampsInJSON(newrankId, updatedUserJSONnew, currentUser, opponentCurrentlyChallengingUser);
@@ -95,7 +95,7 @@ const JSONops = {
       }else{
         return "Ranking order PROBLEM. No changes have been made. Your ranking is unchanged";
       }
-    }else if (resultEntered === 'lost' && currentUserRankInt > selectedOpponentRankInt){
+    }else if (resultEntered === 'lost' && this.isUserAlreadyLowerRankedThanOpponent(currentUserRankInt, selectedOpponentRankInt)){
       //console.log('lost');
         let updatedUserJSONnew = JSONops._updateEnterResultUnchangedJSON(newrankId, currentUser,opponentCurrentlyChallengingUser, data);
         if(JSONops.isValidRankingOrder(updatedUserJSONnew)){
@@ -119,6 +119,23 @@ const JSONops = {
       }
     }
   },
+
+//logic helper functions:
+isUserAlreadyHigherRankedThanOpponent: function(currentUserRankInt, selectedOpponentRankInt){
+  if(currentUserRankInt < selectedOpponentRankInt){
+    return true;
+  } else{
+    return false;
+  }
+},
+
+isUserAlreadyLowerRankedThanOpponent: function(currentUserRankInt, selectedOpponentRankInt){
+  if(currentUserRankInt > selectedOpponentRankInt){
+    return true;
+  } else{
+    return false;
+  }
+},
 
 
   //export function processResult(resultEntered, currentUser) {
