@@ -102,6 +102,15 @@ describe('JSONops - pure', () => {
       {"id":5,"NAME":"player5","CONTACTNO":"","EMAIL":"","RANK":6,"ACCOUNT":"0x3dA1f7f1937985Da9baf87a9b934A50B55981E8E","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"player4","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
       {"id":6,"NAME":"player6","CONTACTNO":"","EMAIL":"","RANK":4,"ACCOUNT":"0x23fCa109110F043847bb0Ca87805f3642D8B7Dc7","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301853807}
     ];
+    const dataTrueWithUserHigherInRanking = [
+      {id: 7, STATUS: "NEW", RANKING: "NEWRANKING"},
+      {"DATESTAMP":1545369526439,"ACTIVE":true,"DESCRIPTION":"alskdfjalj","CURRENTCHALLENGERNAME":"player4","CURRENTCHALLENGERID":4,"ACCOUNT":"0xa864Ea9d142C0997572aD7a2077A67a30a853cc0","RANK":1,"EMAIL":"laskdfjlfj","CONTACTNO":"laskdfjlajf","NAME":"player1","id":3},
+      {"DATESTAMP":1545301903330,"ACTIVE":true,"DESCRIPTION":"laskjfljk","CURRENTCHALLENGERNAME":"AVAILABLE","CURRENTCHALLENGERID":0,"ACCOUNT":"0x2dCC1bd7852819026981B48479b8C3BE5056C0cd","RANK":3,"EMAIL":"aslkdfj","CONTACTNO":"alskjdflaj","NAME":"player2","id":2},
+      {"id":1,"NAME":"player3","CONTACTNO":"","EMAIL":"","RANK":5,"ACCOUNT":"0x0f124b4C7Ccb22c79B3A95BB92188a810802ea26","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545369526437},
+      {"id":4,"NAME":"player4","CONTACTNO":"","EMAIL":"","RANK":2,"ACCOUNT":"0xA87b6b69C139d414D2ca80744dB16172f997a7f7","CURRENTCHALLENGERID":3,"CURRENTCHALLENGERNAME":"player1","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
+      {"id":5,"NAME":"player5","CONTACTNO":"","EMAIL":"","RANK":6,"ACCOUNT":"0x3dA1f7f1937985Da9baf87a9b934A50B55981E8E","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"player4","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
+      {"id":6,"NAME":"player6","CONTACTNO":"","EMAIL":"","RANK":4,"ACCOUNT":"0x23fCa109110F043847bb0Ca87805f3642D8B7Dc7","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301853807}
+    ];
     const dataFalseWithUserLowerInRanking = [
       {id: 7, STATUS: "NEW", RANKING: "NEWRANKING"},
       {"DATESTAMP":1545369526439,"ACTIVE":true,"DESCRIPTION":"alskdfjalj","CURRENTCHALLENGERNAME":"player4","CURRENTCHALLENGERID":4,"ACCOUNT":"0xa864Ea9d142C0997572aD7a2077A67a30a853cc0","RANK":1,"EMAIL":"laskdfjlfj","CONTACTNO":"laskdfjlajf","NAME":"player1","id":3},
@@ -111,17 +120,25 @@ describe('JSONops - pure', () => {
       {"id":5,"NAME":"player5","CONTACTNO":"","EMAIL":"","RANK":6,"ACCOUNT":"0x3dA1f7f1937985Da9baf87a9b934A50B55981E8E","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"player4","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
       {"id":6,"NAME":"player6","CONTACTNO":"","EMAIL":"","RANK":6,"ACCOUNT":"0x23fCa109110F043847bb0Ca87805f3642D8B7Dc7","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301853807}
     ];
+
     let currentUser = 'player1';
     //bad data
     //'Won':
     let resultEntered = 'won';
-    //bad data - no change
+    //bad data
     let result = JSONops.processResult(resultEntered, currentUser, dataFalseWithUserLowerInRanking, rankingID);
-    expect(result).toEqual('Ranking order PROBLEM. No changes have been made. Your ranking is unchanged');
+    expect(result.text).toEqual('Ranking order PROBLEM. No changes have been made. Your ranking is unchanged');
     //good data
+    result = JSONops.processResult(resultEntered, currentUser, dataTrueWithUserHigherInRanking, rankingID);
+    expect(result.text).toEqual('Thank you. Your result has been entered. Your ranking is unchanged');
     result = JSONops.processResult(resultEntered, currentUser, dataTrueWithUserLowerInRanking, rankingID);
-    expect(result).toEqual('Thank you. Your result has been entered. Your ranking has been changed');
+    expect(result.text).toEqual('Thank you. Your result has been entered. Your ranking has been changed');
     //expect(_sendJSONDataWithRankingID).toHaveBeenCalled();
+
+
+    //REVIEW: other tests can be added with this in future
+    const filteredResult = filterJson(result, 'player1');
+    expect(filteredResult[0].CURRENTCHALLENGERNAME).toEqual('AVAILABLE');
   })
 
   it('JSONops processResult - lost', () => {
@@ -133,6 +150,15 @@ describe('JSONops - pure', () => {
       {"id":4,"NAME":"player4","CONTACTNO":"","EMAIL":"","RANK":1,"ACCOUNT":"0xA87b6b69C139d414D2ca80744dB16172f997a7f7","CURRENTCHALLENGERID":3,"CURRENTCHALLENGERNAME":"player1","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
       {"id":5,"NAME":"player5","CONTACTNO":"","EMAIL":"","RANK":5,"ACCOUNT":"0x3dA1f7f1937985Da9baf87a9b934A50B55981E8E","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
       {"id":6,"NAME":"player6","CONTACTNO":"","EMAIL":"","RANK":6,"ACCOUNT":"0x23fCa109110F043847bb0Ca87805f3642D8B7Dc7","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301853807}
+    ];
+    const dataTrueWithUserHigherInRanking = [
+      {id: 7, STATUS: "NEW", RANKING: "NEWRANKING"},
+      {"DATESTAMP":1545369526439,"ACTIVE":true,"DESCRIPTION":"alskdfjalj","CURRENTCHALLENGERNAME":"player4","CURRENTCHALLENGERID":4,"ACCOUNT":"0xa864Ea9d142C0997572aD7a2077A67a30a853cc0","RANK":1,"EMAIL":"laskdfjlfj","CONTACTNO":"laskdfjlajf","NAME":"player1","id":3},
+      {"DATESTAMP":1545301903330,"ACTIVE":true,"DESCRIPTION":"laskjfljk","CURRENTCHALLENGERNAME":"AVAILABLE","CURRENTCHALLENGERID":0,"ACCOUNT":"0x2dCC1bd7852819026981B48479b8C3BE5056C0cd","RANK":3,"EMAIL":"aslkdfj","CONTACTNO":"alskjdflaj","NAME":"player2","id":2},
+      {"id":1,"NAME":"player3","CONTACTNO":"","EMAIL":"","RANK":5,"ACCOUNT":"0x0f124b4C7Ccb22c79B3A95BB92188a810802ea26","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545369526437},
+      {"id":4,"NAME":"player4","CONTACTNO":"","EMAIL":"","RANK":2,"ACCOUNT":"0xA87b6b69C139d414D2ca80744dB16172f997a7f7","CURRENTCHALLENGERID":3,"CURRENTCHALLENGERNAME":"player1","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
+      {"id":5,"NAME":"player5","CONTACTNO":"","EMAIL":"","RANK":6,"ACCOUNT":"0x3dA1f7f1937985Da9baf87a9b934A50B55981E8E","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"player4","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
+      {"id":6,"NAME":"player6","CONTACTNO":"","EMAIL":"","RANK":4,"ACCOUNT":"0x23fCa109110F043847bb0Ca87805f3642D8B7Dc7","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301853807}
     ];
     const dataFalseWithUserLowerInRanking = [
       {id: 7, STATUS: "NEW", RANKING: "NEWRANKING"},
@@ -149,10 +175,19 @@ describe('JSONops - pure', () => {
     let resultEntered = 'lost';
     //bad data - no change
     let result = JSONops.processResult(resultEntered, currentUser, dataFalseWithUserLowerInRanking, rankingID);
-    expect(result).toEqual('Ranking order PROBLEM. No changes have been made. Your ranking is unchanged');
+    expect(result.text).toEqual('Ranking order PROBLEM. No changes have been made. Your ranking is unchanged');
     //good data
     result = JSONops.processResult(resultEntered, currentUser, dataTrueWithUserLowerInRanking, rankingID);
-    expect(result).toEqual("Thank you. Your result has been entered. Your ranking is unchanged");
+    expect(result.text).toEqual("Thank you. Your result has been entered. Your ranking is unchanged");
+    result = JSONops.processResult(resultEntered, currentUser, dataTrueWithUserHigherInRanking, rankingID);
+    expect(result.text).toEqual("Thank you. Your result has been entered. Your ranking has been changed");
+
+    // result = JSONops.processResult(resultEntered, currentUser, dataTrueWithUserHigherInRanking, rankingID);
+    // expect(result.text).toEqual('Thank you. Your result has been entered. Your ranking is unchanged');
+
+    //REVIEW: other tests can be added with this in future
+    const filteredResult = filterJson(result, 'player1');
+    expect(filteredResult[0].CURRENTCHALLENGERNAME).toEqual('AVAILABLE');
 
     //expect(_sendJSONDataWithRankingID).toHaveBeenCalled();
   })

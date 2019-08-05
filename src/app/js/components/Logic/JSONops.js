@@ -62,7 +62,6 @@ const JSONops = {
   },
 
   processResult: function (resultEntered, currentUser, data, newrankId) {
-    //let updatedUserJSON = {};
     //responseObj created to deal with testing/logic etc. issues of returning
     //both the text and the obj so that _sendJSONDataWithRankingID can be extracted
     //from this logic
@@ -75,24 +74,17 @@ const JSONops = {
 
      const currentUserRankInt = parseInt(checkedUserRank);
      const selectedOpponentRankInt = parseInt(checkedOpponentRank);
-     //console.log('currentUserRankInt', currentUserRankInt)
-     //console.log('selectedOpponentRankInt', selectedOpponentRankInt)
-     //TODO: use switch here:
+     //TODO: use switch here?:
   if (resultEntered === 'undecided' ){
        let updatedUserJSONnew = JSONops._updateEnterResultUnchangedJSON(newrankId, currentUser,opponentCurrentlyChallengingUser, data);
-       //const correctTxt = getCorrectTextResponseOnResultEnter(resultEntered, updatedUserJSONnew);
-       //if correctTxt = ()
        if(JSONops.isValidRankingOrder(updatedUserJSONnew)){
          //we still have to set to 'AVAILABLE'
          responseObj.text = "Thank you. No changes have been made. Your ranking is unchanged";
          responseObj.updatedUserJSON = updatedUserJSONnew;
          return responseObj;
-         // _sendJSONDataWithRankingID(updatedUserJSONnew, newrankId);
-         // return "Thank you. No changes have been made. Your ranking is unchanged";
        }else{
          responseObj.text = "Ranking order PROBLEM. No changes have been made. Your ranking is unchanged";
          return responseObj;
-         //return "Ranking order PROBLEM. No changes have been made. Your ranking is unchanged";
        }
      }
      //for 'won' if e.g. current user is ranked 2 (a lower integer) and oppenent is ranked 4
@@ -101,33 +93,36 @@ const JSONops = {
   else if (resultEntered === 'won' && this.isUserAlreadyHigherRankedThanOpponent(currentUserRankInt, selectedOpponentRankInt)){
       let updatedUserJSONnew = JSONops._updateEnterResultUnchangedJSON(newrankId, currentUser,opponentCurrentlyChallengingUser, data);
       if(JSONops.isValidRankingOrder(updatedUserJSONnew)){
-        JSONops.updateDateStampsInJSON(newrankId, updatedUserJSONnew, currentUser, opponentCurrentlyChallengingUser);
-        //_sendJSONDataWithRankingID(updatedUserJSONnew, newrankId);
-        return "Thank you. Your result has been entered. Your ranking is unchanged"
+        updatedUserJSONnew = JSONops.updateDateStampsInJSON(newrankId, updatedUserJSONnew, currentUser, opponentCurrentlyChallengingUser);
+        responseObj.text = "Thank you. Your result has been entered. Your ranking is unchanged";
+        responseObj.updatedUserJSON = updatedUserJSONnew;
+        return responseObj;
       }else{
-        return "Ranking order PROBLEM. No changes have been made. Your ranking is unchanged";
+        responseObj.text = "Ranking order PROBLEM. No changes have been made. Your ranking is unchanged";
+        return responseObj;
       }
-    }else if (resultEntered === 'lost' && this.isUserAlreadyLowerRankedThanOpponent(currentUserRankInt, selectedOpponentRankInt)){
-      //console.log('lost');
+    }else if(resultEntered === 'lost' && this.isUserAlreadyLowerRankedThanOpponent(currentUserRankInt, selectedOpponentRankInt)){
         let updatedUserJSONnew = JSONops._updateEnterResultUnchangedJSON(newrankId, currentUser,opponentCurrentlyChallengingUser, data);
         if(JSONops.isValidRankingOrder(updatedUserJSONnew)){
-          JSONops.updateDateStampsInJSON(newrankId, updatedUserJSONnew, currentUser, opponentCurrentlyChallengingUser);
-          //_sendJSONDataWithRankingID(updatedUserJSONnew, newrankId);
-          //console.log('result send to _updateEnterResultUnchangedJSON');
-          return "Thank you. Your result has been entered. Your ranking is unchanged"
+          updatedUserJSONnew = JSONops.updateDateStampsInJSON(newrankId, updatedUserJSONnew, currentUser, opponentCurrentlyChallengingUser);
+          responseObj.text = "Thank you. Your result has been entered. Your ranking is unchanged";
+          responseObj.updatedUserJSON = updatedUserJSONnew;
+          return responseObj;
         }else{
-          return "Ranking order PROBLEM. No changes have been made. Your ranking is unchanged";
+          responseObj.text = "Ranking order PROBLEM. No changes have been made. Your ranking is unchanged";
+          return responseObj;
         }
     //only if make it here does ranking change as well as 'AVAILABLE'
     }else{
       let updatedUserJSONnew = JSONops._updateEnterResultJSON(newrankId, currentUser, checkedUserRank, opponentCurrentlyChallengingUser, checkedOpponentRank, data);
       if(JSONops.isValidRankingOrder(updatedUserJSONnew)){
-      JSONops.updateDateStampsInJSON(newrankId, data, currentUser,opponentCurrentlyChallengingUser);
-      //_sendJSONDataWithRankingID(updatedUserJSONnew, newrankId);
-      //console.log('result send to _updateEnterResultJSON');
-        return "Thank you. Your result has been entered. Your ranking has been changed"
+      updatedUserJSONnew = JSONops.updateDateStampsInJSON(newrankId, data, currentUser,opponentCurrentlyChallengingUser);
+        responseObj.text = "Thank you. Your result has been entered. Your ranking has been changed";
+        responseObj.updatedUserJSON = updatedUserJSONnew;
+        return responseObj;
       }else{
-        return "Ranking order PROBLEM. No changes have been made. Your ranking is unchanged";
+        responseObj.text = "Ranking order PROBLEM. No changes have been made. Your ranking is unchanged";
+        return responseObj;
       }
     }
   },
