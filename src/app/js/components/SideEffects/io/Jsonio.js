@@ -18,7 +18,8 @@ import axios from 'axios';
           if (req.readyState === XMLHttpRequest.DONE) {
             console.log('httpString in req.onreadystatechange', httpString);
             //NB. when checking on jsonbin.io e.g. https://jsonbin.io/5c340b667b31f426f8531274/1
-            //ensure you include the version number to see that the array has been 'PUT'
+            //ensure you include the version number (at the end of string above)
+            //to see that the array has been 'PUT'
             console.log('req.responseText in _sendJSONDataWithRankingID', req.responseText);
             //console.log(req.responseText);
             return req.responseText;

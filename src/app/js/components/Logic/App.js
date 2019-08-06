@@ -107,7 +107,7 @@ import axios from 'axios'
  *
  * @extends React.Component
  */
-//class App extends Component {
+//functional component App extends Component {
 export function App({
   props
 }) {
@@ -267,7 +267,7 @@ export function App({
   //cb from GlobalRankings.js to set the rank state as view only
   //REVEIW: is this necessary? wasn't working until noticed it ...
   const setOnCallbackviewingOnlyCB = (viewingOnlyCBval) => {
-    // console.log('in viewingOnlyCB', viewingOnlyCB)
+    console.log('in viewingOnlyCB', viewingOnlyCB)
     //   setState({viewingOnlyCB:viewingOnlyCB})
     setviewingOnlyCB(viewingOnlyCBval);
   }

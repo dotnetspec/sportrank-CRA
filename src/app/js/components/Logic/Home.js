@@ -23,16 +23,10 @@ import Spinner from 'react-spinkit';
 import DoChallenge from './DoChallenge'
 import EnterResult from './EnterResult'
 import JSONops from './JSONops'
+import { userInfoText, userInfoText2 } from './TextOps'
 import _sendJSONDataWithRankingID from '../SideEffects/io/Jsonio'
 //import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
-
-//REVIEW: May be able to improve setting rank with similar to:
-//setState((state, props) => ({
-//   counter: state.counter + props.increment
-// }));
-//i.e. setting state by passing a function
-//https://reactjs.org/docs/state-and-lifecycle.html
 
 /**
  * Functionality representing the table search properties
@@ -45,48 +39,15 @@ const selectRowPropAfterClickRow = {
   selectedOpponentRank: ''
 };
 
-//REIVEW: potentially used as selector for the table,
-//but currenlty unused
-// const qualityType = {
-//   0: 'AVAILABLE',
-//   1: 'player'
-// };
-
-//REIVEW: potentially used as selector for the table,
-//but currenlty unused
-// function enumFormatter(cell, row, enumObject) {
-//   console.log(enumObject[cell])
-//   return enumObject[cell];
-// }
-//#endregion
-
-
-//NB: this function gets called from sibling Header.js
-//to clear the warning text when user changes account
-//based on info from
-//https://www.codeproject.com/Tips/1215984/Update-State-of-a-Component-from-Another-in-React
-// export function updateWarningText(warningText) {
-//   console.log('warningText', warningText)
-//   //if(warningText)
-//   setState({
-//     warningText
-//   })
-// }
-
 /**
- * Class representing the home page rendering
+ * Functional component representing the home page rendering
  * Important functions:
  * preprocessDataBeforeRender() e.g. handles if user doesn't exist yet etc.
  *
  * @extends React.Component
  */
-//class Home extends Component {
-  export default function Home(props){
 
-  //#region Constructor
-  // constructor(props, context) {
-  //   super(props, context);
-  //   state = {
+  export default function Home(props){
 
       const [showModal, setshowModal] = useState(false)
       const [resultModalIsOpen, setResultModalIsOpen] = useState(false)
@@ -113,124 +74,49 @@ const selectRowPropAfterClickRow = {
       // });
     }
 
-    // const {
-    //   rankingDefault
-    // } = props;
-    // console.log('rankingDefault in home', rankingDefault)
-    //bind the callbacks (defined above) to this parent component Home
-    //so that DoChallenge (and EnterResult?) changes are updated in UI:
-    //REVIEW: Probably not necessary ...
-    //updateWarningText = updateWarningText.bind(this);
-    //closeResultModal = closeResultModal.bind(this);
-  //}
-  //#endregion
-
   /**
    * Hides the challenge modal
    */
   const _handleClose = () => {
     console.log('_handleClose')
     setshowModal(false);
-    // setState({
-    //   showModal: false
-    // });
   }
 
-  // updateWarningText(warningText) {
-  //   console.log('updateWarningText', warningText)
-  //   setState({
-  //     warningText: warningText
-  //   });
-  // }
   const updateWarningText = (warningText) => {
       setWarningText(warningText);
-       //setState({warningText: warningText});
    }
-  /**
-   * Shows the challenge modal
-   */
+
   const _handleShowChallengeModal = () => {
-    //clear the warning text initially:
     setWarningText('');
-    // setState({
-    //   warningText: ''
-    // });
     const {
       rankingJSONdata
     } = props;
     if (selectRowPropAfterClickRow.selectedOpponentName === props.user.username) {
       setWarningText(' You cannot challenge yourself!');
-      // setState({
-      //   warningText: ' You cannot challenge yourself!'
-      // });
       setWarningModalIsOpen(true);
-      // setState({
-      //   warningModalIsOpen: true
-      // });
     } else if (!JSONops.isPlayerLowerRankThanChallengeOpponent(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.user.username)) {
       setWarningText(' This opponent is lower than you in the rankings - aim high!');
-      // setState({
-      //   warningText: ' This opponent is lower than you in the rankings - aim high!'
-      // });
       setWarningModalIsOpen(true);
-      // setState({
-      //   warningModalIsOpen: true
-      // });
     } else if (JSONops.isPlayerAlreadyChallengingThisOpp(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.user.username)) {
       setWarningText(' You are already challenging this player!')
-      // setState({
-      //   warningText: ' You are already challenging this player!'
-      // });
       setWarningModalIsOpen(true);
-      // setState({
-      //   warningModalIsOpen: true
-      // });
     } else if (!JSONops.isPlayerAvailableToChallenge(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.user.username)) {
-      setWarningText(' Please allow ongoing challenge(s) to complete ...')
-      // setState({
-      //   warningText: ' Please allow ongoing challenge(s) to complete ...'
-      // });
+      setWarningText(' Please allow ongoing challenge(s) to complete ...');
       setWarningModalIsOpen(true);
-      // setState({
-      //   warningModalIsOpen: true
-      // });
     } else {
       setshowModal(true);
-      // setState({
-      //   showModal: true
-      // });
       setWarningText('');
-      // setState({
-      //   warningText: ''
-      // });
     }
   }
-
-  //TODO: use https://reactjs.org/docs/faq-state.html
-  //and code below for better setting of rank in state (perhaps?)
-  // setStateOfRank() {
-  //   setState((state) => {
-  //     // Important: read `state` instead of `state` when updating.
-  //     return {rank: state.count + 1}
-  //   });
-  // }
 
   const onClickChallengeSelected = (cell, row, rowIndex) => {
     selectRowPropAfterClickRow.selectedOpponentName = `${row['NAME']}`;
     selectRowPropAfterClickRow.selectedOpponentRank = `${row['RANK']}`;
-    // console.log('props.user.rankings')
-    // console.log(props.user.chanllenges)
     if (props.user.username !== '') {
       _handleShowChallengeModal();
     } else {
       setWarningText('Error: Sorry your account is not recognized');
-      // setState({
-      //   warningText: 'Error: Sorry your account is not recognized'
-      // });
       setWarningModalIsOpen(true);
-      // setState({
-      //   openWarningModal: true
-      // });
     }
   }
 
@@ -240,16 +126,9 @@ const selectRowPropAfterClickRow = {
     openResultModal();
   }
 
-  // TODO: Challenge/Enter button should be part of onrowselect, not a separate button
-  //REVIEW: selectRowProp has to be defined in render for the onSelect to be bound to the
-  //onSelectRow function within this component. This is not fully understood and needs to be
-  //better understood
-  //https://github.com/AllenFang/react-bootstrap-table/issues/1035
-
   const challengeButton = (cell, row, enumObject, rowIndex) => {
     return ( <
       button bsstyle = "primary"
-      //type="button"
       onClick = {
         () =>
         onClickChallengeSelected(cell, row, rowIndex)
@@ -262,7 +141,6 @@ const selectRowPropAfterClickRow = {
   const resultButton = (cell, row, enumObject, rowIndex) => {
     return ( <
       button bsstyle = "primary"
-      //type="button"
       onClick = {
         () =>
         onClickResultSelected(cell, row, rowIndex)
@@ -272,12 +150,6 @@ const selectRowPropAfterClickRow = {
     )
   }
 
-  // updateWarningText = (warningText) => {
-  //   setState({
-  //     warningText: warningText
-  //   });
-  // };
-
   const openResultModal = () => {
     //NB: this is a NOT operation!
     const {
@@ -285,84 +157,40 @@ const selectRowPropAfterClickRow = {
     } = props;
     if (!JSONops.isPlayerAvailableToEnterResultAgainst(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.user.username)) {
       setWarningText('You must challenge an opponent before attempting to enter a result!');
-      // setState({
-      //   warningText: 'You must challenge an opponent before attempting to enter a result!'
-      // });
       setWarningModalIsOpen(true);
-      // setState({
-      //   warningModalIsOpen: true
-      // });
     } else {
       setResultModalIsOpen(true)
-      // setState({
-      //   resultModalIsOpen: true
-      // });
       setWarningText('');
-      // setState({
-      //   warningText: ''
-      // });
     }
   };
 
   const closeResultModal = () => {
     setResultModalIsOpen(false);
-    // setState({
-    //   resultModalIsOpen: false
-    // });
   };
 
   const closeWarningModal = () => {
     setWarningModalIsOpen(false);
-    // setState({
-    //   warningModalIsOpen: false
-    // });
   };
-
-  // const postResultInfoForDisplayCB = () => {
-  //   console.log('inside postResultInfoForDisplayCB')
-  //   //return 'it would go here';
-  //   setResultInfoForDisplay('set from postResultInfoForDisplayCB');
-  // }
-
   //REVIEW: Managing display here might be handled differently:
   //this was originally a component - perhaps it still should be [?]
   const userPlayerJsonDataDisplay = () => {
     //console.log('userPlayerJsonDataDisplay');
       const textToDisplayRankName = JSONops._getGlobalRankingVal(props.rankingListJSONdata, props.newrankId, 'RANKINGNAME')
       const textToDisplayRankDesc = JSONops._getGlobalRankingVal(props.rankingListJSONdata, props.newrankId, 'RANKINGDESC')
-      let textToDisplayRank = '';
-      let textToDisplayChallenger = '';
-      let textToDisplayChallengerContactNo = '';
-      let textToDisplayChallengerEmail = '';
-      let textToDisplayContinue = '';
-      //if the json is empty do nothing
-      //if (props.rankingJSONdata[0] === null) {
       if (props.rankingJSONdata === undefined) {
         console.log('json is empty inside userPlayerJsonDataDisplay');
         return null;
       }
-
       const currentUserRank = JSONops._getUserValue(props.rankingJSONdata, props.user.username, "RANK");
       const currentChallengerName = JSONops._getUserValue(props.rankingJSONdata, props.user.username, "CURRENTCHALLENGERNAME");
       const currentChallengerContactNo = JSONops._getUserValue(props.rankingJSONdata, currentChallengerName, "CONTACTNO");
       const currentChallengerEmail = JSONops._getUserValue(props.rankingJSONdata, currentChallengerName, "EMAIL");
-
-      textToDisplayRank = 'Your current rank is: ' + currentUserRank;
-
       const currentUserName = JSONops._getUserValue(props.rankingJSONdata, props.user.username, "NAME");
       const activeBool = JSONops._getUserValue(props.rankingJSONdata, props.user.username, "ACTIVE");
-      if (currentUserName === props.user.username && activeBool) {
-        //console.log(details.RANK);
-        if (currentChallengerName !== 'AVAILABLE') {
-          textToDisplayChallenger = 'Your current challenge is VS ' + currentChallengerName;
-          textToDisplayChallengerContactNo = 'Your challenger contact number is  ' + currentChallengerContactNo
-          textToDisplayChallengerEmail = 'Your challenger email is  ' + currentChallengerEmail
-          textToDisplayContinue = 'Enter a result against ' + currentChallengerName + ' to continue'
 
-        } else {
-          textToDisplayChallenger += 'You do NOT currently have a challenge'
-          textToDisplayContinue += 'Please select an AVAILABLE opponent (below) to challenge: '
-        }
+      if (currentUserName === props.user.username && activeBool) {
+        const textOpsReturnOjb = userInfoText(currentChallengerName, currentChallengerContactNo,
+        currentChallengerEmail, currentUserRank);
 
         return ( <
           div >
@@ -378,22 +206,22 @@ const selectRowPropAfterClickRow = {
             props.user.username
           } <
           p > < /p> {
-            textToDisplayRank
+            textOpsReturnOjb.textToDisplayRank
           } <
           p > < /p> {
-            textToDisplayChallenger
+            textOpsReturnOjb.textToDisplayChallenger
           } <
           p > < /p>
           {
-           textToDisplayChallengerContactNo
+           textOpsReturnOjb.textToDisplayChallengerContactNo
           } <
           p > < /p>
           {
-           textToDisplayChallengerEmail
+           textOpsReturnOjb.textToDisplayChallengerEmail
           } <
           p > < /p>
           {
-            textToDisplayContinue
+            textOpsReturnOjb.textToDisplayContinue
           } <
           /div>)
         }
@@ -555,18 +383,6 @@ const selectRowPropAfterClickRow = {
          preprocessDataBeforeRender();
         }, [])
 
-
-        //render() {
-          // const selectRowProp = {
-          //   mode: 'radio',
-          //   clickToSelect: true,
-          //   unselectable: [0],
-          //   selected: [],
-          //   bgColor: 'gold'
-          // };
-
-          //const { username } = props.user;
-
           let isError = props.error && props.error.message;
           //XXX: temp to run
           isError = false;
@@ -582,15 +398,12 @@ const selectRowPropAfterClickRow = {
           fadeIn = 'none' / > ;
 
           states.isError = < span className = 'error' > ERROR! < /span>;
-
-
           //const { rankingJSONdata, contactNoCB, emailCB } = props;
           const {
             rankingJSONdata
           } = props;
           return ( <
             div >
-
             <
             Modal show = {
               showModal
@@ -774,7 +587,3 @@ const selectRowPropAfterClickRow = {
             /div>
           );
         }
-        //#endregion
-      //}
-
-      //export default Home

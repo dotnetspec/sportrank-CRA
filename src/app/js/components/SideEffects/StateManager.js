@@ -39,6 +39,7 @@ function setUserSelectedRanking(state, defaultUserAccount){
 }
 
 function assignUserAcctStateToStateObj(userAccounts, defaultUserAccount, state){
+  console.log('assignUserAcctStateToStateObj', state)
   state.userAccounts =  userAccounts;
   state.user =  defaultUserAccount[0].user;
   state.contactno =  defaultUserAccount[0].user.contactno;
@@ -51,7 +52,8 @@ function assignUserAcctStateToStateObj(userAccounts, defaultUserAccount, state){
   state.emailCB =  '';
   state.loadingAccounts =  false;
   //newrankId must be cleared so a new one has to be regenerated for each account
-  state.newrankId =  '';
-  state.viewingOnlyCB =  true
+  state.newrankId =  ''
+  //;
+  //state.viewingOnlyCB =  true
   return state;
 }
