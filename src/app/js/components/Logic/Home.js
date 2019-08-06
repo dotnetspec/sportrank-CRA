@@ -175,32 +175,25 @@ const selectRowPropAfterClickRow = {
   //this was originally a component - perhaps it still should be [?]
   const userPlayerJsonDataDisplay = () => {
     //console.log('userPlayerJsonDataDisplay');
-      const textToDisplayRankName = JSONops._getGlobalRankingVal(props.rankingListJSONdata, props.newrankId, 'RANKINGNAME')
-      const textToDisplayRankDesc = JSONops._getGlobalRankingVal(props.rankingListJSONdata, props.newrankId, 'RANKINGDESC')
-      if (props.rankingJSONdata === undefined) {
-        console.log('json is empty inside userPlayerJsonDataDisplay');
-        return null;
-      }
-      const currentUserRank = JSONops._getUserValue(props.rankingJSONdata, props.user.username, "RANK");
-      const currentChallengerName = JSONops._getUserValue(props.rankingJSONdata, props.user.username, "CURRENTCHALLENGERNAME");
-      const currentChallengerContactNo = JSONops._getUserValue(props.rankingJSONdata, currentChallengerName, "CONTACTNO");
-      const currentChallengerEmail = JSONops._getUserValue(props.rankingJSONdata, currentChallengerName, "EMAIL");
-      const currentUserName = JSONops._getUserValue(props.rankingJSONdata, props.user.username, "NAME");
-      const activeBool = JSONops._getUserValue(props.rankingJSONdata, props.user.username, "ACTIVE");
+    if (props.rankingJSONdata === undefined) {
+      console.log('json is empty inside userPlayerJsonDataDisplay');
+      return null;
+    }
+      const jsonOpsReturnOjb = JSONops.createUserPlayerJsonDataDisplay(props.rankingListJSONdata, props.newrankId, props.rankingJSONdata, props.user);
 
-      if (currentUserName === props.user.username && activeBool) {
-        const textOpsReturnOjb = userInfoText(currentChallengerName, currentChallengerContactNo,
-        currentChallengerEmail, currentUserRank);
+      if (jsonOpsReturnOjb.currentUserName === props.user.username && jsonOpsReturnOjb.activeBool) {
+        const textOpsReturnOjb = userInfoText(jsonOpsReturnOjb.currentChallengerName, jsonOpsReturnOjb.currentChallengerContactNo,
+        jsonOpsReturnOjb.currentChallengerEmail, jsonOpsReturnOjb.currentUserRank);
 
         return ( <
           div >
           <
           h2 > {
-            textToDisplayRankName
+            jsonOpsReturnOjb.textToDisplayRankName
           } <
           /h2> <
           h4 > {
-            textToDisplayRankDesc
+            jsonOpsReturnOjb.textToDisplayRankDesc
           } <
           /h4> {
             props.user.username
@@ -226,7 +219,7 @@ const selectRowPropAfterClickRow = {
           /div>)
         }
         else
-        if (currentUserName === props.user.username && !activeBool) {
+        if (jsonOpsReturnOjb.currentUserName === props.user.username && !jsonOpsReturnOjb.activeBool) {
           return ( <
             div >
             Your player is currently deactivated! < p > < /p>

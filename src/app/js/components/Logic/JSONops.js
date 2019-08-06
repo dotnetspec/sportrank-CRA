@@ -61,12 +61,27 @@ const JSONops = {
       return true;
   },
 
+  createUserPlayerJsonDataDisplay: function(rankingListJSONdata, newrankId, rankingJSONdata, user){
+      const currentChallengerName = JSONops._getUserValue(rankingJSONdata, user.username, "CURRENTCHALLENGERNAME");
+      const createUserPlayerJsonDataDisplayObj = {
+      textToDisplayRankName: JSONops._getGlobalRankingVal(rankingListJSONdata, newrankId, 'RANKINGNAME'),
+      textToDisplayRankDesc:JSONops._getGlobalRankingVal(rankingListJSONdata, newrankId, 'RANKINGDESC'),
+      currentUserRank:JSONops._getUserValue(rankingJSONdata, user.username, "RANK"),
+      currentChallengerName: currentChallengerName,
+      currentChallengerContactNo:JSONops._getUserValue(rankingJSONdata, currentChallengerName, "CONTACTNO"),
+      currentChallengerEmail: JSONops._getUserValue(rankingJSONdata, currentChallengerName, "EMAIL"),
+      currentUserName:JSONops._getUserValue(rankingJSONdata, user.username, "NAME"),
+      activeBool:JSONops._getUserValue(rankingJSONdata, user.username, "ACTIVE")
+      }
+    return createUserPlayerJsonDataDisplayObj;
+  },
+
   processResult: function (resultEntered, currentUser, data, newrankId) {
     //responseObj created to deal with testing/logic etc. issues of returning
     //both the text and the obj so that _sendJSONDataWithRankingID can be extracted
     //from this logic
     let responseObj = {text:'', updatedUserJSON: []};
-    let checkedUserRank, checkedOpponentRank = 0;
+    let checkedUserRank, checkedOpponentRank:0;
     const opponentCurrentlyChallengingUser = JSONops._getUserValue(data, currentUser, "CURRENTCHALLENGERNAME");
 
       checkedUserRank = JSONops._getUserValue(data, currentUser, "RANK");
