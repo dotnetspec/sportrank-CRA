@@ -23,7 +23,7 @@ import Spinner from 'react-spinkit';
 import DoChallenge from './DoChallenge'
 import EnterResult from './EnterResult'
 import JSONops from './JSONops'
-import { userInfoText, userInfoText2 } from './TextOps'
+import {userInfoText} from './TextOps'
 import _sendJSONDataWithRankingID from '../SideEffects/io/Jsonio'
 //import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
@@ -47,8 +47,9 @@ const selectRowPropAfterClickRow = {
  * @extends React.Component
  */
 
+//we can use export here because we only ever export the whole component
+//not individual sub functions (unlike eg.TextOps)
   export default function Home(props){
-
       const [showModal, setshowModal] = useState(false)
       const [resultModalIsOpen, setResultModalIsOpen] = useState(false)
       const [warningModalIsOpen, setWarningModalIsOpen] = useState(false)
@@ -65,15 +66,10 @@ const selectRowPropAfterClickRow = {
       defaultSortOrder: 'asc' // default sort order
     };
 
-
     const setResultModalIsOpenCB = (openOrCloseBool) => {
       console.log('setResultModalIsOpenCB', openOrCloseBool)
       setResultModalIsOpen(openOrCloseBool);
-      // setState({
-      //   showModal: false
-      // });
     }
-
   /**
    * Hides the challenge modal
    */
@@ -174,19 +170,25 @@ const selectRowPropAfterClickRow = {
   //REVIEW: Managing display here might be handled differently:
   //this was originally a component - perhaps it still should be [?]
   const userPlayerJsonDataDisplay = () => {
-    //console.log('userPlayerJsonDataDisplay');
-    if (props.rankingJSONdata === undefined) {
-      console.log('json is empty inside userPlayerJsonDataDisplay');
-      return null;
-    }
+      let jsonWarkingTxt = '';
+      //only need to test the chosen ranking list ..
+      if(JSONops.isDefinedJson(props.rankingJSONdata)){
+        jsonWarkingTxt = 'JSON file for chosen ranking undefined. Please contact administrator. Thank you.'
+      }
       const jsonOpsReturnOjb = JSONops.createUserPlayerJsonDataDisplay(props.rankingListJSONdata, props.newrankId, props.rankingJSONdata, props.user);
 
+      //IF there's an active user ...
       if (jsonOpsReturnOjb.currentUserName === props.user.username && jsonOpsReturnOjb.activeBool) {
         const textOpsReturnOjb = userInfoText(jsonOpsReturnOjb.currentChallengerName, jsonOpsReturnOjb.currentChallengerContactNo,
         jsonOpsReturnOjb.currentChallengerEmail, jsonOpsReturnOjb.currentUserRank);
-
+        //jsx below has to remain in scope (cannot move it out)
         return ( <
           div >
+          <
+          h2 > {
+            jsonWarkingTxt
+          } <
+          /h2>
           <
           h2 > {
             jsonOpsReturnOjb.textToDisplayRankName
@@ -218,6 +220,7 @@ const selectRowPropAfterClickRow = {
           } <
           /div>)
         }
+        //there's no ACTIVE user
         else
         if (jsonOpsReturnOjb.currentUserName === props.user.username && !jsonOpsReturnOjb.activeBool) {
           return ( <
@@ -226,6 +229,7 @@ const selectRowPropAfterClickRow = {
             Click Reactivate(top menu) to re - enter the rankings(at the bottom) <
             /div>);
           }
+          //there's some other problem
           else {
             return (
               null);
@@ -240,14 +244,15 @@ const selectRowPropAfterClickRow = {
           if (props.user.username !== '' &&
             !JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.user.username) &&
             props.loadingJSON === false &&
-            //props.viewingOnlyCB === false
-            props.setviewingOnlyCB(false)
+            props.viewingOnlyCB === false
+            //props.setviewingOnlyCB(false)
           ) {
             console.log('createNewUserInJSON in preprocessDataBeforeRender in home.js')
             console.log('props.rankingID in preprocessDataBeforeRender in home.js', props.newrankId)
             const newUserJsonObj = JSONops.createNewUserInJSON(props.rankingJSONdata, props.user.username, props.contactno, props.email, props.account, props.description, props.newrankId);
-            _sendJSONDataWithRankingID(newUserJsonObj, props.newrankId);
-            console.log('player created')
+            //_sendJSONDataWithRankingID(newUserJsonObj, props.newrankId);
+            return newUserJsonObj;
+            //console.log('player created')
           }
 
           if (props.isRankingIDInvalid) {
@@ -267,7 +272,8 @@ const selectRowPropAfterClickRow = {
               console.log('preprocessDataBeforeRender player not listed, join clicked')
             //originalData, username, contactno, email, accountno, description, rankingID)
             const newUserJsonObj = JSONops.createNewUserInJSON(props.rankingJSONdata, props.user.username, props.contactno, props.email, props.account, props.description, props.newrankId)
-            _sendJSONDataWithRankingID(newUserJsonObj, props.newrankId);
+            return newUserJsonObj;
+            //_sendJSONDataWithRankingID(newUserJsonObj, props.newrankId);
           }
         }
 
@@ -373,7 +379,11 @@ const selectRowPropAfterClickRow = {
         // }
 
       useEffect(() => {
-         preprocessDataBeforeRender();
+         const jsonDataBeforeRender = preprocessDataBeforeRender();
+         if(JSONops.isDefinedJson(jsonDataBeforeRender)){
+           _sendJSONDataWithRankingID(jsonDataBeforeRender, props.newrankId);
+         }
+
         }, [])
 
           let isError = props.error && props.error.message;

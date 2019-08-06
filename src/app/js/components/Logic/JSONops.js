@@ -45,6 +45,12 @@ const JSONops = {
         return false;
   },
 
+  isDefinedJson: function(data){
+    if (data === undefined) {
+      return false;
+    }
+  },
+
   isValidRankingOrder: function(data){
         //sort the array into ranking order first...
         data.sort(function(a,b){

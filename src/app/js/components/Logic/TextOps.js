@@ -5,7 +5,7 @@
  * Functional component handling text operations
  * Talks to Home etc.
  */
-const userInfoText = (currentChallengerName, currentChallengerContactNo,
+export const userInfoText = (currentChallengerName, currentChallengerContactNo,
 currentChallengerEmail, currentUserRank) => {
       let userInfoObj = {
         textToDisplayRank: '',
@@ -28,7 +28,6 @@ currentChallengerEmail, currentUserRank) => {
     }
 
 //just an example 2nd function ...
-    const userInfoText2 = () => {
+    export const userInfoText2 = () => {
         return 'hello';
     }
-export { userInfoText, userInfoText2 };
