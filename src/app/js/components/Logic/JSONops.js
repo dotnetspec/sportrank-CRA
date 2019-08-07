@@ -1,4 +1,4 @@
-import  _sendJSONDataWithRankingID  from '../SideEffects/io/Jsonio'
+import  {_sendJSONDataWithRankingID}  from '../SideEffects/io/Jsonio'
 
 //TODO: refactor
 const JSONops = {
@@ -48,6 +48,8 @@ const JSONops = {
   isDefinedJson: function(data){
     if (data === undefined) {
       return false;
+    }else{
+      return true;
     }
   },
 
@@ -682,7 +684,7 @@ console.log('inside _setUserNameValue')
         //using ACCOUNT not NAME to test if user is listed in the json
         const result = this._getUserValue(data, currentUser, "ACCOUNT")
 
-        //console.log('result', result)
+        console.log('result', result)
 
         if(result === undefined){return false}
         else

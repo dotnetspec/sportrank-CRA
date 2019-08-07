@@ -5,7 +5,12 @@ import axios from 'axios';
   // export function Jsonio({
   //   props
   // }) {
-    export default async function _sendJSONDataWithRankingID (data, rankingID) {
+
+  //POST a new ranking list update
+    //export async function _sendJSONDataWithRankingID (data, rankingID) {
+    export const _sendJSONDataWithRankingID = (data, rankingID) => {
+      // export const userInfoText = (currentChallengerName, currentChallengerContactNo,
+      // currentChallengerEmail, currentUserRank) => {
     console.log('rankingID inside _sendJSONDataWithRankingID',rankingID)
     console.log('data inside _sendJSONDataWithRankingID',data)
     //console.log('inside _sendJSONDataWithRankingID')
@@ -98,6 +103,7 @@ const requestConfig = {
   return await fetch(url);
 }
 
+//GET the specific ranking list
  export async function _loadsetJSONData (newrankId, _loadsetJSONData_callback){
   console.log('newrankId IN _loadsetJSONData', newrankId);
       try {

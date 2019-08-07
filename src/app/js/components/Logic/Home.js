@@ -59,6 +59,7 @@ const selectRowPropAfterClickRow = {
       const [emailCB, setEmailCB] = useState('')
       const [data, setData] = useState('')
       const [resultInfoForDisplay, setResultInfoForDisplay] = useState('')
+      //const [hasTableDrawnOnceOnly, setHasTableDrawnOnceOnly] = useState(false)
     //}
 
     const tablesortoptions = {
@@ -172,7 +173,7 @@ const selectRowPropAfterClickRow = {
   const userPlayerJsonDataDisplay = () => {
       let jsonWarkingTxt = '';
       //only need to test the chosen ranking list ..
-      if(JSONops.isDefinedJson(props.rankingJSONdata)){
+      if(!JSONops.isDefinedJson(props.rankingJSONdata)){
         jsonWarkingTxt = 'JSON file for chosen ranking undefined. Please contact administrator. Thank you.'
       }
       const jsonOpsReturnOjb = JSONops.createUserPlayerJsonDataDisplay(props.rankingListJSONdata, props.newrankId, props.rankingJSONdata, props.user);
@@ -236,46 +237,47 @@ const selectRowPropAfterClickRow = {
           }
         }
 
-        //NB: none of this code is currently running on a re-set
-        const preprocessDataBeforeRender = () => {
-          //if there is a username but it's not listed in the json,
-          //add this user to the current list
-          //REVIEW: This test may be more consistently handled
-          if (props.user.username !== '' &&
-            !JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.user.username) &&
-            props.loadingJSON === false &&
-            props.viewingOnlyCB === false
-            //props.setviewingOnlyCB(false)
-          ) {
-            console.log('createNewUserInJSON in preprocessDataBeforeRender in home.js')
-            console.log('props.rankingID in preprocessDataBeforeRender in home.js', props.newrankId)
-            const newUserJsonObj = JSONops.createNewUserInJSON(props.rankingJSONdata, props.user.username, props.contactno, props.email, props.account, props.description, props.newrankId);
-            //_sendJSONDataWithRankingID(newUserJsonObj, props.newrankId);
-            return newUserJsonObj;
-            //console.log('player created')
-          }
-
-          if (props.isRankingIDInvalid) {
-            props.history.push('/create');
-          }
-
-          if (JSONops.isJSONEmpty(props.rankingJSONdata) && props.user.username === null) {
-
-            console.log('json is empty and there is no username');
-            props.history.push('/create');
-            return null;
-            //(<div>No Data To Display - Please select an account (top right) to create a player</div>);
-          }
-          //if the player isn't listed in the json then add them (only if user clicked 'join')
-          if (!JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.user.username) &&
-            props.viewingOnlyCB === false) {
-              console.log('preprocessDataBeforeRender player not listed, join clicked')
-            //originalData, username, contactno, email, accountno, description, rankingID)
-            const newUserJsonObj = JSONops.createNewUserInJSON(props.rankingJSONdata, props.user.username, props.contactno, props.email, props.account, props.description, props.newrankId)
-            return newUserJsonObj;
-            //_sendJSONDataWithRankingID(newUserJsonObj, props.newrankId);
-          }
-        }
+        // const preprocessDataBeforeRender = () => {
+        //   //if there is a username but it's not listed in the json,
+        //   //add this user to the current list
+        //   //REVIEW: This test may be more consistently handled
+        //   if (props.user.username !== '' &&
+        //     !JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.user.username) &&
+        //     props.loadingJSON === false &&
+        //     props.viewingOnlyCB === false
+        //     //props.setviewingOnlyCB(false)
+        //   ) {
+        //     console.log('createNewUserInJSON in preprocessDataBeforeRender in home.js')
+        //     console.log('props.rankingID in preprocessDataBeforeRender in home.js', props.newrankId)
+        //     const newUserJsonObj = JSONops.createNewUserInJSON(props.rankingJSONdata, props.user.username, props.contactno, props.email, props.account, props.description, props.newrankId);
+        //     //_sendJSONDataWithRankingID(newUserJsonObj, props.newrankId);
+        //     console.log('newUserJsonObj', newUserJsonObj);
+        //     return newUserJsonObj.jsonRS;
+        //     //console.log('player created')
+        //   }
+        //
+        //   if (props.isRankingIDInvalid) {
+        //     props.history.push('/create');
+        //   }
+        //
+        //   if (JSONops.isJSONEmpty(props.rankingJSONdata) && props.user.username === null) {
+        //
+        //     console.log('json is empty and there is no username');
+        //     props.history.push('/create');
+        //     return null;
+        //     //(<div>No Data To Display - Please select an account (top right) to create a player</div>);
+        //   }
+        //   //if the player isn't listed in the json then add them (only if user clicked 'join')
+        //   if (!JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.user.username) &&
+        //     props.viewingOnlyCB === false) {
+        //       console.log('preprocessDataBeforeRender player not listed, join clicked')
+        //     //originalData, username, contactno, email, accountno, description, rankingID)
+        //     const newUserJsonObj = JSONops.createNewUserInJSON(props.rankingJSONdata, props.user.username, props.contactno, props.email, props.account, props.description, props.newrankId)
+        //     console.log('newUserJsonObj.jsonRS', newUserJsonObj.jsonRS)
+        //     return newUserJsonObj.jsonRS;
+        //     //_sendJSONDataWithRankingID(newUserJsonObj, props.newrankId);
+        //   }
+        // }
 
         const bootstrapTableDisplay = () => {
           //if the json is empty and no account re-direct to create user
@@ -289,7 +291,13 @@ const selectRowPropAfterClickRow = {
             props.history.push('/create');
             return null;
             //(<div>No Data To Display - Please select an account (top right) to create a player</div>);
+            //only allow the table to draw itself once
+            //to enable a new user joining not to be overwritten
+            //REVIEW: better understanding of why overwrite occuring needed ...
           } else {
+          //if(hasTableDrawnOnceOnly){
+            //setHasTableDrawnOnceOnly(true);
+            //console.log('redraw the table with ', props.rankingJSONdata)
             return ( <
               BootstrapTable
               data-testid="BootstrapTableTestId"
@@ -379,11 +387,15 @@ const selectRowPropAfterClickRow = {
         // }
 
       useEffect(() => {
-         const jsonDataBeforeRender = preprocessDataBeforeRender();
-         if(JSONops.isDefinedJson(jsonDataBeforeRender)){
-           _sendJSONDataWithRankingID(jsonDataBeforeRender, props.newrankId);
-         }
-
+         //const jsonDataBeforeRender = preprocessDataBeforeRender();
+         // console.log('jsonDataBeforeRender', jsonDataBeforeRender);
+         // if(JSONops.isDefinedJson(jsonDataBeforeRender)){
+         //   //console.log('about to send json to _sendJSONDataWithRankingID', jsonDataBeforeRender, props.newrankId);
+         //   _sendJSONDataWithRankingID(jsonDataBeforeRender, props.newrankId);
+         //   props.setrankingJSONdataCB(jsonDataBeforeRender);
+           //set to viewingOnly and re-render
+           props.setviewingOnlyCB(true);
+         //}
         }, [])
 
           let isError = props.error && props.error.message;

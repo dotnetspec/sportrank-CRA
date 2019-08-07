@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 //import Spinner from 'react-spinkit'
 import JSONops from './JSONops'
 //import {contactNoCB, emailCB} from './App'
-import _sendJSONDataWithRankingID from '../SideEffects/io/Jsonio'
+import {_sendJSONDataWithRankingID} from '../SideEffects/io/Jsonio'
 
 /**
  * Class that renders a form to allow the user to create

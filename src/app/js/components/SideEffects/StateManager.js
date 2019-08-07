@@ -39,7 +39,7 @@ function setUserSelectedRanking(state, defaultUserAccount){
 }
 
 function assignUserAcctStateToStateObj(userAccounts, defaultUserAccount, state){
-  console.log('assignUserAcctStateToStateObj', state)
+  //console.log('assignUserAcctStateToStateObj', state)
   state.userAccounts =  userAccounts;
   state.user =  defaultUserAccount[0].user;
   state.contactno =  defaultUserAccount[0].user.contactno;

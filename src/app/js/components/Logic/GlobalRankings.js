@@ -95,8 +95,10 @@ class GlobalRankings extends Component {
            username={this.props.user.username}
            setnewrankIdCB={this.props.setnewrankIdCB}
            newrankId={this.props.newrankId}
-           //viewingOnlyCB={this.props.viewingOnlyCB}
+           viewingOnlyCB={this.props.viewingOnlyCB}
            setviewingOnlyCB={this.props.setviewingOnlyCB}
+           setrankingJSONdataCB={this.props.setrankingJSONdataCB}
+           account={this.props.account}
            />
       )
     }

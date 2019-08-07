@@ -154,7 +154,7 @@ export function App({
   }
 
   function _loadsetJSONData_callback(data) {
-    //console.log('data account in callback', data[0].ACCOUNT);
+    console.log('data account in callback', data[0].ACCOUNT);
     //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
     setdata(data);
     setisLoadingJSON(false);
@@ -267,7 +267,7 @@ export function App({
   //cb from GlobalRankings.js to set the rank state as view only
   //REVEIW: is this necessary? wasn't working until noticed it ...
   const setOnCallbackviewingOnlyCB = (viewingOnlyCBval) => {
-    console.log('in viewingOnlyCB', viewingOnlyCB)
+    console.log('in viewingOnlyCB', viewingOnlyCBval)
     //   setState({viewingOnlyCB:viewingOnlyCB})
     setviewingOnlyCB(viewingOnlyCBval);
   }
@@ -288,6 +288,7 @@ export function App({
     //console.log('count in app.js', count);
     setnewrankId(newrankIdtxt);
     //_loadsetJSONData(count, _loadsetJSONData_callback);
+
     _loadsetJSONData(newrankIdtxt, _loadsetJSONData_callback);
   }
 
@@ -305,6 +306,16 @@ export function App({
 const setemailCB = (oppoEmailTxt) => {
   //console.log('oppoEmailTxt in app.js', oppoEmailTxt);
   setemail(oppoEmailTxt);
+}
+
+//just repeating _loadsetJSONData_callback?
+const setrankingJSONdataCB = (datatoSet) => {
+  console.log('datatoSet', datatoSet)
+  setdata(datatoSet);
+  // setisLoadingJSON(false);
+  // setIsUserInJson(JSONops.isPlayerListedInJSON(data, user.username));
+  // setrank(JSONops._getUserValue(data, user.username, "RANK"));
+  // setIsCurrentUserActive(JSONops._getUserValue(data, user.username, "ACTIVE"));
 }
   //#endregion
 
@@ -525,6 +536,9 @@ const setemailCB = (oppoEmailTxt) => {
       rankingJSONdata = {
         data
       }
+      setrankingJSONdataCB = {
+        setrankingJSONdataCB
+      }
       rankingListJSONdata = {
         rankingListData
       }
@@ -533,6 +547,9 @@ const setemailCB = (oppoEmailTxt) => {
       }
       isCurrentUserActive = {
         isCurrentUserActive
+      }
+      setOnCallbackisCurrentUserActiveCB = {
+        setOnCallbackisCurrentUserActiveCB
       }
       isRankingIDInvalid = {
         isRankingIDInvalid
@@ -560,9 +577,6 @@ const setemailCB = (oppoEmailTxt) => {
       }
       loadingJSON = {
         isLoadingJSON
-      }
-      setOnCallbackisCurrentUserActiveCB = {
-        setOnCallbackisCurrentUserActiveCB
       }
       />
 

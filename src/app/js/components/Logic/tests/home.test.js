@@ -1,7 +1,7 @@
 import React from 'react'
-import { BrowserRouter } from 'react-router-dom'
+//import { BrowserRouter } from 'react-router-dom'
 import Home  from '../Home'
-import JSONops from '../JSONops'
+//import JSONops from '../JSONops'
 //import {Jsonio, _sendJSONDataWithRankingID}  from '../../SideEffects/io/Jsonio'
 // import renderer from 'react-test-renderer'
 // import { shallow, mount } from 'enzyme';
@@ -13,10 +13,10 @@ import 'jest-dom/extend-expect'
 //since this is a test it's not actually importing the real 'axios' but
 //rather the axios in the __mocks__ folder
 //import axiosMock  from '../../SideEffects/tests/__mocks__/axios'
-import web3ioMock  from '../../SideEffects/tests/__mocks__/web3io'
-import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, asyncFetch } from '../../SideEffects/io/Jsonio';
-import {fetchMock} from 'fetch-mock'
-import _loadCurrentUserAccounts from '../../SideEffects/io/web3io';
+// import web3ioMock  from '../../SideEffects/tests/__mocks__/web3io'
+// import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, asyncFetch } from '../../SideEffects/io/Jsonio';
+// import {fetchMock} from 'fetch-mock'
+// import _loadCurrentUserAccounts from '../../SideEffects/io/web3io';
 
 //NB: There are no 'props' at the <App /> level. Testing using props
 //has to take place in the child components
@@ -50,7 +50,7 @@ describe('<Home/> ', () => {
   const onClick = jest.fn();
   const onAfterUserUpdate = jest.fn();
   const newrankId = jest.fn();
-  const viewingOnlyCB = jest.fn();
+  const setviewingOnlyCB = jest.fn();
 
   const userAccountsArray =
    [
@@ -82,7 +82,8 @@ describe('<Home/> ', () => {
             rankingJSONdata: dataTrue,
             account: testAccountPlayer1Rinkeby,
             user: userObj,
-            isRankingIDInvalid: false
+            isRankingIDInvalid: false,
+            setviewingOnlyCB:setviewingOnlyCB
           }
 
 
