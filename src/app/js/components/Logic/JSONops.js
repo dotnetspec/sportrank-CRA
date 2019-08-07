@@ -684,12 +684,32 @@ console.log('inside _setUserNameValue')
         //using ACCOUNT not NAME to test if user is listed in the json
         const result = this._getUserValue(data, currentUser, "ACCOUNT")
 
-        console.log('result', result)
+        //console.log('result', result)
 
         if(result === undefined){return false}
         else
         //5 is arbitrary. if < 5 no account number was returned
         if(result.length < 5){return false}else{return true};
+      },
+
+      //just returning undefined not good enough
+      isSafeToAddPlayerToJSON: function(data, currentUser){
+        //using ACCOUNT not NAME to test if user is listed in the json
+        //need to check multiple fields to ensure user not already listed
+        const accountNo = this._getUserValue(data, currentUser, "ACCOUNT")
+        const currentChallengerName = this._getUserValue(data, currentUser, "CURRENTCHALLENGERNAME")
+        const currentid = this._getUserValue(data, currentUser, "id")
+        ////5 is arbitrary. if < 5 no account number was returned
+        //then it should the case that the user
+        //is not in the JSON and is safe to add
+        if(accountNo === undefined ||
+          currentChallengerName === undefined ||
+          currentid === undefined ||
+          accountNo.length < 5)
+          {return true}
+        else
+        //otherwise not safe
+        return false;
       },
 
       //TODO: will have to separate isPlayerAvailableToChallengeObj.jsonRS[i].CURRENTCHALLENGERNAME === user

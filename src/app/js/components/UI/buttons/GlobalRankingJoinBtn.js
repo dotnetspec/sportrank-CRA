@@ -19,25 +19,14 @@ export default function GlobalRankingJoinBtn(props) {
   const onClickRankingJoinSelected = async (row) => {
 
     props.setnewrankIdCB(row.RANKINGID);
-    //next should get data ready to be processed
-    console.log('about to _loadsetJSONData')
     let tempjson = [];
     const handleCB = (data) =>{
-      console.log('in handleCB', data)
-      //return data;
       tempjson = data;
     }
     await _loadsetJSONData(row.RANKINGID, await handleCB);
-    //console.log('is props.rankingJSONdata defined with CB?', props.rankingJSONdata)
-    console.log('tempjson', await tempjson)
-    //const transToNew = await handleCB;
-
     //get the data ready with the new user
-    //before reaching 'Home' page
-    //if(props.rankingJSONdata !== undefined){
-      //props.setviewingOnlyCB(false);
+    //before loading 'Home' page
       const jsonDataBeforeRender = await preprocessDataBeforeRender(tempjson);
-      //_sendJSONDataWithRankingID(jsonDataBeforeRender, props.newrankId);
       await _sendJSONDataWithRankingID(jsonDataBeforeRender, row.RANKINGID);
       props.setrankingJSONdataCB(jsonDataBeforeRender);
       props.setspecificRankingOptionBtnsCB();
@@ -45,66 +34,57 @@ export default function GlobalRankingJoinBtn(props) {
       //if joining and not yet a member of the ranking home will add the new player to the bottom
       //of the rankings in the selected ladder
       props.history.push('/home/@' + props.username);
-    //}
   }
 
   const preprocessDataBeforeRender = async (handleCB) => {
     //if there is a username but it's not listed in the json,
     //add this user to the current list
     //REVIEW: This test may be more consistently handled
-console.log('about to preprocessDataBeforeRender')
-console.log('is handleCB defined', handleCB)
-console.log('props.viewingOnlyCB', props.viewingOnlyCB)
-console.log('props.username', props.username)
-console.log('!JSONops.isPlayerListedInJSON', !JSONops.isPlayerListedInJSON(handleCB, props.username))
-const isPlayerListedAlready = JSONops.isPlayerListedInJSON(handleCB, props.username);
-console.log('isPlayerListedAlready',isPlayerListedAlready)
-console.log('!isPlayerListedAlready',!isPlayerListedAlready)
-console.log('props.account', props.account)
+// console.log('about to preprocessDataBeforeRender')
+// console.log('is handleCB defined', handleCB)
+// console.log('props.viewingOnlyCB', props.viewingOnlyCB)
+// console.log('props.username', props.username)
+// console.log('!JSONops.isPlayerListedInJSON', !JSONops.isPlayerListedInJSON(handleCB, props.username))
+// const isPlayerListedAlready = JSONops.isPlayerListedInJSON(handleCB, props.username);
+// console.log('isPlayerListedAlready',isPlayerListedAlready)
+// console.log('!isPlayerListedAlready',!isPlayerListedAlready)
+// console.log('props.account', props.account)
     if (props.username !== '' &&
-      !(JSONops.isPlayerListedInJSON(handleCB, props.username))
+      //!(JSONops.isPlayerListedInJSON(handleCB, props.username))
+      JSONops.isSafeToAddPlayerToJSON(handleCB, props.username)
       //&&
       //props.loadingJSON === false &&
       //props.viewingOnlyCB === false
       //props.setviewingOnlyCB(false)
     ) {
-      console.log('createNewUserInJSON in preprocessDataBeforeRender in home.js')
-      console.log('props.rankingID in preprocessDataBeforeRender in home.js', props.newrankId)
+      //console.log('createNewUserInJSON in preprocessDataBeforeRender in home.js')
+      //console.log('props.rankingID in preprocessDataBeforeRender in home.js', props.newrankId)
       const newUserJsonObj = JSONops.createNewUserInJSON(handleCB, props.username, props.contactno, props.email, props.account, props.description, props.newrankId);
       //_sendJSONDataWithRankingID(newUserJsonObj, props.newrankId);
-      console.log('newUserJsonObj', newUserJsonObj);
+      //console.log('newUserJsonObj', newUserJsonObj);
       return newUserJsonObj.jsonRS;
       //console.log('player created')
     }
-
     if (props.isRankingIDInvalid) {
       console.log('in isRankingIDInvalid')
       props.history.push('/create');
     }
-
     if (JSONops.isJSONEmpty(handleCB) && props.username === null) {
-
       console.log('json is empty and there is no username');
       props.history.push('/create');
       return null;
-      //(<div>No Data To Display - Please select an account (top right) to create a player</div>);
     }
     //if the player isn't listed in the json then add them (only if user clicked 'join')
-    if (!JSONops.isPlayerListedInJSON(handleCB, props.username)
-    // &&
-    //   props.viewingOnlyCB === false
-    )
+    //if (!JSONops.isPlayerListedInJSON(handleCB, props.username)
+    if(JSONops.isSafeToAddPlayerToJSON(handleCB, props.username))
       {
-        console.log('preprocessDataBeforeRender player not listed, join clicked')
-      //originalData, username, contactno, email, accountno, description, rankingID)
       const newUserJsonObj = JSONops.createNewUserInJSON(handleCB, props.username, props.contactno, props.email, props.account, props.description, props.newrankId)
       console.log('newUserJsonObj.jsonRS', newUserJsonObj.jsonRS)
       return newUserJsonObj.jsonRS;
-      //_sendJSONDataWithRankingID(newUserJsonObj, props.newrankId);
-    } else {
-      console.log('did nothing')
-      return handleCB;
-    }
+      } else {
+        console.log('did nothing')
+        return handleCB;
+      }
   }
 
   useEffect(() => {
