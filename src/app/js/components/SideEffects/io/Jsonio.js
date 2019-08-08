@@ -108,12 +108,19 @@ const requestConfig = {
   console.log('newrankId IN _loadsetJSONData', newrankId);
       try {
             let httpStr = 'https://api.jsonbin.io/b/' + newrankId + '/latest';
-
-            await fetch(httpStr)
+            var obj = {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'secret-key': '$2a$10$HIPT9LxAWxYFTW.aaMUoEeIo2N903ebCEbVqB3/HEOwiBsxY3fk2i'
+                }
+              }
+            await fetch(httpStr, obj)
                .then((response) => response.json())
                .then((responseJson) => {
                  if(responseJson.length !== 0){
                    responseJson = checkUndefined(responseJson);
+                     console.log('responseJson IN _loadsetJSONData', responseJson);
                    _loadsetJSONData_callback(responseJson);
                      }
                })

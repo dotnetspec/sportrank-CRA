@@ -243,7 +243,7 @@ console.log('userTypedRankingNameStr', userTypedRankingNameStr)
       };
       console.log('lookupRankName', lookupRankName)
       const currentUserValue = this._getVal(lookupRankName);
-      console.log('currentUserValue', currentUserValue)
+      console.log('currentUserValue should be undefined', currentUserValue)
       if(currentUserValue === "" || currentUserValue === undefined){
         return false;
       }else{
