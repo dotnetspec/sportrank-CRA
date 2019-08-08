@@ -157,7 +157,7 @@ export function App({
   }
 
   function _loadsetJSONData_callback(data) {
-    console.log('data account in callback', data[0].ACCOUNT);
+    console.log('data account in _loadsetJSONData_callback in app.js', data[0].ACCOUNT);
     //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
     setdata(data);
     setisLoadingJSON(false);

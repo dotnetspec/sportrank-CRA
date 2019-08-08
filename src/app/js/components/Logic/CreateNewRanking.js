@@ -6,7 +6,9 @@ import React, { Component } from 'react'
 import FieldGroup from '../UI/FieldGroup'
 import JSONops from './JSONops'
 import web3 from '../../../../web3';
-import DSportRank from '../../../../ABIaddress';
+//import DSportRank from '../../../../ABIaddress';
+import { estimateGas } from '../SideEffects/io/estimateGas';
+import { newRankingSendToContract } from '../SideEffects/io/newRankingSendToContract';
 //import PageHeader from 'react-bootstrap/PageHeader'
 
 
@@ -212,13 +214,14 @@ _continueClick = () => {
               console.log('newRankingId in CreateNewRanking', this.props.newrankId)
 
               // set up our contract method with the input values from the form
-                  const editAccount = DSportRank.methods.editAccount(usernameHash, updatedDescription, this.props.newrankId, updatedImageHash);
+                  //const editAccount = DSportRank.methods.editAccount(usernameHash, updatedDescription, this.props.newrankId, updatedImageHash);
 
                   // get a gas estimate before sending the transaction
-                  const gasEstimate = await editAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
+                  //const gasEstimate = await editAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
+                  const gasEstimate = await estimateGas();
+                  const result = newRankingSendToContract(gasEstimate, usernameHash, updatedDescription, this.props.newrankId, updatedImageHash);
 
-
-                    const result = await editAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
+                    //const result = await editAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
 
 
                        // check result status. if status is false or '0x0', show user the tx details to debug error
