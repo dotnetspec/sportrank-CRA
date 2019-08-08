@@ -1,6 +1,4 @@
-import React, {
-  useState, useEffect
-} from 'react';
+import React from 'react';
 import {
   Button
 } from 'react-bootstrap';
@@ -27,7 +25,9 @@ export default function GlobalRankingJoinBtn(props) {
     //get the data ready with the new user
     //before loading 'Home' page
       const jsonDataBeforeRender = await preprocessDataBeforeRender(tempjson);
+      if(jsonDataBeforeRender !== undefined){
       await _sendJSONDataWithRankingID(jsonDataBeforeRender, row.RANKINGID);
+      }
       props.setrankingJSONdataCB(jsonDataBeforeRender);
       props.setspecificRankingOptionBtnsCB();
       //props.setviewingOnlyCB(false);
@@ -87,17 +87,17 @@ export default function GlobalRankingJoinBtn(props) {
       }
   }
 
-  useEffect(() => {
-     //const jsonDataBeforeRender = preprocessDataBeforeRender();
-     // console.log('jsonDataBeforeRender', jsonDataBeforeRender);
-     // if(JSONops.isDefinedJson(jsonDataBeforeRender)){
-     //   //console.log('about to send json to _sendJSONDataWithRankingID', jsonDataBeforeRender, props.newrankId);
-     //   _sendJSONDataWithRankingID(jsonDataBeforeRender, props.newrankId);
-     //   props.setrankingJSONdataCB(jsonDataBeforeRender);
-       //set to viewingOnly and re-render
-       //props.setviewingOnlyCB(true);
-     //}
-    }, [])
+  // useEffect(() => {
+  //    //const jsonDataBeforeRender = preprocessDataBeforeRender();
+  //    // console.log('jsonDataBeforeRender', jsonDataBeforeRender);
+  //    // if(JSONops.isDefinedJson(jsonDataBeforeRender)){
+  //    //   //console.log('about to send json to _sendJSONDataWithRankingID', jsonDataBeforeRender, props.newrankId);
+  //    //   _sendJSONDataWithRankingID(jsonDataBeforeRender, props.newrankId);
+  //    //   props.setrankingJSONdataCB(jsonDataBeforeRender);
+  //      //set to viewingOnly and re-render
+  //      //props.setviewingOnlyCB(true);
+  //    //}
+  //   }, [])
 
   return ( <
     Button className = 'globalrankingjoinbtn'

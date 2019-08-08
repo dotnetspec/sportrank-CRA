@@ -5,7 +5,6 @@ import { Grid, Button, Row, Col, Modal } from 'react-bootstrap';
 import React, { Component } from 'react'
 import FieldGroup from '../UI/FieldGroup'
 import JSONops from './JSONops'
-//import {newrankIdCB} from './App'
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
 //import PageHeader from 'react-bootstrap/PageHeader'
@@ -210,10 +209,10 @@ _continueClick = () => {
 
               //const  newrankId  = this.props.getNewRankId();
 
-              console.log('newRankingId in CreateNewRanking', this.props.newrankIdCB)
+              console.log('newRankingId in CreateNewRanking', this.props.newrankId)
 
               // set up our contract method with the input values from the form
-                  const editAccount = DSportRank.methods.editAccount(usernameHash, updatedDescription, this.props.newrankIdCB, updatedImageHash);
+                  const editAccount = DSportRank.methods.editAccount(usernameHash, updatedDescription, this.props.newrankId, updatedImageHash);
 
                   // get a gas estimate before sending the transaction
                   const gasEstimate = await editAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
@@ -238,13 +237,13 @@ _continueClick = () => {
                // "RANKINGID": "123456789012345"
 
 
-               console.log('before _sendCreateNewRankingJSONData this.props.newrankIdCB', this.props.newrankIdCB)
-              const resultOfSendJsonToGlobalList = JSONops._sendCreateNewRankingJSONData(this.props.rankingListJSONdata, this.props.newrankIdCB,this.state.rankName,this.state.rankDescription )
+               console.log('before _sendCreateNewRankingJSONData this.props.', this.props.newrankId)
+              const resultOfSendJsonToGlobalList = JSONops._sendCreateNewRankingJSONData(this.props.rankingListJSONdata, this.props.newrankId ,this.state.rankName,this.state.rankDescription )
               console.log('resultOfSendJsonToGlobalList', resultOfSendJsonToGlobalList)
               //add current user to the new ranking list as the first player
-              JSONops.createNewUserInNewJSON(this.props.user.username, this.props.contactNoCB, this.props.emailCB, this.props.account, 'squash player', this.props.newrankIdCB)
+              JSONops.createNewUserInNewJSON(this.props.user.username, this.props.contactNoCB, this.props.emailCB, this.props.account, 'squash player', this.props.newrankId)
 
-              //JSONops.createNewUserInJSON(originalData, this.props.user.username, this.props.contactNoCB, this.props.emailCB, this.props.account, 'squash player', this.props.newrankIdCB)
+              //JSONops.createNewUserInJSON(originalData, this.props.user.username, this.props.contactNoCB, this.props.emailCB, this.props.account, 'squash player', this.props.)
                // Completed of async action, set loading state back
                //this.setState({ isLoading: false });
                // tell our parent (app.js) that we've created a user so it
@@ -293,8 +292,9 @@ getNewRankId = async () => {
         //(without using await)
         if (req.readyState === XMLHttpRequest.DONE) {
           const resulttxt = JSON.parse(req.responseText);
+          console.log('resulttxt', resulttxt)
           //only here can set state (once result is back)
-          this.props.newrankIdCB(resulttxt.id)
+          this.props.setnewrankIdCB(resulttxt.id)
           this.setState({ rankId: resulttxt.id});
           this.setState({ ranknameHasChanged: true});
           this.setState({ isLoading: false});
@@ -307,7 +307,11 @@ getNewRankId = async () => {
       //(above) before any further processing can be
       //don
       req.open("POST", "https://api.jsonbin.io/b", true);
+      const jsonbinSecretKey = "$2a$10$HIPT9LxAWxYFTW.aaMUoEeIo2N903ebCEbVqB3/HEOwiBsxY3fk2i";
+      //req.setRequestHeader("Content-Type", "application/json", "secret-key", "$2a$10$HIPT9LxAWxYFTW.aaMUoEeIo2N903ebCEbVqB3/HEOwiBsxY3fk2i");
       req.setRequestHeader("Content-type", "application/json");
+      req.setRequestHeader("secret-key", jsonbinSecretKey);
+      //req.setRequestHeader("secret-key", "$2a$10$HIPT9LxAWxYFTW.aaMUoEeIo2N903ebCEbVqB3/HEOwiBsxY3fk2i");
       //req.send('{"Ranking": "NewRanking"}') || {}
       //NB: below done so that jsonobj can be tested for new
       //id set for table display and correct ranking setting

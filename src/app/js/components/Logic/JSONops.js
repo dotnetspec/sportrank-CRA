@@ -680,12 +680,9 @@ console.log('inside _setUserNameValue')
       isPlayerListedInJSON: function(data, currentUser){
         //console.log('data in isPlayerListedInJSON',data)
         //console.log('currentUser in isPlayerListedInJSON', currentUser)
-
         //using ACCOUNT not NAME to test if user is listed in the json
         const result = this._getUserValue(data, currentUser, "ACCOUNT")
-
         //console.log('result', result)
-
         if(result === undefined){return false}
         else
         //5 is arbitrary. if < 5 no account number was returned

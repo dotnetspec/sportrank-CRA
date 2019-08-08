@@ -19,7 +19,7 @@ import {
   formatEth,
   executingAt
 } from '../../utils';
-import web3 from '../../../../web3';
+import {enableEthereum} from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
 import {
   _loadsetJSONData,
@@ -112,6 +112,9 @@ export function App({
   props
 }) {
 
+  // const result = await enableEthereum();
+  // console.log('result', result);
+
   //  function contactNoCB(contactNoCB) {
   //     //setState({contactNoCB})
   //     setcontactNoCB(contactNoCB);
@@ -180,31 +183,15 @@ export function App({
     //setState({ balance: data.balance});
     setBalance(data.balance)
   }
-
   const [user, setuser] = useState({});
-  //     account: '',
   const [account, setAccount] = useState('');
-  //     error: {},
   const [error, setError] = useState({});
-  //     userAccounts: [],
   const [userAccounts, setuserAccounts] = useState([])
-  //     balance: 0,
   const [balance, setBalance] = useState(0)
-  //     data: [],
   const [data, setdata] = useState([])
-  //     currentUserRank: 0,
-  //const [currentUserRank, setCurrentUserRank] = useState(0)
-  //     updatedExtAcctBalCB: 0,
   const [updatedExtAcctBalCB, setupdatedExtAcctBalCB] = useState(0)
-  //     isLoading: true,
-  const [isLoading, setIsLoading] = useState(true)
-  //     contactNoCB:'',
-  //const [contactNoCB, setcontactNoCB] = useState('')
-  //     emailCB:'',
-  //const [emailCB, setemailCB] = useState('')
-  //     usersRankingLists: [],
+  const [isLoading, setIsLoading] = useState(true);
   const [userRankingLists] = useState([]);
-  //     isUserInJson: false,
   const [isUserInJson, setIsUserInJson] = useState(false);
   //     jsonHasRankingID: false,
   //const [jsonHasRankingID, setjsonHasRankingID] = useState(false);;
@@ -232,20 +219,11 @@ export function App({
   //const [isLoadingRankingListJSON, setisLoadingRankingListJSON] = useState(true);
   //     rankingListData: [],
   const [rankingListData, setrankingListData] = useState([]);
-  //     newrankId:'',
-  //const [newrankId, setnewrankIdCB] = useState('');
-  //     viewingOnlyCB: true,
   const [viewingOnlyCB, setviewingOnlyCB] = useState(true);
-
-  //     contactno: '',
   const [contactno, setcontactno] = useState('');
-  //     email: '',
   const [email, setemail] = useState('');
-  //     description:'',
   const [description, setdescription] = useState('');
-  //     specificRankingOptionBtns: false
   const [specificRankingOptionBtns, setspecificRankingOptionBtns] = useState(false);
-
   const [rank, setrank] = useState('1');
   const [ranknameHasChanged, setranknameHasChanged] = useState('');
   const [address, setaddress] = useState('');

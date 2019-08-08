@@ -1,4 +1,5 @@
 import Web3 from 'web3';
+//import React from 'React';
 //import ganache from 'ganache-cli'
 // use the given Provider, e.g in the browser with Metamask,
 //or instantiate a new websocket provider
@@ -10,18 +11,27 @@ const web3 = new Web3(Web3.givenProvider || 'wss://rinkeby.infura.io/ws' || 'ws:
 
 //going through the MM docs:
 //window = browser. brower must be running ...
-if (typeof window.ethereum !== 'undefined') {
-  console.log('you have an etherem compatible browser')
-  if(window.ethereum.isMetaMask){
-    console.log('you have MM in the browser')
-    console.log('ethereum.networkVersion',  window.ethereum.networkVersion)
-    console.log('window[ethereum].networkVersion',  window['ethereum'].networkVersion)
 
-    console.log('ethereum.selectedAddress', window.ethereum.selectedAddress)
-    window.ethereum.enable();
-    //window.reload();
-    }
-};
+//enableEthereum();
+
+//const enableEthereum () async  => {
+  export async function enableEthereum() {
+    console.log('in enableEthereum')
+    await window.ethereum.enable();
+  if (typeof window.ethereum !== 'undefined') {
+    console.log('you have an etherem compatible browser')
+    if(window.ethereum.isMetaMask){
+      console.log('you have MM in the browser')
+      console.log('ethereum.networkVersion',  window.ethereum.networkVersion)
+      console.log('window[ethereum].networkVersion',  window['ethereum'].networkVersion)
+
+      console.log('ethereum.selectedAddress', window.ethereum.selectedAddress)
+      return 'return from enableEthereum';
+      //window.ethereum.enable();
+      //window.reload();
+      }
+  };
+}
 //REVIEW: possibly use as reconnecting code - needs refactor?
 // const RINKEBY_WSS = "wss://rinkeby.infura.io/ws";
 // const GIVENPROVIDER = Web3.givenProvider;
