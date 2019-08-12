@@ -5,6 +5,7 @@ import {getWeb3Accounts} from './web3Accounts';
 //enable mocking:
 //This function returns a tx hash:
   export const challengeSendToContract = async (gasEstimate, challengeState) => {
+    console.log('gasEstimate', gasEstimate)
     const account = await getWeb3Accounts();
     const challenge = await DSportRank.methods.challenge(challengeState);
     //return await challenge.send({ from: await getWeb3Accounts(), gas: gasEstimate + 100000 });

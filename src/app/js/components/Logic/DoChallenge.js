@@ -130,6 +130,7 @@ function displayContactDetails(){
        //const gasEstimate = await web3.eth.estimateGas({ from: web3.eth.defaultAccount });
       //const gasEstimate = await web3.eth.estimateGas({ from: getWeb3defaultAccount() });
       const gasEstimate = await estimateGas();
+      console.log('gasEstimate', gasEstimate);
       await challengeSendToContract(gasEstimate, state.challenge);
       //await console.log('gasEstimate', gasEstimate);
       //REVIEW; Account currently hard coded
@@ -148,7 +149,7 @@ function displayContactDetails(){
       //otherwise, if this goes through there could be ranking errors etc.
       console.log('props.newrankId', props.newrankId)
       JSONops._updateDoChallengeJSON(props.newrankId, props.user, props.selectedOpponentName, props.data);
-      //updateTextCB from Home 
+      //updateTextCB from Home
       displayContactDetails();
       // remove loading state
       //setState({ isLoading: false });

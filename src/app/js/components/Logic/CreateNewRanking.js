@@ -241,10 +241,10 @@ _continueClick = () => {
 
 
                console.log('before _sendCreateNewRankingJSONData this.props.', this.props.newrankId)
-              const resultOfSendJsonToGlobalList = JSONops._sendCreateNewRankingJSONData(this.props.rankingListJSONdata, this.props.newrankId ,this.state.rankName,this.state.rankDescription )
+              const resultOfSendJsonToGlobalList = await JSONops._sendCreateNewRankingJSONData(this.props.rankingListJSONdata, this.props.newrankId ,this.state.rankName,this.state.rankDescription )
               console.log('resultOfSendJsonToGlobalList', resultOfSendJsonToGlobalList)
               //add current user to the new ranking list as the first player
-              JSONops.createNewUserInNewJSON(this.props.user.username, this.props.contactNoCB, this.props.emailCB, this.props.account, 'squash player', this.props.newrankId)
+              await JSONops.createNewUserInNewJSON(this.props.user.username, this.props.contactNoCB, this.props.emailCB, this.props.account, 'squash player', this.props.newrankId)
 
               //JSONops.createNewUserInJSON(originalData, this.props.user.username, this.props.contactNoCB, this.props.emailCB, this.props.account, 'squash player', this.props.)
                // Completed of async action, set loading state back
@@ -260,7 +260,7 @@ _continueClick = () => {
               //TODO: change to onAfterNewRanking();
               //this.props.onAfterChallenge();
               console.log('about to go to onAfterUserUpdate')
-              this.props.onAfterUserUpdate();
+              //this.props.onAfterUserUpdate();
 
               //QUESTION: is this the right place for this function?
               //this.displayContactDetails();
