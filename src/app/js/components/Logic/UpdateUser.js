@@ -8,6 +8,8 @@ import { isEmpty } from '../../utils';
 //import {estimateGas} from '../SideEffects/io/estimateGas'
 import DSportRank from '../../../../ABIaddress';
 import web3 from '../../../../web3';
+import { estimateGas } from '../SideEffects/io/estimateGas';
+import { getWeb3Accounts } from '../SideEffects/io/web3Accounts';
 //import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
 
@@ -90,6 +92,7 @@ class UpdateUser extends Component {
       if (!this.state.formUpdated) return;
       const usernameHash = web3.utils.keccak256(this.props.user.username);
       const updatedDescription = this.state.description;
+      console.log('updatedDescription', updatedDescription);
       //TODO: dummy value - This needs to be fully implemented with IPFS
       const updatedImageHash = 'Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL';
       //ensure defaultRankid isn't altered by updating the user
@@ -98,13 +101,18 @@ class UpdateUser extends Component {
           const editAccount = DSportRank.methods.editAccount(usernameHash, updatedDescription, placeHolderForRankId, updatedImageHash);
           // get a gas estimate before sending the transaction
           //nxt 2 lines commented to avoid compile err
-          const gasEstimate = await editAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
-          const result = await editAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
+          //const gasEstimate = await editAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
+          const account = await getWeb3Accounts();
+          const gasEstimate = await estimateGas();
+          //const result = await editAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
+          const result = await editAccount.send({ from: account,  gas: gasEstimate + 1000 });
+          console.log('result', await result);
 
       if (editAccount.status && !Boolean(result.status.toString().replace('0x', ''))) {
+        console.log('inside the if')
         return this.setState({ isLoading: false, formState: 'error', formUpdated: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
       }
-      console.log('here after contract should have updated')
+      console.log('here after contract should have updated', this.state.error)
       // stop loading state, and render the form as successful
       this.setState({ isLoading: false, formState: 'success', formUpdated: false });
 
@@ -114,12 +122,14 @@ class UpdateUser extends Component {
       // tell parent we've updated our user, so the current
       // user is re-fetched to get the user's details
       //REVIEW: return here?
-      return this.props.onAfterUserUpdate();
+      this.props.onAfterUserUpdate();
+      return null;
 
       //return to home page
       //this.props.history.push('/');
     }
     catch (err) {
+      console.log('here in the err', err)
       // stop loading state and show user the error
       this.setState({ isLoading: false, formState: 'error', formUpdated: false, error: err.message });
     }
@@ -231,6 +241,7 @@ class UpdateUser extends Component {
     const { isLoading, formState, formUpdated, contactno, email, description, picture } = this.state;
     const { user } = this.props;
     //const feedback = formState === 'success' ? 'Saved' : error;
+    console.log('rendering updateUser error', this.state.error)
     return (
       <Grid>
         <Row>

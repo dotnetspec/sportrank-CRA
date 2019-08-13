@@ -14,8 +14,9 @@ import { getWeb3Accounts } from './web3Accounts';
       // const userAccountsArray = await web3.eth.getAccounts();
       //   console.log('getWeb3defaultAccount after await', userAccountsArray[0])
       // return userAccountsArray[0
-      console.log('getWeb3defaultAccount() in estimateGas', getWeb3defaultAccount())
+      console.log('getWeb3defaultAccount() in estimateGas');
       let estimateGas = await web3.eth.estimateGas({ from: await getWeb3defaultAccount()});
+      console.log('estimateGas is ', estimateGas);
       //add additional to be sure ....
       estimateGas += 100000
       return await estimateGas;

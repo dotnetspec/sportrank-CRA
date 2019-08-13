@@ -12,7 +12,7 @@ import JSONops from './JSONops'
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
 import { getWeb3defaultAccount } from '../SideEffects/io/web3defaultAccount';
-import { getWeb3Accounts } from '../SideEffects/io/web3Accounts';
+//import { getWeb3Accounts } from '../SideEffects/io/web3Accounts';
 import { sendEthTransaction } from '../SideEffects/io/sendEthTransaction';
 import { challengeSendToContract } from '../SideEffects/io/challengeSendToContract';
 import { estimateGas } from '../SideEffects/io/estimateGas';
