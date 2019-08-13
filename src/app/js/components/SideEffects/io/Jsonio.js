@@ -38,6 +38,7 @@ import axios from 'axios';
 
         req.open("PUT", httpString, true);
         req.setRequestHeader("Content-type", "application/json");
+        req.setRequestHeader("secret-key", "$2a$10$HIPT9LxAWxYFTW.aaMUoEeIo2N903ebCEbVqB3/HEOwiBsxY3fk2i");
         let myJsonString = JSON.stringify(data);
         console.log('httpString, data in _sendJSONDataWithRankingID', httpString, data);
 
