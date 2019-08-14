@@ -325,8 +325,12 @@ const setrankingJSONdataCB = (datatoSet) => {
       //userAccounts: state.userAccounts,
       setuserAccounts(state.userAccounts)
       //rankingDefault: state.rankingDefault,
-      //isUserInJson: JSONops.isPlayerListedInJSON(state.data, state.user.username),
-      //isCurrentUserActive: JSONops._getUserValue(state.data, state.user.username, "ACTIVE"),
+      if(state.data !== undefined){
+        setIsUserInJson(JSONops.isPlayerListedInJSON(state.data, state.user.username));
+        setIsCurrentUserActive(JSONops._getUserValue(state.data, state.user.username, "ACTIVE"));
+      }else{
+        setIsUserInJson(false);
+      }
       //newrankId: state.newrankId,
       setnewrankId(state.newrankId);
       //user: state.user,

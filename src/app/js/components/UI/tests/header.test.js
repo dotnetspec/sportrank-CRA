@@ -192,7 +192,8 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
       user: userOjb,
       account: testAccountPlayer1Rinkeby,
       specificRankingOptionBtns: true,
-      isCurrentUserActive: true
+      isCurrentUserActive: true,
+      isUserInJson: true
     }
         renderWithRouter(<Header {...props}/>);
         //const { debug } = renderWithRouter(<Header {...props}/>);

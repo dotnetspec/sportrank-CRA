@@ -412,7 +412,9 @@ displayActivationBtns(){
   // const {pathname} = this.props.location;
   //     if(pathname.includes("home/@")){
   //console.log('in header isCurrentUserActive', this.props.isCurrentUserActive)
-  if(this.props.specificRankingOptionBtns){
+  //player may have created ranking without joining it ....
+  //const isPlayerListed = JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, this.props.user[1]);
+  if(this.props.specificRankingOptionBtns && this.props.isUserInJson){
         return(
           <PlayerStatusBtn isCurrentUserActive={this.props.isCurrentUserActive} data-cy='playerStatus' data-testid='playerStatus' {...this.props} newrankId={this.props.newrankId} username={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
       )

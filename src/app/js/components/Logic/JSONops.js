@@ -179,6 +179,7 @@ isUserAlreadyLowerRankedThanOpponent: function(currentUserRankInt, selectedOppon
 
 
 //TODO: should be renamed to getJSONValWithUserName
+//and this should be made more robust e.g. what if no jsonObj?
   _getUserValue: function(jsonObj, currentUser, valueToLookup){
 
     let lookupCurrentUserValue = {
@@ -190,6 +191,7 @@ isUserAlreadyLowerRankedThanOpponent: function(currentUserRankInt, selectedOppon
       checkAllRows: false
       };
       //console.log(lookupCurrentUserRank)
+      if(jsonObj === undefined){console.log('_getUserValue has no jsonObj')};
       const currentUserValue = this._getVal(lookupCurrentUserValue);
 
         return currentUserValue;
@@ -680,6 +682,7 @@ console.log('inside _setUserNameValue')
       isPlayerListedInJSON: function(data, currentUser){
         //console.log('data in isPlayerListedInJSON',data)
         //console.log('currentUser in isPlayerListedInJSON', currentUser)
+        if(data === undefined){return false}
         //using ACCOUNT not NAME to test if user is listed in the json
         const result = this._getUserValue(data, currentUser, "ACCOUNT")
         //console.log('result', result)
