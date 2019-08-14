@@ -6,10 +6,11 @@ import JSONops from './JSONops'
 import { isEmpty } from '../../utils';
 //import {updatedUserSendToContract} from '../SideEffects/io/updatedUserSendToContract'
 //import {estimateGas} from '../SideEffects/io/estimateGas'
-import DSportRank from '../../../../ABIaddress';
+//import DSportRank from '../../../../ABIaddress';
 import web3 from '../../../../web3';
 import { estimateGas } from '../SideEffects/io/estimateGas';
-import { getWeb3Accounts } from '../SideEffects/io/web3Accounts';
+//import { getWeb3Accounts } from '../SideEffects/io/web3Accounts';
+import { updateUserSendToContract } from '../SideEffects/io/updateUserSendToContract';
 //import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
 
@@ -87,10 +88,11 @@ class UpdateUser extends Component {
 //But I don't have anywhere else to add it!
   //
   async useBCToAddUpdatedUserVals(){
+    console.log('in useBCToAddUpdatedUserVals');
     try {
       // if the form has not been updated, do nothing
-      if (!this.state.formUpdated) return;
-      const usernameHash = web3.utils.keccak256(this.props.user.username);
+      //if (!this.state.formUpdated) return;
+      //const usernameHash = web3.utils.keccak256(this.props.user.username);
       const updatedDescription = this.state.description;
       console.log('updatedDescription', updatedDescription);
       //TODO: dummy value - This needs to be fully implemented with IPFS
@@ -98,21 +100,23 @@ class UpdateUser extends Component {
       //ensure defaultRankid isn't altered by updating the user
       const placeHolderForRankId = '';
       // set up our contract method with the input values from the form
-          const editAccount = DSportRank.methods.editAccount(usernameHash, updatedDescription, placeHolderForRankId, updatedImageHash);
-          // get a gas estimate before sending the transaction
-          //nxt 2 lines commented to avoid compile err
-          //const gasEstimate = await editAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
-          const account = await getWeb3Accounts();
+          // const editAccount = DSportRank.methods.editAccount(usernameHash, updatedDescription, placeHolderForRankId, updatedImageHash);
+          // // get a gas estimate before sending the transaction
+          // //nxt 2 lines commented to avoid compile err
+          // //const gasEstimate = await editAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
+          // const account = await getWeb3Accounts();
           const gasEstimate = await estimateGas();
-          //const result = await editAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
-          const result = await editAccount.send({ from: account,  gas: gasEstimate + 1000 });
-          console.log('result', await result);
+          // //const result = await editAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
+          // const result = await editAccount.send({ from: account,  gas: gasEstimate + 1000 });
+          // console.log('result', await result);
 
-      if (editAccount.status && !Boolean(result.status.toString().replace('0x', ''))) {
-        console.log('inside the if')
-        return this.setState({ isLoading: false, formState: 'error', formUpdated: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
-      }
-      console.log('here after contract should have updated', this.state.error)
+          const result = updateUserSendToContract(gasEstimate, updatedDescription, placeHolderForRankId, updatedImageHash)
+
+          if (result.status && !Boolean(result.status.toString().replace('0x', ''))) {
+            console.log('inside the if')
+            return this.setState({ isLoading: false, formState: 'error', formUpdated: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
+          }
+      //console.log('here after contract should have updated', this.state.error)
       // stop loading state, and render the form as successful
       this.setState({ isLoading: false, formState: 'success', formUpdated: false });
 
@@ -144,10 +148,10 @@ class UpdateUser extends Component {
    * @returns {null}
    */
   _handleClick = async (e, username) => {
-    console.log('update error', e)
+    //console.log('update error', e)
     //this.setState({error:true});
     //const { account, user } = this.props;
-    const { description } = this.state;
+    //const { description } = this.state;
 
     this.useBCToAddUpdatedUserVals();
     //REVIEW:
@@ -241,7 +245,7 @@ class UpdateUser extends Component {
     const { isLoading, formState, formUpdated, contactno, email, description, picture } = this.state;
     const { user } = this.props;
     //const feedback = formState === 'success' ? 'Saved' : error;
-    console.log('rendering updateUser error', this.state.error)
+    //console.log('rendering updateUser error', this.state.error)
     return (
       <Grid>
         <Row>

@@ -6,15 +6,21 @@ import {getWeb3Accounts} from './web3Accounts';
 //enable mocking:
 //This function returns a tx hash:
 //NB: this functionality NOT currently being used!
-  export const updatedUserSendToContract = async (gasEstimate, updatedDescription, rankId, updatedImageHash) => {
-
+  export const updateUserSendToContract = async (gasEstimate, updatedDescription, rankId, updatedImageHash) => {
+//export async function updateUserSendToContract(gasEstimate, updatedDescription, rankId, updatedImageHash){
+  try{
     const address = await getWeb3Accounts();
     const usernameHash = await DSportRank.methods.owners(address).call();
-    // console.log('exec at', executingAt());
+    //console.log('address', address);
     // get user details from contract
     //const user = await DSportRank.methods.users(usernameHash).call();
+    // console.log('usernameHash', usernameHash)
+    // console.log('updatedDescription', updatedDescription)
+    // console.log('rankId', rankId)
+    // console.log('updatedImageHash', updatedImageHash)
     const newUserAccountDetails = await DSportRank.methods.editAccount(usernameHash, updatedDescription, rankId, updatedImageHash);
     //return await challenge.send({ from: await getWeb3Accounts(), gas: gasEstimate + 100000 });
+    //console.log('newUserAccountDetails', newUserAccountDetails)
     newUserAccountDetails.send({
       from: address, gas: gasEstimate + 1000
     })
@@ -26,5 +32,9 @@ import {getWeb3Accounts} from './web3Accounts';
     })
     .on('confirmation', function(confirmationNumber, receipt){
       //console.log('confirmationNumber', confirmationNumber);
+      //console.log('receipt', receipt);
     })
+  }catch(e){
+    console.log('error in updateUserSendToContract', e)
+  }
 }
