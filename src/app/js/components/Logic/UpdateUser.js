@@ -11,6 +11,7 @@ import web3 from '../../../../web3';
 import { estimateGas } from '../SideEffects/io/estimateGas';
 //import { getWeb3Accounts } from '../SideEffects/io/web3Accounts';
 import { updateUserSendToContract } from '../SideEffects/io/updateUserSendToContract';
+import UpdateUserModal from '../UI/Modals/UpdateUserModal';
 //import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
 
@@ -29,10 +30,28 @@ class UpdateUser extends Component {
       formState: null,
       formUpdated: false,
       contactno: JSONops._getUserValue(this.props.rankingJSONdata, this.props.user.username, "CONTACTNO"),
-      email: JSONops._getUserValue(this.props.rankingJSONdata, this.props.user.username, "EMAIL")
+      email: JSONops._getUserValue(this.props.rankingJSONdata, this.props.user.username, "EMAIL"),
+      showModal: false
     };
+      this.closeModalCB = this.closeModalCB.bind(this);
   }
   //#endregion
+
+  //for sending to the modal
+  showModal(){
+    this.setState({ showModal: true });
+  }
+
+  closeModalCB(){
+    this.setState({ showModal: false });
+    //NB: below prevents onAfterUserUpdate
+    this.props.history.push('/');
+    // tell parent we've updated our user, so the current
+    // user is re-fetched to get the user's details
+    this.props.onAfterUserUpdate();
+  }
+
+
 
 //REVIEW: Currently not used
 //apparently: Had to change below to cover no player in json but account active
@@ -116,17 +135,18 @@ class UpdateUser extends Component {
             console.log('inside the if')
             return this.setState({ isLoading: false, formState: 'error', formUpdated: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
           }
+
       //console.log('here after contract should have updated', this.state.error)
       // stop loading state, and render the form as successful
-      this.setState({ isLoading: false, formState: 'success', formUpdated: false });
+      this.setState({ isLoading: false, formState: 'success', formUpdated: false, showModal: true });
 
-      //NB: below prevents onAfterUserUpdate
-      this.props.history.push('/');
-
-      // tell parent we've updated our user, so the current
-      // user is re-fetched to get the user's details
-      //REVIEW: return here?
-      this.props.onAfterUserUpdate();
+      // //NB: below prevents onAfterUserUpdate
+      // this.props.history.push('/');
+      //
+      // // tell parent we've updated our user, so the current
+      // // user is re-fetched to get the user's details
+      // //REVIEW: return here?
+      // this.props.onAfterUserUpdate();
       return null;
 
       //return to home page
@@ -247,6 +267,8 @@ class UpdateUser extends Component {
     //const feedback = formState === 'success' ? 'Saved' : error;
     //console.log('rendering updateUser error', this.state.error)
     return (
+      <div>
+      <UpdateUserModal show={this.state.showModal} closeModalCB={this.closeModalCB}></UpdateUserModal>
       <Grid>
         <Row>
           <Col xs={12}>
@@ -343,6 +365,7 @@ class UpdateUser extends Component {
           </Col>
         </Row>
       </Grid>
+    </div>
     );
   }
   //#endregion
