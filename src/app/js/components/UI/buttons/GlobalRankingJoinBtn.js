@@ -16,6 +16,9 @@ export default function GlobalRankingJoinBtn(props) {
 
   const onClickRankingJoinSelected = async (row) => {
 
+    //if the user clicks 'Join' then should always be ACTIVE
+    props.setOnCallbackisCurrentUserActiveCB(true)
+
     props.setnewrankIdCB(row.RANKINGID);
     let tempjson = [];
     const handleCB = (data) =>{

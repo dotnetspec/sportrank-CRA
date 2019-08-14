@@ -36,6 +36,7 @@ it('GlobalRankingJoinBtn - calls "onClick" prop on button click', () => {
   const _sendJSONDataWithRankingID = jest.fn();
   const setrankingJSONdataCB = jest.fn();
   const onClickRankingJoinSelected = jest.fn();
+  const setOnCallbackisCurrentUserActiveCB = jest.fn();
   //const onClickRankingJoinSelected = jest.fn();
   //const setspecificRankingOptionBtnsCB = jest.fn();
 
@@ -53,6 +54,7 @@ it('GlobalRankingJoinBtn - calls "onClick" prop on button click', () => {
     _sendJSONDataWithRankingID={_sendJSONDataWithRankingID}
     setrankingJSONdataCB={setrankingJSONdataCB}
     onClickRankingJoinSelected={onClickRankingJoinSelected}
+    setOnCallbackisCurrentUserActiveCB={setOnCallbackisCurrentUserActiveCB}
     />);
 
   fireEvent.click(getByText(/Join/i));

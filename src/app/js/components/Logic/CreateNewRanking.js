@@ -219,16 +219,15 @@ _continueClick = () => {
                   // get a gas estimate before sending the transaction
                   //const gasEstimate = await editAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
                   const gasEstimate = await estimateGas();
+                  //REVIEIW: Not sure this is doing anything affecting app as all the work
+                  //done in json currently:
                   const result = newRankingSendToContract(gasEstimate, usernameHash, updatedDescription, this.props.newrankId, updatedImageHash);
-
-                    //const result = await editAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
-
-
-                       // check result status. if status is false or '0x0', show user the tx details to debug error
-                       if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
-                         return this.setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
-                       }
+                   // check result status. if status is false or '0x0', show user the tx details to debug error
+                   if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
+                     return this.setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
+                   }
                 // }
+                console.log('result status', await result)
 
                //REVIEW: New ranking must come after editAccount.send() in case e.g. there's not enough gas
                //otherwise, if this goes through there could be ranking errors etc.
@@ -244,7 +243,8 @@ _continueClick = () => {
               const resultOfSendJsonToGlobalList = await JSONops._sendCreateNewRankingJSONData(this.props.rankingListJSONdata, this.props.newrankId ,this.state.rankName,this.state.rankDescription )
               console.log('resultOfSendJsonToGlobalList', resultOfSendJsonToGlobalList)
               //add current user to the new ranking list as the first player
-              await JSONops.createNewUserInNewJSON(this.props.user.username, this.props.contactNoCB, this.props.emailCB, this.props.account, 'squash player', this.props.newrankId)
+              //no because they might just be an administrator
+              //await JSONops.createNewUserInNewJSON(this.props.user.username, this.props.contactNoCB, this.props.emailCB, this.props.account, 'squash player', this.props.newrankId)
 
               //JSONops.createNewUserInJSON(originalData, this.props.user.username, this.props.contactNoCB, this.props.emailCB, this.props.account, 'squash player', this.props.)
                // Completed of async action, set loading state back
@@ -265,9 +265,9 @@ _continueClick = () => {
               //QUESTION: is this the right place for this function?
               //this.displayContactDetails();
 
-              // redirect user to the  home page
-               //this.props.history.push('/');
-               this.props.history.push('/home/@' + this.props.user.username);
+              // redirect user to the  GlobalRankings page
+               this.props.history.push('/');
+               //this.props.history.push('/home/@' + this.props.user.username);
             }
             catch(err){
               //console.log(result)

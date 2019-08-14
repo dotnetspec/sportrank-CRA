@@ -18,6 +18,7 @@ import {getWeb3Accounts} from './web3Accounts';
         console.log('receipt', receipt);
     })
     .on('confirmation', function(confirmationNumber, receipt){
+      //return receipt;
       //console.log('confirmationNumber', confirmationNumber);
     })
 }

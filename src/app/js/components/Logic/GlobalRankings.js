@@ -7,9 +7,9 @@ import GlobalRankingViewBtn from '../UI/buttons/GlobalRankingViewBtn';
 import GlobalRankingJoinBtn from '../UI/buttons/GlobalRankingJoinBtn';
 import React, { Component } from 'react';
 
-const selectRowPropAfterClickRow = {
-  selectedRankingId: ''
-};
+// const selectRowPropAfterClickRow = {
+//   selectedRankingId: ''
+// };
 
 /**
  * Class handling the global ranking selection list
@@ -99,6 +99,7 @@ class GlobalRankings extends Component {
            setviewingOnlyCB={this.props.setviewingOnlyCB}
            setrankingJSONdataCB={this.props.setrankingJSONdataCB}
            account={this.props.account}
+           setOnCallbackisCurrentUserActiveCB={this.props.setOnCallbackisCurrentUserActiveCB}
            />
       )
     }
