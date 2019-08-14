@@ -230,10 +230,19 @@ const selectRowPropAfterClickRow = {
             Click Reactivate(top menu) to re - enter the rankings(at the bottom) <
             /div>);
           }
-          //there's some other problem
+          //it's a new ranking no=one has joined or some other problem 
           else {
-            return (
-              null);
+            return (<div>
+              <
+              h2 > {
+                jsonOpsReturnOjb.textToDisplayRankName
+              } <
+              /h2> <
+              h4 > {
+                jsonOpsReturnOjb.textToDisplayRankDesc
+              } <
+              /h4>
+              </div> );
           }
         }
 

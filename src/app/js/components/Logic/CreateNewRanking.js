@@ -260,7 +260,7 @@ _continueClick = () => {
               //TODO: change to onAfterNewRanking();
               //this.props.onAfterChallenge();
               console.log('about to go to onAfterUserUpdate')
-              //this.props.onAfterUserUpdate();
+              this.props.onAfterUserUpdate();
 
               //QUESTION: is this the right place for this function?
               //this.displayContactDetails();
