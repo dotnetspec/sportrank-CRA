@@ -26,6 +26,8 @@ import JSONops from './JSONops'
 import {userInfoText} from './TextOps'
 //import _sendJSONDataWithRankingID from '../SideEffects/io/Jsonio'
 import DoChallengeModal from '../UI/Modals/DoChallengeModal';
+import LadderInfoPanel from '../UI/LadderInfoPanel'
+import LadderUserPanel from '../UI/LadderUserPanel'
 //import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
 
@@ -81,6 +83,8 @@ const selectRowPropAfterClickRow = {
   }
 
   const closeChallengeModalCB = () => {
+      //props.onAfterUserUpdate();
+      //userPlayerJsonDataDisplay();
       setshowModal(false);
     }
 
@@ -173,14 +177,32 @@ const selectRowPropAfterClickRow = {
   const closeWarningModal = () => {
     setWarningModalIsOpen(false);
   };
+
+  function displayContactDetails(){
+    const oppoContactNumber = JSONops._getUserValue(props.data, props.selectedOpponentName, 'CONTACTNO')
+    const oppoEmail = JSONops._getUserValue(props.data, props.selectedOpponentName, 'EMAIL')
+    const oppoContactNumberTxt = props.selectedOpponentName + "'s contact number is : " + oppoContactNumber;
+    const oppoEmailTxt = props.selectedOpponentName + "'s email address is : " + oppoEmail;
+
+    //contactNoCB callback function (App.js)
+    console.log('opp contactno', oppoContactNumberTxt)
+    props.setcontactNoCB(oppoContactNumberTxt);
+    console.log('oppoEmailTxt', oppoEmailTxt)
+    props.setemailCB(oppoEmailTxt);
+    //contactNoCB callback function (Header.js)
+    //let tempbalTodisplay = parseInt(this.props.updatedExtAcctBalCB) + (10 ** 18);
+    //REVIEW: not sure what below relates to. Probably not useful ...
+    // let tempXternAccountno = parseInt(this.props.updatedExtAcctBalCB)
+    // //tempXternAccountno += 10 ** 18;
+    // tempXternAccountno += 1;
+    // updatedExtAcctBalCB(tempXternAccountno)
+  }
+
   //REVIEW: Managing display here might be handled differently:
   //this was originally a component - perhaps it still should be [?]
   const userPlayerJsonDataDisplay = () => {
-      let jsonWarkingTxt = '';
-      //only need to test the chosen ranking list ..
-      if(!JSONops.isDefinedJson(props.rankingJSONdata)){
-        jsonWarkingTxt = 'JSON file for chosen ranking undefined. Please contact administrator. Thank you.'
-      }
+    //console.log('userPlayerJsonDataDisplay', userPlayerJsonDataDisplay)
+
       const jsonOpsReturnOjb = JSONops.createUserPlayerJsonDataDisplay(props.rankingListJSONdata, props.newrankId, props.rankingJSONdata, props.user);
 
       //IF there's an active user ...
@@ -188,43 +210,12 @@ const selectRowPropAfterClickRow = {
         const textOpsReturnOjb = userInfoText(jsonOpsReturnOjb.currentChallengerName, jsonOpsReturnOjb.currentChallengerContactNo,
         jsonOpsReturnOjb.currentChallengerEmail, jsonOpsReturnOjb.currentUserRank);
         //jsx below has to remain in scope (cannot move it out)
-        return ( <
-          div >
-          <
-          h2 > {
-            jsonWarkingTxt
-          } <
-          /h2>
-          <
-          h2 > {
-            jsonOpsReturnOjb.textToDisplayRankName
-          } <
-          /h2> <
-          h4 > {
-            jsonOpsReturnOjb.textToDisplayRankDesc
-          } <
-          /h4> {
-            props.user.username
-          } <
-          p > < /p> {
-            textOpsReturnOjb.textToDisplayRank
-          } <
-          p > < /p> {
-            textOpsReturnOjb.textToDisplayChallenger
-          } <
-          p > < /p>
-          {
-           textOpsReturnOjb.textToDisplayChallengerContactNo
-          } <
-          p > < /p>
-          {
-           textOpsReturnOjb.textToDisplayChallengerEmail
-          } <
-          p > < /p>
-          {
-            textOpsReturnOjb.textToDisplayContinue
-          } <
-          /div>)
+        return (
+          <React.Fragment>
+            <LadderInfoPanel jsonObj={jsonOpsReturnOjb} rankingJSONdata={props.rankingJSONdata}></LadderInfoPanel>
+            <LadderUserPanel txtObj={textOpsReturnOjb}  username={props.user.username}></LadderUserPanel>
+          </React.Fragment>
+        )
         }
         //there's no ACTIVE user
         else
@@ -441,6 +432,7 @@ const selectRowPropAfterClickRow = {
             closeModalOnAfterChallenge = {
               closeChallengeModalCB
             }
+            //userPlayerJsonDataDisplay={userPlayerJsonDataDisplay}
             rankingJSONdata = {
               props.rankingJSONdata
             }

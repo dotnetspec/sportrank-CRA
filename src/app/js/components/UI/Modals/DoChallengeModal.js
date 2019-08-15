@@ -17,8 +17,6 @@ export default function DoChallengeModal(props) {
   challenge listed
   `;
 
-  //console.log('data in modal', props.rankingJSONdata)
-
   if (!props.show) {
     return null;
   } else {
@@ -72,6 +70,7 @@ export default function DoChallengeModal(props) {
       setemailCB= {
         props.setemailCB
       }
+      //userPlayerJsonDataDisplay={userPlayerJsonDataDisplay}
       >
       <
       /DoChallenge> <

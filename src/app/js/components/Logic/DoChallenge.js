@@ -35,15 +35,15 @@ import { estimateGas } from '../SideEffects/io/estimateGas';
     // initial state
     //this.state = {
       //selection: [],
-      const [selection, setSelection] = useState([])
-      //data: [],
-      const [data, setData] = useState([])
-      //showModal: false,
-      const [showModal, setShowModal] = useState(false)
+      // const [selection, setSelection] = useState([])
+      // //data: [],
+      // const [data, setData] = useState([])
+      // //showModal: false,
+      // const [showModal, setShowModal] = useState(false)
       //challenge: '',
       const [challenge, setChallenge] = useState('')
       //selectedOpponentName: "",
-      const [selectedOpponentName, setSelectedOpponentName] = useState('')
+      //const [selectedOpponentName, setSelectedOpponentName] = useState('')
       //challengeHasChanged: false,
       const [challengeHasChanged, setChallengeHasChanged] = useState(false)
       //isLoading: false,
@@ -51,7 +51,7 @@ import { estimateGas } from '../SideEffects/io/estimateGas';
       //error: '',
       const [error, setError] = useState('')
       //selectedChallengeOption: 'No'
-      const [selectedChallengeOption, setSelectedChallengeOption] = useState('No')
+      //const [selectedChallengeOption, setSelectedChallengeOption] = useState('No')
 
       const [state, setState] = useState({
         challenge: ''
@@ -72,7 +72,9 @@ function displayContactDetails(){
   const oppoEmailTxt = props.selectedOpponentName + "'s email address is : " + oppoEmail;
 
   //contactNoCB callback function (App.js)
+  console.log('opp contactno', oppoContactNumberTxt)
   props.setcontactNoCB(oppoContactNumberTxt);
+  console.log('oppoEmailTxt', oppoEmailTxt)
   props.setemailCB(oppoEmailTxt);
   //contactNoCB callback function (Header.js)
   //let tempbalTodisplay = parseInt(this.props.updatedExtAcctBalCB) + (10 ** 18);
@@ -131,8 +133,8 @@ function displayContactDetails(){
       //const gasEstimate = await web3.eth.estimateGas({ from: getWeb3defaultAccount() });
       const gasEstimate = await estimateGas();
       console.log('gasEstimate', gasEstimate);
-      await challengeSendToContract(gasEstimate, state.challenge);
-      //await console.log('gasEstimate', gasEstimate);
+      const result = await challengeSendToContract(gasEstimate, state.challenge, props.newrankId, props.user, props.selectedOpponentName, props.data);
+      //console.log('result', await result);
       //REVIEW; Account currently hard coded
       //const result = await sendEthTransaction(gasEstimate);
       //await sendEthTransaction(gasEstimate);
@@ -147,17 +149,23 @@ function displayContactDetails(){
       // }
       //REVIEW: Update must come after sendTransaction() in case e.g. there's not enough gas
       //otherwise, if this goes through there could be ranking errors etc.
-      console.log('props.newrankId', props.newrankId)
-      console.log('props.data', props.data)
-      JSONops._updateDoChallengeJSON(props.newrankId, props.user, props.selectedOpponentName, props.data);
-      //updateTextCB from Home
-      displayContactDetails();
-      // remove loading state
-      //setState({ isLoading: false });
-      setIsLoading(false);
-      // tell parent we've updated a user and to re-fetch user details from the contract
-      props.closeModalOnAfterChallenge();
-      //QUESTION: is this the right place for this function?
+      //console.log('props.newrankId', props.newrankId)
+      //console.log('props.data', props.data)
+      //only update the json if the user hasn't rejected (or other issue)
+      //if(await result !== undefined){
+        //JSONops._updateDoChallengeJSON(props.newrankId, props.user, props.selectedOpponentName, props.data);
+        //updateTextCB from Home
+        //this will have to be modified to obtain details from the
+        //bc rather than the json
+        displayContactDetails();
+
+        // remove loading state
+        //setState({ isLoading: false });
+        setIsLoading(false);
+        // tell parent we've updated a user and to re-fetch user details from the contract
+        props.closeModalOnAfterChallenge();
+        //QUESTION: is this the right place for this function?
+      //}
 
     }
     catch(err){
