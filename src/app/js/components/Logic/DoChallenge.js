@@ -135,7 +135,7 @@ function displayContactDetails(){
       //await console.log('gasEstimate', gasEstimate);
       //REVIEW; Account currently hard coded
       //const result = await sendEthTransaction(gasEstimate);
-      await sendEthTransaction(gasEstimate);
+      //await sendEthTransaction(gasEstimate);
        // check result status. if status is false or '0x0', show user the tx details to debug error
        //only error handling now in sendEthTransaction
       // if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
@@ -148,6 +148,7 @@ function displayContactDetails(){
       //REVIEW: Update must come after sendTransaction() in case e.g. there's not enough gas
       //otherwise, if this goes through there could be ranking errors etc.
       console.log('props.newrankId', props.newrankId)
+      console.log('props.data', props.data)
       JSONops._updateDoChallengeJSON(props.newrankId, props.user, props.selectedOpponentName, props.data);
       //updateTextCB from Home
       displayContactDetails();

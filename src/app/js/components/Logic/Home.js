@@ -24,7 +24,8 @@ import DoChallenge from './DoChallenge'
 import EnterResult from './EnterResult'
 import JSONops from './JSONops'
 import {userInfoText} from './TextOps'
-import _sendJSONDataWithRankingID from '../SideEffects/io/Jsonio'
+//import _sendJSONDataWithRankingID from '../SideEffects/io/Jsonio'
+import DoChallengeModal from '../UI/Modals/DoChallengeModal';
 //import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
 
@@ -78,6 +79,10 @@ const selectRowPropAfterClickRow = {
     console.log('_handleClose')
     setshowModal(false);
   }
+
+  const closeChallengeModalCB = () => {
+      setshowModal(false);
+    }
 
   const updateWarningText = (warningText) => {
       setWarningText(warningText);
@@ -230,7 +235,7 @@ const selectRowPropAfterClickRow = {
             Click Reactivate(top menu) to re - enter the rankings(at the bottom) <
             /div>);
           }
-          //it's a new ranking no=one has joined or some other problem 
+          //it's a new ranking no=one has joined or some other problem
           else {
             return (<div>
               <
@@ -428,41 +433,24 @@ const selectRowPropAfterClickRow = {
           } = props;
           return ( <
             div >
-            <
-            Modal show = {
-              showModal
+            <DoChallengeModal
+            show={showModal}
+            closeChallengeModalCB={closeChallengeModalCB}
+            selectedOpponentName={selectRowPropAfterClickRow.selectedOpponentName}
+            selectedOpponentRank={selectRowPropAfterClickRow.selectedOpponentRank}
+            closeModalOnAfterChallenge = {
+              closeChallengeModalCB
             }
-            onHide = {
-              (e) => _handleClose(e)
-            } >
-            <
-            Modal.Header closeButton >
-            <
-            Modal.Title > Instructions < /Modal.Title> <
-            /Modal.Header> <
-            Modal.Body >
-            Would you like to challenge {
-              selectRowPropAfterClickRow.selectedOpponentName
-            }
-            {' '}who is ranked {
-              selectRowPropAfterClickRow.selectedOpponentRank
-            } ? < p > < /p> <
-            DoChallenge closeModalOnAfterChallenge = {
-              (e) => _handleClose()
-            }
-            data = {
-              rankingJSONdata
-            }
-            selectedOpponentName = {
-              selectRowPropAfterClickRow.selectedOpponentName
+            rankingJSONdata = {
+              props.rankingJSONdata
             }
             user = {
               props.user.username
             }
             //REVIEW: updateTextCB not doing anything
-            updateTextCB = {
-              updateWarningText
-            }
+            // updateTextCB = {
+            //   updateWarningText
+            // }
             newrankId = {
               props.newrankId
             }
@@ -472,18 +460,7 @@ const selectRowPropAfterClickRow = {
             setemailCB= {
               props.setemailCB
             }
-            >
-            <
-            /DoChallenge> <
-            /Modal.Body> <
-            Modal.Footer >
-            <
-            Button onClick = {
-              (e) => _handleClose(e)
-            } > Close < /Button> <
-            /Modal.Footer> <
-            /Modal>
-
+            ></DoChallengeModal>
             <
             Modal show = {
               resultModalIsOpen

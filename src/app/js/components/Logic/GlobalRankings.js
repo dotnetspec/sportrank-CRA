@@ -34,40 +34,9 @@ class GlobalRankings extends Component {
      defaultSortName: 'RANKINGNAME',  // default sort column name
      defaultSortOrder: 'asc'  // default sort order
    };
-   //console.log('in GlobalRankings')
-   //console.log('this.props.error in GlobalRankings', this.props.error);
   }
   //#endregion
 
-
-  // //REVIEW: change name to onClickRankingJoinSelected?
-  // onClickRankingJoinSelected(cell, row, rowIndex){
-  //   console.log('in onClickRankingSelected');
-  //   selectRowPropAfterClickRow.selectedRankingId = `${row['RANKINGID']}`;
-  //   console.log('selectRowPropAfterClickRow.selectedRankingId', selectRowPropAfterClickRow.selectedRankingId)
-  //   //this.props.newrankId(selectRowPropAfterClickRow.selectedRankingId);
-  //   this.props.setnewrankIdCB(selectRowPropAfterClickRow.selectedRankingId);
-  //   //this.props.setisCurrentUserActiveCB()
-  //   this.props.setviewingOnlyCB(false);
-  //   this.props.onAfterUserUpdate();
-  //   //if joining and not yet a member of the ranking home will add the new player to the bottom
-  //   //of the rankings in the selected ladder
-  //   this.props.history.push('/home/@' + this.props.user.username);
-  //   //this.openResultModal();
-  //  }
-  //
-  // rankingButton(cell, row, enumObject, rowIndex) {
-  //     return (
-  //        <button
-  //           bsstyle="primary"
-  //           //type="button"
-  //           onClick={() =>
-  //           this.onClickRankingJoinSelected(cell, row, rowIndex)}
-  //        >
-  //        Join
-  //        </button>
-  //     )
-  //  }
 
    rankingViewButton(cell, row, enumObject, rowIndex) {
        return (
@@ -103,29 +72,11 @@ class GlobalRankings extends Component {
            />
       )
     }
-
 //#region React lifecycle events
 //QUESTION: why does componentDidMount not have the data from this.props.rankingJSONdata
 //when it clearly gets passed to Home.js?
-  // componentDidMount() {
-  //
-  // }
 
   globalBSTableDisplay(){
-      //if (this.props.rankingJSONdata[0] === null && this.props.user.username === null){
-      // if (JSONops.isJSONEmpty(this.props.rankingJSONdata) && this.props.user.username === null){
-      //
-      //console.log('inside globalBSTableDisplay');
-      //   this.props.history.push('/create');
-      //   return null;
-      //   //(<div>No Data To Display - Please select an account (top right) to create a player</div>);
-      // } else {
-      // function _tableIndex(indexVal){
-      //   //let tableIndex = 0;
-      //   indexVal = parseInt(indexVal);
-      //    indexVal += 1;
-      //    return indexVal;
-      // }
       //NB: to enable non-test jsonbin.io data use the following as a property of
       //data={this.props.rankingListJSONdata}
       //original test: data={this.state.data}
@@ -177,11 +128,9 @@ class GlobalRankings extends Component {
   //this.props.user[1] is a quick way (not object.keys) to access the array
   //if need it get   {React.version} by adding to return() below: (currently 16.6.3)
   render () {
-      //console.log('b4 render globalBSTableDisplay with rankingListJSONdata', this.props.rankingListJSONdata)
-
     return (
       <div>
-      {isEmpty(this.props.error) ? null : <span className='error'>Oh no!</span>}
+      {isEmpty(this.props.error) ? null : <span className='error'>Please note: there was an ERROR!</span>}
       <Grid>
         <Row>
           {this.globalBSTableDisplay()}
