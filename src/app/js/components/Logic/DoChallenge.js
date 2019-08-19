@@ -2,20 +2,21 @@
 //import { Grid, Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, DropdownItem, Overlay, Tooltip, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import { Button, FormGroup} from 'react-bootstrap';
 //import testData from "../../json/Rankings.json";
-import React, { Component, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 //import FieldGroup from './FieldGroup'
 import Spinner from 'react-spinkit'
 import JSONops from './JSONops'
 //import {contactNoCB, emailCB} from './App'
 //import sendmail from 'sendmail'
 //import Fortmatic from 'fortmatic';
-import web3 from '../../../../web3';
-import DSportRank from '../../../../ABIaddress';
-import { getWeb3defaultAccount } from '../SideEffects/io/web3defaultAccount';
+//import web3 from '../../../../web3';
+//import DSportRank from '../../../../ABIaddress';
+//import { getWeb3defaultAccount } from '../SideEffects/io/web3defaultAccount';
 //import { getWeb3Accounts } from '../SideEffects/io/web3Accounts';
-import { sendEthTransaction } from '../SideEffects/io/sendEthTransaction';
+//import { sendEthTransaction } from '../SideEffects/io/sendEthTransaction';
 import { challengeSendToContract } from '../SideEffects/io/challengeSendToContract';
 import { estimateGas } from '../SideEffects/io/estimateGas';
+// import MMWaitModal from '../UI/Modals/MMWaitModal'
 
 
 /**
@@ -41,27 +42,28 @@ import { estimateGas } from '../SideEffects/io/estimateGas';
       // //showModal: false,
       // const [showModal, setShowModal] = useState(false)
       //challenge: '',
-      const [challenge, setChallenge] = useState('')
+      const [challenge] = useState('')
       //selectedOpponentName: "",
       //const [selectedOpponentName, setSelectedOpponentName] = useState('')
       //challengeHasChanged: false,
-      const [challengeHasChanged, setChallengeHasChanged] = useState(false)
+      const [challengeHasChanged] = useState(false)
       //isLoading: false,
       const [isLoading, setIsLoading] = useState(false)
       //error: '',
-      const [error, setError] = useState('')
+      const [setError] = useState('')
       //selectedChallengeOption: 'No'
       //const [selectedChallengeOption, setSelectedChallengeOption] = useState('No')
-
+      //const [showModal, setShowModal] = useState(false);
       const [state, setState] = useState({
         challenge: ''
       })
     //};
-
     //challengeInput = '';
-    const [challengeInput, setchallengeInput] = useState('')
+    const [challengeInput] = useState('')
   //}
   //#endregion
+
+
 
 
 
@@ -76,13 +78,6 @@ function displayContactDetails(){
   props.setcontactNoCB(oppoContactNumberTxt);
   console.log('oppoEmailTxt', oppoEmailTxt)
   props.setemailCB(oppoEmailTxt);
-  //contactNoCB callback function (Header.js)
-  //let tempbalTodisplay = parseInt(this.props.updatedExtAcctBalCB) + (10 ** 18);
-  //REVIEW: not sure what below relates to. Probably not useful ...
-  // let tempXternAccountno = parseInt(this.props.updatedExtAcctBalCB)
-  // //tempXternAccountno += 10 ** 18;
-  // tempXternAccountno += 1;
-  // updatedExtAcctBalCB(tempXternAccountno)
 }
 
   //#region Component events
@@ -106,6 +101,7 @@ function displayContactDetails(){
     // show loading state
     //setState({ isLoading: true });
     setIsLoading(true);
+
     //REVIEW: I don't see how these props from orig are used
     //const { username, account, onAfterChallenge } = this.props;
     //this.challengeInput = "at last!";
@@ -133,8 +129,13 @@ function displayContactDetails(){
       //const gasEstimate = await web3.eth.estimateGas({ from: getWeb3defaultAccount() });
       const gasEstimate = await estimateGas();
       console.log('gasEstimate', gasEstimate);
-      const result = await challengeSendToContract(gasEstimate, state.challenge, props.newrankId, props.user, props.selectedOpponentName, props.data);
-      //console.log('result', await result);
+      const result = await challengeSendToContract(gasEstimate, state.challenge, props.newrankId, props.user, props.selectedOpponentName, props.data, challengeSendToContractCB);
+      //use a callback to process the result after contract updated 
+      async function challengeSendToContractCB(){
+        JSONops._updateDoChallengeJSON(props.newrankId, props.user, props.selectedOpponentName, props.data);
+        console.log('result', await result);
+      }
+
       //REVIEW; Account currently hard coded
       //const result = await sendEthTransaction(gasEstimate);
       //await sendEthTransaction(gasEstimate);
@@ -185,17 +186,17 @@ function displayContactDetails(){
    *
    * @return {null}
    */
-  function _handleChange(e) {
-    //REVIEW: line below was original but not working
-    //changed to working code below for challengeHasChanged
-    //let state = {challengeHasChanged: true};
-    //state[e.target.name] = e.target.value;
-    //setState(state);
-    //setState({ challenge: e.target.value });
-    setChallenge(e.target.value)
-    //setState({ challengeHasChanged: true });
-    setChallengeHasChanged(true);
-  }
+  // function _handleChange(e) {
+  //   //REVIEW: line below was original but not working
+  //   //changed to working code below for challengeHasChanged
+  //   //let state = {challengeHasChanged: true};
+  //   //state[e.target.name] = e.target.value;
+  //   //setState(state);
+  //   //setState({ challenge: e.target.value });
+  //   setChallenge(e.target.value)
+  //   //setState({ challengeHasChanged: true });
+  //   setChallengeHasChanged(true);
+  // }
   //#endregion
   //#region Helper methods
   /**
@@ -218,7 +219,7 @@ function displayContactDetails(){
 
   useEffect(() => {
     if(challengeInput) challengeInput.focus();
-}, [])
+}, [challengeInput])
 
   //render(){
     //const userAccountNo = web3.eth.defaultAccount;
@@ -242,6 +243,7 @@ function displayContactDetails(){
 
     return (
       <>
+
       <form>
         {/* REVIEW: Re-enable this challenge functionality? */}
       {/*

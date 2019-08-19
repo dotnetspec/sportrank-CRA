@@ -1,39 +1,39 @@
 import Header from '../UI/Header'
 import Main from './Main'
 import React, {
-  Component,
+  //Component,
   useState,
   useEffect,
-  useCallback,
-  useReducer
+  //useCallback,
+  //useReducer
 } from 'react';
 import {
   withRouter
 } from 'react-router-dom'
-import ImgAvatar from '../../../img/avatar-default.png';
-import {
-  map
-} from 'async';
+//import ImgAvatar from '../../../img/avatar-default.png';
+// import {
+//   map
+// } from 'async';
 import JSONops from './JSONops'
-import {
-  formatEth,
-  executingAt
-} from '../../utils';
-import {enableEthereum} from '../../../../web3';
-import DSportRank from '../../../../ABIaddress';
+// import {
+//   formatEth,
+//   executingAt
+// } from '../../utils';
+//import {enableEthereum} from '../../../../web3';
+//import DSportRank from '../../../../ABIaddress';
 import {
   _loadsetJSONData,
-  _loadsetRankingListJSONData,
+//  _loadsetRankingListJSONData,
   getNewRankId,
   getDefaultRankingList
 } from '../SideEffects/io/Jsonio';
 import {
-  _loadCurrentUserAccountsInsideMapping,
+  //_loadCurrentUserAccountsInsideMapping,
   _loadExternalBalance,
   _mapCurrentUserAccounts,
   getCurrentUserAccountsFromBlockchain
 } from '../SideEffects/io/web3io';
-import axios from 'axios'
+//import axios from 'axios'
 //import p-iteration from 'p-iteration'
 
 //REVEIW: perhaps change the naming of rankingDefault as it may be confusing
@@ -112,6 +112,54 @@ export function App({
   props
 }) {
 
+  const [user, setuser] = useState({});
+  const [account, setAccount] = useState('');
+  const [error, setError] = useState({});
+  const [userAccounts, setuserAccounts] = useState([])
+  const [balance, setBalance] = useState(0)
+  const [data, setdata] = useState([])
+  const [updatedExtAcctBalCB, setupdatedExtAcctBalCB] = useState(0)
+  const [isLoading, setIsLoading] = useState(true);
+  const [userRankingLists] = useState([]);
+  const [isUserInJson, setIsUserInJson] = useState(false);
+  //     jsonHasRankingID: false,
+  //const [jsonHasRankingID, setjsonHasRankingID] = useState(false);;
+  //     jsonHasData: false,
+  //const [jsonHasData, setjsonHasData] = useState(false);
+  //     loadingAccounts: true,
+  //const [isLoadingAccounts, setisLoadingAccounts] = useState(true);
+  //     loadingJSON: true,
+  const [isLoadingJSON, setisLoadingJSON] = useState(true);
+  //     loadingExtBal: true,
+  //const [isLoadingExtBal, setIsLoadingExtBal] = useState(true);
+  //     isCurrentUserActive: false,
+  const [isCurrentUserActive, setIsCurrentUserActive] = useState(false);
+  const [isCurrentUserActiveCB] = useState(false);
+  //     isRankingIDInvalid: false,
+  const [isRankingIDInvalid] = useState(false);
+  //     newrankId: '',
+  const [newrankId, setnewrankId] = useState('');
+  //     //rankingDefault is the global ranking list json
+  //     rankingDefault: '5c36f5422c87fa27306acb52',
+  const [rankingDefault] = useState('5c36f5422c87fa27306acb52');
+  //     userNameCB: '',
+  //const [userNameCB, setuserNameCB] = useState('');
+  //     loadingRankingListJSON: true,
+  //const [isLoadingRankingListJSON, setisLoadingRankingListJSON] = useState(true);
+  //     rankingListData: [],
+  const [rankingListData, setrankingListData] = useState([]);
+  const [viewingOnlyCB, setviewingOnlyCB] = useState(true);
+  const [contactno, setcontactno] = useState('');
+  const [email, setemail] = useState('');
+  const [description, setdescription] = useState('');
+  const [specificRankingOptionBtns, setspecificRankingOptionBtns] = useState(false);
+  const [rank, setrank] = useState('1');
+  const [
+    ranknameHasChanged,
+    setranknameHasChanged] = useState(false);
+  //const [address, setaddress] = useState('');
+  const [resultInfoForDisplay, setResultInfoForDisplay] = useState('');
+
   // const result = await enableEthereum();
   // console.log('result', result);
 
@@ -166,68 +214,24 @@ export function App({
     setIsCurrentUserActive(JSONops._getUserValue(data, user.username, "ACTIVE"));
   }
 
-  function getNewRankId_callback(data) {
-    //setState({ newrankId: data.id});
-    setnewrankId(data.id);
-    //setState({ ranknameHasChanged: true});
-    setranknameHasChanged(true);
-    //setState({ isLoading: false});
-    setIsLoading(false);
-  }
+  // function getNewRankId_callback(data) {
+  //   //setState({ newrankId: data.id});
+  //   setnewrankId(data.id);
+  //   //setState({ ranknameHasChanged: true});
+  //   setranknameHasChanged(true);
+  //   //setState({ isLoading: false});
+  //   setIsLoading(false);
+  // }
 
-  function _loadCurrentUserAccountsInsideMapping_callback(data) {
-    //setState({ address: data.address});
-    setaddress(data.address);
-    //setState({ user: data.user});
-    setuser(data.user);
-    //setState({ balance: data.balance});
-    setBalance(data.balance)
-  }
-  const [user, setuser] = useState({});
-  const [account, setAccount] = useState('');
-  const [error, setError] = useState({});
-  const [userAccounts, setuserAccounts] = useState([])
-  const [balance, setBalance] = useState(0)
-  const [data, setdata] = useState([])
-  const [updatedExtAcctBalCB, setupdatedExtAcctBalCB] = useState(0)
-  const [isLoading, setIsLoading] = useState(true);
-  const [userRankingLists] = useState([]);
-  const [isUserInJson, setIsUserInJson] = useState(false);
-  //     jsonHasRankingID: false,
-  //const [jsonHasRankingID, setjsonHasRankingID] = useState(false);;
-  //     jsonHasData: false,
-  //const [jsonHasData, setjsonHasData] = useState(false);
-  //     loadingAccounts: true,
-  //const [isLoadingAccounts, setisLoadingAccounts] = useState(true);
-  //     loadingJSON: true,
-  const [isLoadingJSON, setisLoadingJSON] = useState(true);
-  //     loadingExtBal: true,
-  //const [isLoadingExtBal, setIsLoadingExtBal] = useState(true);
-  //     isCurrentUserActive: false,
-  const [isCurrentUserActive, setIsCurrentUserActive] = useState(false);
-  const [isCurrentUserActiveCB] = useState(false);
-  //     isRankingIDInvalid: false,
-  const [isRankingIDInvalid] = useState(false);
-  //     newrankId: '',
-  const [newrankId, setnewrankId] = useState('');
-  //     //rankingDefault is the global ranking list json
-  //     rankingDefault: '5c36f5422c87fa27306acb52',
-  const [rankingDefault] = useState('5c36f5422c87fa27306acb52');
-  //     userNameCB: '',
-  //const [userNameCB, setuserNameCB] = useState('');
-  //     loadingRankingListJSON: true,
-  //const [isLoadingRankingListJSON, setisLoadingRankingListJSON] = useState(true);
-  //     rankingListData: [],
-  const [rankingListData, setrankingListData] = useState([]);
-  const [viewingOnlyCB, setviewingOnlyCB] = useState(true);
-  const [contactno, setcontactno] = useState('');
-  const [email, setemail] = useState('');
-  const [description, setdescription] = useState('');
-  const [specificRankingOptionBtns, setspecificRankingOptionBtns] = useState(false);
-  const [rank, setrank] = useState('1');
-  const [ranknameHasChanged, setranknameHasChanged] = useState('');
-  const [address, setaddress] = useState('');
-  const [resultInfoForDisplay, setResultInfoForDisplay] = useState('');
+  // function _loadCurrentUserAccountsInsideMapping_callback(data) {
+  //   //setState({ address: data.address});
+  //   setaddress(data.address);
+  //   //setState({ user: data.user});
+  //   setuser(data.user);
+  //   //setState({ balance: data.balance});
+  //   setBalance(data.balance)
+  // }
+
 
 
   //Below appears to be relevant to user events not e.g. callbacks that fetch data
@@ -266,6 +270,9 @@ export function App({
     //console.log('count in app.js', count);
     setnewrankId(newrankIdtxt);
     //_loadsetJSONData(count, _loadsetJSONData_callback);
+    setranknameHasChanged(true);
+
+    setIsLoading(false);
 
     _loadsetJSONData(newrankIdtxt, _loadsetJSONData_callback);
   }
@@ -286,6 +293,11 @@ const setemailCB = (oppoEmailTxt) => {
   setemail(oppoEmailTxt);
 }
 
+const setuserDescCB = (txt) => {
+  console.log('setuserDescCB txt', txt)
+  setdescription(txt);
+}
+
 //just repeating _loadsetJSONData_callback?
 const setrankingJSONdataCB = (datatoSet) => {
   console.log('datatoSet', datatoSet)
@@ -295,6 +307,8 @@ const setrankingJSONdataCB = (datatoSet) => {
   // setrank(JSONops._getUserValue(data, user.username, "RANK"));
   // setIsCurrentUserActive(JSONops._getUserValue(data, user.username, "ACTIVE"));
 }
+
+
   //#endregion
 
   //#region Helper methods
@@ -387,7 +401,7 @@ const setrankingJSONdataCB = (datatoSet) => {
       await setIsLoading(false);
     }
     fetchData();
-  }, []); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
+  }, [rankingDefault]); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
 
   //from https://medium.com/maxime-heckel/asynchronous-rendering-with-react-c323cda68f41
   if (!isLoading) {
@@ -401,6 +415,12 @@ const setrankingJSONdataCB = (datatoSet) => {
       }
       account = {
         account
+      }
+      description = {
+        description
+      }
+      setuserDescCB = {
+        setuserDescCB
       }
       userAccounts = {
         userAccounts
@@ -484,14 +504,17 @@ const setrankingJSONdataCB = (datatoSet) => {
       setemailCB = {
         setemailCB
       }
+      description = {
+        description
+      }
+      setuserDescCB = {
+        setuserDescCB
+      }
       resultInfoForDisplay = {
         resultInfoForDisplay
       }
       setResultInfoForDisplayCB = {
         setResultInfoForDisplayCB
-      }
-      description = {
-        description
       }
       account = {
         account
@@ -526,6 +549,9 @@ const setrankingJSONdataCB = (datatoSet) => {
       }
       rank = {
         rank
+      }
+      ranknameHasChanged={
+        ranknameHasChanged
       }
       isCurrentUserActive = {
         isCurrentUserActive

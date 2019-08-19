@@ -151,7 +151,7 @@ class Header extends Component {
   _handleRankingList(user) {
     try {
       //TODO: refactor?
-      const {pathname} = this.props.location;
+      //const {pathname} = this.props.location;
       //console.log('pathname in _handleRankingList', pathname)
           // if(JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, this.props.user.username)
           //     ){

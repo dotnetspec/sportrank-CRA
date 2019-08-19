@@ -2,7 +2,7 @@ import web3 from '../../../../../web3';
 //import { getDefaultUserAccountFromAddress } from '../io/web3io';
 //import  *  as web3defaultAccount from '../io/web3defaultAccount';
 import { getWeb3defaultAccount } from './web3defaultAccount';
-import { getWeb3Accounts } from './web3Accounts';
+//import { getWeb3Accounts } from './web3Accounts';
 //Gas Limit:
 //if gas limit problem review percentage for given transaction ... e.g.
 //154,000

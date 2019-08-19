@@ -6,16 +6,16 @@ import {
 import React
 from 'react';
 
-//UpdateUserModal must start with UPPER case
+//MMWaitModal must start with UPPER case
 //msg can be sent from parent in props if you want
 //actual display is controlled by closeModalCB
 //sent via props.closeModalCB in parent
-export default function UpdateUserModal(props) {
+export default function MMWaitModal(props) {
 
   const mainMsgTxt = `Please confirm the update with
   Metamask (possibly a separate window) and wait for the
   transaction to be mined to the blockchain to see the
-  update change
+  updated changes
   `;
 
   if (!props.show) {

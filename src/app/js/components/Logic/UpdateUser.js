@@ -1,4 +1,4 @@
-import { Grid, Button, FormGroup, Image, Col, Row } from 'react-bootstrap';
+import { Grid, Button, FormGroup, Col, Row } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react';
 import FieldGroup from '../UI/FieldGroup';
@@ -7,11 +7,11 @@ import { isEmpty } from '../../utils';
 //import {updatedUserSendToContract} from '../SideEffects/io/updatedUserSendToContract'
 //import {estimateGas} from '../SideEffects/io/estimateGas'
 //import DSportRank from '../../../../ABIaddress';
-import web3 from '../../../../web3';
+//import web3 from '../../../../web3';
 import { estimateGas } from '../SideEffects/io/estimateGas';
 //import { getWeb3Accounts } from '../SideEffects/io/web3Accounts';
 import { updateUserSendToContract } from '../SideEffects/io/updateUserSendToContract';
-import UpdateUserModal from '../UI/Modals/UpdateUserModal';
+import MMWaitModal from '../UI/Modals/MMWaitModal';
 //import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
 
@@ -29,8 +29,10 @@ class UpdateUser extends Component {
       error: '',
       formState: null,
       formUpdated: false,
-      contactno: JSONops._getUserValue(this.props.rankingJSONdata, this.props.user.username, "CONTACTNO"),
-      email: JSONops._getUserValue(this.props.rankingJSONdata, this.props.user.username, "EMAIL"),
+      //contactno: JSONops._getUserValue(this.props.rankingJSONdata, this.props.user.username, "CONTACTNO"),
+      //email: JSONops._getUserValue(this.props.rankingJSONdata, this.props.user.username, "EMAIL"),
+      contactno: this.props.user.contactno,
+      email: this.props.user.email,
       showModal: false
     };
       this.closeModalCB = this.closeModalCB.bind(this);
@@ -113,6 +115,8 @@ class UpdateUser extends Component {
       //if (!this.state.formUpdated) return;
       //const usernameHash = web3.utils.keccak256(this.props.user.username);
       const updatedDescription = this.state.description;
+      const updatedContactno  = this.state.contactno;
+      const updatedEmail = this.state.email;
       console.log('updatedDescription', updatedDescription);
       //TODO: dummy value - This needs to be fully implemented with IPFS
       const updatedImageHash = 'Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL';
@@ -129,7 +133,7 @@ class UpdateUser extends Component {
           // const result = await editAccount.send({ from: account,  gas: gasEstimate + 1000 });
           // console.log('result', await result);
 
-          const result = updateUserSendToContract(gasEstimate, updatedDescription, placeHolderForRankId, updatedImageHash)
+          const result = updateUserSendToContract(gasEstimate, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash)
 
           if (result.status && !Boolean(result.status.toString().replace('0x', ''))) {
             console.log('inside the if')
@@ -190,8 +194,10 @@ class UpdateUser extends Component {
     // show loading state
     //this.setState({ isLoading: true });
       //this.props.history.push('/');
+      this.props.setuserDescCB(this.state.description)
 
     this.setState({ isLoading: false });
+    this.props.onAfterUserUpdate();
     return null;
   }
 
@@ -241,8 +247,12 @@ class UpdateUser extends Component {
   //#region React lifecycle events
   //REVIEW: not sure what this is doing
   componentDidUpdate(prevProps){
-    if(this.props.user.description !== prevProps.user.description){
-      this.setState({description: this.props.user.description});
+
+    // if(this.props.user.description !== prevProps.user.description){
+    //   this.setState({description: this.props.user.description});
+    // }
+    if(this.props.description !== prevProps.description){
+      this.setState({description: this.props.description});
     }
   }
 
@@ -268,7 +278,7 @@ class UpdateUser extends Component {
     //console.log('rendering updateUser error', this.state.error)
     return (
       <div>
-      <UpdateUserModal show={this.state.showModal} closeModalCB={this.closeModalCB}></UpdateUserModal>
+      <MMWaitModal show={this.state.showModal} closeModalCB={this.closeModalCB}></MMWaitModal>
       <Grid>
         <Row>
           <Col xs={12}>
@@ -306,7 +316,8 @@ class UpdateUser extends Component {
                 className="contactno"
                 autoFocus
                 type="text"
-                value={ this.props.userAccounts[0].user.contactno }
+                //value={ this.props.userAccounts[0].user.contactno }
+                value={contactno}
                 placeholder="Your Contact Number"
                 onChange={ (e) => this._handleChange(e) }
                 name="contactno"
@@ -316,7 +327,8 @@ class UpdateUser extends Component {
               <FieldGroup
                 className="email"
                 type="text"
-                value={ this.props.userAccounts[0].user.email }
+                //value={ this.props.userAccounts[0].user.email }
+                value={email}
                 placeholder="Your Email"
                 onChange={ (e) => this._handleChange(e) }
                 name="email"

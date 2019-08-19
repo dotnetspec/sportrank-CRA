@@ -1,7 +1,9 @@
 import { createMemoryHistory } from 'history'
-import {render, fireEvent} from '@testing-library/react'
+import {render
+  //, fireEvent
+} from '@testing-library/react'
 import React from 'react'
-import {withRouter} from 'react-router'
+//import {withRouter} from 'react-router'
 import {Router} from 'react-router-dom'
 
 //const { performance } = require('performance');

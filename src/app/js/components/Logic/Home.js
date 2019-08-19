@@ -1,5 +1,6 @@
 import React, {
-  Component, useState, useEffect
+  //Component,
+  useState, useEffect
 } from 'react';
 //import { Grid, Row, Col, PageHeader, Button, Image, Modal, Navbar, ButtonToolbar, Dropdown, Glyphicon, MenuItem, Overlay, Tooltip } from 'react-bootstrap';
 import {
@@ -20,12 +21,13 @@ import {
 //import { NavLink, withRouter } from 'react-router-dom'
 import Spinner from 'react-spinkit';
 //import Chance from "chance"
-import DoChallenge from './DoChallenge'
+//import DoChallenge from './DoChallenge'
 import EnterResult from './EnterResult'
 import JSONops from './JSONops'
 import {userInfoText} from './TextOps'
 //import _sendJSONDataWithRankingID from '../SideEffects/io/Jsonio'
 import DoChallengeModal from '../UI/Modals/DoChallengeModal';
+import MMWaitModal from '../UI/Modals/MMWaitModal'
 import LadderInfoPanel from '../UI/LadderInfoPanel'
 import LadderUserPanel from '../UI/LadderUserPanel'
 //import Grid from 'react-bootstrap/Grid'
@@ -57,11 +59,12 @@ const selectRowPropAfterClickRow = {
       const [resultModalIsOpen, setResultModalIsOpen] = useState(false)
       const [warningModalIsOpen, setWarningModalIsOpen] = useState(false)
       const [warningText, setWarningText] = useState('')
-      const [rank, setRank] = useState(0)
+      const [showMMModal, setShowMMModal] = useState(false)
+      //const [rank, setRank] = useState(0)
       //const [contactNoCB, setcontactNoCB] = useState('')
-      const [emailCB, setEmailCB] = useState('')
-      const [data, setData] = useState('')
-      const [resultInfoForDisplay, setResultInfoForDisplay] = useState('')
+      //const [emailCB, setEmailCB] = useState('')
+      //const [data, setData] = useState('')
+      //const [resultInfoForDisplay, setResultInfoForDisplay] = useState('')
       //const [hasTableDrawnOnceOnly, setHasTableDrawnOnceOnly] = useState(false)
     //}
 
@@ -77,9 +80,17 @@ const selectRowPropAfterClickRow = {
   /**
    * Hides the challenge modal
    */
-  const _handleClose = () => {
-    console.log('_handleClose')
-    setshowModal(false);
+  // const _handleClose = () => {
+  //   console.log('_handleClose')
+  //   setshowModal(false);
+  // }
+  const showMMWaitModal = () => {
+    setShowMMModal(true);
+  }
+
+  const closeMMWaitModalCB = () => {
+    console.log('closeMMWaitModalCB')
+    setShowMMModal(false);
   }
 
   const closeChallengeModalCB = () => {
@@ -120,6 +131,8 @@ const selectRowPropAfterClickRow = {
     selectRowPropAfterClickRow.selectedOpponentRank = `${row['RANK']}`;
     if (props.user.username !== '') {
       _handleShowChallengeModal();
+      showMMWaitModal();
+      props.onAfterUserUpdate();
     } else {
       setWarningText('Error: Sorry your account is not recognized');
       setWarningModalIsOpen(true);
@@ -178,31 +191,31 @@ const selectRowPropAfterClickRow = {
     setWarningModalIsOpen(false);
   };
 
-  function displayContactDetails(){
-    const oppoContactNumber = JSONops._getUserValue(props.data, props.selectedOpponentName, 'CONTACTNO')
-    const oppoEmail = JSONops._getUserValue(props.data, props.selectedOpponentName, 'EMAIL')
-    const oppoContactNumberTxt = props.selectedOpponentName + "'s contact number is : " + oppoContactNumber;
-    const oppoEmailTxt = props.selectedOpponentName + "'s email address is : " + oppoEmail;
-
-    //contactNoCB callback function (App.js)
-    console.log('opp contactno', oppoContactNumberTxt)
-    props.setcontactNoCB(oppoContactNumberTxt);
-    console.log('oppoEmailTxt', oppoEmailTxt)
-    props.setemailCB(oppoEmailTxt);
-    //contactNoCB callback function (Header.js)
-    //let tempbalTodisplay = parseInt(this.props.updatedExtAcctBalCB) + (10 ** 18);
-    //REVIEW: not sure what below relates to. Probably not useful ...
-    // let tempXternAccountno = parseInt(this.props.updatedExtAcctBalCB)
-    // //tempXternAccountno += 10 ** 18;
-    // tempXternAccountno += 1;
-    // updatedExtAcctBalCB(tempXternAccountno)
-  }
+  // function displayContactDetails(){
+  //   const oppoContactNumber = JSONops._getUserValue(props.data, props.selectedOpponentName, 'CONTACTNO')
+  //   const oppoEmail = JSONops._getUserValue(props.data, props.selectedOpponentName, 'EMAIL')
+  //   const oppoContactNumberTxt = props.selectedOpponentName + "'s contact number is : " + oppoContactNumber;
+  //   const oppoEmailTxt = props.selectedOpponentName + "'s email address is : " + oppoEmail;
+  //
+  //   //contactNoCB callback function (App.js)
+  //   console.log('opp contactno', oppoContactNumberTxt)
+  //   props.setcontactNoCB(oppoContactNumberTxt);
+  //   console.log('oppoEmailTxt', oppoEmailTxt)
+  //   props.setemailCB(oppoEmailTxt);
+  //   //contactNoCB callback function (Header.js)
+  //   //let tempbalTodisplay = parseInt(this.props.updatedExtAcctBalCB) + (10 ** 18);
+  //   //REVIEW: not sure what below relates to. Probably not useful ...
+  //   // let tempXternAccountno = parseInt(this.props.updatedExtAcctBalCB)
+  //   // //tempXternAccountno += 10 ** 18;
+  //   // tempXternAccountno += 1;
+  //   // updatedExtAcctBalCB(tempXternAccountno)
+  // }
 
   //REVIEW: Managing display here might be handled differently:
   //this was originally a component - perhaps it still should be [?]
   const userPlayerJsonDataDisplay = () => {
     //console.log('userPlayerJsonDataDisplay', userPlayerJsonDataDisplay)
-
+      //get a json obj with all the user data in it
       const jsonOpsReturnOjb = JSONops.createUserPlayerJsonDataDisplay(props.rankingListJSONdata, props.newrankId, props.rankingJSONdata, props.user);
 
       //IF there's an active user ...
@@ -228,17 +241,9 @@ const selectRowPropAfterClickRow = {
           }
           //it's a new ranking no=one has joined or some other problem
           else {
-            return (<div>
-              <
-              h2 > {
-                jsonOpsReturnOjb.textToDisplayRankName
-              } <
-              /h2> <
-              h4 > {
-                jsonOpsReturnOjb.textToDisplayRankDesc
-              } <
-              /h4>
-              </div> );
+            return (
+                <LadderInfoPanel jsonObj={jsonOpsReturnOjb} rankingJSONdata={props.rankingJSONdata}></LadderInfoPanel>
+            );
           }
         }
 
@@ -391,6 +396,8 @@ const selectRowPropAfterClickRow = {
         //   preprocessDataBeforeRender();
         // }
 
+        const {setviewingOnlyCB} = props;
+
       useEffect(() => {
          //const jsonDataBeforeRender = preprocessDataBeforeRender();
          // console.log('jsonDataBeforeRender', jsonDataBeforeRender);
@@ -399,9 +406,9 @@ const selectRowPropAfterClickRow = {
          //   _sendJSONDataWithRankingID(jsonDataBeforeRender, props.newrankId);
          //   props.setrankingJSONdataCB(jsonDataBeforeRender);
            //set to viewingOnly and re-render
-           props.setviewingOnlyCB(true);
+           setviewingOnlyCB(true);
          //}
-        }, [])
+        }, [setviewingOnlyCB])
 
           let isError = props.error && props.error.message;
           //XXX: temp to run
@@ -424,6 +431,7 @@ const selectRowPropAfterClickRow = {
           } = props;
           return ( <
             div >
+            <MMWaitModal show={showMMModal} closeModalCB={closeMMWaitModalCB}></MMWaitModal>
             <DoChallengeModal
             show={showModal}
             closeChallengeModalCB={closeChallengeModalCB}

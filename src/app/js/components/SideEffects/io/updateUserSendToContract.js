@@ -6,7 +6,7 @@ import {getWeb3Accounts} from './web3Accounts';
 //enable mocking:
 //This function returns a tx hash:
 //NB: this functionality NOT currently being used!
-  export const updateUserSendToContract = async (gasEstimate, updatedDescription, rankId, updatedImageHash) => {
+  export const updateUserSendToContract = async (gasEstimate, updatedContactno, updatedEmail, updatedDescription, rankId, updatedImageHash) => {
 //export async function updateUserSendToContract(gasEstimate, updatedDescription, rankId, updatedImageHash){
   try{
     const address = await getWeb3Accounts();
@@ -18,7 +18,7 @@ import {getWeb3Accounts} from './web3Accounts';
     // console.log('updatedDescription', updatedDescription)
     // console.log('rankId', rankId)
     // console.log('updatedImageHash', updatedImageHash)
-    const newUserAccountDetails = await DSportRank.methods.editAccount(usernameHash, updatedDescription, rankId, updatedImageHash);
+    const newUserAccountDetails = await DSportRank.methods.editAccount(usernameHash, updatedContactno, updatedEmail, updatedDescription, rankId, updatedImageHash);
     //return await challenge.send({ from: await getWeb3Accounts(), gas: gasEstimate + 100000 });
     //console.log('newUserAccountDetails', newUserAccountDetails)
     newUserAccountDetails.send({

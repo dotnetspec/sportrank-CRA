@@ -11,11 +11,11 @@ import DoChallenge from '../../Logic/DoChallenge'
 //sent via props.closeModalCB in parent
 export default function DoChallengeModal(props) {
 
-  const mainMsgTxt = `Please confirm the update with
-  Metamask (possibly a separate window) and wait for the
-  transaction to be mined to the blockchain to see your new
-  challenge listed
-  `;
+  // const mainMsgTxt = `Please confirm the update with
+  // Metamask (possibly a separate window) and wait for the
+  // transaction to be mined to the blockchain to see your new
+  // challenge listed
+  // `;
 
   if (!props.show) {
     return null;

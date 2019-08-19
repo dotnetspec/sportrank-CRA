@@ -1,7 +1,10 @@
 import { Grid, Button, Row, Col } from 'react-bootstrap';
 //import Grid from 'react-bootstrap/Grid'
-import { withRouter } from 'react-router-dom'
-import React, { Component, useState } from 'react'
+//import { withRouter } from 'react-router-dom'
+import React,
+{
+  //Component,
+  useState } from 'react'
 //import FieldGroup from './FieldGroup'
 import JSONops from './JSONops'
 //import Grid from 'react-bootstrap/Grid'
@@ -25,15 +28,15 @@ import JSONops from './JSONops'
   //   state = {
       //isLoading: false,
 
-      const [isLoading, setisLoading] = useState(false)
-      //username: '',
-      const [username, setusername] = useState('')
-      //description: '',
-      const [description, setdescription] = useState('')
-      //usernameHasChanged: false,
-      const [usernameHasChanged, setusernameHasChanged] = useState('')
-      //error: ''
-      const [iserror, setiserror] = useState(false)
+      const [isLoading] = useState(false)
+      // //username: '',
+      // const [username, setusername] = useState('')
+      // //description: '',
+      // const [description, setdescription] = useState('')
+      // //usernameHasChanged: false,
+      // const [usernameHasChanged, setusernameHasChanged] = useState('')
+      // //error: ''
+      // const [iserror, setiserror] = useState(false)
   //   };
   // }
   //#endregion
