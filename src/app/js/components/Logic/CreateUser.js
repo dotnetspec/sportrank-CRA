@@ -2,7 +2,7 @@ import { Grid, Button, Row, Col, Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import FieldGroup from '../UI/FieldGroup'
-import JSONops from './JSONops'
+//import JSONops from './JSONops'
 //import {userNameCB, emailCB} from './App'
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';

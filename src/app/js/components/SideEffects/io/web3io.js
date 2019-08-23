@@ -75,15 +75,15 @@ import { getWeb3Accounts } from './web3Accounts';
   //export async function _loadCurrentUserAccounts(_loadCurrentUserAccounts_callback){
   //REVIEW: what's the difference between accountsFromTheBC, getWeb3Accounts and defaultAccount?
   //export async function _mapCurrentUserAccounts(accountsFromTheBC){
-  export async function _mapCurrentUserAccounts(props){
+  export async function _mapCurrentUserAccounts(){
     let state = {};
 
-    const _onError = (err, source) => {
-        if (source) err.source = source;
-        //this.setState({ error: err });
-        //props.history.push('/whoopsie');
-        console.log('err', err, source)
-      }
+    // const _onError = (err, source) => {
+    //     if (source) err.source = source;
+    //     //this.setState({ error: err });
+    //     //props.history.push('/whoopsie');
+    //     console.log('err', err, source)
+    //   }
 
     //accountsArray only has account numbers (no user or bal data)
     //it's not talking to the contract just the accounts in the wallet

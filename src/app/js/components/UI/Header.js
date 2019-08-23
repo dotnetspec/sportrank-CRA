@@ -13,7 +13,7 @@ import PlayerStatusBtn from './buttons/PlayerStatusBtn';
 import ListAllRankingsBtn from './buttons/ListAllRankingsBtn';
 import {formatBalance} from '../../utils';
 import CurrentETHBal from './Currentethbal'
-import _ from 'lodash'
+//import _ from 'lodash'
 /**
  * Class displaying the accumulated ETH balance from
  *previous transactions
@@ -414,7 +414,7 @@ componentDidMount(){
 const { user } = this.props;
 //const isUserEmpty = _.isEmpty(user);
 //const isUserCreateUser = user;
-console.log('user in header', user)
+//console.log('user in header', user)
     if(user.username === 'CreateUser')
       {
         console.log('redirect to create with account no', this.props.account)
@@ -436,12 +436,12 @@ displayActivationBtns(){
   //#endregion
   //#region React lifecycle events
   render() {
-    console.log('this.props.userAccounts', this.props.userAccounts);
+    //console.log('this.props.userAccounts', this.props.userAccounts);
     if(this.props.userAccounts[0] !== undefined){
 
           const isEditable = Boolean(this.props.user.username);
           const isError = this.props.error && this.props.error.message;
-          console.log('this.props.account', this.props.account)
+          //console.log('this.props.account', this.props.account)
           //console.log('this.props.error', this.props.error)
           //console.log('this.props.error.message', this.props.error.message)
           const isLoading = !Boolean(this.props.account) && !isError;

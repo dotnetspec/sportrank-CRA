@@ -31,7 +31,7 @@ import {
   //_loadCurrentUserAccountsInsideMapping,
   _loadExternalBalance,
   _mapCurrentUserAccounts,
-  getCurrentUserAccountsFromBlockchain
+  //getCurrentUserAccountsFromBlockchain
 } from '../SideEffects/io/web3io';
 //import DSportRank from '../../../../ABIaddress';
 //import axios from 'axios'
@@ -142,7 +142,7 @@ export function App({
   const [newrankId, setnewrankId] = useState('');
   //     //rankingDefault is the global ranking list json
   //     rankingDefault: '5c36f5422c87fa27306acb52',
-  const [rankingDefault] = useState('5c36f5422c87fa27306acb52');
+  //const [rankingDefault] = useState('5c36f5422c87fa27306acb52');
   //     userNameCB: '',
   //const [userNameCB, setuserNameCB] = useState('');
   //     loadingRankingListJSON: true,
@@ -160,18 +160,12 @@ export function App({
     setranknameHasChanged] = useState(false);
   //const [address, setaddress] = useState('');
   const [resultInfoForDisplay, setResultInfoForDisplay] = useState('');
+  //set as a global var:
+  const rankingDefault = '5c36f5422c87fa27306acb52';
 
   // const result = await enableEthereum();
   // console.log('result', result);
 
-  //  function contactNoCB(contactNoCB) {
-  //     //setState({contactNoCB})
-  //     setcontactNoCB(contactNoCB);
-  // }
-  // function emailCB(emailCB) {
-  //     //setState({emailCB})
-  //     setemailCB(emailCB);
-  // }
   //cb functions based on the data in the json
   // function jsonHasRankingID(jsonHasRankingID) {
   //     //setState({jsonHasRankingID})
@@ -186,15 +180,9 @@ export function App({
   //   setCurrentUserRank(currentUserRank);
   // }
 
-
   //cb from web3io.js to set the state of the external balance
   function _loadExternalBalance_callback(externalbalance) {
-    //console.log('data account in callback', data[0].ACCOUNT);
-    //  expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
-    //done();
-    //console.log('externalbalance', externalbalance)
     if (externalbalance !== undefined) {
-      //setState({ updatedExtAcctBalCB: balance })
       setupdatedExtAcctBalCB(externalbalance);
     }
   }
@@ -227,25 +215,19 @@ export function App({
   //   setBalance(data.balance)
   // }
 
-
-
   //Below appears to be relevant to user events not e.g. callbacks that fetch data
   //display the ranking specific btn options
   const setspecificRankingOptionBtnsCB = () => {
-    //setState({specificRankingOptionBtns:true});
     setspecificRankingOptionBtns(true);
   }
 
   const handleListAllChildClick = () => {
-    //setState({specificRankingOptionBtns:false})
     setspecificRankingOptionBtns(false);
   }
 
   //cb from GlobalRankings.js to set the rank state as view only
   //REVEIW: is this necessary? wasn't working until noticed it ...
   const setOnCallbackviewingOnlyCB = (viewingOnlyCBval) => {
-    console.log('in viewingOnlyCB', viewingOnlyCBval)
-    //   setState({viewingOnlyCB:viewingOnlyCB})
     setviewingOnlyCB(viewingOnlyCBval);
   }
 
@@ -254,21 +236,15 @@ export function App({
   //to just setOnCallbackisCurrentUserActiveCB in <Header ...
   const setOnCallbackisCurrentUserActiveCB = (btnState) => {
     //console.log('in isCurrentUserActive', btnState)
-    //setState({isCurrentUserActive:BtnState})
     setIsCurrentUserActive(btnState);
   }
-
   //count is in GlobalRankingViewBtn. This code uses
   //setnewrankIdCB param in <Main below
   //NB: where you DON'T want (e) => in the property attribute:
   const setnewrankIdCB = (newrankIdtxt) => {
-    //console.log('count in app.js', count);
     setnewrankId(newrankIdtxt);
-    //_loadsetJSONData(count, _loadsetJSONData_callback);
     setranknameHasChanged(true);
-
     setIsLoading(false);
-
     _loadsetJSONData(newrankIdtxt, _loadsetJSONData_callback);
   }
 
@@ -276,7 +252,6 @@ export function App({
     console.log('setResultInfoForDisplayCB in app.js', text);
     setResultInfoForDisplay(text);
   }
-
   //cb from createuser.js to set the username
   //in time for getNewRankingID() to put it in the json
   const setuserNameCB = (name) => {
@@ -285,12 +260,10 @@ export function App({
 }
 
   const setcontactNoCB = (number) => {
-    //console.log('number in app.js', number);
     setcontactno(number);
 }
 
 const setemailCB = (oppoEmailTxt) => {
-  //console.log('oppoEmailTxt in app.js', oppoEmailTxt);
   setemail(oppoEmailTxt);
 }
 
@@ -308,15 +281,10 @@ const setrankingJSONdataCB = (datatoSet) => {
   // setrank(JSONops._getUserValue(data, user.username, "RANK"));
   // setIsCurrentUserActive(JSONops._getUserValue(data, user.username, "ACTIVE"));
 }
-
-
   //#endregion
-
   //#region Helper methods
-
   //REVIEW: Possible to getUserRank in App.js (and set state) rather than Home.js?
-  //currently no - problem is waiting for username to check against rank
-
+  //currently no - problem is waiting for username to check against ran
   /**
    * Sets the App state error and redirects the user to the error page
    *
@@ -329,68 +297,26 @@ const setrankingJSONdataCB = (datatoSet) => {
     props.history.push('/whoopsie');
   }
   //#endregion
-  //any change with setState here will re-render app.js
-  const processStateAfter_loadCurrentUserAccounts = (state) => {
-    console.log('state', state);
-    //console.log('state stringify', JSON.stringify(state))
-    console.log('state.userAccounts', state.userAccounts);
-    setuserAccounts(state.userAccounts);
-    console.log('state.userAccounts[0].user', state.userAccounts[0].user);
-    //const userObj =  {user:
-                       // { username: 'player1',
-                       //   description: 'test2',
-                       //   contactno: '1234321',
-                       //   email: 'test@test.com',
-                       //   owner: '0x847700B781667abdD98E1393420754E503dca5b7',
-                       //   picture: 'Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL',
-                       //   rankingDefault: '5c81c1e944e81057efe3e2c8' } }
 
+  const processStateAfter_loadCurrentUserAccounts = (state) => {
+    setuserAccounts(state.userAccounts);
     setuser(state.userAccounts[0].user);
-    //console.log('userObj', userObj);
-    console.log('state.user', state.user);
-    if (user !== undefined) {
-      //setState({
-      //error: state.error,
+    if (state.userAccounts[0].user !== undefined) {
       setError(state.error);
-      //userAccounts: state.userAccounts,
       setuserAccounts(state.userAccounts)
-      //rankingDefault: state.rankingDefault,
       if(state.data !== undefined){
         setIsUserInJson(JSONops.isPlayerListedInJSON(state.data, state.user.username));
         setIsCurrentUserActive(JSONops._getUserValue(state.data, state.user.username, "ACTIVE"));
       }else{
         setIsUserInJson(false);
       }
-      //newrankId: state.newrankId,
       setnewrankId(state.newrankId);
-      //user: state.user,
-      //setuser(state.user);
-      //contactno: state.user.contactno,
       setcontactno(state.userAccounts[0].user.contactno);
-      //email: user.email,
       setemail(state.userAccounts[0].user.email);
-      //description: state.user.description,
       setdescription(state.userAccounts[0].user.description);
-      //account: web3.eth.defaultAccount,
-      //account: state.account,
-      console.log('state.account', state.account);
       setAccount(state.account);
-      //balance: state.balance,
       setBalance(state.balance);
-      //rank: JSONops._getUserValue(state.data, state.user.username, "RANK"),
-      //contactNoCB: state.contactNoCB,
-      //setcontactNoCB(state.contactNoCB);
-      //setcontactno(state.contactno)
-      //emailCB: state.emailCB,
-      //setemail(state.email);
-      //loadingAccounts: false,
-      //not currently used:
-      //setisLoadingAccounts(false);
-      //newrankId must be cleared so a new one has to be regenerated for each account
-      //viewingOnlyCB: true
       setviewingOnlyCB(true);
-      //  })
-      //console.log('state.user.username in app.js', state.user.username)
     }else{
       console.log('user undefined')
     }
@@ -399,29 +325,20 @@ const setrankingJSONdataCB = (datatoSet) => {
   //#region React lifecycle events
   useEffect(() => {
     setIsLoading(true);
-    //console.log('inside useEffect', newrankId)
     async function fetchData() {
-      //const response = await MyAPI.getData(someId);
-
       //from the Blockchain via web3io:
-      //setupdatedExtAcctBalCB(await _loadExternalBalance())
       await _loadExternalBalance(_loadExternalBalance_callback);
-      //await setIsLoadingExtBal();
-      //from jsonbin api via jsonio::
+
       await getDefaultRankingList(rankingDefault, getDefaultRankingList_callback);
       async function getDefaultRankingList_callback(json) {
         setrankingListData(json);
       }
-      //from the Blockchain via web3io:
-      //processStateAfter_loadCurrentUserAccounts(await _loadCurrentUserAccounts());
-      processStateAfter_loadCurrentUserAccounts(
-        //await _mapCurrentUserAccounts(await getCurrentUserAccountsFromBlockchain())
-        await _mapCurrentUserAccounts(props)
-      );
+      const state = await _mapCurrentUserAccounts();
+      processStateAfter_loadCurrentUserAccounts(state);
       await setIsLoading(false);
     }
     fetchData();
-  }, [rankingDefault, props]); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
+  }, []); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
 
   //from https://medium.com/maxime-heckel/asynchronous-rendering-with-react-c323cda68f41
   if (!isLoading) {

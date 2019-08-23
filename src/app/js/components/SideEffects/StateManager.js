@@ -10,15 +10,15 @@ export default function changeState(stateToChange, state, userAccounts, defaultU
     defaultUserAccount[0].user.username === ''
     || defaultUserAccount[0].user.username === undefined){
   //if(stateToChange === 'noExistingUser'){
-  console.log('in noExistingUser')
+  //console.log('in noExistingUser')
     return noExistingUser(state, userAccounts);
   }
   else if(stateToChange === 'setUserSelectedRanking'){
-    console.log('setUserSelectedRanking')
+    //console.log('setUserSelectedRanking')
     return setUserSelectedRanking(state, defaultUserAccount);
   }
   else if(stateToChange === 'assignUserAcctStateToStateObj'){
-    console.log('setUserSelectedRanking')
+    //console.log('setUserSelectedRanking')
     return assignUserAcctStateToStateObj(userAccounts, defaultUserAccount, state);
   }
   else{
@@ -29,7 +29,7 @@ export default function changeState(stateToChange, state, userAccounts, defaultU
 }
 
 function noExistingUser(state, userAccounts){
-  console.log('no user', userAccounts)
+  //console.log('no user', userAccounts)
   state.userAccounts =  userAccounts;
   state.rankingDefault =  '';
   state.isUserInJson =  false;

@@ -6,10 +6,10 @@ import Web3 from 'web3';
 //const Web3 = require("web3");
 
 //NB: tests don't work with Web3.givenProvider. Will defer to rinkeby.infura node
-//const web3 = new Web3(Web3.givenProvider || 'wss://rinkeby.infura.io/ws' || 'ws://localhost:8546' || 'https://localhost:8546', null, {});
+const web3 = new Web3(Web3.givenProvider || 'wss://rinkeby.infura.io/ws' || 'ws://localhost:8546' || 'https://localhost:8546', null, {});
 //const web3 = new Web3('ws://localhost:8546', null, {});
 //const web3 = new Web3(ganache.provider());
-var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+//var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
 
 // async function init() {
 //   if (typeof web3 !== 'undefined') {
