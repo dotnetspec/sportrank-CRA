@@ -5,7 +5,8 @@ import {
   _loadExternalBalance,
   getCurrentUserAccountsFromBlockchain,
   _mapCurrentUserAccounts,
-  getDefaultUserAccountFromAddress
+  getDefaultUserAccountFromAddress,
+  fillArrayIfNoUser
   //,
   //getDefaultUserAccountFromAddress,
   //getWeb3defaultAccount
@@ -46,8 +47,54 @@ const userAccountsArray = [{
   }
 }];
 
+
+
 const address = '0x847700B781667abdD98E1393420754E503dca5b7';
 
+  describe('web3io.js helper functions',  () => {
+    //REVIEW: not sure how to obtain from tests - in browser is ok
+    it('fill array in web3io', () => {
+
+      const nouserArr = [
+      "0xc353f1FDBfEe3a548472620b8b3c0B022E0D6E07",
+      "0xcAEF848222Bce7754B0836d01e4dC027671A5BE2",
+      "0x6b07a8ABeb20E5282c3BB918924726E04Bf551aC",
+      "0x5d5e5D5E85EF705379787fCb8Bb72E8337E9e28B",
+      "0xA8a2d76D0ba8a56217e772620DBe9f1c69719d75",
+      "0x675da293f9dc4A1ee111a7893CA73457cC3161C1",
+      "0x35115E86c6AF889cE2b2cabC3ee076DF5134e061",
+      "0x84b93d1bb390434F6d86884805f032abE6CC5F2E",
+      "0xF4DA81504c6c398BEAF11187a41D1E7A2A409b8f",
+      "0xb7523d52E859C1910770D9da5C39e9DDCB67483F"];
+
+    //   const filledArrayForTest =
+    //   [
+    //   {address: "0xc353f1FDBfEe3a548472620b8b3c0B022E0D6E07", user: 'CreateUser', balance: 0},
+    //   {address: "0xcAEF848222Bce7754B0836d01e4dC027671A5BE2", user: 'CreateUser', balance: 0},
+    //   {address: "0x6b07a8ABeb20E5282c3BB918924726E04Bf551aC", user: 'CreateUser', balance: 0},
+    //   {address: "0x5d5e5D5E85EF705379787fCb8Bb72E8337E9e28B", user: 'CreateUser', balance: 0},
+    //   {address: "0xA8a2d76D0ba8a56217e772620DBe9f1c69719d75", user: 'CreateUser', balance: 0},
+    //   {address: "0x675da293f9dc4A1ee111a7893CA73457cC3161C1", user: 'CreateUser', balance: 0},
+    //   {address: "0x35115E86c6AF889cE2b2cabC3ee076DF5134e061", user: 'CreateUser', balance: 0},
+    //   {address: "0x84b93d1bb390434F6d86884805f032abE6CC5F2E", user: 'CreateUser', balance: 0},
+    //   {address: "0xF4DA81504c6c398BEAF11187a41D1E7A2A409b8f", user: 'CreateUser', balance: 0},
+    //   {address: "0xb7523d52E859C1910770D9da5C39e9DDCB67483F", user: 'CreateUser', balance: 0}
+    // ];
+
+      const filledArray = fillArrayIfNoUser(nouserArr);
+      expect(filledArray[0].user.username).toEqual("CreateUser");
+      expect(filledArray[3].address).toEqual("0x5d5e5D5E85EF705379787fCb8Bb72E8337E9e28B");
+      expect(filledArray[6].user).not.toEqual("");
+      expect(filledArray[6].balance).toEqual(0);
+
+      //const getCurrentUserAccountsFromBlockchain = jest.fn(userAccountsArray);
+      // async function getAccounts_callback(array) {
+      //   console.log('data', array);
+      //   await expect(array[0]).toEqual("0x847700B781667abdD98E1393420754E503dca5b7");
+      //   done();
+    })
+      // await wait(() => getCurrentUserAccountsFromBlockchain(getAccounts_callback));
+});
 
 
  // async function connectToWeb3TestProvider(connectToWeb3_callback){

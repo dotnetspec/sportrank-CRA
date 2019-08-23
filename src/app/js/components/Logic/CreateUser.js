@@ -55,7 +55,8 @@ class CreateUser extends Component {
       error: '',
       WarningModalIsOpen: false,
       warningText: '',
-      userConfirm: false
+      userConfirm: false,
+      newRankId: ''
     };
 
   }
@@ -95,11 +96,11 @@ _continueClick = () => {
     //console.log(this.props.rankingJSONdata);
     this.setState({ isLoading: true });
 
-    //Player has to belong to a ranking
+    //Player has to belong to a ranking (?)
     if(this.props.newrankId === ''){
       console.log('this.props.newrankId in createuser handleclick1', this.props.newrankId)
-      this.props.getNewRankingID();
-      console.log('this.props.newrankId in createuser handleclick2', this.props.newrankId)
+      this.setState({ newRankId: await this.getNewRankId() });
+      //console.log('this.state.newrankId in createuser handleclick2', this.state.newRankId)
     }
 
     if (this.state.userConfirm === false){
@@ -110,25 +111,29 @@ _continueClick = () => {
     //so that the componentDidUpdate in app.js can do
     //getNewRankId() and set the player name in json
     console.log('this.state.username in _handleClick', this.state.username)
-    this.props.userNameCB(this.state.username);
-    this.props.contactNoCB(this.state.contactno);
-    this.props.emailCB(this.state.email);
+    this.props.setuserNameCB(this.state.username);
+    this.props.setcontactNoCB(this.state.contactno);
+    this.props.setemailCB(this.state.email);
+    this.props.setuserDescCB(this.state.description);
 
-    const { newrankId } = this.props;
-    console.log('newrankId in create user', newrankId)
+//getNewRankId(description, account, email, contactno, user, getNewRankId_callback) {
+    //const newrankId = await getNewRankId()
+
+    //const { newrankId } = this.props;
+    //console.log('newrankId in create user', newrankId)
     //only do this once the user has confirmed the user name because it cannot be
     //changed in future
     //if(this.state.userConfirm && newrankId !== ''){
       if(this.state.userConfirm){
               console.log('ready to go to createNewUserInNewJSON')
-              JSONops.createNewUserInNewJSON(this.state.username, this.state.contactno, this.state.email, this.props.account, this.state.description, newrankId);
+              //JSONops.createNewUserInNewJSON(this.state.username, this.state.contactno, this.state.email, this.props.account, this.state.description, this.state.newRankId);
               const { username, description } = this.state;
               try {
                 // set up our contract method with the input values from the form
-                console.log('newrankId ready to send to createAccount', newrankId)
+                console.log('newrankId ready to send to createAccount', this.state.newRankId)
                 //const createAccount = DSportRank.methods.createAccount(username, this.state.contactno, this.state.email, description, newrankId);
-
-                const createAccount = DSportRank.methods.createAccount(username, this.state.contactno, this.state.email, description, newrankId);
+                //does user need newRankId?
+                const createAccount = DSportRank.methods.createAccount(username, this.state.contactno, this.state.email, description, '');
                 console.log('createAccount created', createAccount)
                 // get a gas estimate before sending the transaction
                 const gasEstimate = await createAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
@@ -169,6 +174,61 @@ _continueClick = () => {
             //   this.setState({ warningText: wtext });
           }
   }
+
+  componentDidMount(){
+    const newRankingId = this.getNewRankId();
+    //
+    this.setState({ newRankId: newRankingId });
+  }
+
+  //TODO:add code to get from jsonbin.io
+  //_handleClick1 = async () => {
+   getNewRankId = async () => {
+   //getNewRankId(){
+      try{
+      this.setState({ isLoading: true});
+      let req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+          //this async section tests whether the result
+          //from the code lower down has been returned
+          //(without using await)
+          if (req.readyState === XMLHttpRequest.DONE) {
+            const resulttxt = JSON.parse(req.responseText);
+            console.log('resulttxt', resulttxt)
+            //only here can set state (once result is back)
+            this.props.setnewrankIdCB(resulttxt.id)
+            this.setState({ rankId: resulttxt.id});
+            //this.setState({ ranknameHasChanged: true});
+            //this.setState({ isLoading: false});
+            // console.log('this.state.rankId')
+            // console.log(this.state.rankId)
+          }
+        };
+        //NB: following will send the request but
+        //need to wait for the results to come back
+        //(above) before any further processing can be
+        //don
+        req.open("POST", "https://api.jsonbin.io/b", true);
+        const jsonbinSecretKey = "$2a$10$HIPT9LxAWxYFTW.aaMUoEeIo2N903ebCEbVqB3/HEOwiBsxY3fk2i";
+        //req.setRequestHeader("Content-Type", "application/json", "secret-key", "$2a$10$HIPT9LxAWxYFTW.aaMUoEeIo2N903ebCEbVqB3/HEOwiBsxY3fk2i");
+        req.setRequestHeader("Content-type", "application/json");
+        req.setRequestHeader("secret-key", jsonbinSecretKey);
+        //req.setRequestHeader("secret-key", "$2a$10$HIPT9LxAWxYFTW.aaMUoEeIo2N903ebCEbVqB3/HEOwiBsxY3fk2i");
+        //req.send('{"Ranking": "NewRanking"}') || {}
+        //NB: below done so that jsonobj can be tested for new
+        //id set for table display and correct ranking setting
+        //REVIEW: may handle below differently but getting rankingid involves
+        //chicken and egg problem getting an initiial json
+        //req.send('{"RANKING": "NEWRANKING", "STATUS":"NEW", "id":1}') || {}
+        const { account } = this.props;
+        req.send('{"RANKING": "NEWRANKING", "STATUS":"NEW", "id":1, "ACTIVE": false,"RANK": 0,"CURRENTCHALLENGERNAME": "AVAILABLE", "ACCOUNT": "' + account + '" }')
+        }catch (err) {
+        // stop loading state and show the error
+        console.log(err)
+        this.setState({ isLoading: false, error: err.message });
+      };
+        return null;
+    }
 
   getUserConfirmationOfAccountCreation(){
     //REVIEW: Fix the validation isLoading if necessary
@@ -330,7 +390,7 @@ _continueClick = () => {
         </Modal>
         <Row>
           <Col xs={12}>
-          <h2>Create An Account Name<small> for account number:  { this.props.account }</small></h2>
+          <h2>Create An Account Name<small> for account number:  { this.props.address }</small></h2>
           </Col>
         </Row>
         <Row>

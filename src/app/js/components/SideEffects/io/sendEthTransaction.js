@@ -9,11 +9,11 @@ import { getWeb3Accounts } from './web3Accounts';
         //you need to manually set the nonce,
         //because the node will not keep track of it correctly.
         const account = await getWeb3Accounts();
-        let nonce = await web3.eth.getTransactionCount(account);
+        let nonce = await web3.eth.getTransactionCount(account[0]);
         nonce = nonce++;
         //only return when promise has returned
         web3.eth.sendTransaction({
-          from: account, to: '0xAC5491BB066c98fec13046928a78761c0B1E5603', nonce: nonce, value: 1**17, gas: gasEstimate + 1000
+          from: account[0], to: '0xAC5491BB066c98fec13046928a78761c0B1E5603', nonce: nonce, value: 1**17, gas: gasEstimate + 1000
         })
         // .on('result', function(result){
         //     console.log('result', result);

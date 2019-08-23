@@ -105,7 +105,6 @@ function displayContactDetails(){
     //REVIEW: I don't see how these props from orig are used
     //const { username, account, onAfterChallenge } = this.props;
     //this.challengeInput = "at last!";
-    //const sendETHDev = DSportRank.methods.sendETHDev();
 
     // using the callback
     //NB: we are not currently sending challenges to the blockchain
@@ -123,43 +122,20 @@ function displayContactDetails(){
       //  });
       //REVIEW: probably change naming of setState as that confuses with object components
       await setState(state.challenge = props.user + " vs " + props.selectedOpponentName);
-       //const challenge = DSportRank.methods.challenge(this.state.challenge);
-       // estimate gas before sending challenge transaction
-       //const gasEstimate = await web3.eth.estimateGas({ from: web3.eth.defaultAccount });
-      //const gasEstimate = await web3.eth.estimateGas({ from: getWeb3defaultAccount() });
+
       const gasEstimate = await estimateGas();
       console.log('gasEstimate', gasEstimate);
       const result = await challengeSendToContract(gasEstimate, state.challenge, props.newrankId, props.user, props.selectedOpponentName, props.data, challengeSendToContractCB);
-      //use a callback to process the result after contract updated 
+      //use a callback to process the result after contract updated
+      //REVIEW: Update must come after sendTransaction() in case e.g. there's not enough gas
+      //otherwise, if this goes through there could be ranking errors etc.
       async function challengeSendToContractCB(){
         JSONops._updateDoChallengeJSON(props.newrankId, props.user, props.selectedOpponentName, props.data);
         console.log('result', await result);
       }
-
-      //REVIEW; Account currently hard coded
-      //const result = await sendEthTransaction(gasEstimate);
-      //await sendEthTransaction(gasEstimate);
-       // check result status. if status is false or '0x0', show user the tx details to debug error
-       //only error handling now in sendEthTransaction
-      // if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
-      //   console.log('if result', result)
-      //   //commented to get funcitonal working for now ...
-      //   //return setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
-      //   setIsLoading(false);
-      //   setError('Error executing transaction, transaction details: ' + JSON.stringify(result));
-      // }
-      //REVIEW: Update must come after sendTransaction() in case e.g. there's not enough gas
-      //otherwise, if this goes through there could be ranking errors etc.
-      //console.log('props.newrankId', props.newrankId)
-      //console.log('props.data', props.data)
-      //only update the json if the user hasn't rejected (or other issue)
-      //if(await result !== undefined){
-        //JSONops._updateDoChallengeJSON(props.newrankId, props.user, props.selectedOpponentName, props.data);
-        //updateTextCB from Home
-        //this will have to be modified to obtain details from the
+        //REVIEW: this will have to be modified to obtain details from the
         //bc rather than the json
         displayContactDetails();
-
         // remove loading state
         //setState({ isLoading: false });
         setIsLoading(false);
@@ -167,7 +143,6 @@ function displayContactDetails(){
         props.closeModalOnAfterChallenge();
         //QUESTION: is this the right place for this function?
       //}
-
     }
     catch(err){
       //console.log(result)

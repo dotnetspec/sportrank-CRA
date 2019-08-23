@@ -15,7 +15,7 @@
     "ganache-cli": "^6.4.5",
     "jquery": "^3.4.1",
     "keyboardjs": "^2.5.1",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "npm-install": "0.0.1",
     "nyc": "^14.1.1",
     "p-iteration": "^1.1.8",

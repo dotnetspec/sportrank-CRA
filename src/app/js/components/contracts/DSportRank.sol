@@ -1,6 +1,48 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.11;
 
-contract DSportRank{
+
+contract owned {
+    constructor() public { owner = msg.sender; }
+    address payable owner;
+
+
+    // This contract only defines a modifier but does not use
+    // it: it will be used in derived contracts.
+    // The function body is inserted where the special symbol
+    // `_;` in the definition of a modifier appears.
+    // This means that if the owner calls this function, the
+    // function is executed and otherwise, an exception is
+    // thrown.
+    modifier onlyByContractOwner {
+        require(
+            msg.sender == owner,
+            "Only owner can call this function."
+        );
+        _;
+    }
+}
+
+
+contract DSportRank is owned {
+
+
+  /**
+   * Contract Owner
+   *
+   * Address holding address of contract creator
+   // These will be assigned at the construction
+    // phase, where `msg.sender` is the account
+    // creating this contract.
+   */
+    address public contractOwner = msg.sender;
+    uint public creationTime = now;
+    bool private isContractActive = true;
+
+
+
+
+
+
     /**
      * User
      *
@@ -52,6 +94,7 @@ contract DSportRank{
         uint time
     );
 
+
     /**
      * Newranking
      *
@@ -66,6 +109,7 @@ contract DSportRank{
         uint time
     );
 
+
     /**
      * getRankingAt
      *
@@ -76,19 +120,26 @@ contract DSportRank{
      * {string} description - the user profile description
      */
 
-    function getRankingAt(uint index) public view returns (string)  {
+
+    function getRankingAt(uint index) public view returns (string memory)  {
+      //ensure the contract is active
+      require(isContractActive == true);
       // ensure the sender has an account
       require(owners[msg.sender].length > 0);
+
 
       // get the username hash of the sender's account
       bytes32 usernameHash = owners[msg.sender];
 
+
       // get our user
       User storage user = users[usernameHash];
+
 
       // return the ranking at the ranking index
       return user.rankings[index];
  }
+
 
     /**
      * createAccount
@@ -99,7 +150,9 @@ contract DSportRank{
      * {string} username - the username of the user
      * {string} description - the user profile description
      */
-    function createAccount(string username, string contactno, string email, string description, string rankingDefault) public {
+    function createAccount(string memory username, string memory contactno, string memory email, string memory description, string memory rankingDefault) public {
+        //ensure the contract is active
+        require(isContractActive == true);
         // ensure a null or empty string wasn't passed in
         require(bytes(username).length > 0);
         // generate the username hash using keccak
@@ -122,6 +175,7 @@ contract DSportRank{
         owners[msg.sender] = usernameHash;
     }
 
+
     /**
      * editAccount
      *
@@ -135,7 +189,9 @@ contract DSportRank{
      * {string} rankingDefault (optional) - a new default ranking jsonbin.io id
      * {string} pictureHash (optional) - the IFPS hash of the user's updated profile picture
      */
-    function editAccount(bytes32 usernameHash, string contactno, string email, string description, string rankingDefault, string pictureHash) public {
+    function editAccount(bytes32 usernameHash, string memory contactno, string memory email, string memory description, string memory rankingDefault, string memory pictureHash) public {
+        //ensure the contract is active
+        require(isContractActive == true);
         // ensure the user exists and that the creator of the user is the
         // sender of the transaction
         require(users[usernameHash].owner == msg.sender);
@@ -163,8 +219,10 @@ contract DSportRank{
      * {bool} - returns true if the hashed username exists in the user mapping, false otherwise
      */
     function userExists(bytes32 usernameHash) public view returns (bool) {
+      //ensure the contract is active
+      require(isContractActive == true);
         // must check a property... bc solidity!
-            return users[usernameHash].creationDate !== 0;
+            return users[usernameHash].creationDate != 0;
     }
     /**
      * challenge
@@ -173,21 +231,28 @@ contract DSportRank{
      * that a challenge happened. Assumes the user sending the transaction is the challengeer.
      * {string} content - the challenge content
      */
-    function challenge(string content) public {
+    function challenge(string memory content) public {
+        //ensure the contract is active
+        require(isContractActive == true);
         // ensure the sender has an account
         require(owners[msg.sender].length > 0);
+
 
         // get the username hash of the sender's account
         bytes32 usernameHash = owners[msg.sender];
 
+
         // get our user
         User storage user = users[usernameHash];
+
 
         // get our new challenge index
         uint challengeIndex = user.challenges.length++;
 
+
         // update the user's challenges at the challenge index
         user.challenges[challengeIndex] = content;
+
 
         // emit the challenge event and notify the listeners
         emit Newchallenge(usernameHash, content, now);
@@ -198,23 +263,41 @@ contract DSportRank{
      * Adds a new ranking to the user's ranking list. Assumes the user sends the transaction.
      * {string} content array - the ranking list content rankname and id
      */
-    function ranking(string content) public {
+    function ranking(string memory content) public {
+        //ensure the contract is active
+        require(isContractActive == true);
         // ensure the sender has an account
         require(owners[msg.sender].length > 0);
+
 
         // get the username hash of the sender's account
         bytes32 usernameHash = owners[msg.sender];
 
+
         // get our user
         User storage user = users[usernameHash];
+
 
         // get our new ranking index
         uint rankingIndex = user.rankings.length++;
 
+
         // update the user's rankings at the ranking index
         user.rankings[rankingIndex] = content;
 
+
         // emit the challenge event and notify the listeners
         emit Newranking(usernameHash, content, now);
+    }
+
+
+    //only owner account that did deployment can turn contract off/on
+    function turnOffOn() public onlyByContractOwner { //onlyByContractOwner is custom modifier
+      if (isContractActive == true ) {
+        isContractActive = false;
+      } else {
+        isContractActive = true;
+      }
+      //selfdestruct(owner);  // `owner` is the owners address
     }
 }

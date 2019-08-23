@@ -1,7 +1,7 @@
 import web3 from '../../../../../web3';
 import DSportRank from '../../../../../ABIaddress';
 import { formatEth
-//  , executingAt 
+//  , executingAt
 } from '../../../utils';
 //import JSONops from '../../Logic/JSONops'
 import { map } from 'async';
@@ -23,11 +23,11 @@ import { getWeb3Accounts } from './web3Accounts';
           })
       }
 
-      export async function getCurrentUserAccountsFromBlockchain(){
-        const userAccountsArray = await web3.eth.getAccounts();
-          console.log('got accounts after await', userAccountsArray[0])
-        return userAccountsArray;
-      }
+      // export async function getCurrentUserAccountsFromBlockchain(){
+      //   const userAccountsArray = await web3.eth.getAccounts();
+      //     console.log('got accounts after await', userAccountsArray[0])
+      //   return userAccountsArray;
+      // }
 
 // export async function isWeb3Connected(){
 //   console.log('here')
@@ -73,10 +73,23 @@ import { getWeb3Accounts } from './web3Accounts';
    */
 
   //export async function _loadCurrentUserAccounts(_loadCurrentUserAccounts_callback){
-  export async function _mapCurrentUserAccounts(accountsFromTheBC){
+  //REVIEW: what's the difference between accountsFromTheBC, getWeb3Accounts and defaultAccount?
+  //export async function _mapCurrentUserAccounts(accountsFromTheBC){
+  export async function _mapCurrentUserAccounts(props){
     let state = {};
-    const defaultAccount = await getWeb3Accounts();
-    console.log('defaultAccount', defaultAccount)
+
+    const _onError = (err, source) => {
+        if (source) err.source = source;
+        //this.setState({ error: err });
+        //props.history.push('/whoopsie');
+        console.log('err', err, source)
+      }
+
+    //accountsArray only has account numbers (no user or bal data)
+    //it's not talking to the contract just the accounts in the wallet
+    const accountsArray = await getWeb3Accounts();
+    console.log('accountsArray', accountsArray)
+
   //try/catch was interferring with the test!
   //_loadCurrentUserAccounts uses an anonymous async function to assign
   //the accounts array from web3.eth.getAccounts() to the State array 'userAccounts'
@@ -109,7 +122,8 @@ import { getWeb3Accounts } from './web3Accounts';
         //accounts should be an array of addresses
         //when using MetaMask we can only currently access one account at a time
         //until an MM update changes this
-        await map(accountsFromTheBC,
+        //await map(accountsFromTheBC,
+        await map(accountsArray,
           //which are being mapped to the relevant addresses:
           //param 2 - current item index
           //map() maps 2 types of indexed item
@@ -130,19 +144,26 @@ import { getWeb3Accounts } from './web3Accounts';
 
           //instead of using an anonymous function will used named one from io/Contractio
           //async function _loadCurrentUserAccountsInsideMapping(address, _loadCurrentUserAccountsInsideMapping_callback){
-          async function (address, callback) {
+          async function (address, next) {
               try {
-                // console.log('callback inside await map', callback)
-                // console.log('address inside await map', address)
+                //console.log('callback inside await map', callback)
+
+                //const convertedAddress = web3.utils.fromAscii(address);
+                //address = web3.utils.fromAscii(address);
+                //address = web3.utils.asciiToHex(address);
+                console.log('address inside await map', address)
+                //console.log('convertedAddress inside await map', convertedAddress)
+                console.log('typeof address inside await map', typeof address)
                 // // get the owner details for this address from the contract
                 // console.log('about to get usernameHash, when done - got usernameHash after await')
                 //console.log('exec at', executingAt());
+                //address is used to look up owners, but if none have been created yet
+                //in the contract then no users will appear or be assigned below
                 const usernameHash = await DSportRank.methods.owners(address).call();
-                // console.log('exec at', executingAt());
-                // get user details from contract
                 const user = await DSportRank.methods.users(usernameHash).call();
 
-                // gets the balance of the address
+                // use the address to get the balance of the address
+                //(not talking to the contract)
                 let balance = await web3.eth.getBalance(address);
                 balance = web3.utils.fromWei(balance, 'ether');
                 //console.log('balance', balance)
@@ -173,20 +194,26 @@ import { getWeb3Accounts } from './web3Accounts';
 
                 //_loadCurrentUserAccountsInsideMapping_callback(contractObj);
 
-                callback(null, {
+                next(null, {
                   address: address,
                   user: user,
                   balance: balance
                   //,
                   //NB: added by me:
                   //updatedExtAcctBalCB: globalVardevAccountBalResult
-                });
+                }
+                //this function added by me ...
+                // , function(){
+                //   console.log("cb function in _loadCurrentUserAccounts called");
+                // }
+              );
                 //console.log('callback2', callback)
               }
               catch (err) {
-                //console.log("Error within current item index", err);
-
-                //next(err);
+                //console.log("Error current item index in _mapCurrentUserAccounts", err);
+                //return null;
+                //there will be an err if e.g. there is no user for that address
+                next(err);
               }//end of try/catch within async function definition within await/map
             }//end of async function definition within await map
 
@@ -196,14 +223,25 @@ import { getWeb3Accounts } from './web3Accounts';
             //function
         , (err, userAccounts) => {
           //err is only relevant in the next line
-          if (err) return this._onError(err, 'App._loadCurrentUserAccounts');
+          //if (err) return _onError(err, 'App._loadCurrentUserAccounts');
+          //if(err){userAccounts = accountsArray}
+          if(userAccounts[0] === undefined){
+            userAccounts = fillArrayIfNoUser(accountsArray);
+            console.log('userAccounts array in if', userAccounts)
+          }
           //console.log('user in 3rd param', user)
-          //console.log('userAccounts array', userAccounts)
+          //user accounts have been fetched from the contract
+          console.log('userAccounts array', userAccounts)
           //console.log('web3.eth.defaultAccount', web3.eth.getAccounts(accounts => console.log(accounts[0])))
           //now all these assignments are done on the userAccounts array
           // let defaultUserAccount = userAccounts.find((userAccount) => {
-          //   //console.log('about to return default userAccount.address', web3.eth.defaultAccount);
-          //   return userAccount.address === web3.eth.defaultAccount;
+          //   console.log('single userAccount', userAccount);
+          //   console.log('currently selected userAccount.address', web3.eth.getAccount);
+          //   //return the 1 account that matches the address of the currrent
+          //   //selected account
+          //   const acctsArr = web3.eth.getAccounts();
+          //   return acctsArr[0];
+          //   //return userAccount.address === web3.eth.getAccount;
           //   //return userAccount.address === web3.eth.getAccounts(accounts => console.log(accounts[0]));
           // });
 
@@ -212,10 +250,17 @@ import { getWeb3Accounts } from './web3Accounts';
           //one at a time, to the userAccounts array
           //HACK: I think only works for 1 account
           //I'm forced to specify array index[0] when it wasn't previously required
+          //problem is web3.eth.getAccount no longer working
+          //let defaultUserAccount = userAccounts[0].address;
+
+          //changeState only makes sense if defaultUserAccount is an array
           //let defaultUserAccount = userAccounts;
+
           let defaultUserAccount = [];
-          defaultUserAccount[0] = getDefaultUserAccountFromAddress(userAccounts, defaultAccount);
-          console.log('defaultUserAccount', defaultUserAccount)
+          //defaultUserAccount = getDefaultUserAccountFromAddress(userAccounts, accountsArray);
+           console.log('defaultUserAccount', defaultUserAccount)
+           defaultUserAccount = userAccounts[0];
+
           //check that there is an existing default account user
           //before setting state. if there isn't app will go to create
           //state = handleStateAccordingToUserExists(defaultUserAccount, state)
@@ -225,7 +270,7 @@ import { getWeb3Accounts } from './web3Accounts';
           //maybe this could become one?:
           //state = changeState('setUserSelectedRanking', state, userAccounts, defaultUserAccount);
           state = changeState('assignUserAcctStateToStateObj', state, userAccounts, defaultUserAccount);
-
+          console.log('state', state);
             console.log('userAccounts', userAccounts)
 
         }//end of the functionality that has (mysteriously) been added into
@@ -248,18 +293,36 @@ import { getWeb3Accounts } from './web3Accounts';
 
       console.log('calling');
       var result = await resolveAfter2Seconds();
-      console.log(result);
+      console.log('result is', result);
       return result;
     }
     // end of _loadCurrentUserAccounts
 
+    export const fillArrayIfNoUser = (arrayToFill) => {
+      //var fullname = []
+      function addUserAndBalToAccountsArray(item){
+        const userObj =     { username: 'CreateUser',
+                             description: 'holder descr',
+                             contactno: '1234321',
+                             email: 'test@test.com',
+                             owner: '0x847700B781667abdD98E1393420754E503dca5b7',
+                             picture: 'Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL',
+                             rankingDefault: '5c81c1e944e81057efe3e2c8' };
+        const accountObjItem = {address:item, user: userObj, balance: 0.0};
+        return accountObjItem;
+      }
+      var arrOfObjs = arrayToFill.map(addUserAndBalToAccountsArray);
+      return arrOfObjs;
+    }
+
     //pull one account out of the the userAccounts array that matches
-    //the current connected defaultAccount
+    //the current connected accountsArray
   //  export function getDefaultUserAccountFromAddress(userAccounts){
   //I think this is used for when user changes account
-  export const getDefaultUserAccountFromAddress = (userAccountsArray, defaultAccount) => {
+  export const getDefaultUserAccountFromAddress = (userAccountsArray, accountsArray) => {
     //export async function getDefaultUserAccountFromAddress(userAccountsArray){
-    //console.log('userAccountsArray', userAccountsArray)
+    //console.log('userAccountsArray in getDefaultUserAccountFromAddress', userAccountsArray)
+    //console.log('accountsArray in getDefaultUserAccountFromAddress', accountsArray)
     //in the array of userAccounts find a particular matching
     //specificUserAccount address
     //all that's needed for the particular array element to be returned
@@ -270,13 +333,14 @@ import { getWeb3Accounts } from './web3Accounts';
       //const arrRes = getWeb3defaultAccount();
       //const arrResFormat = '[' + arrRes + ']';
       //console.log('defaultAccount', defaultAccount);
-      return specificAccount.address === defaultAccount;
+      return specificAccount.address === accountsArray;
       //return specificAccount.address === arrResFormat;
     }
       //return whatever type is found that matches the search criteria
       //return acctNos.find(checkAddresses);
-      return userAccountsArray.find(checkAddresses);
-
+      const specificAddress =  userAccountsArray.find(checkAddresses);
+      //console.log('specific address', specificAddress)
+      return specificAddress;
       // userAccounts.find((specificUserAccount) => {
       //   console.log('address of particular element in the array', specificUserAccount.address);
       //   console.log('the address in the whole array of userAccounts', userAccounts[0].address);

@@ -20,10 +20,15 @@ export default function GlobalRankingJoinBtn(props) {
     props.setOnCallbackisCurrentUserActiveCB(true)
 
     props.setnewrankIdCB(row.RANKINGID);
+    //only allow this cb to be processed if it's
+    //NOT a new user (otherwise overwrites change just made)
     let tempjson = [];
     const handleCB = (data) =>{
+    //   if (props.username !== ''){
       tempjson = data;
+      //}
     }
+
     await _loadsetJSONData(row.RANKINGID, await handleCB);
     //get the data ready with the new user
     //before loading 'Home' page

@@ -14,8 +14,8 @@ export default function MMWaitModal(props) {
 
   const mainMsgTxt = `Please confirm the update with
   Metamask (possibly a separate window) and wait for the
-  transaction to be mined to the blockchain to see the
-  updated changes
+  transaction to be successfully processed on the blockchain
+  to see your changes correctly displayed
   `;
 
   if (!props.show) {

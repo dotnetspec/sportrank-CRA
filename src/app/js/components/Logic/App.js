@@ -33,6 +33,7 @@ import {
   _mapCurrentUserAccounts,
   getCurrentUserAccountsFromBlockchain
 } from '../SideEffects/io/web3io';
+//import DSportRank from '../../../../ABIaddress';
 //import axios from 'axios'
 //import p-iteration from 'p-iteration'
 
@@ -184,13 +185,7 @@ export function App({
   //   //setState({currentUserRank})
   //   setCurrentUserRank(currentUserRank);
   // }
-  // //cb from createuser.js to set the username
-  // //in time for getNewRankingID() to put it in the json
-  // function userNameCB(userNameCB) {
-  //   //console.log('in userNameCB', userNameCB)
-  //     //setState({userNameCB})
-  //     setuserNameCB(userNameCB);
-  // }
+
 
   //cb from web3io.js to set the state of the external balance
   function _loadExternalBalance_callback(externalbalance) {
@@ -282,6 +277,12 @@ export function App({
     setResultInfoForDisplay(text);
   }
 
+  //cb from createuser.js to set the username
+  //in time for getNewRankingID() to put it in the json
+  const setuserNameCB = (name) => {
+    console.log('name in app.js', name);
+    setuser(name);
+}
 
   const setcontactNoCB = (number) => {
     //console.log('number in app.js', number);
@@ -330,9 +331,24 @@ const setrankingJSONdataCB = (datatoSet) => {
   //#endregion
   //any change with setState here will re-render app.js
   const processStateAfter_loadCurrentUserAccounts = (state) => {
-    //console.log('state.user', (state).user);
+    console.log('state', state);
     //console.log('state stringify', JSON.stringify(state))
-    if (state.user !== undefined) {
+    console.log('state.userAccounts', state.userAccounts);
+    setuserAccounts(state.userAccounts);
+    console.log('state.userAccounts[0].user', state.userAccounts[0].user);
+    //const userObj =  {user:
+                       // { username: 'player1',
+                       //   description: 'test2',
+                       //   contactno: '1234321',
+                       //   email: 'test@test.com',
+                       //   owner: '0x847700B781667abdD98E1393420754E503dca5b7',
+                       //   picture: 'Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL',
+                       //   rankingDefault: '5c81c1e944e81057efe3e2c8' } }
+
+    setuser(state.userAccounts[0].user);
+    //console.log('userObj', userObj);
+    console.log('state.user', state.user);
+    if (user !== undefined) {
       //setState({
       //error: state.error,
       setError(state.error);
@@ -348,25 +364,25 @@ const setrankingJSONdataCB = (datatoSet) => {
       //newrankId: state.newrankId,
       setnewrankId(state.newrankId);
       //user: state.user,
-      setuser(state.user);
+      //setuser(state.user);
       //contactno: state.user.contactno,
-      setcontactno(state.user.contactno);
-      //email: state.user.email,
-      setemail(state.user.email);
+      setcontactno(state.userAccounts[0].user.contactno);
+      //email: user.email,
+      setemail(state.userAccounts[0].user.email);
       //description: state.user.description,
-      setdescription(state.user.description);
+      setdescription(state.userAccounts[0].user.description);
       //account: web3.eth.defaultAccount,
       //account: state.account,
-      //console.log('state.account', state.account);
+      console.log('state.account', state.account);
       setAccount(state.account);
       //balance: state.balance,
       setBalance(state.balance);
       //rank: JSONops._getUserValue(state.data, state.user.username, "RANK"),
       //contactNoCB: state.contactNoCB,
       //setcontactNoCB(state.contactNoCB);
-      setcontactno(state.contactno)
+      //setcontactno(state.contactno)
       //emailCB: state.emailCB,
-      setemail(state.email);
+      //setemail(state.email);
       //loadingAccounts: false,
       //not currently used:
       //setisLoadingAccounts(false);
@@ -375,6 +391,8 @@ const setrankingJSONdataCB = (datatoSet) => {
       setviewingOnlyCB(true);
       //  })
       //console.log('state.user.username in app.js', state.user.username)
+    }else{
+      console.log('user undefined')
     }
   }
 
@@ -397,11 +415,13 @@ const setrankingJSONdataCB = (datatoSet) => {
       //from the Blockchain via web3io:
       //processStateAfter_loadCurrentUserAccounts(await _loadCurrentUserAccounts());
       processStateAfter_loadCurrentUserAccounts(
-        await _mapCurrentUserAccounts(await getCurrentUserAccountsFromBlockchain()));
+        //await _mapCurrentUserAccounts(await getCurrentUserAccountsFromBlockchain())
+        await _mapCurrentUserAccounts(props)
+      );
       await setIsLoading(false);
     }
     fetchData();
-  }, [rankingDefault]); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
+  }, [rankingDefault, props]); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
 
   //from https://medium.com/maxime-heckel/asynchronous-rendering-with-react-c323cda68f41
   if (!isLoading) {
@@ -491,6 +511,9 @@ const setrankingJSONdataCB = (datatoSet) => {
       Main data-testid = 'main'
       user = {
         user
+      }
+      setuserNameCB = {
+        setuserNameCB
       }
       contactno = {
         contactno

@@ -12,7 +12,7 @@ import JSONops from '../../Logic/JSONops'
     //return await challenge.send({ from: await getWeb3Accounts(), gas: gasEstimate + 100000 });
     try{
           challenge.send({
-            from: account, gas: gasEstimate + 1000
+            from: account[0], gas: gasEstimate + 1000
           })
           .on('transactionHash', function(hash){
               JSONops._updateDoChallengeJSON(newrankId, user, selectedOpponentName, data);

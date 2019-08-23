@@ -13,6 +13,7 @@ import PlayerStatusBtn from './buttons/PlayerStatusBtn';
 import ListAllRankingsBtn from './buttons/ListAllRankingsBtn';
 import {formatBalance} from '../../utils';
 import CurrentETHBal from './Currentethbal'
+import _ from 'lodash'
 /**
  * Class displaying the accumulated ETH balance from
  *previous transactions
@@ -176,7 +177,10 @@ class Header extends Component {
     if(this.props.user.username !== ''){
       return  <NavLink exact to="/"><small>Sportrank HOME</small><small>Decentralized Sport</small></NavLink>
     }else{
-      return <NavLink exact to="/create"><small>Sportrank HOME</small><small>Decentralized Sport</small></NavLink>
+      console.log('redirect to create with account no', this.props.account)
+      this.props.history.push('/create');
+      //TODO: sort this header info ...
+      //return <NavLink exact to="/create"><small>Sportrank HOME</small><small>Decentralized Sport</small></NavLink>
     }
   }
 
@@ -404,9 +408,18 @@ class Header extends Component {
     return navClasses;
   }
 
-// componentDidMount(){
-// //console.log('header componentDidMount user', this.props.user)
-// }
+componentDidMount(){
+//console.log('header componentDidMount user', this.props.user)
+//determine if there's a user here so can use history.push if necessary
+const { user } = this.props;
+//const isUserEmpty = _.isEmpty(user);
+//const isUserCreateUser = user;
+console.log('user in header', user)
+    if(user.username === 'CreateUser')
+      {
+        console.log('redirect to create with account no', this.props.account)
+        this.props.history.push('/create')};
+}
 
 displayActivationBtns(){
   // const {pathname} = this.props.location;
@@ -423,10 +436,12 @@ displayActivationBtns(){
   //#endregion
   //#region React lifecycle events
   render() {
-    if(this.props.userAccounts !== undefined){
+    console.log('this.props.userAccounts', this.props.userAccounts);
+    if(this.props.userAccounts[0] !== undefined){
+
           const isEditable = Boolean(this.props.user.username);
           const isError = this.props.error && this.props.error.message;
-          //console.log('this.props.account', this.props.account)
+          console.log('this.props.account', this.props.account)
           //console.log('this.props.error', this.props.error)
           //console.log('this.props.error.message', this.props.error.message)
           const isLoading = !Boolean(this.props.account) && !isError;
@@ -448,6 +463,7 @@ displayActivationBtns(){
       }
       else{
         //return(null)
+        console.log('no user in header but can render the account addresses')
         return 'There is no account currently defined!'
       }
 }

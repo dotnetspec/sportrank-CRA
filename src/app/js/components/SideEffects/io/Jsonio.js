@@ -148,6 +148,8 @@ const requestConfig = {
           }
 }
 
+
+
 //get a new rankid ready in case user wants/needs to create a new ranking
 //do this after _loadsetJSONData so that we will already have the correct username
 //getNewRankId = async () => {
@@ -163,7 +165,9 @@ const requestConfig = {
         if (req.readyState === XMLHttpRequest.DONE) {
 
           const resulttxt = JSON.parse(req.responseText);
-          getNewRankId_callback(resulttxt);
+          //getNewRankId_callback(resulttxt);
+          //getNewRankId_callback(resulttxt);
+          return resulttxt;
           //only here can set state (once result is back)
           //this.setState({ newrankId: resulttxt.id});
           //this.setState({ ranknameHasChanged: true});
@@ -193,6 +197,7 @@ const requestConfig = {
       req.open("POST", "https://api.jsonbin.io/b", true);
       //req.open("PUT", "https://api.jsonbin.io/b", true);
       req.setRequestHeader("Content-type", "application/json");
+      req.setRequestHeader("secret-key", "$2a$10$HIPT9LxAWxYFTW.aaMUoEeIo2N903ebCEbVqB3/HEOwiBsxY3fk2i");
       //req.send('{"Player": "Johan Straus"}') || {}
       req.send(myJSON)
       //|| {}

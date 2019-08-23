@@ -59,10 +59,11 @@ export function limitLength (strToShorten, maxLength, replacement, trimMiddle){
  * // returns '0x390-552'
  * @returns {String} the shortened string
  */
-export function limitAddressLength (address, maxLength, replacement){
+export function limitAddressLength (addressObj, maxLength, replacement){
+  let address = addressObj.address;
   if(!address) return '';
   let prepend0x = false;
-
+console.log('address type', typeof address);
   if(address.startsWith('0x')){
     address = address.substring(2);
     prepend0x = true;

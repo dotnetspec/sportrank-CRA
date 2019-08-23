@@ -12,6 +12,7 @@ import web3 from '../../../../../web3';
       //return web3.eth.getAccounts[0];
 
       const userAccountsArray = await web3.eth.getAccounts();
-        console.log('getWeb3Accounts after await', userAccountsArray[0])
-      return userAccountsArray[0];
+      //console.log('getWeb3Accounts after await array', userAccountsArray)
+        //console.log('getWeb3Accounts after await', userAccountsArray[0])
+      return userAccountsArray;
     }

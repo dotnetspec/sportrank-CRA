@@ -133,7 +133,13 @@ class UpdateUser extends Component {
           // const result = await editAccount.send({ from: account,  gas: gasEstimate + 1000 });
           // console.log('result', await result);
 
-          const result = updateUserSendToContract(gasEstimate, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash)
+          const result = updateUserSendToContract(gasEstimate, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash, updateUserSendToContractCB)
+
+          //use CB to wait for the result to come back and update the page 
+          async function updateUserSendToContractCB(){
+            JSONops.updateUserInJSON(this.props.newrankId, this.props.rankingJSONdata, this.props.user.username, this.state.contactno, this.state.email, this.state.description);
+          }
+
 
           if (result.status && !Boolean(result.status.toString().replace('0x', ''))) {
             console.log('inside the if')

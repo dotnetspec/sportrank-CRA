@@ -15,7 +15,7 @@ import {getWeb3Accounts} from './web3Accounts';
 
     //return await challenge.send({ from: await getWeb3Accounts(), gas: gasEstimate + 100000 });
     newRanking.send({
-      from: account, gas: gasEstimate + 1000
+      from: account[0], gas: gasEstimate + 1000
     })
     .on('transactionHash', function(hash){
         console.log('hash', hash);
