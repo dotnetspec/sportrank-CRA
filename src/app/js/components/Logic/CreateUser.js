@@ -199,7 +199,7 @@ _continueClick = () => {
             this.props.setnewrankIdCB(resulttxt.id)
             this.setState({ rankId: resulttxt.id});
             //this.setState({ ranknameHasChanged: true});
-            //this.setState({ isLoading: false});
+            this.setState({ isLoading: false});
             // console.log('this.state.rankId')
             // console.log(this.state.rankId)
           }
@@ -386,7 +386,6 @@ _continueClick = () => {
         </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.closeWarningModal}>Close</Button>
-
           </Modal.Footer>
         </Modal>
         <Row>
