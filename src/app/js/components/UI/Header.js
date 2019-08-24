@@ -417,7 +417,8 @@ const { user } = this.props;
 //console.log('user in header', user)
     if(user.username === 'CreateUser')
       {
-        console.log('redirect to create with account no', this.props.account)
+        console.log('redirect to create with account no', this.props.account.address)
+        //this.props.setAccountCB(this.props.account);
         this.props.history.push('/create')};
 }
 

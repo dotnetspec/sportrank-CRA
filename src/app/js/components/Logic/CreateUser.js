@@ -365,6 +365,7 @@ _continueClick = () => {
   //#region React lifecycle events
   render() {
     const { isLoading } = this.state;
+    const { address } = this.props.account;
     let validationState = this._getValidationState();
     let isValid = validationState === 'success' && !isLoading && !this.state.error;
     let feedback = isValid ? 'Username is available' : this.state.error || 'Usernames must be 6 or more characters and cannot include @ or spaces.';
@@ -390,7 +391,7 @@ _continueClick = () => {
         </Modal>
         <Row>
           <Col xs={12}>
-          <h2>Create An Account Name<small> for account number:  { this.props.address }</small></h2>
+          <h2>Create An Account Name<small> for account number:  { address }</small></h2>
           </Col>
         </Row>
         <Row>

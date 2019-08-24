@@ -225,6 +225,7 @@ import { getWeb3Accounts } from './web3Accounts';
           //err is only relevant in the next line
           //if (err) return _onError(err, 'App._loadCurrentUserAccounts');
           //if(err){userAccounts = accountsArray}
+          console.log('userAccounts array b4 if', userAccounts)
           if(userAccounts[0] === undefined){
             userAccounts = fillArrayIfNoUser(accountsArray);
             console.log('userAccounts array in if', userAccounts)

@@ -32,7 +32,7 @@ window.addEventListener('load', async () => {
         try {
             // Request account access if needed
             await window.ethereum.enable();
-              console.log('web3.eth.defaultAccount',  web3.eth.defaultAccount);
+              //console.log('web3.eth.defaultAccount',  web3.eth.defaultAccount);
             // Acccounts now exposed
             //web3.eth.sendTransaction({/* ... */});
         } catch (error) {
