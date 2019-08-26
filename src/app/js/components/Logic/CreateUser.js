@@ -130,10 +130,10 @@ _continueClick = () => {
               const { username, description } = this.state;
               try {
                 // set up our contract method with the input values from the form
-                console.log('newrankId ready to send to createAccount', this.state.newRankId)
+                console.log('newrankId ready to send to createAccount', await this.state.newRankId)
                 //const createAccount = DSportRank.methods.createAccount(username, this.state.contactno, this.state.email, description, newrankId);
                 //does user need newRankId?
-                const createAccount = DSportRank.methods.createAccount(username, this.state.contactno, this.state.email, description, '');
+                const createAccount = DSportRank.methods.createAccount(username, this.state.contactno, this.state.email, description, this.state.newRankId);
                 console.log('createAccount created', createAccount)
                 // get a gas estimate before sending the transaction
                 const gasEstimate = await createAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
@@ -176,9 +176,10 @@ _continueClick = () => {
   }
 
   componentDidMount(){
-    const newRankingId = this.getNewRankId();
+    //const newRankingId =
+    this.getNewRankId();
     //
-    this.setState({ newRankId: newRankingId });
+    //this.setState({ newRankId: newRankingId });
   }
 
   //TODO:add code to get from jsonbin.io
@@ -197,7 +198,7 @@ _continueClick = () => {
             console.log('resulttxt', resulttxt)
             //only here can set state (once result is back)
             this.props.setnewrankIdCB(resulttxt.id)
-            this.setState({ rankId: resulttxt.id});
+            this.setState({ newRankId: resulttxt.id});
             //this.setState({ ranknameHasChanged: true});
             this.setState({ isLoading: false});
             // console.log('this.state.rankId')
@@ -233,8 +234,9 @@ _continueClick = () => {
   getUserConfirmationOfAccountCreation(){
     //REVIEW: Fix the validation isLoading if necessary
      const isLoading = false;
-     let  wtext = 'Please ensure your username (' + this.state.username + ') is exactly as you want it'
-            wtext += ' since it CANNOT be changed, even if you de-activate your account!'
+     let  wtext = `Please ensure your username (` + this.state.username + `)
+     is exactly as you want it since it CANNOT be changed wit this account number,
+     even if you de-activate your account!`
     return (
       <div>
       {wtext}<p></p>
