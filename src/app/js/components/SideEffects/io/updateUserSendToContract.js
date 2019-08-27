@@ -1,5 +1,5 @@
 import DSportRank from '../../../../../ABIaddress';
-import web3 from '../../../../../web3';
+//import web3 from '../../../../../web3';
 //import { getWeb3defaultAccount } from './web3defaultAccount';
 //import {getWeb3Accounts} from './web3Accounts';
 
