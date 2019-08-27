@@ -146,24 +146,14 @@ import { getWeb3Accounts } from './web3Accounts';
           //async function _loadCurrentUserAccountsInsideMapping(address, _loadCurrentUserAccountsInsideMapping_callback){
           async function (address, next) {
               try {
-                //console.log('callback inside await map', callback)
-
-                //const convertedAddress = web3.utils.fromAscii(address);
-                //address = web3.utils.fromAscii(address);
-                //address = web3.utils.asciiToHex(address);
                 console.log('address inside await map', address)
-                //console.log('convertedAddress inside await map', convertedAddress)
-                console.log('typeof address inside await map', typeof address)
-                // // get the owner details for this address from the contract
-                // console.log('about to get usernameHash, when done - got usernameHash after await')
-                //console.log('exec at', executingAt());
                 //address is used to look up owners, but if none have been created yet
                 //in the contract then no users will appear or be assigned below
+                //any error at this point will only appear in the catch below ...
                 const usernameHash = await DSportRank.methods.owners(address).call();
                 const user = await DSportRank.methods.users(usernameHash).call();
-
                 // use the address to get the balance of the address
-                //(not talking to the contract)
+                //(nb. web3 - talking to ACCOUNT not the contract)
                 let balance = await web3.eth.getBalance(address);
                 balance = web3.utils.fromWei(balance, 'ether');
                 //console.log('balance', balance)
@@ -191,9 +181,6 @@ import { getWeb3Accounts } from './web3Accounts';
 
                 //if you use the Contractio code the callback will already give you
                 //a complete obj. No need to make the assignment here then
-
-                //_loadCurrentUserAccountsInsideMapping_callback(contractObj);
-
                 next(null, {
                   address: address,
                   user: user,
@@ -205,12 +192,14 @@ import { getWeb3Accounts } from './web3Accounts';
                 //this function added by me ...
                 // , function(){
                 //   console.log("cb function in _loadCurrentUserAccounts called");
+                //   console.log('usernameHash', usernameHash);
+                //   console.log('user',user)
                 // }
               );
                 //console.log('callback2', callback)
               }
               catch (err) {
-                //console.log("Error current item index in _mapCurrentUserAccounts", err);
+                console.log("Error current item index in _mapCurrentUserAccounts", err);
                 //return null;
                 //there will be an err if e.g. there is no user for that address
                 next(err);

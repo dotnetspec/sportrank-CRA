@@ -133,7 +133,9 @@ _continueClick = () => {
                 console.log('newrankId ready to send to createAccount', await this.state.newRankId)
                 //const createAccount = DSportRank.methods.createAccount(username, this.state.contactno, this.state.email, description, newrankId);
                 //does user need newRankId?
-                const createAccount = DSportRank.methods.createAccount(username, this.state.contactno, this.state.email, description, this.state.newRankId);
+                console.log('account params:', username, this.state.contactno, this.state.email, description, this.state.newRankId)
+                //don't need newRankId with a new user
+                const createAccount = await DSportRank.methods.createAccount(username, this.state.contactno, this.state.email, description, '');
                 console.log('createAccount created', createAccount)
                 // get a gas estimate before sending the transaction
                 const gasEstimate = await createAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
@@ -184,6 +186,7 @@ _continueClick = () => {
 
   //TODO:add code to get from jsonbin.io
   //_handleClick1 = async () => {
+  //REVIEW: need newRankId with a new user?
    getNewRankId = async () => {
    //getNewRankId(){
       try{
@@ -282,18 +285,21 @@ _continueClick = () => {
     state[input] = value;
     console.log('state[input]', state[input])
     console.log('state', state)
-    if (input === 'username') {
+    //if (input !== 'CreateUser') {
       state.usernameHasChanged = true;
       if (value.length >= 5) {
         // ensure we're not already loading the last lookup
         if (!this.state.isLoading) {
-          //console.log('inside handle change')
+          console.log('inside handle change')
           // call the userExists method in our contract asynchronously
+          console.log('web3.utils.keccak256(value)', web3.utils.keccak256(value))
           DSportRank.methods.userExists(web3.utils.keccak256(value)).call()
           .then((exists) => {
+            console.log('exists', exists)
             // stop loading state
             state.isLoading = false;
-            // show error to user if user doesn't exist
+            // show error to user if user exists
+
             state.error = exists ? 'Username not available' : '';
             this.setState(state);
           }).catch((err) => {
@@ -309,7 +315,7 @@ _continueClick = () => {
         // we are loading already, do nothing while we wait
         return true;
       }
-    }
+    //}
     this.setState(state);
   }
   //#endregion
@@ -400,7 +406,7 @@ _continueClick = () => {
             <form onSubmit={ !isValid ? null : (e) => this._continueClick(e) }>
               <FieldGroup
                 type="text"
-                value={ this.state.username }
+                value={ this.props.user.username }
                 disabled={ isLoading }
                 placeholder="No gaps e.g. My_SRAccount1 - Must be unique. Cannot be changed!"
                 onKeyPress={ (e) => e.key === '@' || e.key === ' ' ? e.preventDefault() : true }

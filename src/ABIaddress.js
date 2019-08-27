@@ -1,10 +1,14 @@
 
 import web3 from './web3';
 //import web3 from 'web3';
-//local ganache:
-const deployeAddress = '0x42d278eae5cdf61f8f1352f0990a62197587c348';
+//local ganache-cli:
+//const deployeAddress = '0x42d278eae5cdf61f8f1352f0990a62197587c348';
+//local ganache GUI:
+const deployeAddress = '0xFAda6151Fb54a2851B7Fb08b1AC9Ba5B949Ba1c3';
 //Rinkeby:
 //const deployeAddress = '0x43bfb40d6b45dc0370574c67465b3db83618708e';
+
+//DSportRank is a derived contract of 'owned' contrac
 
 
 const deployedAbi = [
