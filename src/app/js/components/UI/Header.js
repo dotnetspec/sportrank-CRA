@@ -177,8 +177,10 @@ class Header extends Component {
     if(this.props.user.username !== ''){
       return  <NavLink exact to="/"><small>Sportrank HOME</small><small>Decentralized Sport</small></NavLink>
     }else{
-      console.log('redirect to create with account no', this.props.account)
-      this.props.history.push('/create');
+      //this can be dealt with via the 'CreateUser' code 
+      //console.log('redirect to create with account no', this.props.account)
+      //this.props.history.push('/create');
+      return null;
       //TODO: sort this header info ...
       //return <NavLink exact to="/create"><small>Sportrank HOME</small><small>Decentralized Sport</small></NavLink>
     }

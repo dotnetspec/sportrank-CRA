@@ -133,7 +133,8 @@ class UpdateUser extends Component {
           // const result = await editAccount.send({ from: account,  gas: gasEstimate + 1000 });
           // console.log('result', await result);
 
-          const result = updateUserSendToContract(gasEstimate, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash, updateUserSendToContractCB)
+          const result = updateUserSendToContract(gasEstimate, this.props.account.address, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash, updateUserSendToContractCB)
+          //const result = updateUserSendToContract(gasEstimate, this.props.account.address, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash)
 
           //use CB to wait for the result to come back and update the page
           async function updateUserSendToContractCB(){
