@@ -135,7 +135,7 @@ class UpdateUser extends Component {
 
           const result = updateUserSendToContract(gasEstimate, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash, updateUserSendToContractCB)
 
-          //use CB to wait for the result to come back and update the page 
+          //use CB to wait for the result to come back and update the page
           async function updateUserSendToContractCB(){
             JSONops.updateUserInJSON(this.props.newrankId, this.props.rankingJSONdata, this.props.user.username, this.state.contactno, this.state.email, this.state.description);
           }
@@ -288,7 +288,7 @@ class UpdateUser extends Component {
       <Grid>
         <Row>
           <Col xs={12}>
-            <h2>Update { user.username } <small>{this.props.account}</small></h2>
+            <h2>Update { user.username } <small>{this.props.account.address}</small></h2>
           </Col>
         </Row>
         {isEmpty(this.state.error) ? null : <span className='error'>Oh no!</span>}
