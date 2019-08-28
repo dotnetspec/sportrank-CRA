@@ -46,6 +46,12 @@ class UpdateUser extends Component {
 
   closeModalCB(){
     this.setState({ showModal: false });
+    this.props.setcontactNoCB(this.state.contactno);
+    this.props.setemailCB(this.state.email);
+    //this.props.setuserDescCB(this.state.description);
+    //this.props.user.description = this.state.description;
+    console.log('this.props.user', this.props.user)
+    this.props.setuserDescCB(this.props.user, this.state.description);
     //NB: below prevents onAfterUserUpdate
     this.props.history.push('/');
     // tell parent we've updated our user, so the current
@@ -201,10 +207,10 @@ class UpdateUser extends Component {
     // show loading state
     //this.setState({ isLoading: true });
       //this.props.history.push('/');
-      this.props.setuserDescCB(this.state.description)
+      //this.props.setuserDescCB(this.state.description)
 
     this.setState({ isLoading: false });
-    this.props.onAfterUserUpdate();
+    //this.props.onAfterUserUpdate();
     return null;
   }
 

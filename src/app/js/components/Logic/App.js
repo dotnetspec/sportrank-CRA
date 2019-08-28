@@ -152,7 +152,7 @@ export function App({
   const [viewingOnlyCB, setviewingOnlyCB] = useState(true);
   const [contactno, setcontactno] = useState('');
   const [email, setemail] = useState('');
-  const [description, setdescription] = useState('');
+  const [description, setdescription] = useState({});
   const [specificRankingOptionBtns, setspecificRankingOptionBtns] = useState(false);
   const [rank, setrank] = useState('1');
   const [
@@ -267,9 +267,12 @@ const setemailCB = (oppoEmailTxt) => {
   setemail(oppoEmailTxt);
 }
 
-const setuserDescCB = (txt) => {
-  console.log('setuserDescCB txt', txt)
-  setdescription(txt);
+const setuserDescCB = (userObj, description) => {
+  console.log('userObj', userObj)
+  userObj.description = description;
+  console.log('setuserDescCB txt', userObj.description)
+  //setdescription(userObj);
+  setuser(userObj);
 }
 
 //just repeating _loadsetJSONData_callback?
