@@ -9,30 +9,6 @@ import web3 from '../../../../web3';
 //import DSportRank from '../../../../ABIaddress';
 import { estimateGas } from '../SideEffects/io/estimateGas';
 import { newRankingSendToContract } from '../SideEffects/io/newRankingSendToContract';
-//import PageHeader from 'react-bootstrap/PageHeader'
-
-
-//helper class
-// class UserConfirmCreateNewRanking extends Component {
-//
-//    render(
-//
-//    ) {
-//      const isLoading = false;
-//               return (
-//                 <div>
-//                 hello
-//                 <Button
-//                   //bsStyle="primary"
-//                   //disabled={ !isValid }
-//                   //onClick={ !isValid ? null : (e) => this._continueClick(e) }
-//                   onClick={ (e) => this._cancelClick(e) }
-//                 >
-//                 { isLoading ? 'Loading...' : 'Cancel' }
-//                 </Button>
-//                </div>);
-//           }
-//         }
 
 /**
  * Class that renders a form to facilitate the creation

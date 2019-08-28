@@ -80,10 +80,6 @@ const selectRowPropAfterClickRow = {
   /**
    * Hides the challenge modal
    */
-  // const _handleClose = () => {
-  //   console.log('_handleClose')
-  //   setshowModal(false);
-  // }
   const showMMWaitModal = () => {
     setShowMMModal(true);
   }
@@ -94,8 +90,6 @@ const selectRowPropAfterClickRow = {
   }
 
   const closeChallengeModalCB = () => {
-      //props.onAfterUserUpdate();
-      //userPlayerJsonDataDisplay();
       setshowModal(false);
       setShowMMModal(false);
     }
