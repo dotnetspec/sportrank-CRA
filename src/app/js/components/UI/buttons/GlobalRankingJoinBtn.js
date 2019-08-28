@@ -29,6 +29,7 @@ export default function GlobalRankingJoinBtn(props) {
       //}
     }
 
+    //REVIEW: move to jsonio?
     await _loadsetJSONData(row.RANKINGID, await handleCB);
     //get the data ready with the new user
     //before loading 'Home' page

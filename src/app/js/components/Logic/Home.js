@@ -65,6 +65,7 @@ const selectRowPropAfterClickRow = {
       //const [emailCB, setEmailCB] = useState('')
       //const [data, setData] = useState('')
       const [resultInfoForDisplay, setResultInfoForDisplay] = useState('')
+      //const [tableData, setTableData] = useState('')
       //const [hasTableDrawnOnceOnly, setHasTableDrawnOnceOnly] = useState(false)
     //}
 
@@ -85,12 +86,7 @@ const selectRowPropAfterClickRow = {
   /**
    * Hides the challenge modal
    */
-  // const showMMWaitModal = () => {
-  //   setShowMMModal(true);
-  // }
-
   const closeMMWaitModalCB = () => {
-    console.log('closeMMWaitModalCB')
     //if we are here then we also want to close the DoChallenge modal
     setShowMMModal(false);
     setshowModal(false);
@@ -101,7 +97,6 @@ const selectRowPropAfterClickRow = {
     }
 
   const updateWarningText = (warningText) => {
-      //setShowMMModal(false);
       setWarningText(warningText);
    }
 
@@ -123,7 +118,6 @@ const selectRowPropAfterClickRow = {
       setWarningText(' Please allow ongoing challenge(s) to complete ...');
       setWarningModalIsOpen(true);
     } else {
-      console.log('ready to showMMModal')
       setShowMMModal(true);
       setshowModal(true);
       //setWarningText('');
@@ -141,8 +135,6 @@ const selectRowPropAfterClickRow = {
         setWarningModalIsOpen(true);
       } else if (props.user.username !== '') {
       _handleShowChallengeModal();
-      //showMMWaitModal();
-      //setShowMMModal(true);
       props.onAfterUserUpdate();
     } else {
       setWarningText('Error: Sorry your account is not recognized');
@@ -210,27 +202,6 @@ const selectRowPropAfterClickRow = {
   const closeWarningModal = () => {
     setWarningModalIsOpen(false);
   };
-
-  // function displayContactDetails(){
-  //   const oppoContactNumber = JSONops._getUserValue(props.data, props.selectedOpponentName, 'CONTACTNO')
-  //   const oppoEmail = JSONops._getUserValue(props.data, props.selectedOpponentName, 'EMAIL')
-  //   const oppoContactNumberTxt = props.selectedOpponentName + "'s contact number is : " + oppoContactNumber;
-  //   const oppoEmailTxt = props.selectedOpponentName + "'s email address is : " + oppoEmail;
-  //
-  //   //contactNoCB callback function (App.js)
-  //   console.log('opp contactno', oppoContactNumberTxt)
-  //   props.setcontactNoCB(oppoContactNumberTxt);
-  //   console.log('oppoEmailTxt', oppoEmailTxt)
-  //   props.setemailCB(oppoEmailTxt);
-  //   //contactNoCB callback function (Header.js)
-  //   //let tempbalTodisplay = parseInt(this.props.updatedExtAcctBalCB) + (10 ** 18);
-  //   //REVIEW: not sure what below relates to. Probably not useful ...
-  //   // let tempXternAccountno = parseInt(this.props.updatedExtAcctBalCB)
-  //   // //tempXternAccountno += 10 ** 18;
-  //   // tempXternAccountno += 1;
-  //   // updatedExtAcctBalCB(tempXternAccountno)
-  // }
-
   //REVIEW: Managing display here might be handled differently:
   //this was originally a component - perhaps it still should be [?]
   const userPlayerJsonDataDisplay = () => {

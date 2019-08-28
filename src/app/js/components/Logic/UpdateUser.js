@@ -49,65 +49,10 @@ class UpdateUser extends Component {
     this.props.setuserCB(this.props.user, this.props.username, this.state.contactno, this.state.email, this.state.description);
     this.props.history.push('/');
   }
-//REVIEW: Currently not used
-//apparently: Had to change below to cover no player in json but account active
-  uploadUserProfilePic(){
-    //REVIEW: this json code is added here to remove it from _handleClick from where it originated
-    //if the ployer account name isn't yet listed as a 'NAME' in the json (should be just a dev issue)
-    //caused by deleting accounts for dev purposes
-    //update 12 Mar 2019: I do not see what this is used for as update ops are against the bc not a json file
-    //delete after a while
-    //
-    // if (!JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, user.username)){
-    //     JSONops.createNewUserInJSON(this.props.rankingJSONdata, user.username, this.props.account, this.state.description, this.props.newrankId);
-    //     this.props.history.push('/');
-    // }
-    // // OPTIMIZE:
-    // else{
-    //   console.log('user.username')
-    //   console.log(user.username)
-    //   console.log('his.state.contactno')
-    //   console.log(this.state.contactno)
-    //   console.log('this.state.email')
-    //   console.log(this.state.email)
-    //
-    //   JSONops.updateUserInJSON(this.props.newrankId, this.props.rankingJSONdata, user.username, this.state.contactno, this.state.email, this.state.description);
-    // }
 
-    //REVIEW: currently unused legacy user profile pic upload code
-    //this.uploadUserProfilePic();
-
-        // if the user has updated their photo, try to upload it to ipfs
-        // and use the resulting ipfs hash to send to the contract as part
-        // of the user's profile.
-        //let hash = '';
-        if (this.state.picture !== '') {
-          try {
-            // upload the file to ipfs and get the resulting hash
-            //hash = await EmbarkJS.Storage.uploadFile([this.inputPicture]);
-            //   user.picture = user.picture.length > 0 ? EmbarkJS.Storage.getUrl(user.picture) : imgAvatar;
-            // hash = '';
-          }
-          catch (err) {
-            // stop loading state and show user the error
-            return this.setState({ isLoading: false, formState: 'error', error: err.message });
-          }
-          this.props.history.push('/');
-        }
-  }
-
-//REVEIW: not currenlty used - it appears the 'update' wasn't even talking to the BC
-//apparently it makes little sense to store this kind of user data on a BC
-//and it was done just for the sake of the original demo code. This function will
-//probably be deleted.
-//But I don't have anywhere else to add it!
-  //
   async useBCToAddUpdatedUserVals(){
     console.log('in useBCToAddUpdatedUserVals');
     try {
-      // if the form has not been updated, do nothing
-      //if (!this.state.formUpdated) return;
-      //const usernameHash = web3.utils.keccak256(this.props.user.username);
       const updatedDescription = this.state.description;
       const updatedContactno  = this.state.contactno;
       const updatedEmail = this.state.email;
@@ -173,32 +118,8 @@ class UpdateUser extends Component {
    * @returns {null}
    */
   _handleClick = async (e, username) => {
-    //console.log('update error', e)
-    //this.setState({error:true});
-    //const { account, user } = this.props;
-    //const { description } = this.state;
-
     this.useBCToAddUpdatedUserVals();
-    //REVIEW:
-    // if the form has not been updated, do nothing
-    //if (!this.state.formUpdated) return;
-    //const newValAddedJson = JSONops._setUserValue(jsonObj, username, description, newValue)
-    //const gasEstimate = estimateGas();
-
-    //REVEIW: below was if using a  separate updatedUserSendToContract file for mocking
-    //may return to this approach
-    //usernameHash, updatedDescription, newrankId, updatedImageHash
-    // const result = updatedUserSendToContract(gasEstimate, description, newrankId, this.state.picture)
-    // if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
-    //   return this.setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
-    // }
-    // show loading state
-    //this.setState({ isLoading: true });
-      //this.props.history.push('/');
-      //this.props.setuserDescCB(this.state.description)
-
     this.setState({ isLoading: false });
-    //this.props.onAfterUserUpdate();
     return null;
   }
 
