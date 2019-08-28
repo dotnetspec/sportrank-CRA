@@ -275,6 +275,15 @@ const setuserDescCB = (userObj, description) => {
   setuser(userObj);
 }
 
+const setuserCB = (userObj, contactno, email, description) => {
+  console.log('userObj', userObj)
+  userObj.contactno = contactno;
+  userObj.email = email;
+  userObj.description = description;
+  console.log('updated userObj in CB', userObj);
+  setuser(userObj);
+}
+
 //just repeating _loadsetJSONData_callback?
 const setrankingJSONdataCB = (datatoSet) => {
   console.log('datatoSet', datatoSet)
@@ -431,6 +440,9 @@ const setrankingJSONdataCB = (datatoSet) => {
       Main data-testid = 'main'
       user = {
         user
+      }
+      setuserCB = {
+        setuserCB
       }
       setuserNameCB = {
         setuserNameCB
