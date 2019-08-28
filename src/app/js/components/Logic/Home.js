@@ -108,7 +108,12 @@ const selectRowPropAfterClickRow = {
     const {
       rankingJSONdata
     } = props;
-    if (selectRowPropAfterClickRow.selectedOpponentName === props.user.username) {
+    if(!JSONops.isPlayerListedInJSON(props.user.username)){
+      setWarningText(` You are not currently listed in this ranking.
+      Please click ListAllRankings
+      and then Join to select the ranking you wish to be added to`);
+      setWarningModalIsOpen(true);
+    } else if (selectRowPropAfterClickRow.selectedOpponentName === props.user.username) {
       setWarningText(' You cannot challenge yourself!');
       setWarningModalIsOpen(true);
     } else if (!JSONops.isPlayerLowerRankThanChallengeOpponent(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.user.username)) {

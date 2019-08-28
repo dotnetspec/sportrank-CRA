@@ -107,26 +107,8 @@ _continueClick = () => {
     if (this.state.userConfirm === false){
       this.setState({ WarningModalIsOpen: true });
     }
-
-    //NB: userNameCB callback function (to App.js)
-    //so that the componentDidUpdate in app.js can do
-    //getNewRankId() and set the player name in json
-    console.log('this.state.username in _handleClick', this.state.username)
-    // this.props.setuserNameCB(this.state.username);
-    // this.props.setcontactNoCB(this.state.contactno);
-    // this.props.setemailCB(this.state.email);
-    // this.props.setuserDescCB(this.state.description);
-
       //update the new details display.
       this.props.setuserCB(this.props.user, this.state.username, this.state.contactno, this.state.email, this.state.description);
-      //this.props.history.push('/');
-
-
-//getNewRankId(description, account, email, contactno, user, getNewRankId_callback) {
-    //const newrankId = await getNewRankId()
-
-    //const { newrankId } = this.props;
-    //console.log('newrankId in create user', newrankId)
     //only do this once the user has confirmed the user name because it cannot be
     //changed in future
     //if(this.state.userConfirm && newrankId !== ''){
@@ -135,18 +117,7 @@ _continueClick = () => {
               //JSONops.createNewUserInNewJSON(this.state.username, this.state.contactno, this.state.email, this.props.account, this.state.description, this.state.newRankId);
               const { username, description } = this.state;
               try {
-                // set up our contract method with the input values from the form
-                console.log('newrankId ready to send to createAccount', await this.state.newRankId)
-                //const createAccount = DSportRank.methods.createAccount(username, this.state.contactno, this.state.email, description, newrankId);
-                //does user need newRankId?
-                console.log('account params:', username, this.state.contactno, this.state.email, description, this.state.newRankId)
-                //don't need newRankId with a new user
-                // const createAccount = await DSportRank.methods.createAccount(username, this.state.contactno, this.state.email, description, '');
-                // console.log('createAccount created', createAccount)
-                // get a gas estimate before sending the transaction
-                //const gasEstimate = await createAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
-                // send the transaction to create an account with our gas estimate
-                //console.log('this.props.account.address', this.props.account.address);
+          
                 const result = await createUserSendToContract(this.props.account.address, username, this.state.contactno, this.state.email, description, this.state.newRankId)
 
                 // (plus a little bit more in case the contract state has changed).
