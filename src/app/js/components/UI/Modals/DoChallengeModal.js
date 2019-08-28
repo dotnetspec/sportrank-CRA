@@ -17,6 +17,11 @@ export default function DoChallengeModal(props) {
   // challenge listed
   // `;
 
+  // const _handleClose = () => {
+  //   //props.closeChallengeModalCB();
+  //   props.closeMMWaitModalCB
+  // }
+
   if (!props.show) {
     return null;
   } else {
@@ -28,7 +33,8 @@ export default function DoChallengeModal(props) {
         props.show
       }
       onHide = {
-        //(e) => _handleClose(e)
+        //e) => _handleClose(e)
+        //_handleClose()
         props.closeChallengeModalCB
       } >
       <
@@ -78,8 +84,9 @@ export default function DoChallengeModal(props) {
       Modal.Footer >
       <
       Button onClick = {
-        //(e) => _handleClose(e)
-        props.closeChallengeModalCB
+        //_handleClose()
+        props.closeMMWaitModalCB
+        //props.closeChallengeModalCB
       } > Close < /Button> <
       /Modal.Footer> <
       /Modal> <

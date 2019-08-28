@@ -64,7 +64,7 @@ const selectRowPropAfterClickRow = {
       //const [contactNoCB, setcontactNoCB] = useState('')
       //const [emailCB, setEmailCB] = useState('')
       //const [data, setData] = useState('')
-      //const [resultInfoForDisplay, setResultInfoForDisplay] = useState('')
+      const [resultInfoForDisplay, setResultInfoForDisplay] = useState('')
       //const [hasTableDrawnOnceOnly, setHasTableDrawnOnceOnly] = useState(false)
     //}
 
@@ -77,6 +77,11 @@ const selectRowPropAfterClickRow = {
       console.log('setResultModalIsOpenCB', openOrCloseBool)
       setResultModalIsOpen(openOrCloseBool);
     }
+
+    const setResultInfoForDisplayCB = (resultInfo) => {
+      console.log('setResultModalIsOpenCB', resultInfo)
+      setResultInfoForDisplay(resultInfo);
+    }
   /**
    * Hides the challenge modal
    */
@@ -86,12 +91,13 @@ const selectRowPropAfterClickRow = {
 
   const closeMMWaitModalCB = () => {
     console.log('closeMMWaitModalCB')
+    //if we are here then we also want to close the DoChallenge modal
     setShowMMModal(false);
+    setshowModal(false);
   }
 
   const closeChallengeModalCB = () => {
       setshowModal(false);
-      //setShowMMModal(false);
     }
 
   const updateWarningText = (warningText) => {
@@ -127,6 +133,7 @@ const selectRowPropAfterClickRow = {
   const onClickChallengeSelected = (cell, row, rowIndex) => {
     selectRowPropAfterClickRow.selectedOpponentName = `${row['NAME']}`;
     selectRowPropAfterClickRow.selectedOpponentRank = `${row['RANK']}`;
+    setResultInfoForDisplay('');
       if(!JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.user.username)){
         setWarningText(` You are not currently listed in this ranking.
         Please click ListAllRankings
@@ -146,6 +153,7 @@ const selectRowPropAfterClickRow = {
   const onClickResultSelected = (cell, row, rowIndex) => {
     selectRowPropAfterClickRow.selectedOpponentName = `${row['NAME']}`;
     selectRowPropAfterClickRow.selectedOpponentRank = `${row['RANK']}`;
+    setResultInfoForDisplay('');
     console.log('username', props.user.username)
     if(!JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.user.username)){
       setWarningText(` You are not currently listed in this ranking.
@@ -436,6 +444,7 @@ const selectRowPropAfterClickRow = {
             <DoChallengeModal
             show={showModal}
             closeChallengeModalCB={closeChallengeModalCB}
+            closeMMWaitModalCB={closeMMWaitModalCB}
             selectedOpponentName={selectRowPropAfterClickRow.selectedOpponentName}
             selectedOpponentRank={selectRowPropAfterClickRow.selectedOpponentRank}
             closeModalOnAfterChallenge = {
@@ -500,10 +509,10 @@ const selectRowPropAfterClickRow = {
               updateWarningText
             }
             resultInfoForDisplay={
-              props.resultInfoForDisplay
+              resultInfoForDisplay
             }
             setResultInfoForDisplayCB={
-              props.setResultInfoForDisplayCB
+              setResultInfoForDisplayCB
             }
             >
             <
@@ -559,7 +568,7 @@ const selectRowPropAfterClickRow = {
               props.emailCB
             } < /h3> <
             h3 > {
-              props.resultInfoForDisplay
+              resultInfoForDisplay
             } < /h3>{
               bootstrapTableDisplay()
             } <
