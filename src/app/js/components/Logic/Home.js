@@ -386,9 +386,13 @@ const selectRowPropAfterClickRow = {
       const {setviewingOnlyCB} = props;
 
       useEffect(() => {
+        if(props.rankingJSONdata === undefined){
+          //refresh if the cb from join btn doesn't update the prop in time 
+          props.onAfterUserUpdate();
+        }
            //set to viewingOnly and re-render
            setviewingOnlyCB(true);
-       }, [setviewingOnlyCB])
+       }, [props, setviewingOnlyCB])
 
           let isError = props.error && props.error.message;
           //XXX: temp to run
