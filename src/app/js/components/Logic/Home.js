@@ -80,9 +80,9 @@ const selectRowPropAfterClickRow = {
   /**
    * Hides the challenge modal
    */
-  const showMMWaitModal = () => {
-    setShowMMModal(true);
-  }
+  // const showMMWaitModal = () => {
+  //   setShowMMModal(true);
+  // }
 
   const closeMMWaitModalCB = () => {
     console.log('closeMMWaitModalCB')
@@ -91,10 +91,11 @@ const selectRowPropAfterClickRow = {
 
   const closeChallengeModalCB = () => {
       setshowModal(false);
-      setShowMMModal(false);
+      //setShowMMModal(false);
     }
 
   const updateWarningText = (warningText) => {
+      //setShowMMModal(false);
       setWarningText(warningText);
    }
 
@@ -116,8 +117,10 @@ const selectRowPropAfterClickRow = {
       setWarningText(' Please allow ongoing challenge(s) to complete ...');
       setWarningModalIsOpen(true);
     } else {
+      console.log('ready to showMMModal')
+      setShowMMModal(true);
       setshowModal(true);
-      setWarningText('');
+      //setWarningText('');
     }
   }
 
@@ -131,7 +134,8 @@ const selectRowPropAfterClickRow = {
         setWarningModalIsOpen(true);
       } else if (props.user.username !== '') {
       _handleShowChallengeModal();
-      showMMWaitModal();
+      //showMMWaitModal();
+      //setShowMMModal(true);
       props.onAfterUserUpdate();
     } else {
       setWarningText('Error: Sorry your account is not recognized');
