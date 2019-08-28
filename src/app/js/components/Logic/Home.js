@@ -108,12 +108,7 @@ const selectRowPropAfterClickRow = {
     const {
       rankingJSONdata
     } = props;
-    if(!JSONops.isPlayerListedInJSON(props.user.username)){
-      setWarningText(` You are not currently listed in this ranking.
-      Please click ListAllRankings
-      and then Join to select the ranking you wish to be added to`);
-      setWarningModalIsOpen(true);
-    } else if (selectRowPropAfterClickRow.selectedOpponentName === props.user.username) {
+    if (selectRowPropAfterClickRow.selectedOpponentName === props.user.username) {
       setWarningText(' You cannot challenge yourself!');
       setWarningModalIsOpen(true);
     } else if (!JSONops.isPlayerLowerRankThanChallengeOpponent(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.user.username)) {
@@ -134,7 +129,12 @@ const selectRowPropAfterClickRow = {
   const onClickChallengeSelected = (cell, row, rowIndex) => {
     selectRowPropAfterClickRow.selectedOpponentName = `${row['NAME']}`;
     selectRowPropAfterClickRow.selectedOpponentRank = `${row['RANK']}`;
-    if (props.user.username !== '') {
+      if(!JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.user.username)){
+        setWarningText(` You are not currently listed in this ranking.
+        Please click ListAllRankings
+        and then Join to select the ranking you wish to be added to`);
+        setWarningModalIsOpen(true);
+      } else if (props.user.username !== '') {
       _handleShowChallengeModal();
       showMMWaitModal();
       props.onAfterUserUpdate();
@@ -147,7 +147,15 @@ const selectRowPropAfterClickRow = {
   const onClickResultSelected = (cell, row, rowIndex) => {
     selectRowPropAfterClickRow.selectedOpponentName = `${row['NAME']}`;
     selectRowPropAfterClickRow.selectedOpponentRank = `${row['RANK']}`;
-    openResultModal();
+    console.log('username', props.user.username)
+    if(!JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.user.username)){
+      setWarningText(` You are not currently listed in this ranking.
+      Please click ListAllRankings
+      and then Join to select the ranking you wish to be added to`);
+      setWarningModalIsOpen(true);
+    }else{
+      openResultModal();
+    }
   }
 
   const challengeButton = (cell, row, enumObject, rowIndex) => {
@@ -404,6 +412,12 @@ const selectRowPropAfterClickRow = {
         const {setviewingOnlyCB} = props;
 
       useEffect(() => {
+        //if there's no data go back to ListAllRankings
+        // console.log('props.rankingJSONdata', props.rankingJSONdata)
+        // if(props.rankingJSONdata.length === 0){
+        //   console.log('in home useEffect')
+        //   props.history.push('/');
+        // }
          //const jsonDataBeforeRender = preprocessDataBeforeRender();
          // console.log('jsonDataBeforeRender', jsonDataBeforeRender);
          // if(JSONops.isDefinedJson(jsonDataBeforeRender)){
@@ -413,7 +427,7 @@ const selectRowPropAfterClickRow = {
            //set to viewingOnly and re-render
            setviewingOnlyCB(true);
          //}
-        }, [setviewingOnlyCB])
+       }, [props.rankingJSONdata, props.history, setviewingOnlyCB])
 
           let isError = props.error && props.error.message;
           //XXX: temp to run
