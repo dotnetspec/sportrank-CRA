@@ -97,6 +97,7 @@ const selectRowPropAfterClickRow = {
       //props.onAfterUserUpdate();
       //userPlayerJsonDataDisplay();
       setshowModal(false);
+      setShowMMModal(false);
     }
 
   const updateWarningText = (warningText) => {
@@ -405,29 +406,12 @@ const selectRowPropAfterClickRow = {
           }
         }
 
-        // const componentDidMount = () => {
-        //   preprocessDataBeforeRender();
-        // }
-
-        const {setviewingOnlyCB} = props;
+      const {setviewingOnlyCB} = props;
 
       useEffect(() => {
-        //if there's no data go back to ListAllRankings
-        // console.log('props.rankingJSONdata', props.rankingJSONdata)
-        // if(props.rankingJSONdata.length === 0){
-        //   console.log('in home useEffect')
-        //   props.history.push('/');
-        // }
-         //const jsonDataBeforeRender = preprocessDataBeforeRender();
-         // console.log('jsonDataBeforeRender', jsonDataBeforeRender);
-         // if(JSONops.isDefinedJson(jsonDataBeforeRender)){
-         //   //console.log('about to send json to _sendJSONDataWithRankingID', jsonDataBeforeRender, props.newrankId);
-         //   _sendJSONDataWithRankingID(jsonDataBeforeRender, props.newrankId);
-         //   props.setrankingJSONdataCB(jsonDataBeforeRender);
            //set to viewingOnly and re-render
            setviewingOnlyCB(true);
-         //}
-       }, [props.rankingJSONdata, props.history, setviewingOnlyCB])
+       }, [setviewingOnlyCB])
 
           let isError = props.error && props.error.message;
           //XXX: temp to run
