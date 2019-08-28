@@ -275,8 +275,9 @@ const setuserDescCB = (userObj, description) => {
   setuser(userObj);
 }
 
-const setuserCB = (userObj, contactno, email, description) => {
+const setuserCB = (userObj, name, contactno, email, description) => {
   console.log('userObj', userObj)
+  userObj.username = name;
   userObj.contactno = contactno;
   userObj.email = email;
   userObj.description = description;

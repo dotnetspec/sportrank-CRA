@@ -6,6 +6,7 @@ import FieldGroup from '../UI/FieldGroup'
 //import {userNameCB, emailCB} from './App'
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
+import { createUserSendToContract } from '../SideEffects/io/createUserSendToContract';
 //import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
 
@@ -111,10 +112,15 @@ _continueClick = () => {
     //so that the componentDidUpdate in app.js can do
     //getNewRankId() and set the player name in json
     console.log('this.state.username in _handleClick', this.state.username)
-    this.props.setuserNameCB(this.state.username);
-    this.props.setcontactNoCB(this.state.contactno);
-    this.props.setemailCB(this.state.email);
-    this.props.setuserDescCB(this.state.description);
+    // this.props.setuserNameCB(this.state.username);
+    // this.props.setcontactNoCB(this.state.contactno);
+    // this.props.setemailCB(this.state.email);
+    // this.props.setuserDescCB(this.state.description);
+
+      //update the new details display.
+      this.props.setuserCB(this.props.user, this.state.username, this.state.contactno, this.state.email, this.state.description);
+      //this.props.history.push('/');
+
 
 //getNewRankId(description, account, email, contactno, user, getNewRankId_callback) {
     //const newrankId = await getNewRankId()
@@ -135,13 +141,16 @@ _continueClick = () => {
                 //does user need newRankId?
                 console.log('account params:', username, this.state.contactno, this.state.email, description, this.state.newRankId)
                 //don't need newRankId with a new user
-                const createAccount = await DSportRank.methods.createAccount(username, this.state.contactno, this.state.email, description, '');
-                console.log('createAccount created', createAccount)
+                // const createAccount = await DSportRank.methods.createAccount(username, this.state.contactno, this.state.email, description, '');
+                // console.log('createAccount created', createAccount)
                 // get a gas estimate before sending the transaction
-                const gasEstimate = await createAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
+                //const gasEstimate = await createAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
                 // send the transaction to create an account with our gas estimate
+                //console.log('this.props.account.address', this.props.account.address);
+                const result = await createUserSendToContract(this.props.account.address, username, this.state.contactno, this.state.email, description, this.state.newRankId)
+
                 // (plus a little bit more in case the contract state has changed).
-                const result = await createAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
+                //const result = await createAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
                 // check result status. if status is false or '0x0', show user the tx details to debug error
                 if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
                   return this.setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
@@ -154,7 +163,7 @@ _continueClick = () => {
                 this.setState({ isLoading: false });
                 // tell our parent (app.js) that we've created a user so it
                 // will re-fetch the current user details from the contract (re-load the account info)
-                this.props.onAfterUserUpdate();
+                //this.props.onAfterUserUpdate();
                 // redirect user to the  update user page
                 //this.props.history.push('/update/@' + username);
 
@@ -179,7 +188,11 @@ _continueClick = () => {
 
   componentDidMount(){
     //const newRankingId =
-    this.getNewRankId();
+    if(this.props.user.username !== ''){
+      this.props.history.push('/');
+    }else{
+      this.getNewRankId();
+    }
     //
     //this.setState({ newRankId: newRankingId });
   }
@@ -406,7 +419,7 @@ _continueClick = () => {
             <form onSubmit={ !isValid ? null : (e) => this._continueClick(e) }>
               <FieldGroup
                 type="text"
-                value={ this.props.user.username }
+                value={ this.state.username }
                 disabled={ isLoading }
                 placeholder="No gaps e.g. My_SRAccount1 - Must be unique. Cannot be changed!"
                 onKeyPress={ (e) => e.key === '@' || e.key === ' ' ? e.preventDefault() : true }

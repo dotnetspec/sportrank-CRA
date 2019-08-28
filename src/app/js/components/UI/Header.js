@@ -177,7 +177,7 @@ class Header extends Component {
     if(this.props.user.username !== ''){
       return  <NavLink exact to="/"><small>Sportrank HOME</small><small>Decentralized Sport</small></NavLink>
     }else{
-      //this can be dealt with via the 'CreateUser' code 
+      //this can be dealt with via the 'CreateUser' code
       //console.log('redirect to create with account no', this.props.account)
       //this.props.history.push('/create');
       return null;
@@ -210,7 +210,7 @@ class Header extends Component {
       </span>
       <small className='balance'>{formatBalance(this.props.balance)}</small>
       <Overlay {...tooltipProps} placement="bottom">
-        <Tooltip id="overload-bottom">{this.props.account}</Tooltip>
+        <Tooltip id="overload-bottom">{this.props.address}</Tooltip>
       </Overlay>
     </React.Fragment>);
   }

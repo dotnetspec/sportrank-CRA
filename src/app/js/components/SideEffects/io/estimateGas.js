@@ -9,7 +9,9 @@ import { getWeb3defaultAccount } from './web3defaultAccount';
 //Gas Used by Transaction:
 //21,000 (13.64%)
 //this may appear unnecessary but it's done to
-//enable mocking:
+//enable mocking. Problem is it's not using the particular contract
+//function to estimateGas (and each function is different)
+//REVIEW: delete this component and estimate the gas separately ...
       export async function estimateGas(){
       // const userAccountsArray = await web3.eth.getAccounts();
       //   console.log('getWeb3defaultAccount after await', userAccountsArray[0])

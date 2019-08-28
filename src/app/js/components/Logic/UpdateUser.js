@@ -45,12 +45,10 @@ class UpdateUser extends Component {
   }
 
   closeModalCB(){
-    this.props.setuserCB(this.props.user, this.state.contactno, this.state.email, this.state.description);
+    //update the new details display.
+    this.props.setuserCB(this.props.user, this.props.username, this.state.contactno, this.state.email, this.state.description);
     this.props.history.push('/');
   }
-
-
-
 //REVIEW: Currently not used
 //apparently: Had to change below to cover no player in json but account active
   uploadUserProfilePic(){

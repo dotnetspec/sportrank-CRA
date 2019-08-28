@@ -123,6 +123,15 @@ class GlobalRankings extends Component {
           )
         }
 
+        componentDidMount() {
+          //if there's no user re-direct to create
+          if(this.props.user.username === ''){
+            this.props.history.push('/create');
+          }
+        }
+
+
+
   //REVIEW: Home page may be unnecessarily re-rendering with this approach to passing props
   //but need to pass the username and display it as a greeting and to link account with json data
   //this.props.user[1] is a quick way (not object.keys) to access the array
