@@ -5,9 +5,10 @@ import { formatEth
 } from '../../../utils';
 //import JSONops from '../../Logic/JSONops'
 import { map } from 'async';
-import changeState from '../../SideEffects/StateManager';
+//import changeState from '../../SideEffects/StateManager';
 //import * as helper from './web3io';
 //import { getWeb3defaultAccount } from './web3defaultAccount';
+import ChangeState from '../../Logic/ChangeState'
 import { getWeb3Accounts } from './web3Accounts';
 
     //REVIEW: below based on
@@ -215,7 +216,11 @@ import { getWeb3Accounts } from './web3Accounts';
           //if (err) return _onError(err, 'App._loadCurrentUserAccounts');
           //if(err){userAccounts = accountsArray}
           console.log('userAccounts array b4 if', userAccounts)
-          if(userAccounts[0] === undefined){
+          // if(userAccounts[0] === undefined){
+          //   userAccounts = fillArrayIfNoUser(accountsArray);
+          //   console.log('userAccounts array in if', userAccounts)
+          // }
+          if(userAccounts.length < 1){
             userAccounts = fillArrayIfNoUser(accountsArray);
             console.log('userAccounts array in if', userAccounts)
           }
@@ -258,8 +263,9 @@ import { getWeb3Accounts } from './web3Accounts';
           //as earlier state settings may be affected
           //REVIEW: Below currently set to handle the two arrays
           //maybe this could become one?:
-          //state = changeState('setUserSelectedRanking', state, userAccounts, defaultUserAccount);
-          state = changeState('assignUserAcctStateToStateObj', state, userAccounts, defaultUserAccount);
+
+          state = ChangeState.assignUserAcctStateToStateObj(state, userAccounts, defaultUserAccount);
+
           console.log('state', state);
             console.log('userAccounts', userAccounts)
 

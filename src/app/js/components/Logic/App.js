@@ -29,7 +29,7 @@ import {
 export function App({
   props
 }) {
-  const [user, setuser] = useState({});
+  const [user, setUser] = useState({});
   const [account, setAccount] = useState('');
   const [error, setError] = useState({});
   const [userAccounts, setuserAccounts] = useState([])
@@ -51,23 +51,17 @@ export function App({
   const [description, setdescription] = useState({});
   const [specificRankingOptionBtns, setspecificRankingOptionBtns] = useState(false);
   const [rank, setrank] = useState('1');
-  const [ranknameHasChanged,setranknameHasChanged] = useState(false);
+  const [ranknameHasChanged, setranknameHasChanged] = useState(false);
   const [resultInfoForDisplay, setResultInfoForDisplay] = useState('');
   //REVIEW: set as a global var. Perhaps change to environment var ?:
   const rankingDefault = '5c36f5422c87fa27306acb52';
+
   function _loadExternalBalance_callback(externalbalance) {
     if (externalbalance !== undefined) {
       setupdatedExtAcctBalCB(externalbalance);
     }
   }
 
-  function _loadsetJSONData_callback(data) {
-    setdata(data);
-    setisLoadingJSON(false);
-    setIsUserInJson(JSONops.isPlayerListedInJSON(data, user.username));
-    setrank(JSONops._getUserValue(data, user.username, "RANK"));
-    setIsCurrentUserActive(JSONops._getUserValue(data, user.username, "ACTIVE"));
-  }
   //Below appears to be relevant to user events not e.g. callbacks that fetch data
   const setspecificRankingOptionBtnsCB = () => {
     setspecificRankingOptionBtns(true);
@@ -89,7 +83,7 @@ export function App({
     setnewrankId(newrankIdtxt);
     setranknameHasChanged(true);
     setIsLoading(false);
-    _loadsetJSONData(newrankIdtxt, _loadsetJSONData_callback);
+    _loadsetJSONData(newrankIdtxt, setrankingJSONdataCB);
   }
   const setResultInfoForDisplayCB = (text) => {
     console.log('setResultInfoForDisplayCB in app.js', text);
@@ -98,41 +92,34 @@ export function App({
   //cb from createuser.js to set the username
   //in time for getNewRankingID() to put it in the json
   const setuserNameCB = (name) => {
-    setuser(name);
-}
+    setUser(name);
+  }
   const setcontactNoCB = (number) => {
     setcontactno(number);
-}
-const setemailCB = (oppoEmailTxt) => {
-  setemail(oppoEmailTxt);
-}
-const setuserDescCB = (userObj, description) => {
-  console.log('userObj', userObj)
-  userObj.description = description;
-  console.log('setuserDescCB txt', userObj.description)
-  //setdescription(userObj);
-  setuser(userObj);
-}
+  }
+  const setemailCB = (oppoEmailTxt) => {
+    setemail(oppoEmailTxt);
+  }
+  const setuserDescCB = (userObj, description) => {
+    userObj.description = description;
+    setUser(userObj);
+  }
 
-const setuserCB = (userObj, name, contactno, email, description) => {
-  console.log('userObj', userObj)
-  userObj.username = name;
-  userObj.contactno = contactno;
-  userObj.email = email;
-  userObj.description = description;
-  console.log('updated userObj in CB', userObj);
-  setuser(userObj);
-}
+  const setuserCB = (userObj, name, contactno, email, description) => {
+    userObj.username = name;
+    userObj.contactno = contactno;
+    userObj.email = email;
+    userObj.description = description;
+    setUser(userObj);
+  }
 
-//just repeating _loadsetJSONData_callback?
-const setrankingJSONdataCB = (datatoSet) => {
-  console.log('datatoSet', datatoSet)
-  setdata(datatoSet);
-  // setisLoadingJSON(false);
-  // setIsUserInJson(JSONops.isPlayerListedInJSON(data, user.username));
-  // setrank(JSONops._getUserValue(data, user.username, "RANK"));
-  // setIsCurrentUserActive(JSONops._getUserValue(data, user.username, "ACTIVE"));
-}
+  const setrankingJSONdataCB = (datatoSet) => {
+    setdata(datatoSet);
+    setisLoadingJSON(false);
+    setIsUserInJson(JSONops.isPlayerListedInJSON(data, user.username));
+    setrank(JSONops._getUserValue(data, user.username, "RANK"));
+    setIsCurrentUserActive(JSONops._getUserValue(data, user.username, "ACTIVE"));
+  }
   //#endregion
   //#region Helper methods
   //REVIEW: Possible to getUserRank in App.js (and set state) rather than Home.js?
@@ -151,17 +138,17 @@ const setrankingJSONdataCB = (datatoSet) => {
   //#endregion
 
   const processStateAfter_loadCurrentUserAccounts = (state) => {
-    setuserAccounts(state.userAccounts);
-    setuser(state.userAccounts[0].user);
-    if (state.userAccounts[0].user !== undefined) {
+      setuserAccounts(state.userAccounts);
+    if (state.userAccounts) {
       setError(state.error);
+      setUser(state.userAccounts[0].user)
       setuserAccounts(state.userAccounts)
-      if(state.data !== undefined){
-        setIsUserInJson(JSONops.isPlayerListedInJSON(state.data, state.user.username));
-        setIsCurrentUserActive(JSONops._getUserValue(state.data, state.user.username, "ACTIVE"));
-      }else{
-        setIsUserInJson(false);
-      }
+        if (state.data !== undefined) {
+          setIsUserInJson(JSONops.isPlayerListedInJSON(state.data, state.user.username));
+          setIsCurrentUserActive(JSONops._getUserValue(state.data, state.user.username, "ACTIVE"));
+        } else {
+          setIsUserInJson(false);
+        }
       setnewrankId(state.newrankId);
       setcontactno(state.userAccounts[0].user.contactno);
       setemail(state.userAccounts[0].user.email);
@@ -169,11 +156,10 @@ const setrankingJSONdataCB = (datatoSet) => {
       setAccount(state.account);
       setBalance(state.balance);
       setviewingOnlyCB(true);
-    }else{
+    } else {
       console.log('user undefined')
     }
   }
-
   //#region React lifecycle events
   useEffect(() => {
     setIsLoading(true);
@@ -192,9 +178,7 @@ const setrankingJSONdataCB = (datatoSet) => {
     fetchData();
   }, []); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
 
-  //from https://medium.com/maxime-heckel/asynchronous-rendering-with-react-c323cda68f41
   if (!isLoading) {
-    //console.log('account in render', account)
     return ( <
       div >
       <
@@ -345,7 +329,7 @@ const setrankingJSONdataCB = (datatoSet) => {
       rank = {
         rank
       }
-      ranknameHasChanged={
+      ranknameHasChanged = {
         ranknameHasChanged
       }
       isCurrentUserActive = {

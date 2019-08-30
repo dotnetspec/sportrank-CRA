@@ -11,23 +11,6 @@ import { Button } from 'react-bootstrap';
 
   export default function GlobalRankingViewBtn(props){
 
-  // _handleChangeStatusPlayer(username) {
-  //   if(username !== null){
-  //     this.setState({GlobalRankingViewBtn_clicked: true });
-  //     if(this.state.PlayerActive === true){
-  //       this.setState({PlayerActive: false });
-  //     }else{
-  //       this.setState({PlayerActive: true });
-  //     }
-  //     //REVIEW: passing name to json to be deactivated
-  //     //could be done in this component?
-  //     this.props.history.push('/delete/@' + username);
-  //   }
-  //   else {
-  //     console.log('no username passed to deactivate btn!')
-  //   }
-  // }
-
   const onClickRankingViewSelected = (row) => {
     //REVIEW: the naming here.
     //tell Header that the view btn has been clicked

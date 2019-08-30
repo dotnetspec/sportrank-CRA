@@ -2,36 +2,9 @@ import { Grid, Button, Row, Col, Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import FieldGroup from '../UI/FieldGroup'
-//import JSONops from './JSONops'
-//import {userNameCB, emailCB} from './App'
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
 import { createUserSendToContract } from '../SideEffects/io/createUserSendToContract';
-//import Grid from 'react-bootstrap/Grid'
-//import PageHeader from 'react-bootstrap/PageHeader'
-
-
-//helper class
-// class UserConfirmCreateUser extends Component {
-//
-//    render(
-//
-//    ) {
-//      const isLoading = false;
-//               return (
-//                 <div>
-//                 hello
-//                 <Button
-//                   //bsStyle="primary"
-//                   //disabled={ !isValid }
-//                   //onClick={ !isValid ? null : (e) => this._continueClick(e) }
-//                   onClick={ (e) => this._cancelClick(e) }
-//                 >
-//                 { isLoading ? 'Loading...' : 'Cancel' }
-//                 </Button>
-//                </div>);
-//           }
-//         }
 
 /**
  * Class that renders a form to facilitate the creation
@@ -44,7 +17,6 @@ class CreateUser extends Component {
   //#region Constructor
   constructor(props, context) {
     super(props, context);
-
     // initial state
     this.state = {
       isLoading: false,
@@ -59,27 +31,17 @@ class CreateUser extends Component {
       userConfirm: false,
       newRankId: ''
     };
-
   }
 
 _continueClick = () => {
-  //_continueClick(){
       this.setState({ userConfirm: true });
-      //console.log('userConfirm in _continueClick1')
-      //console.log(this.state.userConfirm)
       this.setState({ WarningModalIsOpen: false });
-      //console.log('userConfirm in _continueClick2')
-    //  console.log(this.state.userConfirm)
       if(this.props.newrankId === ''){
-        console.log('_continueClick this.props.newrankId', this.props.newrankId)
-        console.log('this.props.newrankId in createuser handleclick1', this.props.newrankId)
         this.props.getNewRankingID();
-        console.log('this.props.newrankId in createuser handleclick2', this.props.newrankId)
         this._handleClick();
     } else {
       this._handleClick();
     }
-      //console.log('_continueClick');
   }
   //#endregion
 
@@ -91,19 +53,12 @@ _continueClick = () => {
    * @returns {null}
    */
   _handleClick = async () => {
-
-    //console.log(JSONops.createNewUserInJSON());
     //TODO: all the json data for create new user is here ready to be appended to
-    //console.log(this.props.rankingJSONdata);
     this.setState({ isLoading: true });
-
     //Player has to belong to a ranking (?)
     if(this.props.newrankId === ''){
-      console.log('this.props.newrankId in createuser handleclick1', this.props.newrankId)
       this.setState({ newRankId: await this.getNewRankId() });
-      //console.log('this.state.newrankId in createuser handleclick2', this.state.newRankId)
     }
-
     if (this.state.userConfirm === false){
       this.setState({ WarningModalIsOpen: true });
     }
@@ -111,68 +66,38 @@ _continueClick = () => {
       this.props.setuserCB(this.props.user, this.state.username, this.state.contactno, this.state.email, this.state.description);
     //only do this once the user has confirmed the user name because it cannot be
     //changed in future
-    //if(this.state.userConfirm && newrankId !== ''){
       if(this.state.userConfirm){
-              console.log('ready to go to createNewUserInNewJSON')
-              //JSONops.createNewUserInNewJSON(this.state.username, this.state.contactno, this.state.email, this.props.account, this.state.description, this.state.newRankId);
               const { username, description } = this.state;
               try {
-          
-                const result = await createUserSendToContract(this.props.account.address, username, this.state.contactno, this.state.email, description, this.state.newRankId)
-
-                // (plus a little bit more in case the contract state has changed).
-                //const result = await createAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
-                // check result status. if status is false or '0x0', show user the tx details to debug error
+                const result = await createUserSendToContract(this.props.account.address, username, this.state.contactno, this.state.email, description, this.state.newRankId);
                 if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
                   return this.setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
                 }
-                console.log('b4 _setUserNameValue')
-                //update the json with the username (which wasn't available before the form submit)
-                //JSONops._setUserNameValue(this.props.rankingJSONdata, userAccountNo, 'NAME', username, newrankId);
-
                 // Completed of async action, set loading state back
                 this.setState({ isLoading: false });
                 // tell our parent (app.js) that we've created a user so it
                 // will re-fetch the current user details from the contract (re-load the account info)
                 //this.props.onAfterUserUpdate();
-                // redirect user to the  update user page
-                //this.props.history.push('/update/@' + username);
-
                 this.props.history.push('/');
               } catch (err) {
-                // stop loading state and show the error
                 this.setState({ isLoading: false, error: err.message });
               };
             //user didn't confirm
           }else{
               console.log('user has not confirmed or no rankid obtained')
-              // if(newrankId === ''){
-              //   this.setState({ WarningModalIsOpen: false });
-              //   this.setState({ isLoading: false });
-              //
-              // }
-            // const wtext = 'Please ensure your username is as you want it'
-            // wtext = ' since it CANNOT be changed, even if you de-activate your account!'
-            //   this.setState({ warningText: wtext });
           }
   }
 
   componentDidMount(){
-    //const newRankingId =
     if(this.props.user.username !== ''){
       this.props.history.push('/');
     }else{
       this.getNewRankId();
     }
-    //
-    //this.setState({ newRankId: newRankingId });
   }
-
   //TODO:add code to get from jsonbin.io
-  //_handleClick1 = async () => {
   //REVIEW: need newRankId with a new user?
    getNewRankId = async () => {
-   //getNewRankId(){
       try{
       this.setState({ isLoading: true});
       let req = new XMLHttpRequest();
@@ -186,10 +111,7 @@ _continueClick = () => {
             //only here can set state (once result is back)
             this.props.setnewrankIdCB(resulttxt.id)
             this.setState({ newRankId: resulttxt.id});
-            //this.setState({ ranknameHasChanged: true});
             this.setState({ isLoading: false});
-            // console.log('this.state.rankId')
-            // console.log(this.state.rankId)
           }
         };
         //NB: following will send the request but
@@ -283,7 +205,6 @@ _continueClick = () => {
             // stop loading state
             state.isLoading = false;
             // show error to user if user exists
-
             state.error = exists ? 'Username not available' : '';
             this.setState(state);
           }).catch((err) => {

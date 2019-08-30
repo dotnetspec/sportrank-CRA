@@ -440,7 +440,8 @@ displayActivationBtns(){
   //#region React lifecycle events
   render() {
     //console.log('this.props.userAccounts', this.props.userAccounts);
-    if(this.props.userAccounts[0] !== undefined){
+    //if(this.props.userAccounts[0] !== undefined){
+    if(this.props.userAccounts){
 
           const isEditable = Boolean(this.props.user.username);
           const isError = this.props.error && this.props.error.message;

@@ -1,15 +1,10 @@
 import { Grid, Button, Row, Col, Modal } from 'react-bootstrap';
-//import { Grid, Button, FormGroup, ControlLabel, FormControl, HelpBlock, Row, Col, Modal } from 'react-bootstrap';
-//import Grid from 'react-bootstrap/Grid'
-//import { withRouter } from 'react-router-dom'
 import React, { Component } from 'react'
 import FieldGroup from '../UI/FieldGroup'
 import JSONops from './JSONops'
 import web3 from '../../../../web3';
-//import DSportRank from '../../../../ABIaddress';
 import { estimateGas } from '../SideEffects/io/estimateGas';
 import { newRankingSendToContract } from '../SideEffects/io/newRankingSendToContract';
-
 /**
  * Class that renders a form to facilitate the creation
  * of a new rank list in the contract.
@@ -22,13 +17,9 @@ class CreateNewRanking extends Component {
   //#region Constructor
   constructor(props, context) {
     super(props, context);
-
-    // initial state
     this.state = {
       isLoading: false,
       username: '',
-      //contactno: '',
-      //email: '',
       rankDescription: '',
       ranknameHasChanged: false,
       error: '',
@@ -43,22 +34,14 @@ class CreateNewRanking extends Component {
 
   componentDidMount(){
     const newRankingId = this.getNewRankId();
-    //
     this.setState({ rankId: newRankingId });
   }
 
 _continueClick = () => {
-  //_continueClick(){
       this.setState({ userConfirm: true });
-      //console.log('userConfirm in _continueClick1')
-      //console.log(this.state.userConfirm)
       this.setState({ WarningModalIsOpen: false });
-      //console.log('userConfirm in _continueClick2')
-    //  console.log(this.state.userConfirm)
       //get a new rank Id ready
-      //this.setState({ newRankId: this.props.getNewRankingID() });
       this._handleCreateNewRankingClick();
-      //console.log('_continueClick');
   }
   //#endregion
 
