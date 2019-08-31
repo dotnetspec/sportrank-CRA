@@ -15,8 +15,10 @@ import {
 } from '../SideEffects/io/Jsonio';
 import {
   _loadExternalBalance,
-  _mapCurrentUserAccounts
+  _mapCurrentUserAccounts,
+  mapTheAccounts
 } from '../SideEffects/io/web3io';
+import web3 from '../../../../web3';
 
 /**
  * Functional component representing the highest order component. Any user
@@ -138,23 +140,24 @@ export function App({
   //#endregion
 
   const processStateAfter_loadCurrentUserAccounts = (state) => {
-      setuserAccounts(state.userAccounts);
-    if (state.userAccounts) {
-      setError(state.error);
-      setUser(state.userAccounts[0].user)
-      setuserAccounts(state.userAccounts)
-        if (state.data !== undefined) {
-          setIsUserInJson(JSONops.isPlayerListedInJSON(state.data, state.user.username));
-          setIsCurrentUserActive(JSONops._getUserValue(state.data, state.user.username, "ACTIVE"));
-        } else {
-          setIsUserInJson(false);
-        }
-      setnewrankId(state.newrankId);
-      setcontactno(state.userAccounts[0].user.contactno);
-      setemail(state.userAccounts[0].user.email);
-      setdescription(state.userAccounts[0].user.description);
-      setAccount(state.account);
-      setBalance(state.balance);
+console.log('state', state)
+    if (state) {
+      setuserAccounts(state);
+      console.log('state[0].userAccount', state[0].userAccount)
+      setAccount(state[0].userAccount);
+      setError(state[0].error);
+      setUser(state[0].userAccount.user)
+      if (state[0].data !== undefined) {
+        setIsUserInJson(JSONops.isPlayerListedInJSON(state[0].data, state[0].user.username));
+        setIsCurrentUserActive(JSONops._getUserValue(state[0].data, state[0].user.username, "ACTIVE"));
+      } else {
+        setIsUserInJson(false);
+      }
+      setnewrankId(state[0].newrankId);
+      setcontactno(state[0].userAccount.user.contactno);
+      setemail(state[0].userAccount.user.email);
+      setdescription(state[0].userAccount.user.description);
+      setBalance(state[0].balance);
       setviewingOnlyCB(true);
     } else {
       console.log('user undefined')
@@ -171,9 +174,23 @@ export function App({
       async function getDefaultRankingList_callback(json) {
         setrankingListData(json);
       }
-      const state = await _mapCurrentUserAccounts();
-      processStateAfter_loadCurrentUserAccounts(state);
-      await setIsLoading(false);
+      //const state = await _mapCurrentUserAccounts();
+      //processStateAfter_loadCurrentUserAccounts(state);
+
+      new Promise(function(resolve, reject) {
+          resolve(web3.eth.getAccounts());
+        }).then(function(result) { // (**)
+          console.log(result); // 1
+          const newArray = mapTheAccounts(result);
+          // let state = {};
+          // state = ChangeState.assignUserAcctStateToStateObj(state, newArray, newArray[0]);
+          return newArray;
+        }).then(function(result) { // (***)
+          console.log('result after state assigned', result); // 2
+          processStateAfter_loadCurrentUserAccounts(result);
+          //return result;
+          setIsLoading(false);
+        })
     }
     fetchData();
   }, []); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
