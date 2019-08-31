@@ -246,21 +246,21 @@ class Header extends Component {
   }
 
   renderAMenuItem(userAccount, index){
-    console.log('userAccount, iindex', userAccount.user, index)
-    console.log('userAccount.user.username', userAccount.user.username)
+    //console.log('userAccount, iindex', userAccount.userAccount.user, index)
+    //console.log('userAccount.user.username', userAccount.userAccount.user.username)
     const isCurrUser = userAccount.address === this.props.account;
     return(
         <MenuItem
         key={index}
         eventKey={index}
         active={isCurrUser}
-        value={userAccount.address}
-        username={userAccount.user.username}
+        value={userAccount.userAccount.address}
+        username={userAccount.userAccount.user.username}
         onSelect={(key, e) => this._handleAcctChange(e, key)}
       >
-        {this.renderBasedOnUserExists(userAccount)}
+        {this.renderBasedOnUserExists(userAccount.userAccount)}
         <React.Fragment>
-          <small className='balance'>{formatBalance(userAccount.balance)}</small>
+          <small className='balance'>{formatBalance(userAccount.userAccount.balance)}</small>
         </React.Fragment>
       </MenuItem>
     )
@@ -270,19 +270,9 @@ class Header extends Component {
     //console.log('mapAndRenderUserAccounts', this.props.userAccounts)
     // generate the DropdownItems for the accounts to populate
     // the accounts dropdown
-    console.log('this.props.userAccounts', this.props.userAccounts)
-    //console.log('this.props.userAccounts', this.props.userAccounts)
-
   return this.props.userAccounts.map((userAccount, index) => {
-    console.log('mapAndRenderUserAccounts', userAccount)
-    let menuItem = [];
-    setTimeout(function()
-        {
-          return this.renderAMenuItem(userAccount, index);
-
-        }, 100);
-      // return this.renderAMenuItem(userAccount, index);
-      return menuItem;
+    //console.log('mapAndRenderUserAccounts', userAccount)
+      return this.renderAMenuItem(userAccount, index);
     });
   }
 
