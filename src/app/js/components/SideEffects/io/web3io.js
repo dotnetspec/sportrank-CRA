@@ -1,15 +1,8 @@
 import web3 from '../../../../../web3';
 import DSportRank from '../../../../../ABIaddress';
 import { formatEth
-//  , executingAt
 } from '../../../utils';
-//import JSONops from '../../Logic/JSONops'
-import { map } from 'async';
-//import changeState from '../../SideEffects/StateManager';
-//import * as helper from './web3io';
-//import { getWeb3defaultAccount } from './web3defaultAccount';
-import ChangeState from '../../Logic/ChangeState'
-import { getWeb3Accounts } from './web3Accounts';
+
 
     //REVIEW: below based on
     //https://medium.com/@bluepnume/learn-about-promises-before-you-start-using-async-await-eb148164a9c8
@@ -23,41 +16,6 @@ import { getWeb3Accounts } from './web3Accounts';
             _loadExternalBalance_callback(devAccountBalResult);
           })
       }
-
-      // export async function getCurrentUserAccountsFromBlockchain(){
-      //   const userAccountsArray = await web3.eth.getAccounts();
-      //     console.log('got accounts after await', userAccountsArray[0])
-      //   return userAccountsArray;
-      // }
-
-// export async function isWeb3Connected(){
-//   console.log('here')
-//     web3.eth.net.isListening()
-//       .then(() => console.log('is connected'))
-//       .catch(e => console.log('Wow. Something went wrong'));
-//       return 'in here'
-//     }
-
-// export async function connectToWeb3new(connectToWeb3_callback){
-//     console.log('typeof web3.ethereum', typeof web3.ethereum)
-//   let ethereumObj = {};
-//     if (typeof web3.ethereum !== 'undefined') {
-//       //console.log('you have an etherem compatible browser')
-//       if(web3.ethereum.isMetaMask){
-//         console.log('you have MM in the browser', web3.ethereum)
-//         console.log('web3', web3 )
-//         ethereumObj = {networkVersion:  window.ethereum.networkVersion,   // property_# may be an identifier...
-//                             selectedAddress:  window.ethereum.selectedAddress}
-//
-//         // console.log('ethereum.selectedAddress', )
-//         await connectToWeb3_callback(ethereumObj);
-//         //window.ethereum.enable();
-//         }
-//     };
-//   }
-
-
-
   /**
    * Loads user details from the contract for all accounts on the node.
    *
@@ -78,7 +36,6 @@ import { getWeb3Accounts } from './web3Accounts';
           }).then(function(result) { // (**)
             console.log(result); // 1
             const newArray = mapTheAccounts(result);
-            // let state = {};
             // state = ChangeState.assignUserAcctStateToStateObj(state, newArray, newArray[0]);
             return newArray;
           }).then(function(result) { // (***)
@@ -95,13 +52,12 @@ import { getWeb3Accounts } from './web3Accounts';
     export const mapTheAccounts = async (accountsArray) => {
         const newArray = accountsArray.map(processArray);
         return newArray;
-
-        function processArray(){
-          //const addressArray = '0x48DF2ee04DFE67902B83a670281232867e5dC0Ca'
+        //each address in the array is processed by the map function
+        function processArray(address){
           // const address = accountsArray;
           // const usernameHash = await DSportRank.methods.owners(address).call();
           // const user = await DSportRank.methods.users(usernameHash).call();
-          const address = '0x48DF2ee04DFE67902B83a670281232867e5dC0Ca';
+
           const username = 'testuser1';
           const bal = 2.0;
           const userAccountOjb =
@@ -121,55 +77,8 @@ import { getWeb3Accounts } from './web3Accounts';
           return userAccountOjb;
         }
       }
-    //)
-      //return accountsArray;
-  //}
-
-
-  //     map(accountsArray,
-  //       async function (address, next) {
-  //           try {
-  //               console.log('address inside await map', address)
-  //               const usernameHash = await DSportRank.methods.owners(address).call();
-  //               const user = await DSportRank.methods.users(usernameHash).call();
-  //               let balance = await web3.eth.getBalance(address);
-  //               balance = web3.utils.fromWei(balance, 'ether');
-  //               next(null, {
-  //                 address: address,
-  //                 user: user,
-  //                 balance: balance
-  //               }
-  //             );
-  //           }
-  //           catch (err) {
-  //             console.log("Error current item index in _mapCurrentUserAccounts", err);
-  //             next(err);
-  //           }
-  //         }
-  //     , (err, userAccounts) => {
-  //       if(userAccounts.length < 1){
-  //         userAccounts = fillArrayIfNoUser(accountsArray);
-  //         console.log('userAccounts array in if', userAccounts)
-  //       }
-  //       console.log('userAccounts array', userAccounts)
-  //       let defaultUserAccount = [];
-  //        console.log('defaultUserAccount', defaultUserAccount)
-  //        defaultUserAccount = userAccounts[0];
-  //       //let state = {};
-  //       //state = ChangeState.assignUserAcctStateToStateObj(state, userAccounts, defaultUserAccount);
-  //       //  console.log('state', state);
-  //         console.log('userAccounts', userAccounts)
-  //         return userAccounts;
-  //     }
-  //   );
-  //   }
-  //
-  //   )
-  //   //return accountsArray;
-  // }
 
     export const fillArrayIfNoUser = (arrayToFill) => {
-      //var fullname = []
       function addUserAndBalToAccountsArray(item){
         const userObj =     { username: 'CreateUser',
                              description: 'holder descr',

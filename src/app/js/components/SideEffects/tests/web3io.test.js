@@ -1,6 +1,4 @@
 import {
-  isWeb3Connected,
-  connectToWeb3new,
   _loadCurrentUserAccountsInsideMapping,
   _loadExternalBalance,
   getCurrentUserAccountsFromBlockchain,
@@ -8,23 +6,14 @@ import {
   getDefaultUserAccountFromAddress,
   fillArrayIfNoUser,
   mapTheAccounts
-  //,
-  //getDefaultUserAccountFromAddress,
-  //getWeb3defaultAccount
 } from '../io/web3io';
 import web3 from '../../../../../web3';
 import 'jest-dom/extend-expect'
 import {
-  render,
-  fireEvent,
-  cleanup,
   wait
 } from '@testing-library/react'
-import Web3 from 'web3';
-import PrivateKeyProvider from 'truffle-privatekey-provider'
 import  *  as web3defaultAccount from '../io/web3defaultAccount';
 import  *  as getWeb3Accounts from '../io/web3Accounts';
-import {web3AddressesArray} from '../../../../../../cypress/fixtures/web3testdata'
 
 //REVIEW: there is no point testing simply getting the accounts array
 //from the BC. Testing starts with the substantial functionality
@@ -49,30 +38,21 @@ const userAccountsArray = [{
   }
 }];
 
-
-
-const address = '0x847700B781667abdD98E1393420754E503dca5b7';
+//Rinkeby:
+//const address = '0x847700B781667abdD98E1393420754E503dca5b7';
+//ganache-noisy-mother account 7
+const address = '0x18237903Ec722aF500Ad944A9209aF5fc4136279';
 
 describe('Talking to blockchain via web3io.js', () => {
 
-  //REVIEW: not sure how to obtain from tests - in browser is ok
   fit('web3.eth.getAccounts', async () => {
-    //const getCurrentUserAccountsFromBlockchain = jest.fn(userAccountsArray);
-    // async function mapTheAccountsCB(array) {
-    //   console.log('data', array);
-    //   //Ganache
-    //   await expect(array[0]).toEqual("0x48DF2ee04DFE67902B83a670281232867e5dC0Ca");
-    //   //done();
-    // }
-    //const array = mapTheAccounts();
     const accountsArray = await web3.eth.getAccounts();
     const array =  await mapTheAccounts(accountsArray);
-    //const array =  mapTheAccounts(web3AddressesArray);
-    expect(array[7].address).toEqual("0x48DF2ee04DFE67902B83a670281232867e5dC0Ca");
+    //ganache-noisy-mother test
+    expect(array[7].address).toEqual(address);
     expect(array[7].user.username).toEqual("testuser1");
+    //REVIEW: Don't know why this is seen as undefined
     //expect(array[7].bal).toBeCloseTo(2.0);
-    //await wait(() => mapTheAccounts(web3AddressesArray, mapTheAccountsCB));
-    //await wait(() => mapTheAccounts(mapTheAccountsCB));
   });
 
 

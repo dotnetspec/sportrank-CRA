@@ -368,7 +368,6 @@ class Header extends Component {
   }
 
   handleRenderErrorOrDropDownCollapse(isError, isEditable, states){
-    //console.log('handleRenderErrorOrDropDownCollapse')
     return isError ? states.isError : this.renderDropDownCollapseNoError(isEditable, states)
   }
 
