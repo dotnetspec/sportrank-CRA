@@ -254,13 +254,13 @@ class Header extends Component {
         key={index}
         eventKey={index}
         active={isCurrUser}
-        value={userAccount.userAccount.address}
-        username={userAccount.userAccount.user.username}
+        value={userAccount.address}
+        username={userAccount.user.username}
         onSelect={(key, e) => this._handleAcctChange(e, key)}
       >
-        {this.renderBasedOnUserExists(userAccount.userAccount)}
+        {this.renderBasedOnUserExists(userAccount)}
         <React.Fragment>
-          <small className='balance'>{formatBalance(userAccount.userAccount.balance)}</small>
+          <small className='balance'>{formatBalance(userAccount.balance)}</small>
         </React.Fragment>
       </MenuItem>
     )
@@ -373,7 +373,6 @@ class Header extends Component {
   }
 
   renderDropDownCollapseNoError(isEditable, states){
-    console.log('in renderDropDownCollapseNoError')
     return(
         <React.Fragment>
         <ButtonToolbar>

@@ -92,13 +92,8 @@ import { getWeb3Accounts } from './web3Accounts';
     }
     // end of _loadCurrentUserAccounts
 
-      //export const mapTheAccounts =  async (accountsArray)  => {
     export const mapTheAccounts = async (accountsArray) => {
-        // await web3.eth.getAccounts().then((accountsArray) => {
-        console.log('accountsArray in mapTheAccounts', accountsArray)
-        //const accountsArray = await web3.eth.getAccounts();
         const newArray = accountsArray.map(processArray);
-        console.log('newArray', newArray)
         return newArray;
 
         function processArray(){
@@ -110,7 +105,7 @@ import { getWeb3Accounts } from './web3Accounts';
           const username = 'testuser1';
           const bal = 2.0;
           const userAccountOjb =
-                  { userAccount: {
+                  {
                         address: address,
                         balance: bal,
                         user: {
@@ -121,8 +116,8 @@ import { getWeb3Accounts } from './web3Accounts';
                            picture: "Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL",
                            rankingDefault: "5c81c1e944e81057efe3e2c8"
                         }
-                      }
-                    }
+                  }
+
           return userAccountOjb;
         }
       }

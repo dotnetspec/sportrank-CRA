@@ -68,8 +68,8 @@ describe('Talking to blockchain via web3io.js', () => {
     const accountsArray = await web3.eth.getAccounts();
     const array =  await mapTheAccounts(accountsArray);
     //const array =  mapTheAccounts(web3AddressesArray);
-    expect(array[7].userAccount.address).toEqual("0x48DF2ee04DFE67902B83a670281232867e5dC0Ca");
-    expect(array[7].userAccount.user.username).toEqual("testuser1");
+    expect(array[7].address).toEqual("0x48DF2ee04DFE67902B83a670281232867e5dC0Ca");
+    expect(array[7].user.username).toEqual("testuser1");
     //expect(array[7].bal).toBeCloseTo(2.0);
     //await wait(() => mapTheAccounts(web3AddressesArray, mapTheAccountsCB));
     //await wait(() => mapTheAccounts(mapTheAccountsCB));

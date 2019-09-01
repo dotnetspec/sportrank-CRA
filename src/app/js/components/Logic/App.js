@@ -143,10 +143,10 @@ export function App({
 console.log('state', state)
     if (state) {
       setuserAccounts(state);
-      console.log('state[0].userAccount', state[0].userAccount)
-      setAccount(state[0].userAccount);
+      console.log('state[0].userAccount', state[0])
+      setAccount(state[0]);
       setError(state[0].error);
-      setUser(state[0].userAccount.user)
+      setUser(state[0].user)
       if (state[0].data !== undefined) {
         setIsUserInJson(JSONops.isPlayerListedInJSON(state[0].data, state[0].user.username));
         setIsCurrentUserActive(JSONops._getUserValue(state[0].data, state[0].user.username, "ACTIVE"));
@@ -154,9 +154,9 @@ console.log('state', state)
         setIsUserInJson(false);
       }
       setnewrankId(state[0].newrankId);
-      setcontactno(state[0].userAccount.user.contactno);
-      setemail(state[0].userAccount.user.email);
-      setdescription(state[0].userAccount.user.description);
+      setcontactno(state[0].user.contactno);
+      setemail(state[0].user.email);
+      setdescription(state[0].user.description);
       setBalance(state[0].balance);
       setviewingOnlyCB(true);
     } else {
