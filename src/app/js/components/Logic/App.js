@@ -15,8 +15,11 @@ import {
 } from '../SideEffects/io/Jsonio';
 import {
   _loadExternalBalance,
-  _mapCurrentUserAccounts
+  _mapCurrentUserAccounts,
+  mapTheAccounts
 } from '../SideEffects/io/web3io';
+import web3 from '../../../../web3';
+import DSportRank from '../../../../ABIaddress';
 
 /**
  * Functional component representing the highest order component. Any user
@@ -137,24 +140,25 @@ export function App({
   }
   //#endregion
 
-  const processStateAfter_loadCurrentUserAccounts = (state) => {
-      setuserAccounts(state.userAccounts);
-    if (state.userAccounts) {
-      setError(state.error);
-      setUser(state.userAccounts[0].user)
-      setuserAccounts(state.userAccounts)
-        if (state.data !== undefined) {
-          setIsUserInJson(JSONops.isPlayerListedInJSON(state.data, state.user.username));
-          setIsCurrentUserActive(JSONops._getUserValue(state.data, state.user.username, "ACTIVE"));
-        } else {
-          setIsUserInJson(false);
-        }
-      setnewrankId(state.newrankId);
-      setcontactno(state.userAccounts[0].user.contactno);
-      setemail(state.userAccounts[0].user.email);
-      setdescription(state.userAccounts[0].user.description);
-      setAccount(state.account);
-      setBalance(state.balance);
+  const processStateAfter_loadCurrentUserAccounts = async (state) => {
+console.log('state', state)
+    if ( state) {
+      setuserAccounts(state);
+      console.log('state[0].userAccount', state[0])
+      setAccount(state[0]);
+      setError(state[0].error);
+      setUser(state[0].user)
+      if (state[0].data !== undefined) {
+        setIsUserInJson(JSONops.isPlayerListedInJSON(state[0].data, state[0].user.username));
+        setIsCurrentUserActive(JSONops._getUserValue(state[0].data, state[0].user.username, "ACTIVE"));
+      } else {
+        setIsUserInJson(false);
+      }
+      setnewrankId(state[0].newrankId);
+      setcontactno(state[0].user.contactno);
+      setemail(state[0].user.email);
+      setdescription(state[0].user.description);
+      setBalance(state[0].balance);
       setviewingOnlyCB(true);
     } else {
       console.log('user undefined')
@@ -171,12 +175,75 @@ export function App({
       async function getDefaultRankingList_callback(json) {
         setrankingListData(json);
       }
-      const state = await _mapCurrentUserAccounts();
-      processStateAfter_loadCurrentUserAccounts(state);
-      await setIsLoading(false);
+      //const state = await _mapCurrentUserAccounts();
+      //processStateAfter_loadCurrentUserAccounts(state);
+
+      web3.eth.getAccounts().then(function(expectingAResult){
+
+          return expectingAResult;
+      }).then(function(resultWhenItFinallyCame ){
+          resultWhenItFinallyCame =  DSportRank.methods.owners(resultWhenItFinallyCame[0]).call()
+          //return resultWhenItFinallyCame;
+          return resultWhenItFinallyCame;
+          //return mapTheAccounts(result);
+      }).then(function(usernameHash){
+        console.log('b4 usernamehashes', usernameHash)
+          usernameHash = DSportRank.methods.users(usernameHash).call();
+          return usernameHash;
+      }).then(function(result2){
+          return processStateAfter_loadCurrentUserAccounts(result2);
+      }).catch(function(error) {
+           console.log('error is:', error)
+      }).then(function() {
+           console.log('in the last then')
+      });
+
+    //   Promise.all([web3.eth.getAccounts()]).then(function(result) {
+    // //do work. result is an array contains the values of the three fulfilled promises.
+    // console.log('getAccounts result', result)
+    //   mapTheAccounts(result);
+    //   }).then(function(result) {
+    // //do work. result is an array contains the values of the three fulfilled promises.
+    // console.log('mappedAccounts result', result)
+    // processStateAfter_loadCurrentUserAccounts(result);
+    //   }).catch(function(error) {
+    //       console.log('error is:', error)
+    //   });
+
+      // const acctArr = await web3.eth.getAccounts();
+      // console.log('acctArr', acctArr)
+      // const mappedAccounts = await getUsernames(acctArr);
+      // //await mapTheAccounts(acctArr, mapCB)
+      // console.log('mappedAccounts', mappedAccounts)
+      //  function mapCB(result) {
+      //   console.log('result', result)
+      //   if(result){
+      //   processStateAfter_loadCurrentUserAccounts(result);
+  //}
+        setIsLoading(false);
     }
     fetchData();
   }, []); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
+
+
+  async function getUsernames(accountsArray){
+        const newArray = accountsArray.map(processArray);
+        return newArray;
+        //each address in the array is processed by the map function
+        async function processArray(address){
+          let acctsArr = [];
+          //let username = '';
+          const usernameHash = await DSportRank.methods.owners(address).call()
+          //await DSportRank.methods.owners(address).call()
+          acctsArr = await DSportRank.methods.users(usernameHash).call();
+          return acctsArr;
+          // .then(function(usernameHash) { // (**)
+          //   console.log(usernameHash); // 1
+          //   acctsArr = DSportRank.methods.users(usernameHash).call();
+          //   return acctsArr;
+          // })
+        }
+      }
 
   if (!isLoading) {
     return ( <

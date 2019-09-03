@@ -196,8 +196,6 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
       isUserInJson: true
     }
         renderWithRouter(<Header {...props}/>);
-        //const { debug } = renderWithRouter(<Header {...props}/>);
-        //debug();
         expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
         expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/De-Activate?/i)
         expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveAttribute("style", 'color: red;');

@@ -246,8 +246,10 @@ class Header extends Component {
   }
 
   renderAMenuItem(userAccount, index){
-    //console.log('menuitem')
+    //console.log('userAccount, iindex', userAccount.userAccount.user, index)
+    //console.log('userAccount.user.username', userAccount.userAccount.user.username)
     const isCurrUser = userAccount.address === this.props.account;
+    console.log('userAccount.user.username', userAccount.user.username);
     return(
         <MenuItem
         key={index}
@@ -270,7 +272,7 @@ class Header extends Component {
     // generate the DropdownItems for the accounts to populate
     // the accounts dropdown
   return this.props.userAccounts.map((userAccount, index) => {
-    //console.log('mapAndRenderUserAccounts')
+    //console.log('mapAndRenderUserAccounts', userAccount)
       return this.renderAMenuItem(userAccount, index);
     });
   }
@@ -367,12 +369,10 @@ class Header extends Component {
   }
 
   handleRenderErrorOrDropDownCollapse(isError, isEditable, states){
-    //console.log('handleRenderErrorOrDropDownCollapse')
     return isError ? states.isError : this.renderDropDownCollapseNoError(isEditable, states)
   }
 
   renderDropDownCollapseNoError(isEditable, states){
-    //console.log('in renderDropDownCollapseNoError')
     return(
         <React.Fragment>
         <ButtonToolbar>

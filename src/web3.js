@@ -18,8 +18,8 @@ import Web3 from 'web3';
 // };
 // const web3 = new Web3(provider, null, OPTIONS);
 
-const web3 = new Web3(Web3.givenProvider);
-//var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+//const web3 = new Web3(Web3.givenProvider);
+var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
 
 // async function init() {
 //   if (typeof web3 !== 'undefined') {

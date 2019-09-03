@@ -1,32 +1,25 @@
 import {
-  isWeb3Connected,
-  connectToWeb3new,
   _loadCurrentUserAccountsInsideMapping,
   _loadExternalBalance,
   getCurrentUserAccountsFromBlockchain,
   _mapCurrentUserAccounts,
   getDefaultUserAccountFromAddress,
-  fillArrayIfNoUser
-  //,
-  //getDefaultUserAccountFromAddress,
-  //getWeb3defaultAccount
+  fillArrayIfNoUser,
+  mapTheAccounts
 } from '../io/web3io';
 import web3 from '../../../../../web3';
 import 'jest-dom/extend-expect'
 import {
-  render,
-  fireEvent,
-  cleanup,
   wait
 } from '@testing-library/react'
-import Web3 from 'web3';
-import PrivateKeyProvider from 'truffle-privatekey-provider'
 import  *  as web3defaultAccount from '../io/web3defaultAccount';
 import  *  as getWeb3Accounts from '../io/web3Accounts';
 
 //REVIEW: there is no point testing simply getting the accounts array
 //from the BC. Testing starts with the substantial functionality
 //in _mapCurrentUserAccounts
+
+//async testing proving difficult - need to start simple
 
 //jest.mock('../SideEffects/io/web3io');
 // const fakegetCurrentUserAccountsFromBlockchain = jest.fn('../SideEffects/io/web3io/getCurrentUserAccountsFromBlockchain');
@@ -47,9 +40,53 @@ const userAccountsArray = [{
   }
 }];
 
+//Rinkeby:
+//const address = '0x847700B781667abdD98E1393420754E503dca5b7';
+//ganache-noisy-mother account 7
+const address = '0x18237903Ec722aF500Ad944A9209aF5fc4136279';
 
+describe('Talking to blockchain via web3io.js', () => {
 
-const address = '0x847700B781667abdD98E1393420754E503dca5b7';
+//below doesn't test anything
+  xit('web3.eth.getAccounts', async () => {
+    //await web3.eth.getAccounts caused the problem with this test
+    new Promise(function(resolve, reject) {
+      resolve(web3.eth.getAccounts())
+    .then(function(accountsArray) {
+      console.log('accountsArray', accountsArray)
+      mapTheAccounts(accountsArray);
+  })
+  .then(function(array) {
+    //ganache-noisy-mother test
+    console.log('array[7}]', array)
+    expect(array[7].address).toEqual(address);
+    expect(array[7].user.username).toEqual("testuser");
+    expect(array[7].bal).toBeCloseTo(2.0);
+
+    });
+  });
+});
+
+  xit('_mapCurrentUserAccounts - complete ', async done => {
+    //const rankingDefaultid = '5c36f5422c87fa27306acb52';
+    const address = ['0x847700B781667abdD98E1393420754E503dca5b7', '0x999900B781667abdD98E1393420754E503dca999'];
+    //const address = "0x847700B781667abdD98E1393420754E503dca5b7";
+    async function _mapCurrentUserAccounts_callback(obj) {
+      //console.log('data', obj);
+      await expect(getCurrentUserAccountsFromBlockchain()).toHaveBeenCalled();
+      await expect(obj.address).toEqual("0x847700B781667abdD98E1393420754E503dca5b7");
+      let bal = parseFloat(obj.balance);
+      await expect(bal).toBeDefined();
+      await expect(bal).toBeGreaterThanOrEqual(0.0);
+      await expect(obj.user.username).toEqual("player1");
+      done();
+    }
+    //this function mimicks asnyc function in the .map in _loadCurrentUserAccounts()
+    //userAccountsArray is obtained from getCurrentUserAccountsFromBlockchain
+    //await wait(() => _mapCurrentUserAccounts(fakegetCurrentUserAccountsFromBlockchain, _mapCurrentUserAccounts_callback));
+    await wait(() => _mapCurrentUserAccounts(address, _mapCurrentUserAccounts_callback));
+  });
+});
 
   describe('web3io.js helper functions',  () => {
     //REVIEW: not sure how to obtain from tests - in browser is ok
@@ -122,40 +159,6 @@ const address = '0x847700B781667abdD98E1393420754E503dca5b7';
  //  }
 
 
-describe('Talking to blockchain via web3io.js', () => {
-  //REVIEW: not sure how to obtain from tests - in browser is ok
-  xit('web3.eth.getAccounts', async done => {
-    //const getCurrentUserAccountsFromBlockchain = jest.fn(userAccountsArray);
-    async function getAccounts_callback(array) {
-      console.log('data', array);
-      await expect(array[0]).toEqual("0x847700B781667abdD98E1393420754E503dca5b7");
-      done();
-    }
-    await wait(() => getCurrentUserAccountsFromBlockchain(getAccounts_callback));
-  });
-
-  xit('_mapCurrentUserAccounts - complete ', async done => {
-    //const rankingDefaultid = '5c36f5422c87fa27306acb52';
-    const address = ['0x847700B781667abdD98E1393420754E503dca5b7', '0x999900B781667abdD98E1393420754E503dca999'];
-    //const address = "0x847700B781667abdD98E1393420754E503dca5b7";
-    async function _mapCurrentUserAccounts_callback(obj) {
-      //console.log('data', obj);
-      await expect(getCurrentUserAccountsFromBlockchain()).toHaveBeenCalled();
-      await expect(obj.address).toEqual("0x847700B781667abdD98E1393420754E503dca5b7");
-      let bal = parseFloat(obj.balance);
-      await expect(bal).toBeDefined();
-      await expect(bal).toBeGreaterThanOrEqual(0.0);
-      await expect(obj.user.username).toEqual("player1");
-      done();
-    }
-    //this function mimicks asnyc function in the .map in _loadCurrentUserAccounts()
-    //userAccountsArray is obtained from getCurrentUserAccountsFromBlockchain
-    //await wait(() => _mapCurrentUserAccounts(fakegetCurrentUserAccountsFromBlockchain, _mapCurrentUserAccounts_callback));
-    await wait(() => _mapCurrentUserAccounts(address, _mapCurrentUserAccounts_callback));
-  });
-});
-
-
 describe('_loadExternalBalance in web3io.js should get account balance', () => {
   xit('_loadExternalBalance', async () => {
     async function _loadExternalBalance_callback(bal) {
@@ -218,7 +221,7 @@ xit('test getWeb3defaultAccount', () => {
  });
 
 //it('test funcA', () => {
-  it('getDefaultUserAccountFromAddress', () => {
+  xit('getDefaultUserAccountFromAddress', () => {
     const spy = jest.spyOn(web3defaultAccount, 'getWeb3defaultAccount');
     spy.mockReturnValue(address);
 
