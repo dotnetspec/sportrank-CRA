@@ -2,7 +2,6 @@ import web3 from '../../../../../web3';
 import DSportRank from '../../../../../ABIaddress';
 import { formatEth
 } from '../../../utils';
-import ChangeState from '../../Logic/ChangeState'
 
 
     //REVIEW: below based on
@@ -35,16 +34,13 @@ import ChangeState from '../../Logic/ChangeState'
         new Promise(function(resolve, reject) {
             resolve(web3.eth.getAccounts());
           }).then(function(result) { // (**)
-            console.log('result after first then', result); // 1
-            //const newArray =
-            mapTheAccounts(result);
+            console.log(result); // 1
+            const newArray = mapTheAccounts(result);
             // state = ChangeState.assignUserAcctStateToStateObj(state, newArray, newArray[0]);
-            //return newArray;
-          }).then(function(newArray) { // (***)
-            console.log('result after state assigned', newArray); // 2
-            //return result;
-            let state =  {};
-            return ChangeState.assignUserAcctStateToStateObj(state, newArray, newArray[0]);
+            return newArray;
+          }).then(function(result) { // (***)
+            console.log('result after state assigned', result); // 2
+            return result;
           })
           // .then(function(result) {
           //   //console.log(result); // 4

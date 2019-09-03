@@ -140,9 +140,9 @@ export function App({
   }
   //#endregion
 
-  const processStateAfter_loadCurrentUserAccounts = async (state) => {
+  const processStateAfter_loadCurrentUserAccounts = (state) => {
 console.log('state', state)
-    if ( state) {
+    if (state) {
       setuserAccounts(state);
       console.log('state[0].userAccount', state[0])
       setAccount(state[0]);
