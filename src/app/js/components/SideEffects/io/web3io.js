@@ -30,87 +30,27 @@ import { formatEth
    *
    * @returns {null}
    */
-  export async function _mapCurrentUserAccounts(){
-        new Promise(function(resolve, reject) {
-            resolve(web3.eth.getAccounts());
-          }).then(function(result) { // (**)
-            console.log(result); // 1
-            const newArray = mapTheAccounts(result);
-            // state = ChangeState.assignUserAcctStateToStateObj(state, newArray, newArray[0]);
-            return newArray;
-          }).then(function(result) { // (***)
-            console.log('result after state assigned', result); // 2
-            return result;
-          })
-          // .then(function(result) {
-          //   //console.log(result); // 4
-          //   return result;
-          // });
-    }
+  // export async function _mapCurrentUserAccounts(){
+  //       new Promise(function(resolve, reject) {
+  //           resolve(web3.eth.getAccounts());
+  //         }).then(function(result) { // (**)
+  //           console.log(result); // 1
+  //           const newArray = mapTheAccounts(result);
+  //           // state = ChangeState.assignUserAcctStateToStateObj(state, newArray, newArray[0]);
+  //           return newArray;
+  //         }).then(function(result) { // (***)
+  //           console.log('result after state assigned', result); // 2
+  //           return result;
+  //         })
+  //         // .then(function(result) {
+  //         //   //console.log(result); // 4
+  //         //   return result;
+  //         // });
+  //   }
     // end of _loadCurrentUserAccounts
 
-    export const mapTheAccounts = async (accountsArray) => {
-        const newArray = accountsArray.map(processArray);
-        console.log('newArray in map', newArray)
-        return newArray;
-        //each address in the array is processed by the map function
-        async function processArray(address){
-          let acctsArr = [];
-          //let username = '';
-          //const usernameHash = await DSportRank.methods.owners(address).call()
-          DSportRank.methods.owners(address).call()
-          .then(function(usernameHash) { // (**)
-            console.log(usernameHash); // 1
-            acctsArr = DSportRank.methods.users(usernameHash).call();
-            return acctsArr;
-          }).then(function(acctsArr) {
-            //console.log('acctsArr', acctsArr);
-            console.log('acctsArr.username', acctsArr.username);
-            let userAccountOjb = {};
-            const bal = 2.0;
-            if(acctsArr.username !== ''){
 
-              //it''s not making any assignment it's just passing the
-              //objects on ....
-            userAccountOjb =
-                    {
-                          address: acctsArr.owner,
-                          balance: bal,
-                          user: {
-                             username: acctsArr.username,
-                             description: acctsArr.description,
-                             email: acctsArr.email,
-                             owner: acctsArr.address,
-                             picture: "Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL",
-                             rankingDefault: "5c81c1e944e81057efe3e2c8"
-                          }
-                    }
-                    console.log('userAccountOjb', userAccountOjb)
-            return userAccountOjb;
-          } else {
-            console.log('in else')
-            userAccountOjb =
-                    {
-                          address: '0x48DF2ee04DFE67902B83a670281232867e5dC0Ca',
-                          balance: 0.0,
-                          user: {
-                             username: 'CreateUser',
-                             description: "test2",
-                             email: "test@test.com",
-                             owner: "0x48DF2ee04DFE67902B83a670281232867e5dC0Ca",
-                             picture: "Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL",
-                             rankingDefault: "5c81c1e944e81057efe3e2c8"
-                          }
-                    }
-            return userAccountOjb;
-          }
-            //return username;
-          })
-          .then(function(userAccountOjb) { // (**)
-            console.log(userAccountOjb); // 1
-            //acctsArr = DSportRank.methods.users(usernameHash).call();
-            return userAccountOjb;
-          });
+
 
 
           //const username = 'testuser1';
@@ -130,8 +70,8 @@ import { formatEth
           //         }
           //
           // return userAccountOjb;
-        }
-      }
+      //   }
+      // }
 
     export const fillArrayIfNoUser = (arrayToFill) => {
       function addUserAndBalToAccountsArray(item){

@@ -205,7 +205,7 @@ class Header extends Component {
           onMouseLeave={(e) => this._handleToggle(e)}
           className='username'
           ref={(span) => this.tooltipTarget = span}
-        >{limitAddressLength(this.props.account, 4)}
+        >{limitAddressLength(this.props.account.address, 4)}
         </span>
       </span>
       <small className='balance'>{formatBalance(this.props.balance)}</small>

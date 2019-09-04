@@ -59,8 +59,9 @@ export function limitLength (strToShorten, maxLength, replacement, trimMiddle){
  * // returns '0x390-552'
  * @returns {String} the shortened string
  */
-export function limitAddressLength (addressObj, maxLength, replacement){
-  let address = addressObj.address;
+//export function limitAddressLength (addressObj, maxLength, replacement){
+export function limitAddressLength (address, maxLength, replacement){
+  //let address = address;
   if(!address) return '';
   let prepend0x = false;
 console.log('address type', typeof address);
