@@ -182,15 +182,19 @@ console.log('state', state)
 
           return expectingAResult;
       }).then(function(resultWhenItFinallyCame ){
-          resultWhenItFinallyCame =  DSportRank.methods.owners(resultWhenItFinallyCame[0]).call()
+          //resultWhenItFinallyCame =  DSportRank.methods.owners(resultWhenItFinallyCame[0]).call()
           //return resultWhenItFinallyCame;
-          return resultWhenItFinallyCame;
-          //return mapTheAccounts(result);
-      }).then(function(usernameHash){
-        console.log('b4 usernamehashes', usernameHash)
-          usernameHash = DSportRank.methods.users(usernameHash).call();
-          return usernameHash;
-      }).then(function(result2){
+          //return resultWhenItFinallyCame;
+          return mapTheAccounts(resultWhenItFinallyCame);
+          //return getUsernames(resultWhenItFinallyCame);
+      })
+      // .then(function(usernameHash){
+      //   console.log('b4 usernamehashes', usernameHash)
+      //     usernameHash = DSportRank.methods.users(usernameHash).call();
+      //     return usernameHash;
+      // })
+      .then(function(result2){
+        console.log('result2', result2)
           return processStateAfter_loadCurrentUserAccounts(result2);
       }).catch(function(error) {
            console.log('error is:', error)
