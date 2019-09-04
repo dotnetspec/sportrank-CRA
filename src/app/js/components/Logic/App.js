@@ -148,17 +148,17 @@ console.log('state', state)
       //console.log('state[0].userAccount', state[0])
       setAccount(state[0]);
       setError(state[0].error);
-      setUser(state[0].user)
+      setUser(state[0])
       if (state[0].data !== undefined) {
-        setIsUserInJson(JSONops.isPlayerListedInJSON(state[0].data, state[0].user.username));
-        setIsCurrentUserActive(JSONops._getUserValue(state[0].data, state[0].user.username, "ACTIVE"));
+        setIsUserInJson(JSONops.isPlayerListedInJSON(state[0].data, state[0].username));
+        setIsCurrentUserActive(JSONops._getUserValue(state[0].data, state[0].username, "ACTIVE"));
       } else {
         setIsUserInJson(false);
       }
       setnewrankId(state[0].newrankId);
-      setcontactno(state[0].user.contactno);
-      setemail(state[0].user.email);
-      setdescription(state[0].user.description);
+      setcontactno(state[0].contactno);
+      setemail(state[0].email);
+      setdescription(state[0].description);
       setBalance(state[0].balance);
       setviewingOnlyCB(true);
     } else {
@@ -184,6 +184,7 @@ console.log('state', state)
         })
         .then(async function(accountsArray){
 
+          //get the hashes by async
           const functionWithPromise = item => { //a function that returns a promise
             return Promise.resolve(DSportRank.methods.owners(item).call())
           }
@@ -195,17 +196,14 @@ console.log('state', state)
           const getData = async () => {
             return await Promise.all(accountsArray.map(item => anAsyncFunction(item)))
           }
-
           const data = await getData()
-          console.log('hash data in the list', data)
 
+          //use the hashes to get the user data from contract by async
           const functionGetUserDataWithPromise = item => { //a function that returns a promise
-            console.log('item', item)
             return Promise.resolve(DSportRank.methods.users(item).call());
           }
 
           const anAsyncFunctionToGetUserData = async item => {
-            console.log('returned item', await functionGetUserDataWithPromise(item))
             return await functionGetUserDataWithPromise(item)
           }
 
@@ -216,9 +214,8 @@ console.log('state', state)
           const userdata = await getUserData()
           console.log('user data in the list', userdata)
           return userdata;
-              }).then(function(result2){
-                //console.log('result2', result2)
-                  return processStateAfter_loadCurrentUserAccounts(result2);
+        }).then(function(resolvedUserData){
+                  return processStateAfter_loadCurrentUserAccounts(resolvedUserData);
               }).catch(function(error) {
                    console.log('error is:', error)
               }).then(function() {
@@ -231,28 +228,6 @@ console.log('state', state)
     }
     fetchData();
   }, []); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
-
-
-
-
-  // async function getUsernames(accountsArray){
-  //       const newArray = accountsArray.map(processArray);
-  //       return newArray;
-  //       //each address in the array is processed by the map function
-  //       async function processArray(address){
-  //         let acctsArr = [];
-  //         //let username = '';
-  //         const usernameHash = await DSportRank.methods.owners(address).call()
-  //         //await DSportRank.methods.owners(address).call()
-  //         acctsArr = await DSportRank.methods.users(usernameHash).call();
-  //         return acctsArr;
-  //         // .then(function(usernameHash) { // (**)
-  //         //   console.log(usernameHash); // 1
-  //         //   acctsArr = DSportRank.methods.users(usernameHash).call();
-  //         //   return acctsArr;
-  //         // })
-  //       }
-  //     }
 
   if (!isLoading) {
     return ( <
