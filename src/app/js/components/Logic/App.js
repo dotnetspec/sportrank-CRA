@@ -146,20 +146,20 @@ console.log('state', state)
     if (state) {
       setuserAccounts(state);
       //console.log('state[0].userAccount', state[0])
-      setAccount(state);
-      setError(state.error);
-      setUser(state.user)
-      if (state.data !== undefined) {
-        setIsUserInJson(JSONops.isPlayerListedInJSON(state.data, state.user.username));
-        setIsCurrentUserActive(JSONops._getUserValue(state.data, state.user.username, "ACTIVE"));
+      setAccount(state[0]);
+      setError(state[0].error);
+      setUser(state[0].user)
+      if (state[0].data !== undefined) {
+        setIsUserInJson(JSONops.isPlayerListedInJSON(state[0].data, state[0].user.username));
+        setIsCurrentUserActive(JSONops._getUserValue(state[0].data, state[0].user.username, "ACTIVE"));
       } else {
         setIsUserInJson(false);
       }
-      setnewrankId(state.newrankId);
-      setcontactno(state.user.contactno);
-      setemail(state.user.email);
-      setdescription(state.user.description);
-      setBalance(state.balance);
+      setnewrankId(state[0].newrankId);
+      setcontactno(state[0].user.contactno);
+      setemail(state[0].user.email);
+      setdescription(state[0].user.description);
+      setBalance(state[0].balance);
       setviewingOnlyCB(true);
     } else {
       console.log('user undefined')
@@ -215,73 +215,9 @@ console.log('state', state)
 
           const userdata = await getUserData()
           console.log('user data in the list', userdata)
-            // let newArray = await accountsArray.map(await processArray);
-            // console.log('newArray in map', newArray)
-            // return newArray;
-            // async function processArray(address){
-            //   return await DSportRank.methods.owners(address).call();
-            // }
-
-            //const accountsArray = [] //...an array filled with values
-
-
-
-            //each address in the array is processed by the map function
-             // function processArray(address){
-             //      let acctsArr = {};
-             //      //let username = '';
-             //      //const usernameHash = await DSportRank.methods.owners(address).call()
-             //      DSportRank.methods.owners(address).call()
-             //      .then(function(usernameHash) { // (**)
-             //        console.log(usernameHash); // 1
-             //        acctsArr = DSportRank.methods.users(usernameHash).call();
-             //        return acctsArr;
-             //      }).then(function(acctsArr) {
-             //        //console.log('acctsArr', acctsArr);
-             //        console.log('acctsArr.username', acctsArr.username);
-             //        let userAccountOjb = {};
-             //        const bal = 2.0;
-             //        if(acctsArr.username !== ''){
-             //
-             //          //it''s not making any assignment it's just passing the
-             //          //objects on ....?
-             //        userAccountOjb =
-             //                {
-             //                      address: acctsArr.owner,
-             //                      balance: bal,
-             //                      error: '',
-             //                      user: {
-             //                         username: acctsArr.username,
-             //                         description: acctsArr.description,
-             //                         email: acctsArr.email,
-             //                         owner: acctsArr.address,
-             //                         picture: "Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL",
-             //                         rankingDefault: "5c81c1e944e81057efe3e2c8"
-             //                      }
-             //                }
-             //                console.log('userAccountOjb', userAccountOjb)
-             //        return userAccountOjb;
-             //      } else {
-             //        console.log('in else')
-             //        userAccountOjb =
-             //                {
-             //                      address: '0x48DF2ee04DFE67902B83a670281232867e5dC0Ca',
-             //                      balance: 0.0,
-             //                      error: '',
-             //                      user: {
-             //                         username: 'CreateUser',
-             //                         description: "test2",
-             //                         email: "test@test.com",
-             //                         owner: "0x48DF2ee04DFE67902B83a670281232867e5dC0Ca",
-             //                         picture: "Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL",
-             //                         rankingDefault: "5c81c1e944e81057efe3e2c8"
-             //                      }
-             //                }
-             //            }
-             //            //return acctsArr.push(userAccountOjb);
-             //    return userAccountOjb;
+          return userdata;
               }).then(function(result2){
-                console.log('result2', result2)
+                //console.log('result2', result2)
                   return processStateAfter_loadCurrentUserAccounts(result2);
               }).catch(function(error) {
                    console.log('error is:', error)
@@ -289,9 +225,6 @@ console.log('state', state)
                    console.log('in the last then')
               });
             }
-        //  }
-        //)};
-
         await mapTheAccounts();
 
         setIsLoading(false);

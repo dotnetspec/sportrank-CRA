@@ -174,7 +174,7 @@ class Header extends Component {
   navHomeOrToUserUpdate(){
     //console.log('navHomeOrToUserUpdate');
     //TODO: display SportRank Home in white without small tag
-    if(this.props.user.username !== ''){
+    if(this.props.username !== ''){
       return  <NavLink exact to="/"><small>Sportrank HOME</small><small>Decentralized Sport</small></NavLink>
     }else{
       //this can be dealt with via the 'CreateUser' code
@@ -218,13 +218,13 @@ class Header extends Component {
   renderHasUserFragment(userAccount){
     return(
       <React.Fragment><Image
-      src={userAccount.user.picture}
-      alt={userAccount.user.username}
+      src={userAccount.picture}
+      alt={userAccount.username}
       width={30}
       circle
       className='profile'
       ></Image>
-      <span className='username' data-cy='usernameinprofile' data-testid="usernameinprofile">{userAccount.user.username}</span>
+      <span className='username' data-cy='usernameinprofile' data-testid="usernameinprofile">{userAccount.username}</span>
       </React.Fragment>
     )
   }
@@ -238,7 +238,7 @@ class Header extends Component {
 
   renderBasedOnUserExists(userAccount){
     //console.log('renderBasedOnUserExists')
-    const hasUser = Boolean(userAccount.user.username);
+    const hasUser = Boolean(userAccount.username);
     return hasUser ?
       this.renderHasUserFragment(userAccount)
       :
@@ -249,14 +249,14 @@ class Header extends Component {
     //console.log('userAccount, iindex', userAccount.userAccount.user, index)
     //console.log('userAccount.user.username', userAccount.userAccount.user.username)
     const isCurrUser = userAccount.address === this.props.account;
-    console.log('userAccount.user.username', userAccount.user.username);
+    console.log('userAccount.username', userAccount.username);
     return(
         <MenuItem
         key={index}
         eventKey={index}
         active={isCurrUser}
         value={userAccount.address}
-        username={userAccount.user.username}
+        username={userAccount.username}
         onSelect={(key, e) => this._handleAcctChange(e, key)}
       >
         {this.renderBasedOnUserExists(userAccount)}
@@ -311,7 +311,7 @@ class Header extends Component {
   }
 
   determineStatesForDisplay(){
-    const { picture, username } = this.props.user;
+    const { picture, username } = this.props;
     let states = {};
     // state when we are waiting for the App component to finish loading
     // the current account (address) from web3.eth.getAccounts()
@@ -443,7 +443,7 @@ displayActivationBtns(){
     //if(this.props.userAccounts[0] !== undefined){
     if(this.props.userAccounts){
 
-          const isEditable = Boolean(this.props.user.username);
+          const isEditable = Boolean(this.props.username);
           const isError = this.props.error && this.props.error.message;
           //console.log('this.props.account', this.props.account)
           //console.log('this.props.error', this.props.error)

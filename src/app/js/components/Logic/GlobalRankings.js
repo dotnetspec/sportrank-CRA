@@ -45,7 +45,7 @@ class GlobalRankings extends Component {
             setspecificRankingOptionBtnsCB={this.props.setspecificRankingOptionBtnsCB}
             onAfterUserUpdate={this.props.onAfterUserUpdate}
             history={this.props.history}
-            username={this.props.user.username}
+            username={this.props.username}
             setnewrankIdCB={this.props.setnewrankIdCB}
             viewingOnlyCB={this.props.viewingOnlyCB}
             newrankId={this.props.newrankId}
@@ -61,7 +61,7 @@ class GlobalRankings extends Component {
            setspecificRankingOptionBtnsCB={this.props.setspecificRankingOptionBtnsCB}
            onAfterUserUpdate={this.props.onAfterUserUpdate}
            history={this.props.history}
-           username={this.props.user.username}
+           username={this.props.username}
            setnewrankIdCB={this.props.setnewrankIdCB}
            newrankId={this.props.newrankId}
            viewingOnlyCB={this.props.viewingOnlyCB}
