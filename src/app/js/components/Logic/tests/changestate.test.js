@@ -1,19 +1,46 @@
 import 'jest-dom/extend-expect'
-import {render, fireEvent, cleanup, wait} from '@testing-library/react'
 import ChangeState from '../../Logic/ChangeState'
-import {userAccountsArray, userObj} from '../../../../../../cypress/fixtures/userAccounts'
+import {userAccountsArray} from '../../../../../../cypress/fixtures/userAccounts'
+import {userAccountsFromContractArr} from '../../../../../../cypress/fixtures/userAccountsFromContract'
+import {cleanedUpSRContractDataArr} from '../../../../../../cypress/fixtures/cleanedUpSRContractData'
 
-cleanup();
+//cleanup();
 // // User Account data:
 // //currently this is same for userAccountsArray and defaultUserAccount
 // //cos only one account coming through the from the BC
 
 describe('ChangeState tests', () => {
+
+//test using 'real' data from ganache:
+  it('cleanUpUserSRAccountData',  () => {
+    const retArr = ChangeState.cleanUpUserSRAccountData(userAccountsFromContractArr);
+    expect(retArr[2].owner).toEqual('0xDdF507E108C94B0348fb42658D527e7EfD51672d');
+    expect(retArr[2].username).toEqual('GanacheAcct3');
+    expect(retArr[6].owner).toEqual('');
+    expect(retArr[6].username).toEqual('Create New');
+   });
+
+
 it('doesUsernameExistInUserAccounts',  () => {
   //const state = {};
-  let boolResult = ChangeState.isUserNameInDefaultUserAcct([]);
+  let boolResult = ChangeState.isUserNameInDefaultUserAcct({});
   expect(boolResult).toBe(false);
-  boolResult = ChangeState.isUserNameInDefaultUserAcct(userAccountsArray[0]);
+  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractDataArr[0]);
+  expect(boolResult).toBe(true);
+  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractDataArr[1]);
+  expect(boolResult).toBe(true);
+  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractDataArr[2]);
+  expect(boolResult).toBe(true);
+  //username is 'Create New'
+  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractDataArr[3]);
+  expect(boolResult).toBe(true);
+  //if data hasn't been cleaned up there is no username
+  //nb. using userAccountsFromContractArr here
+  boolResult = ChangeState.isUserNameInDefaultUserAcct(userAccountsFromContractArr[3]);
+  expect(boolResult).toBe(false);
+  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractDataArr[6]);
+  expect(boolResult).toBe(true);
+  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractDataArr[9]);
   expect(boolResult).toBe(true);
  });
 

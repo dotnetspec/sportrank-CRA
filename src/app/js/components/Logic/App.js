@@ -216,7 +216,7 @@ console.log('state', state)
           console.log('user data in the list', userdata)
           return userdata;
         }).then(function(resolvedUserData){
-                  return processStateAfter_loadCurrentUserAccounts(resolvedUserData);
+                  processStateAfter_loadCurrentUserAccounts(resolvedUserData);
               }).catch(function(error) {
                    console.log('error is:', error)
               }).then(function() {
