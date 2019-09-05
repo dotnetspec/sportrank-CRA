@@ -6,6 +6,7 @@
     "ajv": "^6.10.0",
     "async": "^3.0.0",
     "axios": "^0.18.0",
+    "big-number": "^2.0.0",
     "bootstrap": "^4.3.1",
     "browserslist": "^4.6.0",
     "chai": "^4.2.0",

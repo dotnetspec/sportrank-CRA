@@ -15,6 +15,7 @@ import web3ioMock  from '../../SideEffects/tests/__mocks__/web3io'
 import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, asyncFetch } from '../../SideEffects/io/Jsonio';
 import {fetchMock} from 'fetch-mock'
 import _loadCurrentUserAccounts from '../../SideEffects/io/web3io';
+import {userAccountsFromContractArr} from '../../../../../../cypress/fixtures/userAccountsFromContract'
 
 //NB: There are no 'props' at the <App /> level. Testing using props
 //has to take place in the child components
@@ -70,6 +71,18 @@ describe('<App/> ', () => {
             account: testAccountPlayer1Rinkeby,
             user: userObj
           }
+
+          fit('processStateAfter_loadCurrentUserAccounts', () => {
+            //if there's no user account array then state
+            //set to no existing user
+            let state = {};
+            const newState = App.processStateAfter_loadCurrentUserAccounts(state, userAccountsFromContractArr,userAccountsFromContractArr[0]);
+            expect(newState.userAccounts).toEqual([]);
+            expect(newState.rankingDefault).toEqual('');
+            expect(newState.isUserInJson).toBe(false);
+            expect(newState.isCurrentUserActive).toBe(false);
+            expect(newState.status).toEqual('There is no existing user');
+         });
 
 
           xit("App ETH bal basic render w/o data", async () => {

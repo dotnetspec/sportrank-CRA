@@ -21,6 +21,7 @@ import {
 } from '../SideEffects/io/web3io';
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
+import ChangeState from './ChangeState';
 
 /**
  * Functional component representing the highest order component. Any user
