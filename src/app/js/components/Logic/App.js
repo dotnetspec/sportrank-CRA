@@ -142,25 +142,27 @@ export function App({
   }
   //#endregion
 
-  const processStateAfter_loadCurrentUserAccounts = (state) => {
-console.log('state', state)
-    if (state) {
-      setuserAccounts(state);
-      //console.log('state[0].userAccount', state[0])
-      setAccount(state[0]);
-      setError(state[0].error);
-      setUser(state[0])
-      if (state[0].data !== undefined) {
-        setIsUserInJson(JSONops.isPlayerListedInJSON(state[0].data, state[0].username));
-        setIsCurrentUserActive(JSONops._getUserValue(state[0].data, state[0].username, "ACTIVE"));
+  const processStateAfter_loadCurrentUserAccounts = (userAcctArr) => {
+    console.log('userAcctArr before clean', userAcctArr)
+    userAcctArr = ChangeState.cleanUpUserSRAccountData(userAcctArr);
+    console.log('userAcctArr after clean', userAcctArr)
+    if (userAcctArr) {
+      setuserAccounts(userAcctArr);
+      //console.log('userAcctArr[0].userAccount', userAcctArr[0])
+      setAccount(userAcctArr[0]);
+      setError(userAcctArr[0].error);
+      setUser(userAcctArr[0])
+      if (userAcctArr[0].data !== undefined) {
+        setIsUserInJson(JSONops.isPlayerListedInJSON(userAcctArr[0].data, userAcctArr[0].username));
+        setIsCurrentUserActive(JSONops._getUserValue(userAcctArr[0].data, userAcctArr[0].username, "ACTIVE"));
       } else {
         setIsUserInJson(false);
       }
-      setnewrankId(state[0].newrankId);
-      setcontactno(state[0].contactno);
-      setemail(state[0].email);
-      setdescription(state[0].description);
-      setBalance(state[0].balance);
+      setnewrankId(userAcctArr[0].newrankId);
+      setcontactno(userAcctArr[0].contactno);
+      setemail(userAcctArr[0].email);
+      setdescription(userAcctArr[0].description);
+      setBalance(userAcctArr[0].balance);
       setviewingOnlyCB(true);
     } else {
       console.log('user undefined')
