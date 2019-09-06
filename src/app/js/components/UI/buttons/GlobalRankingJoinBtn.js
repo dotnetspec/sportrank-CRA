@@ -42,6 +42,7 @@ export default function GlobalRankingJoinBtn(props) {
       //props.setviewingOnlyCB(false);
       //if joining and not yet a member of the ranking home will add the new player to the bottom
       //of the rankings in the selected ladder
+
       props.history.push('/home/@' + props.username);
   }
 

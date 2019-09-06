@@ -125,7 +125,7 @@ class GlobalRankings extends Component {
 
         componentDidMount() {
           //if there's no user re-direct to create
-          if(this.props.user.username === ''){
+          if(this.props.user === ''){
             this.props.history.push('/create');
           }
         }

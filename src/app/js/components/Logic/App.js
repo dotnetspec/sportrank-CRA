@@ -35,6 +35,7 @@ export function App({
   props
 }) {
   const [user, setUser] = useState({});
+  const [userName, setUserName] = useState('');
   const [account, setAccount] = useState('');
   const [error, setError] = useState({});
   const [userAccounts, setuserAccounts] = useState([])
@@ -97,7 +98,10 @@ export function App({
   //cb from createuser.js to set the username
   //in time for getNewRankingID() to put it in the json
   const setuserNameCB = (name) => {
-    setUser(name);
+    setUserName(name);
+    //this was originally
+    //may need to account for this
+    //setUser(name);
   }
   const setcontactNoCB = (number) => {
     setcontactno(number);
@@ -149,9 +153,12 @@ export function App({
     if (userAcctArr) {
       setuserAccounts(userAcctArr);
       //console.log('userAcctArr[0].userAccount', userAcctArr[0])
+      //REVIEW: sort out this duplication
       setAccount(userAcctArr[0]);
-      setError(userAcctArr[0].error);
       setUser(userAcctArr[0])
+      setError(userAcctArr[0].error);
+      setUserName(userAcctArr[0].username);
+      console.log(userAcctArr[0])
       if (userAcctArr[0].data !== undefined) {
         setIsUserInJson(JSONops.isPlayerListedInJSON(userAcctArr[0].data, userAcctArr[0].username));
         setIsCurrentUserActive(JSONops._getUserValue(userAcctArr[0].data, userAcctArr[0].username, "ACTIVE"));
@@ -233,12 +240,16 @@ export function App({
   }, []); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
 
   if (!isLoading) {
+    console.log('userName', userName)
     return ( <
       div >
       <
       Header data-testid = 'header'
       user = {
         user
+      }
+      username = {
+        userName
       }
       account = {
         account
@@ -321,6 +332,9 @@ export function App({
       }
       setuserCB = {
         setuserCB
+      }
+      username = {
+        userName
       }
       setuserNameCB = {
         setuserNameCB

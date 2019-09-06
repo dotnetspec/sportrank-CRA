@@ -417,7 +417,7 @@ const { user } = this.props;
 //const isUserEmpty = _.isEmpty(user);
 //const isUserCreateUser = user;
 //console.log('user in header', user)
-    if(user.username === 'CreateUser')
+    if(user === 'CreateUser')
       {
         console.log('redirect to create with account no', this.props.account.address)
         //this.props.setAccountCB(this.props.account);
