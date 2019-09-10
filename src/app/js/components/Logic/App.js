@@ -235,6 +235,7 @@ export function App({
             return await functionWithPromiseToGetBal(item)
           }
           //wait for the async hash calls to resolve for all accounts
+          //and get the balances ...
           const getBalances = async () => {
             return await Promise.all(userdata.map(item => anAsyncFunctionToGetBal(item)))
           }
@@ -244,9 +245,9 @@ export function App({
           //formatted balances from here:
           userdata.map(addBalToUsers);
           function addBalToUsers(item, index){
-            let devAccountBalResult =  web3.utils.fromWei(balances[index], 'ether');
-            devAccountBalResult =  formatEth(devAccountBalResult, 3);
-            const newItem = item.balance = devAccountBalResult;
+            let balAsEth =  web3.utils.fromWei(balances[index], 'ether');
+            balAsEth =  formatEth(balAsEth, 3);
+            const newItem = item.balance = balAsEth;
             return newItem;
           }
           //originally appeared that would have to create a new array
