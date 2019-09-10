@@ -89,10 +89,11 @@ _continueClick = () => {
   }
 
   componentDidMount(){
-    if(this.props.user.username !== ''){
-      this.props.history.push('/');
-    }else{
+    console.log('create user componentDidMount')
+    if(this.props.username === 'Create New'){
       this.getNewRankId();
+    }else{
+      this.props.history.push('/');
     }
   }
   //TODO:add code to get from jsonbin.io

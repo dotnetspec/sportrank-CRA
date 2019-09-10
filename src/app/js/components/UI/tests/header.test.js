@@ -23,6 +23,7 @@ import {
 import 'jest-dom/extend-expect'
 import 'jest-dom'
 import '@testing-library/dom'
+import {user, userAccounts} from '../../../../../../cypress/fixtures/userAccounts'
 
 beforeEach(cleanup)
 
@@ -186,10 +187,11 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
         expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveAttribute("style", 'color: red;');
   });
 
+
   fit('RTL - isCurrentUserActive true', () => {
     const props  = {
-      userAccounts: userAccountsArray,
-      user: userOjb,
+      userAccounts: userAccounts,
+      username: user.username,
       account: testAccountPlayer1Rinkeby,
       specificRankingOptionBtns: true,
       isCurrentUserActive: true,

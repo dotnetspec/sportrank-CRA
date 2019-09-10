@@ -278,6 +278,9 @@ export function App({
       user = {
         user
       }
+      setuserCB = {
+        setuserCB
+      }
       username = {
         userName
       }

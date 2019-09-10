@@ -76,7 +76,6 @@ class Header extends Component {
    * Toggles the current account address tooltip
    */
   _handleToggle() {
-    //console.log('_handleToggle')
     this.setState({ showTooltip: !this.state.showTooltip });
   }
 
@@ -87,9 +86,7 @@ class Header extends Component {
    */
 
   _handleAcctChange(e) {
-    //console.log('account change')
     if (e.target.tagName !== 'A') e.target = e.target.parentElement;
-    console.log('e', e.target)
     //if there's an account owner address specified make it the new default account
     if (e.target.attributes.value.value) web3.eth.defaultAccount = e.target.attributes.value.value;
     //REVIEW: May need to re-implement this on acccount changes
@@ -102,38 +99,13 @@ class Header extends Component {
     }
 
     if(e.target.attributes.username.value === 'Create New'){
-      console.log('here ready to go to create new')
         this.props.setuserNameCB(e.target.attributes.username.value);
         this.props.history.push('/create');
       }
-      //update the text in the Home.js sibling warkingText
-      //updateWarningText('');
-      //this.props.history.push('/update/@' + e.target.attributes.username.value);
-    // else{
-    //   //update the text in the Home.js sibling warkingText
-    //   //updateWarningText('');
-    //   //create a new user
-    // this.props.history.push('/whoopsie');
-    // }
   }
-
-  // /**
-  //  * Formats an ethereum balance for display
-  //  * @param {*} balance to be formatted
-  //  */
-  // formatBalance(balance) {
-  //   //trim middle set to false - looks better
-  //   balance = formatEth(balance, 3)
-  //   return 'Ξ' + limitLength(
-  //     parseFloat(
-  //       balance
-  //     ).toFixed(4), 6, '', true
-  //   );
-  // }
 
   _handleReactivatePlayer(user) {
     try {
-      //console.log('in _handleReactivatePlayer', this.props.newrankId, this.props.rankingJSONdata, user, this.props.account)
       JSONops.reactivatePlayer(this.props.newrankId, this.props.rankingJSONdata, user, this.props.account);
       this.props.history.push('/home/@' + user);
     } catch (err) {
@@ -144,7 +116,6 @@ class Header extends Component {
 
   _handleCreateNewRanking(user) {
     try {
-    //JSONops.reactivatePlayer(this.props.rankingJSONdata, user, this.props.account);
       this.props.history.push('/newranking/@' + user);
     } catch (err) {
     // stop loading state and show the error
@@ -155,19 +126,9 @@ class Header extends Component {
   _handleRankingList(user) {
     try {
       //TODO: refactor?
-      //const {pathname} = this.props.location;
-      //console.log('pathname in _handleRankingList', pathname)
-          // if(JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, this.props.user.username)
-          //     ){
-      //     if(pathname.includes("/sportrank/")){
-      // //this.props.history.push('/userrankings/@' + user);
-      //       this.props.history.push('/sportrank/');
-      //     }else{
       //REVIEW: Better naming for setspecificRankingOptionBtnsCB
             this.props.onListAllChildClick();
             this.props.history.push('/');
-          //}
-      //this.props.history.push('/@' + this.state.username);
     } catch (err) {
     // stop loading state and show the error
     console.log(err.message);
@@ -175,13 +136,12 @@ class Header extends Component {
   }
 
   navHomeOrToUserUpdate(){
-    //console.log('navHomeOrToUserUpdate');
     //TODO: display SportRank Home in white without small tag
     if(this.props.username !== ''){
       return  <NavLink exact to="/"><small>Sportrank HOME</small><small>Decentralized Sport</small></NavLink>
     }else{
       //this can be dealt with via the 'CreateUser' code
-      //console.log('redirect to create with account no', this.props.account)
+
       //this.props.history.push('/create');
       return null;
       //TODO: sort this header info ...
@@ -240,7 +200,6 @@ class Header extends Component {
   }
 
   renderBasedOnUserExists(userAccount){
-    //console.log('renderBasedOnUserExists')
     const hasUser = Boolean(userAccount.username);
     return hasUser ?
       this.renderHasUserFragment(userAccount)
@@ -249,11 +208,7 @@ class Header extends Component {
   }
 
   renderAMenuItem(userAccount, index){
-    //console.log('userAccount, iindex', userAccount.userAccount.user, index)
-    //console.log('userAccount.user.username', userAccount.userAccount.user.username)
     const isCurrUser = userAccount.owner === this.props.account;
-    console.log('userAccount.username', userAccount.username);
-    console.log('userAccount.address', userAccount.owner);
     return(
         <MenuItem
         key={index}
@@ -272,11 +227,9 @@ class Header extends Component {
   }
 
   mapAndRenderUserAccounts(){
-    //console.log('mapAndRenderUserAccounts', this.props.userAccounts)
     // generate the DropdownItems for the accounts to populate
     // the accounts dropdown
   return this.props.userAccounts.map((userAccount, index) => {
-    //console.log('mapAndRenderUserAccounts', userAccount)
       return this.renderAMenuItem(userAccount, index);
     });
   }
@@ -338,7 +291,6 @@ class Header extends Component {
 
   handleRenderErrorOrCurrentEthBal(states){
     const isError = this.props.error && this.props.error.message;
-    //console.log('handleRenderErrorOrCurrentEthBal iserror?', isError);
     return isError ?
       states.isError
       :
@@ -347,7 +299,6 @@ class Header extends Component {
   }
 
   renderNavbarHeader(isLoading, states){
-    //console.log('renderNavbarHeader isLoading', isLoading);
     return(
       <Navbar.Header>
       <Navbar.Brand>
@@ -400,14 +351,12 @@ class Header extends Component {
   }
 
   handleDropDownIsLoadingOrRender(isLoading, isError, isEditable, states){
-    //console.log('in handleDropDownIsLoadingOrRender', isLoading)
     return(isLoading ? states.isLoading :
       this.handleRenderErrorOrDropDownCollapse(isError, isEditable, states)
     )
   }
 
   handleNavClasses(isError,isEditable){
-    //console.log('handleNavClasses')
     let navClasses = [];
     if (isError) navClasses.push('error');
     if (!isEditable) navClasses.push('logged-out');
@@ -415,52 +364,26 @@ class Header extends Component {
   }
 
 componentDidMount(){
-//console.log('header componentDidMount user', this.props.user)
-//determine if there's a user here so can use history.push if necessary
-const { user } = this.props;
-//const isUserEmpty = _.isEmpty(user);
-//const isUserCreateUser = user;
-//console.log('user in header', user)
-    if(user === 'CreateUser')
-      {
-        console.log('redirect to create with account no', this.props.account.address)
-        //this.props.setAccountCB(this.props.account);
-        this.props.history.push('/create')};
-}
+const { username } = this.props;
+if(username === 'CreateUser') this.props.history.push('/create')};
 
 displayActivationBtns(){
-  // const {pathname} = this.props.location;
-  //     if(pathname.includes("home/@")){
-  //console.log('in header isCurrentUserActive', this.props.isCurrentUserActive)
   //player may have created ranking without joining it ....
-  //const isPlayerListed = JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, this.props.user[1]);
   if(this.props.specificRankingOptionBtns && this.props.isUserInJson){
         return(
-          <PlayerStatusBtn isCurrentUserActive={this.props.isCurrentUserActive} data-cy='playerStatus' data-testid='playerStatus' {...this.props} newrankId={this.props.newrankId} username={this.props.user[1]} rankingJSONdata={this.props.rankingJSONdata} account={this.props.account}/>
+          <PlayerStatusBtn isCurrentUserActive={this.props.isCurrentUserActive} data-cy='playerStatus' data-testid='playerStatus' {...this.props} newrankId={this.props.newrankId} username={this.props.username} rankingJSONdata={this.props.rankingJSONdata} account={this.props.owner}/>
       )
     }else{ return null }
 }
   //#endregion
   //#region React lifecycle events
   render() {
-    //console.log('this.props.userAccounts', this.props.userAccounts);
-    //if(this.props.userAccounts[0] !== undefined){
     if(this.props.userAccounts){
-
           const isEditable = Boolean(this.props.username);
           const isError = this.props.error && this.props.error.message;
-          //console.log('this.props.account', this.props.account)
-          //console.log('this.props.error', this.props.error)
-          //console.log('this.props.error.message', this.props.error.message)
           const isLoading = !Boolean(this.props.account) && !isError;
-
-          //console.log('this.props.account', this.props.account)
-          //console.log('this.props.user.username', this.props.user.username)
-
           let navClasses = this.handleNavClasses(isError,isEditable);
-
           let states = this.determineStatesForDisplay();
-
       //This gets rendered to the DOM
           return (
             <Navbar collapseOnSelect className={navClasses.join(' ')}>
