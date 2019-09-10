@@ -13,15 +13,16 @@ import {
   getNewRankId,
   getDefaultRankingList
 } from '../SideEffects/io/Jsonio';
-import {
-  _loadExternalBalance
-  //,
-  // _mapCurrentUserAccounts,
-  // mapTheAccounts
-} from '../SideEffects/io/web3io';
+// import {
+//   _loadExternalBalance
+//   //,
+//   // _mapCurrentUserAccounts,
+//   // mapTheAccounts
+// } from '../SideEffects/io/web3io';
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
 import ChangeState from './ChangeState';
+import {formatEth} from '../../utils';
 
 /**
  * Functional component representing the highest order component. Any user
@@ -228,7 +229,6 @@ export function App({
 
           const functionWithPromiseToGetBal = item => { //a function that returns a promise
             return Promise.resolve(web3.eth.getBalance(item.owner));
-            //return Promise.resolve(_loadExternalBalance(item.owner));
           }
 
           const anAsyncFunctionToGetBal = async item => {
@@ -239,13 +239,20 @@ export function App({
             return await Promise.all(userdata.map(item => anAsyncFunctionToGetBal(item)))
           }
           const balances = await getBalances();
-          const usersWithBal = userdata.map(addBalToUsers);
+          //NB: the mapping here affects getUserData() I think because it
+          //finishes before getUserData and therefore that array already has
+          //formatted balances from here:
+          userdata.map(addBalToUsers);
           function addBalToUsers(item, index){
-            const newItem = item.balance = balances[index];
+            let devAccountBalResult =  web3.utils.fromWei(balances[index], 'ether');
+            devAccountBalResult =  formatEth(devAccountBalResult, 3);
+            const newItem = item.balance = devAccountBalResult;
             return newItem;
           }
-          console.log('usersWithBal', usersWithBal);
+          //originally appeared that would have to create a new array
+          //with the balances mapped ... but this was unnecessary ...
           return userdata;
+          //return usersWithBal;
         }).then(function(resolvedUserData){
                   processStateAfter_loadCurrentUserAccounts(resolvedUserData);
               }).catch(function(error) {
