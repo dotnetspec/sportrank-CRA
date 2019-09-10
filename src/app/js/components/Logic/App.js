@@ -180,7 +180,7 @@ export function App({
     setIsLoading(true);
     async function fetchData() {
       //from the Blockchain via web3io:
-      await _loadExternalBalance(_loadExternalBalance_callback);
+      //await _loadExternalBalance(_loadExternalBalance_callback);
 
       await getDefaultRankingList(rankingDefault, getDefaultRankingList_callback);
       async function getDefaultRankingList_callback(json) {
@@ -193,8 +193,9 @@ export function App({
             return expectingAResult;
         })
         .then(async function(accountsArray){
-
+          //based on: https://flaviocopes.com/javascript-async-await-array-map/
           //get the hashes by async
+          //each separate piece of async data needs these parts ...
           const functionWithPromise = item => { //a function that returns a promise
             return Promise.resolve(DSportRank.methods.owners(item).call())
           }
@@ -202,11 +203,12 @@ export function App({
           const anAsyncFunction = async item => {
             return await functionWithPromise(item)
           }
-
+          //wait for the async hash calls to resolve for all accounts
           const getData = async () => {
             return await Promise.all(accountsArray.map(item => anAsyncFunction(item)))
           }
           const data = await getData()
+          //each separate piece of async data needs these parts (above)  ...
 
           //use the hashes to get the user data from contract by async
           const functionGetUserDataWithPromise = item => { //a function that returns a promise
@@ -216,13 +218,30 @@ export function App({
           const anAsyncFunctionToGetUserData = async item => {
             return await functionGetUserDataWithPromise(item)
           }
-
+          //wait for the async hash calls to resolve for all users
           const getUserData = async () => {
             return await Promise.all(data.map(item => anAsyncFunctionToGetUserData(item)))
           }
 
           const userdata = await getUserData()
           console.log('user data in the list', userdata)
+
+          const functionWithPromiseToGetBal = item => { //a function that returns a promise
+            return Promise.resolve(web3.eth.getBalance(item.owner));
+          }
+
+          const anAsyncFunctionToGetBal = async item => {
+            return await functionWithPromiseToGetBal(item)
+          }
+          //wait for the async hash calls to resolve for all accounts
+          const getDataWithBal = async () => {
+            return await Promise.all(userdata.map(item => anAsyncFunctionToGetBal(item)))
+          }
+          const userdataWithBal = await getDataWithBal()
+
+          //var numbers = [4, 9, 16, 25];
+          //var userdataWithBalArr = userdata.map(item => web3.eth.getBalance('0xAC5491BB066c98fec13046928a78761c0B1E5603'));
+          console.log('userdataWithBal', userdataWithBal)
           return userdata;
         }).then(function(resolvedUserData){
                   processStateAfter_loadCurrentUserAccounts(resolvedUserData);
