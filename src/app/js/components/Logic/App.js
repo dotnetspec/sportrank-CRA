@@ -228,20 +228,23 @@ export function App({
 
           const functionWithPromiseToGetBal = item => { //a function that returns a promise
             return Promise.resolve(web3.eth.getBalance(item.owner));
+            //return Promise.resolve(_loadExternalBalance(item.owner));
           }
 
           const anAsyncFunctionToGetBal = async item => {
             return await functionWithPromiseToGetBal(item)
           }
           //wait for the async hash calls to resolve for all accounts
-          const getDataWithBal = async () => {
+          const getBalances = async () => {
             return await Promise.all(userdata.map(item => anAsyncFunctionToGetBal(item)))
           }
-          const userdataWithBal = await getDataWithBal()
-
-          //var numbers = [4, 9, 16, 25];
-          //var userdataWithBalArr = userdata.map(item => web3.eth.getBalance('0xAC5491BB066c98fec13046928a78761c0B1E5603'));
-          console.log('userdataWithBal', userdataWithBal)
+          const balances = await getBalances();
+          const usersWithBal = userdata.map(addBalToUsers);
+          function addBalToUsers(item, index){
+            const newItem = item.balance = balances[index];
+            return newItem;
+          }
+          console.log('usersWithBal', usersWithBal);
           return userdata;
         }).then(function(resolvedUserData){
                   processStateAfter_loadCurrentUserAccounts(resolvedUserData);

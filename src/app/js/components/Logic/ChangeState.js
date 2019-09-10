@@ -40,6 +40,7 @@ const ChangeState = {
           //REVIEW: ensure the creationDate is correct with userAcct[0]?
           //for now a placeholder
           newObj.creationDate = '12345678';
+          newObj.balance = userAcct.balance;
           newObj.owner = userAcct[5];
           newObj.picture = userAcct[6];
           newObj.rankingDefault = userAcct[7];
@@ -49,6 +50,7 @@ const ChangeState = {
           newObj.description =  userAcct.description;
       }else{
           newObj.creationDate = '12345678';
+          newObj.balance = 0.0;
           newObj.owner = '';
           newObj.picture = '';
           newObj.rankingDefault = '';
