@@ -13,12 +13,12 @@ import {
   getNewRankId,
   getDefaultRankingList
 } from '../SideEffects/io/Jsonio';
-// import {
-//   _loadExternalBalance
-//   //,
-//   // _mapCurrentUserAccounts,
-//   // mapTheAccounts
-// } from '../SideEffects/io/web3io';
+import {
+  _loadExternalBalance
+  //,
+  // _mapCurrentUserAccounts,
+  // mapTheAccounts
+} from '../SideEffects/io/web3io';
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
 import ChangeState from './ChangeState';
@@ -181,7 +181,7 @@ export function App({
     setIsLoading(true);
     async function fetchData() {
       //from the Blockchain via web3io:
-      //await _loadExternalBalance(_loadExternalBalance_callback);
+      await _loadExternalBalance(_loadExternalBalance_callback);
 
       await getDefaultRankingList(rankingDefault, getDefaultRankingList_callback);
       async function getDefaultRankingList_callback(json) {
@@ -280,6 +280,9 @@ export function App({
       }
       username = {
         userName
+      }
+      setuserNameCB = {
+        setuserNameCB
       }
       account = {
         account

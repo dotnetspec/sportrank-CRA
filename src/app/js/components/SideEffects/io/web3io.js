@@ -7,14 +7,14 @@ import { formatEth
     //REVIEW: below based on
     //https://medium.com/@bluepnume/learn-about-promises-before-you-start-using-async-await-eb148164a9c8
     //to a (small) degree - anyway it's a useful reference
-        export async function _loadExternalBalance(address){
+        export async function _loadExternalBalance(_loadExternalBalance_callback){
         //try/catch was interferring with the test!
-          await web3.eth.getBalance(address)
+          await web3.eth.getBalance("0xAC5491BB066c98fec13046928a78761c0B1E5603")
           .then(devAccountBalResult => {
             devAccountBalResult = web3.utils.fromWei(devAccountBalResult, 'ether');
             devAccountBalResult =  formatEth(devAccountBalResult, 3);
-            return devAccountBalResult;
-            //_loadExternalBalance_callback(devAccountBalResult);
+            //return devAccountBalResult;
+            _loadExternalBalance_callback(devAccountBalResult);
           })
       }
   /**

@@ -89,29 +89,32 @@ class Header extends Component {
   _handleAcctChange(e) {
     //console.log('account change')
     if (e.target.tagName !== 'A') e.target = e.target.parentElement;
-    web3.eth.defaultAccount = e.target.attributes.value.value;
-    this.props.onAfterUserUpdate();
-    if (e.target.attributes.username.value && JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, e.target.attributes.username.value)) {
-
-      //update the text in the Home.js sibling warkingText
-      //updateWarningText('');
-      //this used to be:
-      //this.props.history.push('/update/@' + e.target.attributes.username.value);
+    console.log('e', e.target)
+    //if there's an account owner address specified make it the new default account
+    if (e.target.attributes.value.value) web3.eth.defaultAccount = e.target.attributes.value.value;
+    //REVIEW: May need to re-implement this on acccount changes
+    //this.props.onAfterUserUpdate();
+    if (e.target.attributes.username.value !== 'Create New')
+    //&& JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, e.target.attributes.username.value))
+    {
       //if there's already a username just return to home page
       this.props.history.push('/');
     }
-    //REVIEW: Nothing happening here ...
-    else if (e.target.attributes.username.value){
+
+    if(e.target.attributes.username.value === 'Create New'){
+      console.log('here ready to go to create new')
+        this.props.setuserNameCB(e.target.attributes.username.value);
+        this.props.history.push('/create');
+      }
       //update the text in the Home.js sibling warkingText
       //updateWarningText('');
       //this.props.history.push('/update/@' + e.target.attributes.username.value);
-    }
-    else{
-      //update the text in the Home.js sibling warkingText
-      //updateWarningText('');
-      //create a new user
-      this.props.history.push('/create');
-    }
+    // else{
+    //   //update the text in the Home.js sibling warkingText
+    //   //updateWarningText('');
+    //   //create a new user
+    // this.props.history.push('/whoopsie');
+    // }
   }
 
   // /**
@@ -248,14 +251,15 @@ class Header extends Component {
   renderAMenuItem(userAccount, index){
     //console.log('userAccount, iindex', userAccount.userAccount.user, index)
     //console.log('userAccount.user.username', userAccount.userAccount.user.username)
-    const isCurrUser = userAccount.address === this.props.account;
+    const isCurrUser = userAccount.owner === this.props.account;
     console.log('userAccount.username', userAccount.username);
+    console.log('userAccount.address', userAccount.owner);
     return(
         <MenuItem
         key={index}
         eventKey={index}
         active={isCurrUser}
-        value={userAccount.address}
+        value={userAccount.owner}
         username={userAccount.username}
         onSelect={(key, e) => this._handleAcctChange(e, key)}
       >
