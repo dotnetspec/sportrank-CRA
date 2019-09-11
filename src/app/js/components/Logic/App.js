@@ -271,7 +271,6 @@ export function App({
   }, []); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
 
   if (!isLoading) {
-    console.log('userName', userName)
     return ( <
       div >
       <

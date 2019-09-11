@@ -2,7 +2,7 @@ import 'jest-dom/extend-expect'
 import ChangeState from '../../Logic/ChangeState'
 import {userAccountsArray} from '../../../../../../cypress/fixtures/userAccounts'
 import {userAccountsFromContractArr} from '../../../../../../cypress/fixtures/userAccountsFromContract'
-import {cleanedUpSRContractDataArr} from '../../../../../../cypress/fixtures/cleanedUpSRContractData'
+import {cleanedUpSRContractData} from '../../../../../../cypress/fixtures/cleanedUpSRContractData'
 
 //cleanup();
 // // User Account data:
@@ -25,22 +25,22 @@ it('doesUsernameExistInUserAccounts',  () => {
   //const state = {};
   let boolResult = ChangeState.isUserNameInDefaultUserAcct({});
   expect(boolResult).toBe(false);
-  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractDataArr[0]);
+  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractData[0]);
   expect(boolResult).toBe(true);
-  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractDataArr[1]);
+  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractData[1]);
   expect(boolResult).toBe(true);
-  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractDataArr[2]);
+  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractData[2]);
   expect(boolResult).toBe(true);
   //username is 'Create New'
-  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractDataArr[3]);
+  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractData[3]);
   expect(boolResult).toBe(true);
   //if data hasn't been cleaned up there is no username
   //nb. using userAccountsFromContractArr here
   boolResult = ChangeState.isUserNameInDefaultUserAcct(userAccountsFromContractArr[3]);
   expect(boolResult).toBe(false);
-  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractDataArr[6]);
+  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractData[6]);
   expect(boolResult).toBe(true);
-  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractDataArr[9]);
+  boolResult = ChangeState.isUserNameInDefaultUserAcct(cleanedUpSRContractData[9]);
   expect(boolResult).toBe(true);
  });
 

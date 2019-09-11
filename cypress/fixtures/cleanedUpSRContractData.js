@@ -1,4 +1,4 @@
-export const cleanedUpSRContractDataArr =
+export const cleanedUpSRContractData =
 [     { creationDate: '12345678',
         owner: '0x48DF2ee04DFE67902B83a670281232867e5dC0Ca',
         picture: 'Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL',

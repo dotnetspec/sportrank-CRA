@@ -217,6 +217,7 @@ class Header extends Component {
         value={userAccount.owner}
         username={userAccount.username}
         onSelect={(key, e) => this._handleAcctChange(e, key)}
+        data-testid={'menuitem' + index}
       >
         {this.renderBasedOnUserExists(userAccount)}
         <React.Fragment>
