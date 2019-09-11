@@ -97,8 +97,8 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
       //do the tests
        it('RTL - check initial display', () => {
          const props  = {
-           userAccounts: userAccountsArray,
-           user: userOjb,
+           userAccounts: userAccounts,
+           username: user.username,
            account: testAccountPlayer1Rinkeby
          }
              const { getByText } = renderWithRouter(<Header {...props}/>);
@@ -107,14 +107,37 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
              expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument();
       });
 
-      it('Account dropdown display', () => {
+      fit('Profile link display', () => {
 
         const props  = {
-          userAccounts: userAccountsArray,
-          user: userOjb,
+          userAccounts: userAccounts,
+          username: user.username,
           account: testAccountPlayer1Rinkeby,
           onAfterUserUpdate: (e) => dummyFunction(),
-          rankingJSONdata: rankingJSONdata
+          rankingJSONdata: rankingJSONdata,
+          balance: 4.0
+        }
+            const { debug, getByRole, getByTestId } = renderWithRouter(<Header {...props}/>);
+
+            //fireEvent.click(getByTestId('usernameinprofilelink'));
+            //const dialogContainer = getByRole('menuitem')
+            //debug();
+            //the querySelector (span) has to be nested within the dialogContainer
+            //expect(dialogContainer.querySelector('span').innerHTML).toBe('player1')
+            expect(document.querySelector('[data-testid="usernameinprofilelink"]')).toBeInTheDocument();
+            expect(document.querySelector('[data-testid="balinprofilelink"]')).toBeInTheDocument();
+
+     });
+
+      xit('Account dropdown display', () => {
+
+        const props  = {
+          userAccounts: userAccounts,
+          username: user.username,
+          account: testAccountPlayer1Rinkeby,
+          onAfterUserUpdate: (e) => dummyFunction(),
+          rankingJSONdata: rankingJSONdata,
+          balance: 4.0
         }
             const { debug, getByRole, getByTestId } = renderWithRouter(<Header {...props}/>);
 

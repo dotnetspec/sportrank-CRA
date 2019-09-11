@@ -37,7 +37,7 @@ export function App({
 }) {
   const [user, setUser] = useState({});
   const [userName, setUserName] = useState('');
-  const [account, setAccount] = useState('');
+  const [account, setAccount] = useState({});
   const [error, setError] = useState({});
   const [userAccounts, setuserAccounts] = useState([])
   const [balance, setBalance] = useState(0)
@@ -256,6 +256,7 @@ export function App({
           //return usersWithBal;
         }).then(function(resolvedUserData){
                   processStateAfter_loadCurrentUserAccounts(resolvedUserData);
+                  setIsLoading(false);
               }).catch(function(error) {
                    console.log('error is:', error)
               }).then(function() {

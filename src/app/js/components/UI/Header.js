@@ -194,7 +194,7 @@ class Header extends Component {
 
   renderNoUserFragment(userAccount){
       return(<React.Fragment>
-        <span className='address'>{limitAddressLength(userAccount.address, 4)}</span>
+        <span className='address'>{limitAddressLength(userAccount.owner, 4)}</span>
       </React.Fragment>
     )
   }
@@ -245,9 +245,10 @@ class Header extends Component {
             circle
             className='profile'
           ></Image>
-          <span className='username' data-cy='usernameinprofilelink'>{username}</span>
+          <span className='username' data-cy='usernameinprofilelink' data-testid='usernameinprofilelink'>{username}</span>
         </span>
-        <small className='balance'>{formatBalance(this.props.balance)}</small>
+        <small className='balance' data-testid="balinprofilelink"
+        >{formatBalance(this.props.balance)}</small>
       </React.Fragment>
     )
   }
