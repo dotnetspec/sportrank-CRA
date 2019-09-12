@@ -1,65 +1,43 @@
 import React from 'react'
-//import { BrowserRouter } from 'react-router-dom'
-//import sinon from 'sinon'
-//import { stub, sinon } from 'sinon';
-//import App from '../../Logic/App'
-//import GlobalRankings from '../../Logic/GlobalRankings'
-//import chai from 'chai'
-//import GlobalRankingViewBtn  from '../buttons/GlobalRankingViewBtn'
-import PlayerStatusBtn from '../buttons/PlayerStatusBtn';
 import {renderWithRouter} from '../../../utils'
-
 import Header  from '../Header'
-import renderer from 'react-test-renderer'
-//import { shallow, mount } from 'enzyme';
-//import icon from './img/ross.png'
+
 import {
-  render,
-  fireEvent,
+  //render,
+  //fireEvent,
   cleanup,
-  waitForElement,
-  debug
+//waitForElement,
+  //debug
 } from '@testing-library/react'
 import 'jest-dom/extend-expect'
 import 'jest-dom'
 import '@testing-library/dom'
-import {user, userAccounts} from '../../../../../../cypress/fixtures/userAccounts'
-import {specificrankingdata} from '../../../../../../cypress/fixtures/specificrankingdata'
-import {cleanedUpSRContractData} from '../../../../../../cypress/fixtures/cleanedUpSRContractData'
-
-
+import {specificrankingdata} from '../../../../../../test-fixtures/jsonbin/specificrankingdata'
+import {cleanedUpSRContractData} from '../../../../../../test-fixtures/jsonbin/cleanedUpSRContractData'
 
 beforeEach(cleanup)
 //ensure descrbe blocks don't overlap
 describe('Header UI', () => {
-
 //setup the user account info passed from app
-
 const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
 
-//currently the app refers to a userAccount and a user so tests
-//setup for both
-//need these setup vars to be within one descrbe block
+//for the functions that get sent in props
+function dummyFunction(){
+        return null;
+      }
+function setuserNameCB (){
+        return null;
+      }
 
-          //for the functions that get sent in props
-          function dummyFunction(){
-                  return null;
-                }
-
-          //mock json:
-          // const rankingJSONdata =
-          // [
-          //       {"DATESTAMP":1545369526439,"ACTIVE":true,"DESCRIPTION":"alskdfjalj","CURRENTCHALLENGERNAME":"AVAILABLE","CURRENTCHALLENGERID":6,"ACCOUNT":"0xa864Ea9d142C0997572aD7a2077A67a30a853cc0","RANK":2,"EMAIL":"laskdfjlfj","CONTACTNO":"laskdfjlajf","NAME":"player1","id":1},
-          // ]
-
-          const props  = {
-            userAccounts: cleanedUpSRContractData,
-            username: user.username,
-            account: testAccountPlayer1Rinkeby,
-            onAfterUserUpdate: (e) => dummyFunction(),
-            rankingJSONdata: specificrankingdata,
-            balance: 4.0
-          }
+const props  = {
+  userAccounts: cleanedUpSRContractData,
+  username: cleanedUpSRContractData[0].username,
+  account: testAccountPlayer1Rinkeby,
+  onAfterUserUpdate: (e) => dummyFunction(),
+  rankingJSONdata: specificrankingdata,
+  balance: 4.0,
+  setuserNameCB: (e) => setuserNameCB()
+}
       //do the tests
     it('RTL - check initial display', () => {
              const { getByText } = renderWithRouter(<Header {...props}/>);
@@ -69,7 +47,7 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
       });
 
     it('Profile link display', () => {
-            const { debug, getByRole, getByTestId } = renderWithRouter(<Header {...props}/>);
+            renderWithRouter(<Header {...props}/>);
             expect(document.querySelector('[data-testid="usernameinprofilelink"]')).toBeInTheDocument();
             expect(document.querySelector('[data-testid="balinprofilelink"]')).toBeInTheDocument();
      });
@@ -84,22 +62,15 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
             expect(dialogContainer2.querySelector('span').innerHTML).toBe('GanacheAcct2')
      });
 
-     xit('Account dropdown on click Create New display', () => {
-
-           const { debug, getByRole, getByTestId } = renderWithRouter(<Header {...props}/>);
-
-           fireEvent.click(getByTestId("menuitem0"));
-           // const dialogContainer = getByRole('menuitem0')
-
-    });
-
-    xit('specificRankingOptionBtns - true displays', () => {
+    //NB: props need to be specific to these tests
+    it('specificRankingOptionBtns - true displays', () => {
       const props  = {
-        userAccounts: userAccounts,
-        username: user.username,
+        userAccounts: cleanedUpSRContractData,
+        username: cleanedUpSRContractData[0].username,
         account: testAccountPlayer1Rinkeby,
         specificRankingOptionBtns: true,
-        isCurrentUserActive: true
+        isCurrentUserActive: true,
+        isUserInJson: true
       }
           const { getByText } = renderWithRouter(<Header {...props}/>);
           expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
@@ -108,14 +79,14 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
           expect(getByText(/List All Rankings/i)).toBeInTheDocument()
     });
 
-
-    xit('specificRankingOptionBtns - false does not display', () => {
+    it('specificRankingOptionBtns - false does not display', () => {
       const props  = {
-        userAccounts: userAccounts,
-        usernameinprofile: user.username,
+        userAccounts: cleanedUpSRContractData,
+        username: cleanedUpSRContractData[0].username,
         account: testAccountPlayer1Rinkeby,
         specificRankingOptionBtns: false,
-        isCurrentUserActive: true
+        isCurrentUserActive: true,
+        isUserInJson: true
       }
           const { getByText } = renderWithRouter(<Header {...props}/>);
           expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument();
@@ -123,43 +94,25 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
           expect(getByText(/List All Rankings/i)).toBeInTheDocument()
     });
 
-  xit('RTL - isCurrentUserActive false - Display Re-Activate', () => {
+  it('RTL - isCurrentUserActive false - Display Re-Activate', () => {
     const props  = {
-      userAccounts: userAccounts,
-      username: user.username,
+      userAccounts: cleanedUpSRContractData,
+      username: cleanedUpSRContractData[0].username,
       account: testAccountPlayer1Rinkeby,
       specificRankingOptionBtns: true,
-      isCurrentUserActive: false
+      isCurrentUserActive: false,
+      isUserInJson: true
     }
         renderWithRouter(<Header {...props}/>);
-        //const { debug } = renderWithRouter(<Header {...props}/>);
-        //debug();
         expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
         expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/Re-Activate?/i)
         expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveAttribute("style", 'color: green;');
   });
 
-  xit('RTL - isCurrentUserActive true - Display De-Activate', () => {
+  it('RTL - isCurrentUserActive true - Display De-Activate', () => {
     const props  = {
-      userAccounts: userAccounts,
-      username: user.username,
-      account: testAccountPlayer1Rinkeby,
-      specificRankingOptionBtns: true,
-      isCurrentUserActive: true
-    }
-        renderWithRouter(<Header {...props}/>);
-        //const { debug } = renderWithRouter(<Header {...props}/>);
-        //debug();
-        expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
-        expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/De-Activate?/i)
-        expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveAttribute("style", 'color: red;');
-  });
-
-
-  xit('RTL - isCurrentUserActive true', () => {
-    const props  = {
-      userAccounts: userAccounts,
-      username: user.username,
+      userAccounts: cleanedUpSRContractData,
+      username: cleanedUpSRContractData[0].username,
       account: testAccountPlayer1Rinkeby,
       specificRankingOptionBtns: true,
       isCurrentUserActive: true,
@@ -169,5 +122,18 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
         expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
         expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/De-Activate?/i)
         expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveAttribute("style", 'color: red;');
+  });
+
+  it('RTL - isCurrentUserActive true, isUserInJson: false', () => {
+    const props  = {
+      userAccounts: cleanedUpSRContractData,
+      username: cleanedUpSRContractData[0].username,
+      account: testAccountPlayer1Rinkeby,
+      specificRankingOptionBtns: true,
+      isCurrentUserActive: true,
+      isUserInJson: false
+    }
+        renderWithRouter(<Header {...props}/>);
+        expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument();
   });
 });

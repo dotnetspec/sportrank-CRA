@@ -15,6 +15,8 @@ import web3ioMock  from '../../SideEffects/tests/__mocks__/web3io'
 import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, asyncFetch } from '../../SideEffects/io/Jsonio';
 import {fetchMock} from 'fetch-mock'
 import _loadCurrentUserAccounts from '../../SideEffects/io/web3io';
+import {specificrankingdata} from '../../../../../../test-fixtures/jsonbin/specificrankingdata'
+import {cleanedUpSRContractData} from '../../../../../../test-fixtures/jsonbin/cleanedUpSRContractData'
 
 
 //NB: There are no 'props' at the <App /> level. Testing using props
@@ -40,6 +42,10 @@ describe('<App/> ', () => {
   const onAfterUserUpdate = jest.fn();
   const newrankId = jest.fn();
   const viewingOnlyCB = jest.fn();
+
+  //another way of adding property functions
+  function setuserNameCB (){return null;}
+  function dummyFunction(){return null;}
 
   const userAccountsArray =
    [
@@ -71,6 +77,25 @@ describe('<App/> ', () => {
             account: testAccountPlayer1Rinkeby,
             user: userObj
           }
+
+          xit('Account dropdown on click Create New display', async () => {
+            const props  = {
+              userAccounts: cleanedUpSRContractData,
+              username: cleanedUpSRContractData[0].username,
+              account: testAccountPlayer1Rinkeby,
+              onAfterUserUpdate: (e) => dummyFunction(),
+              rankingJSONdata: specificrankingdata,
+              balance: 4.0,
+              setuserNameCB: (e) => setuserNameCB()
+            }
+
+                const { debug, getByText, getByTestId } = renderWithRouter(<App {...props}/>);
+                //give the menu time to load
+                await wait(() =>  getByTestId("menuitem3"));
+                fireEvent.click(getByTestId("menuitem3"));
+                //await wait(() => expect(getByText(/Create An Account Name/i)).toBeInTheDocument());
+                expect(getByText(/Create An Account Name/i)).toBeInTheDocument();
+         });
 
 
           xit("App ETH bal basic render w/o data", async () => {

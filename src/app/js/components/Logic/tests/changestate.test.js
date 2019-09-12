@@ -2,7 +2,7 @@ import 'jest-dom/extend-expect'
 import ChangeState from '../../Logic/ChangeState'
 import {userAccountsArray} from '../../../../../../cypress/fixtures/userAccounts'
 import {userAccountsFromContractArr} from '../../../../../../cypress/fixtures/userAccountsFromContract'
-import {cleanedUpSRContractData} from '../../../../../../cypress/fixtures/cleanedUpSRContractData'
+import {cleanedUpSRContractData} from '../../../../../../test-fixtures/jsonbin/cleanedUpSRContractData'
 
 //cleanup();
 // // User Account data:

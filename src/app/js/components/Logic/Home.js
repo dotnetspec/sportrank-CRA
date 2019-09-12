@@ -238,54 +238,12 @@ const selectRowPropAfterClickRow = {
           }
         }
 
-        // const preprocessDataBeforeRender = () => {
-        //   //if there is a username but it's not listed in the json,
-        //   //add this user to the current list
-        //   //REVIEW: This test may be more consistently handled
-        //   if (props.user.username !== '' &&
-        //     !JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.user.username) &&
-        //     props.loadingJSON === false &&
-        //     props.viewingOnlyCB === false
-        //     //props.setviewingOnlyCB(false)
-        //   ) {
-        //     console.log('createNewUserInJSON in preprocessDataBeforeRender in home.js')
-        //     console.log('props.rankingID in preprocessDataBeforeRender in home.js', props.newrankId)
-        //     const newUserJsonObj = JSONops.createNewUserInJSON(props.rankingJSONdata, props.user.username, props.contactno, props.email, props.account, props.description, props.newrankId);
-        //     //_sendJSONDataWithRankingID(newUserJsonObj, props.newrankId);
-        //     console.log('newUserJsonObj', newUserJsonObj);
-        //     return newUserJsonObj.jsonRS;
-        //     //console.log('player created')
-        //   }
-        //
-        //   if (props.isRankingIDInvalid) {
-        //     props.history.push('/create');
-        //   }
-        //
-        //   if (JSONops.isJSONEmpty(props.rankingJSONdata) && props.user.username === null) {
-        //
-        //     console.log('json is empty and there is no username');
-        //     props.history.push('/create');
-        //     return null;
-        //     //(<div>No Data To Display - Please select an account (top right) to create a player</div>);
-        //   }
-        //   //if the player isn't listed in the json then add them (only if user clicked 'join')
-        //   if (!JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.user.username) &&
-        //     props.viewingOnlyCB === false) {
-        //       console.log('preprocessDataBeforeRender player not listed, join clicked')
-        //     //originalData, username, contactno, email, accountno, description, rankingID)
-        //     const newUserJsonObj = JSONops.createNewUserInJSON(props.rankingJSONdata, props.user.username, props.contactno, props.email, props.account, props.description, props.newrankId)
-        //     console.log('newUserJsonObj.jsonRS', newUserJsonObj.jsonRS)
-        //     return newUserJsonObj.jsonRS;
-        //     //_sendJSONDataWithRankingID(newUserJsonObj, props.newrankId);
-        //   }
-        // }
-
         const bootstrapTableDisplay = () => {
           //if the json is empty and no account re-direct to create user
           //console.log('props.rankingJSONdata', props.rankingJSONdata)
           //REVIEW: this should only occur after an Embark re-set and there's no
           //inital account or data - there may be a better way to test for this
-
+          //console.log('rankingJSONdata', props.rankingJSONdata)
           if (JSONops.isJSONEmpty(props.rankingJSONdata) && props.user.username === null) {
 
             console.log('json is empty and there is no username');
@@ -387,7 +345,7 @@ const selectRowPropAfterClickRow = {
 
       useEffect(() => {
         if(props.rankingJSONdata === undefined){
-          //refresh if the cb from join btn doesn't update the prop in time 
+          //refresh if the cb from join btn doesn't update the prop in time
           props.onAfterUserUpdate();
         }
            //set to viewingOnly and re-render

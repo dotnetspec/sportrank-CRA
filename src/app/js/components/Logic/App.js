@@ -126,9 +126,9 @@ export function App({
   const setrankingJSONdataCB = (datatoSet) => {
     setdata(datatoSet);
     setisLoadingJSON(false);
-    setIsUserInJson(JSONops.isPlayerListedInJSON(data, user.username));
-    setrank(JSONops._getUserValue(data, user.username, "RANK"));
-    setIsCurrentUserActive(JSONops._getUserValue(data, user.username, "ACTIVE"));
+    setIsUserInJson(JSONops.isPlayerListedInJSON(data, userName));
+    setrank(JSONops._getUserValue(data, userName, "RANK"));
+    setIsCurrentUserActive(JSONops._getUserValue(data, userName, "ACTIVE"));
   }
   //#endregion
   //#region Helper methods

@@ -12,7 +12,7 @@ import axiosMock  from 'axios'
 import {fetchMock} from 'fetch-mock'
 import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, asyncFetch } from '../../SideEffects/io/Jsonio';
 
-import {specificrankingdata} from '../../../../../../cypress/fixtures/specificrankingdata'
+import {specificrankingdata} from '../../../../../../test-fixtures/jsonbin/specificrankingdata'
 //import { MemoryRouter as Router } from 'react-router-dom';
 // import {
 //   // Tip: all queries are also exposed on an object
