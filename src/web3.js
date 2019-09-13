@@ -1,4 +1,20 @@
 import Web3 from 'web3';
+
+var web3 = new Web3(window.ethereum);
+
+// if (typeof window.ethereum !== 'undefined'
+// || (typeof window.web3 !== 'undefined')) {
+//   console.log('typeof window.ethereum', typeof window.ethereum)
+//   console.log('typeof window.web3', typeof window.web3)
+//   // Web3 browser user detected. You can now use the provider.
+//   const provider = window['ethereum'] || window.web3.currentProvider
+//   web3 = provider;
+//   console.log('web 3 is ', web3)
+// }
+//   console.log('web 3 is now', web3.selectedAddress)
+
+
+
 //import React from 'React';
 //import ganache from 'ganache-cli'
 // use the given Provider, e.g in the browser with Metamask,
@@ -19,7 +35,7 @@ import Web3 from 'web3';
 // const web3 = new Web3(provider, null, OPTIONS);
 
 //const web3 = new Web3(Web3.givenProvider);
-var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+//var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
 
 // async function init() {
 //   if (typeof web3 !== 'undefined') {
@@ -36,30 +52,38 @@ var web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
 // init();
 
 window.addEventListener('load', async () => {
-    // Modern dapp browsers...
-    if (window.ethereum) {
-        window.web3 = new Web3(window.ethereum);
-        try {
-            // Request account access if needed
-            await window.ethereum.enable();
-              //console.log('web3.eth.defaultAccount',  web3.eth.defaultAccount);
-            // Acccounts now exposed
-            //web3.eth.sendTransaction({/* ... */});
-        } catch (error) {
-            // User denied account access...
-        }
-    }
-    // Legacy dapp browsers...
-    else if (window.web3) {
-        window.web3 = new Web3(web3.currentProvider);
-        // Acccounts always exposed
-        //web3.eth.sendTransaction({/* ... */});
-    }
-    // Non-dapp browsers...
-    else {
-        console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
-    }
+  // Modern dapp browsers...
+      if (window.ethereum) {
+          window.web3 = new Web3(window.ethereum);
+          try {
+              // Request account access if needed
+              console.log('here')
+              web3 = await window.ethereum.enable();
+              // Acccounts now exposed
+              //web3.eth.sendTransaction({/* ... */});
+              //const bal = await window.web3.eth.getBalance('0xAC5491BB066c98fec13046928a78761c0B1E5603')
+              //web3 = window.web3;
+              const bal = await window.web3.eth.getBalance("0x283C2d3800151F1E3db1F2C32c37e296b9db0834")
+              console.log('bal', bal)
+          } catch (error) {
+              // User denied account access...
+          }
+      }
+      // Legacy dapp browsers...
+      else if (window.web3) {
+          window.web3 = new Web3(web3.currentProvider);
+          // Acccounts always exposed
+          //web3.eth.sendTransaction({/* ... */});
+          const bal = web3.eth.getBalance("0xAC5491BB066c98fec13046928a78761c0B1E5603")
+          console.log('bal', bal)
+      }
+      // Non-dapp browsers...
+      else {
+          console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+      }
 });
+
+export default web3;
 
 
 // async function getAccts(){
@@ -72,7 +96,7 @@ window.addEventListener('load', async () => {
 //     }
 //getAccts();
 
-export default web3;
+
 
 //going through the MM docs:
 //window = browser. brower must be running ...
