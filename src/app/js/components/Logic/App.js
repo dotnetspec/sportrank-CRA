@@ -265,6 +265,10 @@ export function App({
               });
             }
         await mapTheAccounts();
+        window.ethereum.on('accountsChanged', async function () {
+          // Time to reload your interface with accounts[0]!
+          await mapTheAccounts();
+        })
 
         setIsLoading(false);
     }
