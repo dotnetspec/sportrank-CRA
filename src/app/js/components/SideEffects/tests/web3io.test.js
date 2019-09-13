@@ -42,6 +42,8 @@ const userAccountsArray = [{
 
 //Rinkeby:
 //const address = '0x847700B781667abdD98E1393420754E503dca5b7';
+//ganache-noisy-mother account 0 - named testUser1 in MM
+const addressNM0 = '0x48DF2ee04DFE67902B83a670281232867e5dC0Ca';
 //ganache-noisy-mother account 7
 const address = '0x18237903Ec722aF500Ad944A9209aF5fc4136279';
 
@@ -216,8 +218,13 @@ describe('_loadCurrentUserAccounts in app.js inside mapping should get account d
 //     200 |             //return userAccount.address === web3.eth.getAccounts(accounts => console.log(accounts[0]));
 //     201 |           });
 
-xit('test getWeb3defaultAccount', () => {
-   expect(web3defaultAccount.getWeb3defaultAccount()).toBe('undefined');  // Success!
+xit('test getWeb3defaultAccount', async () => {
+   //;  // Success!
+   //
+   //await wait(() => getDefaultUserAccountFromAddress(userAccountsArray, getDefaultUserAccountFromAddress_callback));
+   await wait(() => expect(web3defaultAccount.getWeb3defaultAccount()).toBe(addressNM0));
+
+
  });
 
 //it('test funcA', () => {

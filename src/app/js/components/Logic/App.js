@@ -148,6 +148,7 @@ export function App({
   //#endregion
 
   const processStateAfter_loadCurrentUserAccounts = (userAcctArr) => {
+    console.log('selectedAddress', web3.givenProvider.selectedAddress)
     console.log('userAcctArr before clean', userAcctArr)
     userAcctArr = ChangeState.cleanUpUserSRAccountData(userAcctArr);
     console.log('userAcctArr after clean', userAcctArr)
