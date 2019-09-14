@@ -12,7 +12,7 @@ import {
 import 'jest-dom/extend-expect'
 import 'jest-dom'
 import '@testing-library/dom'
-import {specificrankingdata} from '../../../../../../test-fixtures/jsonbin/specificrankingdata'
+import {specificRankingData} from '../../../../../../test-fixtures/jsonbin/specificRankingData'
 import {cleanedUpSRContractData} from '../../../../../../test-fixtures/jsonbin/cleanedUpSRContractData'
 
 beforeEach(cleanup)
@@ -34,7 +34,7 @@ const props  = {
   username: cleanedUpSRContractData[0].username,
   account: testAccountPlayer1Rinkeby,
   onAfterUserUpdate: (e) => dummyFunction(),
-  rankingJSONdata: specificrankingdata,
+  rankingJSONdata: specificRankingData,
   balance: 4.0,
   setuserNameCB: (e) => setuserNameCB()
 }

@@ -16,7 +16,8 @@ import {
   fireEvent,
   cleanup,
   waitForElement,
-  wait
+  wait,
+  waitForDomChange
 } from '@testing-library/react'
 import {
   renderWithRouter
@@ -37,8 +38,11 @@ import {
 } from 'fetch-mock'
 import _loadCurrentUserAccounts from '../../SideEffects/io/web3io';
 import {
-  specificrankingdata
-} from '../../../../../../test-fixtures/jsonbin/specificrankingdata'
+  specificRankingData
+} from '../../../../../../test-fixtures/jsonbin/specificRankingData'
+import {
+  globalRankings
+} from '../../../../../../test-fixtures/jsonbin/globalRankings'
 import {
   cleanedUpSRContractData
 } from '../../../../../../test-fixtures/jsonbin/cleanedUpSRContractData'
@@ -113,13 +117,109 @@ describe('<App/> ', () => {
         user: userObj
       }
 
+      xit('Displays De-Activate btn when ranking selected', async () => {
+
+        // const historyMock = { push: jest.fn() };
+        // const onClick = jest.fn();
+        // const onAfterUserUpdate = jest.fn();
+        // const newrankId = jest.fn();
+        // const setviewingOnlyCB = jest.fn();
+        // const setnewrankIdCB = jest.fn();
+        // const _loadsetJSONData = jest.fn();
+        // const _sendJSONDataWithRankingID = jest.fn();
+        // const setrankingJSONdataCB = jest.fn();
+        // const onClickRankingJoinSelected = jest.fn();
+        // const setOnCallbackisCurrentUserActiveCB = jest.fn();
+        //const onClickRankingJoinSelected = jest.fn();
+        //const setspecificRankingOptionBtnsCB = jest.fn();
+
+        // const row = {RANKINGNAME: "mplayer1rank", RANKINGDESC: "mp1r", ACTIVE: true, RANKINGID: "5c875c79adeb832d3ec6732d"}
+        // const { getByText, getByTestId } = render(<GlobalRankingJoinBtn
+        //   setspecificRankingOptionBtnsCB={onClick}
+        //   row={row}
+        //   onAfterUserUpdate={onAfterUserUpdate}
+        //   newrankId={newrankId}
+        //   setviewingOnlyCB={setviewingOnlyCB}
+        //   history={historyMock}
+        //   setnewrankIdCB={setnewrankIdCB}
+        //   _loadsetJSONData={_loadsetJSONData}
+        //   rankingJSONdata={dataTrue}
+        //   _sendJSONDataWithRankingID={_sendJSONDataWithRankingID}
+        //   setrankingJSONdataCB={setrankingJSONdataCB}
+        //   onClickRankingJoinSelected={onClickRankingJoinSelected}
+        //   setOnCallbackisCurrentUserActiveCB={setOnCallbackisCurrentUserActiveCB}
+        //   />);
+
+        // fireEvent.click(getByText(/View/i));
+        // //expect(onClick).toHaveBeenCalled();
+        // //expect(onClickRankingJoinSelected).toHaveBeenCalled();
+        // //expect(onAfterUserUpdate).toHaveBeenCalled();
+        // //expect(setviewingOnlyCB).toHaveBeenCalled();
+        // expect(setnewrankIdCB).toHaveBeenCalled();
+        //expect(getByTestId('activatebtn-input')).toBeInTheDocument();
+
+          // const props = {
+          //   userAccounts: cleanedUpSRContractData,
+          //   isCurrentUserActive: true,
+          //   rankingListJSONdata: globalRankingData,
+          //   account: testAccountPlayer1Rinkeby,
+          //   user: 'player1',
+          //   setspecificRankingOptionBtnsCB: onClick,
+          //   onAfterUserUpdate: onAfterUserUpdate,
+          //   newrankId: newrankId,
+          //   viewingOnlyCB: viewingOnlyCB,
+          //   history: historyMock,
+          //   data: globalRankingData
+          // }
+          const props  = {
+            userAccounts: cleanedUpSRContractData,
+            username: cleanedUpSRContractData[0].username,
+            account: testAccountPlayer1Rinkeby,
+            specificRankingOptionBtns: true,
+            setspecificRankingOptionBtnsCB: (e) => dummyFunction(),
+            setnewrankIdCB: (e) => dummyFunction(),
+            setviewingOnlyCB: (e) => dummyFunction(),
+            isCurrentUserActive: true,
+            isUserInJson: true,
+            rankingJSONdata: specificRankingData,
+            //rankingListData: globalRankings,
+            rankingListJSONdata: globalRankings,
+            history: historyMock
+          }
+          const {
+            debug,
+            getByTestId,
+            getByText,
+            waitForDomChange
+          } = renderWithRouter( < App {
+              ...props
+            }
+            url = {
+              url
+            }
+            />);
+            //console.log('globalRankings', props.rankingListJSONdata)
+            //expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
+            //await wait(() => getByTestId("menuitem3")); fireEvent.click(getByTestId("menuitem3"));
+            //await wait(() => getByText("View"));
+            await wait(() => expect(getByText("mplayer1rank")).toBeInTheDocument());
+            //await wait(() =>
+            //expect(getByText("mplayer1rank")).toBeInTheDocument();
+            // joinbtn.fireEvent.click();
+            await wait(() => fireEvent.click(getByText(/View/i)));
+            debug();
+            // //await wait(() => expect(getByText(/Create An Account Name/i)).toBeInTheDocument());
+            // //expect(getByText(/Create An Account Name/i)).toBeInTheDocument();
+            // await wait(() => expect(getByTestId('activatebtn-input')).toBeInTheDocument());
+          });
+
       xit('Account dropdown on click Create New display', async () => {
             const props = {
               userAccounts: cleanedUpSRContractData,
               username: cleanedUpSRContractData[0].username,
               account: testAccountPlayer1Rinkeby,
               onAfterUserUpdate: (e) => dummyFunction(),
-              rankingJSONdata: specificrankingdata,
+              rankingJSONdata: specificRankingData,
               balance: 4.0,
               setuserNameCB: (e) => setuserNameCB()
             }
@@ -180,84 +280,6 @@ describe('<App/> ', () => {
             expect(getByTestId("loading")).toHaveTextContent('Loading ...');
             await wait(() => expect(getByText("mplayer1rank")).toBeInTheDocument());
           });
-
-
-          xit('Displays De-Activate btn when ranking selected', async () => {
-
-            // const historyMock = { push: jest.fn() };
-            // const onClick = jest.fn();
-            // const onAfterUserUpdate = jest.fn();
-            // const newrankId = jest.fn();
-            // const setviewingOnlyCB = jest.fn();
-            // const setnewrankIdCB = jest.fn();
-            // const _loadsetJSONData = jest.fn();
-            // const _sendJSONDataWithRankingID = jest.fn();
-            // const setrankingJSONdataCB = jest.fn();
-            // const onClickRankingJoinSelected = jest.fn();
-            // const setOnCallbackisCurrentUserActiveCB = jest.fn();
-            //const onClickRankingJoinSelected = jest.fn();
-            //const setspecificRankingOptionBtnsCB = jest.fn();
-
-            // const row = {RANKINGNAME: "mplayer1rank", RANKINGDESC: "mp1r", ACTIVE: true, RANKINGID: "5c875c79adeb832d3ec6732d"}
-            // const { getByText, getByTestId } = render(<GlobalRankingJoinBtn
-            //   setspecificRankingOptionBtnsCB={onClick}
-            //   row={row}
-            //   onAfterUserUpdate={onAfterUserUpdate}
-            //   newrankId={newrankId}
-            //   setviewingOnlyCB={setviewingOnlyCB}
-            //   history={historyMock}
-            //   setnewrankIdCB={setnewrankIdCB}
-            //   _loadsetJSONData={_loadsetJSONData}
-            //   rankingJSONdata={dataTrue}
-            //   _sendJSONDataWithRankingID={_sendJSONDataWithRankingID}
-            //   setrankingJSONdataCB={setrankingJSONdataCB}
-            //   onClickRankingJoinSelected={onClickRankingJoinSelected}
-            //   setOnCallbackisCurrentUserActiveCB={setOnCallbackisCurrentUserActiveCB}
-            //   />);
-
-            // fireEvent.click(getByText(/View/i));
-            // //expect(onClick).toHaveBeenCalled();
-            // //expect(onClickRankingJoinSelected).toHaveBeenCalled();
-            // //expect(onAfterUserUpdate).toHaveBeenCalled();
-            // //expect(setviewingOnlyCB).toHaveBeenCalled();
-            // expect(setnewrankIdCB).toHaveBeenCalled();
-            //expect(getByTestId('activatebtn-input')).toBeInTheDocument();
-
-              const props = {
-                userAccounts: cleanedUpSRContractData,
-                isCurrentUserActive: true,
-                rankingListJSONdata: globalRankingData,
-                account: testAccountPlayer1Rinkeby,
-                user: 'player1',
-                setspecificRankingOptionBtnsCB: onClick,
-                onAfterUserUpdate: onAfterUserUpdate,
-                newrankId: newrankId,
-                viewingOnlyCB: viewingOnlyCB,
-                history: historyMock,
-                data: globalRankingData
-              }
-              const {
-                getByTestId,
-                getByText
-              } = renderWithRouter( < App {
-                  ...props
-                } url = {
-                  url
-                }
-                />);
-
-                console.log('globalRankingData', props.rankingListJSONdata)
-                //expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
-
-
-                //await wait(() => getByTestId("menuitem3")); fireEvent.click(getByTestId("menuitem3"));
-                // const joinbtn = await wait(() => getByTestId("0"));
-                // joinbtn.fireEvent.click();
-                await wait(() => fireEvent.click(getByText(/View/i)));
-                //await wait(() => expect(getByText(/Create An Account Name/i)).toBeInTheDocument());
-                //expect(getByText(/Create An Account Name/i)).toBeInTheDocument();
-                expect(getByTestId('activatebtn-input')).toBeInTheDocument();
-              });
 
             xit('RTL - check initial display', () => {
 

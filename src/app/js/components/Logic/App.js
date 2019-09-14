@@ -148,10 +148,10 @@ export function App({
   //#endregion
 
   const processStateAfter_loadCurrentUserAccounts = (userAcctArr) => {
-    console.log('selectedAddress', web3.givenProvider.selectedAddress)
-    console.log('userAcctArr before clean', userAcctArr)
+    //console.log('selectedAddress', web3.givenProvider.selectedAddress)
+    //console.log('userAcctArr before clean', userAcctArr)
     userAcctArr = ChangeState.cleanUpUserSRAccountData(userAcctArr);
-    console.log('userAcctArr after clean', userAcctArr)
+    //console.log('userAcctArr after clean', userAcctArr)
     if (userAcctArr) {
       setuserAccounts(userAcctArr);
       //console.log('userAcctArr[0].userAccount', userAcctArr[0])
@@ -160,7 +160,7 @@ export function App({
       setUser(userAcctArr[0])
       setError(userAcctArr[0].error);
       setUserName(userAcctArr[0].username);
-      console.log(userAcctArr[0])
+      //console.log(userAcctArr[0])
       if (userAcctArr[0].data !== undefined) {
         setIsUserInJson(JSONops.isPlayerListedInJSON(userAcctArr[0].data, userAcctArr[0].username));
         setIsCurrentUserActive(JSONops._getUserValue(userAcctArr[0].data, userAcctArr[0].username, "ACTIVE"));

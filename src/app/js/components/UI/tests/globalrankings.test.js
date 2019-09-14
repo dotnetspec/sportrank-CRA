@@ -4,7 +4,8 @@ import GlobalRankings  from '../GlobalRankings'
 
 import {
   //render,
-  //fireEvent,
+  wait,
+  fireEvent,
   cleanup,
 //waitForElement,
   //debug
@@ -12,8 +13,10 @@ import {
 import 'jest-dom/extend-expect'
 import 'jest-dom'
 import '@testing-library/dom'
-import {specificrankingdata} from '../../../../../../test-fixtures/jsonbin/specificrankingdata'
+import {specificRankingData} from '../../../../../../test-fixtures/jsonbin/specificRankingData'
 import {cleanedUpSRContractData} from '../../../../../../test-fixtures/jsonbin/cleanedUpSRContractData'
+import {globalRankings} from '../../../../../../test-fixtures/jsonbin/globalRankings'
+//import {singleGlobalRow} from '../../../../../../test-fixtures/jsonbin/singleGlobalRow'
 
 beforeEach(cleanup)
 //ensure descrbe blocks don't overlap
@@ -25,54 +28,59 @@ const testAccountPlayer1Rinkeby = '0x847700B781667abdD98E1393420754E503dca5b7';
 function dummyFunction(){
         return null;
       }
-function setuserNameCB (){
-        return null;
-      }
+      const historyMock = { push: jest.fn() };
+
+      // let row = {};
+      // row = {RANKINGNAME: "mplayer1rank", RANKINGDESC: "mp1r", ACTIVE: true, RANKINGID: "5c875c79adeb832d3ec6732d"};
+      // function setnewrankIdCB(row.RANKINGID){
+      //
+      // }
+// function setspecificRankingOptionBtnsCB(){
+//         return null;
+//       }
 
 const props  = {
-  userAccounts: cleanedUpSRContractData,
-  username: cleanedUpSRContractData[0].username,
-  account: testAccountPlayer1Rinkeby,
-  onAfterUserUpdate: (e) => dummyFunction(),
-  rankingJSONdata: specificrankingdata,
-  balance: 4.0,
-  setuserNameCB: (e) => setuserNameCB()
+  //onAfterUserUpdate: (e) => dummyFunction(),
+  rankingJSONdata: specificRankingData,
+  rankingListJSONdata: globalRankings
 }
       //do the tests
-    xit('RTL - check initial display', () => {
-             const { getByText } = renderWithRouter(<GlobalRankings {...props}/>);
-             expect(getByText(/List All Rankings/i)).toHaveTextContent('List All Rankings')
-             expect (getByText(/Update Profile/i)).toBeInTheDocument();
+    it('RTL - check initial display', () => {
+             const { getByText, debug } = renderWithRouter(<GlobalRankings {...props}/>);
+             //expect(getByText(/List All Rankings/i)).toHaveTextContent('List All Rankings')
+             // console.log(globalRankings, props.rankingListJSONdata)
+             //debug();
+             expect (getByText(/mplayer1ra/i)).toBeInTheDocument();
              expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument();
+             // const dialogContainer2 = getByTestId("menuitem1")
+             // //the querySelector (span) has to be nested within the dialogContainer
+             // expect(dialogContainer.querySelector('span').innerHTML).toBe('testuser1')
       });
 
-    xit('Profile link display', () => {
-            renderWithRouter(<GlobalRankings {...props}/>);
-            expect(document.querySelector('[data-testid="usernameinprofilelink"]')).toBeInTheDocument();
-            expect(document.querySelector('[data-testid="balinprofilelink"]')).toBeInTheDocument();
-     });
-
-    xit('Account dropdown display', () => {
-            const { getByTestId } = renderWithRouter(<GlobalRankings {...props}/>);
-            expect(document.querySelector('[data-testid="menuitem0"]')).toBeInTheDocument();
-            const dialogContainer = getByTestId("menuitem0")
-            const dialogContainer2 = getByTestId("menuitem1")
-            //the querySelector (span) has to be nested within the dialogContainer
-            expect(dialogContainer.querySelector('span').innerHTML).toBe('testuser1')
-            expect(dialogContainer2.querySelector('span').innerHTML).toBe('GanacheAcct2')
-     });
-
     //NB: props need to be specific to these tests
-    xit('specificRankingOptionBtns - true displays', () => {
+    //REVIEW: not sure this possible due to header not being included ...
+    xit('specificRankingOptionBtns - true displays on viewbtn click', async () => {
+      //const onClick = jest.fn();
       const props  = {
         userAccounts: cleanedUpSRContractData,
         username: cleanedUpSRContractData[0].username,
         account: testAccountPlayer1Rinkeby,
         specificRankingOptionBtns: true,
+        setspecificRankingOptionBtnsCB: (e) => dummyFunction(),
+        setnewrankIdCB: (e) => dummyFunction(),
+        setviewingOnlyCB: (e) => dummyFunction(),
         isCurrentUserActive: true,
-        isUserInJson: true
+        isUserInJson: true,
+        rankingJSONdata: specificRankingData,
+        rankingListJSONdata: globalRankings,
+        history: historyMock
       }
-          const { getByText } = renderWithRouter(<GlobalRankings {...props}/>);
+          const { getByText, getByTestId, debug } = renderWithRouter(<GlobalRankings {...props}/>);
+          //debug();
+          //fireEvent.click(getByTestId('0'));
+          await wait(() => getByTestId("0")); fireEvent.click(getByTestId("0"));
+          //await wait(() => expect(getByText(/Create An Account Name/i)).toBeInTheDocument());
+          expect(getByText(/Create An Account Name/i)).toBeInTheDocument();
           expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
           expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/De-Activate?/i)
           expect(getByText(/Update Profile/i)).toBeInTheDocument();

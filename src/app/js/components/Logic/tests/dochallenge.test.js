@@ -12,7 +12,7 @@ import React from 'react'
 import { render, cleanup, fireEvent, getByText, debug  } from '@testing-library/react'
 import {renderWithRouter} from '../../../utils'
 //import {ranking1} from '../../../../../../cypress/fixtures/ranking1'
-import {specificrankingdata} from '../../../../../../test-fixtures/jsonbin/specificrankingdata'
+import {specificRankingData} from '../../../../../../test-fixtures/jsonbin/specificRankingData'
 //import { render, cleanup, fireEvent, getByText, container, waitForElement, getByLabelText } from '@testing-library/react'
 //import { getDefaultUserAccountFromAddress } from '../io/web3io';
 import * as web3defaultAccount from '../../SideEffects/io/web3defaultAccount';
@@ -25,7 +25,7 @@ afterEach(cleanup);
 const historyMock = { push: jest.fn() };
 const onAfterChallenge = jest.fn();
 const _handleClick = jest.fn();
-const data = specificrankingdata;
+const data = specificRankingData;
 const selectedOpponentName = 'player3';
 //const closeResultModal = jest.fn();
 // const updateTextCB =

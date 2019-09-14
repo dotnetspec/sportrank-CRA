@@ -1,3 +1,4 @@
+export const globalRankings =
 [
 {
   "RANKINGNAME":"testRa1","RANKINGDESC":"testRank","ACTIVE":true,"RANKINGID":"5c6a7cf5a83a2931773847b8"

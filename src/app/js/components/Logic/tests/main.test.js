@@ -12,7 +12,7 @@ import axiosMock  from 'axios'
 import {fetchMock} from 'fetch-mock'
 import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, asyncFetch } from '../../SideEffects/io/Jsonio';
 
-import {specificrankingdata} from '../../../../../../test-fixtures/jsonbin/specificrankingdata'
+import {specificRankingData} from '../../../../../../test-fixtures/jsonbin/specificRankingData'
 //import { MemoryRouter as Router } from 'react-router-dom';
 // import {
 //   // Tip: all queries are also exposed on an object
@@ -108,7 +108,7 @@ const viewingOnlyCB = jest.fn();
             newrankId:newrankId,
             viewingOnlyCB:viewingOnlyCB,
             history:historyMock,
-            rankingJSONdata: specificrankingdata
+            rankingJSONdata: specificRankingData
           }
 
   it('RTL - check initial display', () => {
@@ -143,10 +143,10 @@ const viewingOnlyCB = jest.fn();
        //expect (getByText(/mplayer1/i)).toBeInTheDocument();
        //debug();
 
-//REVIEW: this passed when specificrankingdata not properly defined
+//REVIEW: this passed when specificRankingData not properly defined
        axiosMock.get.mockResolvedValueOnce({
          //data: { rankingJSONdata: specificRankingData }
-         rankingJSONdata: specificrankingdata
+         rankingJSONdata: specificRankingData
        })
 
        const firstRowOfTableViewBtn = getByTestId("0");
