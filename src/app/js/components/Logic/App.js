@@ -226,7 +226,7 @@ export function App({
           }
 
           const userdata = await getUserData()
-          console.log('user data in the list', userdata)
+          //console.log('user data in the list', userdata)
 
           const functionWithPromiseToGetBal = item => { //a function that returns a promise
             return Promise.resolve(web3.eth.getBalance(item.owner));
@@ -265,11 +265,12 @@ export function App({
               });
             }
         await mapTheAccounts();
-        window.ethereum.on('accountsChanged', async function () {
-          // Time to reload your interface with accounts[0]!
-          await mapTheAccounts();
-        })
-
+        if(window.ethereum){
+          window.ethereum.on('accountsChanged', async function () {
+            // Time to reload your interface with accounts[0]!
+            await mapTheAccounts();
+          })
+        }
         setIsLoading(false);
     }
     fetchData();
@@ -328,9 +329,9 @@ export function App({
       specificRankingOptionBtns = {
         specificRankingOptionBtns
       }
-      // onAfterUserUpdate = {
-      //   mapTheAccounts
-      // }
+      onAfterUserUpdate = {
+        setuserNameCB
+      }
       onError = {
         _onError
       }
@@ -419,10 +420,9 @@ export function App({
       specificRankingOptionBtns = {
         specificRankingOptionBtns
       }
-
-      // onAfterUserUpdate = {
-      //   _mapCurrentUserAccounts
-      // }
+      onAfterUserUpdate = {
+        setuserNameCB
+      }
       onError = {
         _onError
       }

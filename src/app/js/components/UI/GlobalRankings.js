@@ -3,8 +3,8 @@ import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 //import { Grid, Row, Col, PageHeader, Image, Modal, Navbar, ButtonToolbar, Dropdown, DropdownItem, Overlay, Tooltip, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import { Grid, Row } from 'react-bootstrap';
 import { isEmpty } from '../../utils';
-import GlobalRankingViewBtn from '../UI/buttons/GlobalRankingViewBtn';
-import GlobalRankingJoinBtn from '../UI/buttons/GlobalRankingJoinBtn';
+import GlobalRankingViewBtn from './buttons/GlobalRankingViewBtn';
+import GlobalRankingJoinBtn from './buttons/GlobalRankingJoinBtn';
 import React, { Component } from 'react';
 
 // const selectRowPropAfterClickRow = {

@@ -1,5 +1,5 @@
 import {
-  wait,
+  //wait,
 } from '@testing-library/dom'
 // adds special assertions like toHaveTextContent
 import 'jest-dom/extend-expect'

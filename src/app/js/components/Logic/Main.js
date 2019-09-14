@@ -11,7 +11,7 @@ import React, { Component } from 'react';
 //import JSONops from './JSONops'
 import CreateNewRanking from './CreateNewRanking';
 import UserRankings from './UserRankings'
-import GlobalRankings from './GlobalRankings'
+import GlobalRankings from '../UI/GlobalRankings'
 
 /**
  * Class representing the area below the header.

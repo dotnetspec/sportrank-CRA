@@ -3,7 +3,7 @@ import { BrowserRouter, MemoryRouter } from 'react-router-dom'
 import App  from '../App'
 import PropsRoute  from '../PropsRoute'
 import Error from '../Error'
-import GlobalRankings from '../GlobalRankings'
+import GlobalRankings from '../../UI/GlobalRankings'
 //import renderer from 'react-test-renderer'
 import { shallow, mount } from 'enzyme';
 
