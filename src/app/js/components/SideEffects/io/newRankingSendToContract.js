@@ -1,6 +1,7 @@
 import DSportRank from '../../../../../ABIaddress';
 //import { getWeb3defaultAccount } from './web3defaultAccount';
-import {getWeb3Accounts} from './web3Accounts';
+//import {getWeb3Accounts} from './web3Accounts';
+import web3 from '../../../../../web3';
 //this may appear unnecessary but it's done to
 //enable mocking:
 //This function returns a tx hash
@@ -10,12 +11,15 @@ import {getWeb3Accounts} from './web3Accounts';
   //const newRanking = await DSportRank.methods.editAccount(usernameHash, updatedDescription, newrankId, updatedImageHash);
 
   export const newRankingSendToContract = async (gasEstimate, usernameHash, updatedContactno, updatedEmail, updatedDescription, newrankId, updatedImageHash) => {
-    const account = await getWeb3Accounts();
+    //const account = await getWeb3Accounts();
+    //NB: this might be just web3.selectedAddress; outside of local test environment
+    const account = web3.givenProvider.selectedAddress;
+    console.log('account', account)
     const newRanking = await DSportRank.methods.editAccount(usernameHash, updatedContactno, updatedEmail, updatedDescription, newrankId, updatedImageHash);
 
     //return await challenge.send({ from: await getWeb3Accounts(), gas: gasEstimate + 100000 });
     newRanking.send({
-      from: account[0], gas: gasEstimate + 1000
+      from: account, gas: gasEstimate + 1000
     })
     .on('transactionHash', function(hash){
         console.log('hash', hash);

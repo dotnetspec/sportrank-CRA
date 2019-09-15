@@ -131,31 +131,6 @@ _continueClick = () => {
     if(this.state.userConfirm){
             try{
 
-
-              //  let rankStr = '","RANKINGNAME":"' + this.state.rankName + '"';
-              // rankStr += ',"RANKINGDESC":"' + this.state.rankDescription + '"}';
-              //
-              //  //const newRankingId = JSONops._sendCreateNewRankingJSONData(rankStr);
-              //
-              //  //_sendCreateNewRankingJSONData will complete the incomplete rankStr
-              //  //to send the data. We now need to complete the string correctly here
-              //  //before adding to the user's ranking arr
-              //
-              //   // set up our contract method with the input values from the form
-              //   //code can be implement within here once new contract has been deployed
-              //   //if(this.state.ranknameHasChanged) {
-              //     console.log('this.state.rankId after state change')
-              //     console.log('this.state.rankId')
-              //     console.log(this.state.rankId);
-              //     rankStr = '{"RANKINGID":"' + this.state.rankId + rankStr;
-              //     //rankStr = JSON.parse(rankStr);
-              //     console.log('rankStr');
-              //      console.log(rankStr);
-              //
-              //          //const createRanking = DSportRank.methods.ranking(rankStr);
-              //          const createRanking = DSportRank.methods.ranking(this.state.rankId);
-              //         console.log('createRanking');
-              //         console.log(createRanking);
               //          //get a gas estimate before sending the transaction
               //          const gasEstimate = await createRanking.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
               //          //send the transaction to create an account with our gas estimate
