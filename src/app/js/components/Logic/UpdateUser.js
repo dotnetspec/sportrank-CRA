@@ -70,10 +70,10 @@ class UpdateUser extends Component {
           const gasEstimate = await estimateGas();
           // //const result = await editAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
           // const result = await editAccount.send({ from: account,  gas: gasEstimate + 1000 });
-          // console.log('result', await result);
+          //console.log('this.props.account', this.props.account);
 
-          const result = updateUserSendToContract(gasEstimate, this.props.account.address, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash, updateUserSendToContractCB)
-          //const result = updateUserSendToContract(gasEstimate, this.props.account.address, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash)
+          const result = updateUserSendToContract(gasEstimate, this.props.account.owner, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash, updateUserSendToContractCB)
+          //const result = updateUserSendToContract(gasEstimate, this.props.account.owner, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash)
 
           //use CB to wait for the result to come back and update the page
           async function updateUserSendToContractCB(){
@@ -204,7 +204,7 @@ class UpdateUser extends Component {
       <Grid>
         <Row>
           <Col xs={12}>
-            <h2>Update { user.username } <small>{this.props.account.address}</small></h2>
+            <h2>Update { user.username } <small>{this.props.account.owner}</small></h2>
           </Col>
         </Row>
         {isEmpty(this.state.error) ? null : <span className='error'>Oh no!</span>}

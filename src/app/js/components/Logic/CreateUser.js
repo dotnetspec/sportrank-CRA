@@ -69,7 +69,7 @@ _continueClick = () => {
       if(this.state.userConfirm){
               const { username, description } = this.state;
               try {
-                const result = await createUserSendToContract(this.props.account.address, username, this.state.contactno, this.state.email, description, this.state.newRankId);
+                const result = await createUserSendToContract(this.props.account.owner, username, this.state.contactno, this.state.email, description, this.state.newRankId);
                 if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
                   return this.setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
                 }

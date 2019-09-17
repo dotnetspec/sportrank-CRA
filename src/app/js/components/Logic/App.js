@@ -173,6 +173,7 @@ export function App({
       setdescription(userAcctArr[0].description);
       setBalance(userAcctArr[0].balance);
       setviewingOnlyCB(true);
+
     } else {
       console.log('user undefined')
     }
@@ -256,6 +257,7 @@ export function App({
           return userdata;
           //return usersWithBal;
         }).then(function(resolvedUserData){
+          console.log('resolvedUserData', resolvedUserData)
                   processStateAfter_loadCurrentUserAccounts(resolvedUserData);
                   setIsLoading(false);
               }).catch(function(error) {
@@ -329,9 +331,9 @@ export function App({
       specificRankingOptionBtns = {
         specificRankingOptionBtns
       }
-      onAfterUserUpdate = {
-        setuserNameCB
-      }
+      // onAfterUserUpdate = {
+      //   setuserNameCB
+      // }
       onError = {
         _onError
       }
@@ -420,9 +422,9 @@ export function App({
       specificRankingOptionBtns = {
         specificRankingOptionBtns
       }
-      onAfterUserUpdate = {
-        setuserNameCB
-      }
+      // onAfterUserUpdate = {
+      //   setuserNameCB
+      // }
       onError = {
         _onError
       }

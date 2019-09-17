@@ -155,13 +155,14 @@ _continueClick = () => {
                   const gasEstimate = await estimateGas();
                   //REVIEIW: Not sure this is doing anything affecting app as all the work
                   //done in json currently:
-                  const result = newRankingSendToContract(gasEstimate, usernameHash, updatedDescription, this.props.newrankId, updatedImageHash);
+                  //gasEstimate, usernameHash, updatedContactno, updatedEmail, updatedDescription, newrankId, updatedImageHash
+                  const result = await newRankingSendToContract(gasEstimate, usernameHash, this.props.newrankId, updatedImageHash);
                    // check result status. if status is false or '0x0', show user the tx details to debug error
-                   if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
-                     return this.setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
-                   }
+                   // if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
+                   //   return this.setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
+                   // }
                 // }
-                console.log('result status', await result)
+                console.log('result status',await result)
 
                //REVIEW: New ranking must come after editAccount.send() in case e.g. there's not enough gas
                //otherwise, if this goes through there could be ranking errors etc.
@@ -193,8 +194,8 @@ _continueClick = () => {
               // tell parent we've updated a user and to re-fetch user details from the contract
               //TODO: change to onAfterNewRanking();
               //this.props.onAfterChallenge();
-              console.log('about to go to onAfterUserUpdate')
-              this.props.onAfterUserUpdate();
+              //console.log('about to go to onAfterUserUpdate')
+              //this.props.onAfterUserUpdate();
 
               //QUESTION: is this the right place for this function?
               //this.displayContactDetails();

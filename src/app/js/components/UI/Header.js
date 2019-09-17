@@ -168,7 +168,7 @@ class Header extends Component {
           onMouseLeave={(e) => this._handleToggle(e)}
           className='username'
           ref={(span) => this.tooltipTarget = span}
-        >{limitAddressLength(this.props.account.address, 4)}
+        >{limitAddressLength(this.props.account.owner, 4)}
         </span>
       </span>
       <small className='balance'>{formatBalance(this.props.balance)}</small>
@@ -258,11 +258,11 @@ class Header extends Component {
     return(
       <React.Fragment>
       <ListAllRankingsBtn data-testid='ListAllRankings' onListAllChildClick={this.props.onListAllChildClick} setResultInfoForDisplayCB={this.props.setResultInfoForDisplayCB}/>
-        <Button bsStyle="primary" data-cy='UpdateProfile' data-testid='UpdateProfile' onClick={(e) => this._handleUpdateProfile(this.props.user[1])}>
+        <Button bsStyle="primary" data-cy='UpdateProfile' data-testid='UpdateProfile' onClick={(e) => this._handleUpdateProfile(this.props.username)}>
           Update Profile
         </Button>
         {this.displayActivationBtns()}
-        <Button bsStyle="primary" data-cy='CreateNewRanking' onClick={(e) => this._handleCreateNewRanking(this.props.user[1])}>
+        <Button bsStyle="primary" data-cy='CreateNewRanking' onClick={(e) => this._handleCreateNewRanking(this.props.username)}>
           Create New Ranking
         </Button>
       </React.Fragment>
