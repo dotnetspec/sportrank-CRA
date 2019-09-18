@@ -22,7 +22,7 @@ import {
 import {
   renderWithRouter
 } from '../../../utils'
-import 'jest-dom/extend-expect'
+//import 'jest-dom/extend-expect'
 //since this is a test it's not actually importing the real 'axios' but
 //rather the axios in the __mocks__ folder
 import axiosMock from '../../SideEffects/tests/__mocks__/axios'

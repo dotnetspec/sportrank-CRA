@@ -2,7 +2,9 @@ import {
   //wait,
 } from '@testing-library/dom'
 // adds special assertions like toHaveTextContent
-import 'jest-dom/extend-expect'
+import '@testing-library/dom'
+import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/extend-expect'
 import GlobalRankingViewBtn from '../buttons/GlobalRankingViewBtn'
 import React from 'react'
 import { render, fireEvent, cleanup } from '@testing-library/react'

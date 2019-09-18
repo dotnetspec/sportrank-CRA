@@ -6,7 +6,9 @@ import {
   wait,
 } from '@testing-library/dom'
 // adds special assertions like toHaveTextContent
-import 'jest-dom/extend-expect'
+import '@testing-library/dom'
+import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/extend-expect'
 import PlayerStatusBtn from '../buttons/PlayerStatusBtn'
 import React from 'react'
 import { render, cleanup, fireEvent, getByText, container, waitForElement, getByLabelText } from '@testing-library/react'

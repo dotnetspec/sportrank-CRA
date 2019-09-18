@@ -64,7 +64,6 @@ export function limitAddressLength (address, maxLength, replacement){
   //let address = address;
   if(!address) return '';
   let prepend0x = false;
-console.log('address type', typeof address);
   if(address.startsWith('0x')){
     address = address.substring(2);
     prepend0x = true;

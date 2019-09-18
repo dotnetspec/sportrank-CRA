@@ -7,7 +7,9 @@ import { stub } from 'sinon';
 import { render, fireEvent, cleanup,
    waitForElement, within, wait} from '@testing-library/react'
 import {renderWithRouter} from '../../../utils'
-import 'jest-dom/extend-expect'
+import '@testing-library/dom'
+import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/extend-expect'
 import axiosMock  from 'axios'
 import {fetchMock} from 'fetch-mock'
 import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, asyncFetch } from '../../SideEffects/io/Jsonio';

@@ -139,7 +139,7 @@ _continueClick = () => {
 
               //const usernameHash = web3.utils.keccak256(user.username);
               const usernameHash = web3.utils.keccak256(this.props.user.username);
-              const updatedDescription = this.state.rankDescription;
+              //const updatedDescription = this.state.rankDescription;
               //TODO: dummy value - This needs to be fully implemented with IPFS
               const updatedImageHash = 'Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL';
 

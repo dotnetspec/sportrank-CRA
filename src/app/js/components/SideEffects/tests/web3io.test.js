@@ -8,10 +8,12 @@ import {
   mapTheAccounts
 } from '../io/web3io';
 import web3 from '../../../../../web3';
-import 'jest-dom/extend-expect'
 import {
   wait
 } from '@testing-library/react'
+import '@testing-library/dom'
+import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/extend-expect'
 import  *  as web3defaultAccount from '../io/web3defaultAccount';
 import  *  as getWeb3Accounts from '../io/web3Accounts';
 

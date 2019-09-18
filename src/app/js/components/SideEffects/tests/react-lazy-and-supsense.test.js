@@ -1,6 +1,8 @@
 import React from 'react'
 import {wait, waitForElement, cleanup} from '@testing-library/react'
-import 'jest-dom/extend-expect'
+import '@testing-library/dom'
+import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/extend-expect'
 import {renderWithRouter} from '../../../utils'
 import { _loadsetJSONData, _loadsetRankingListJSONData, getNewRankId, getDefaultRankingList } from '../../SideEffects/io/Jsonio';
 import { _loadCurrentUserAccountsInsideMapping, _loadExternalBalance, _loadCurrentUserAccounts } from '../../SideEffects/io/web3io';

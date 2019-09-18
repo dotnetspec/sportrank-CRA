@@ -60,8 +60,18 @@ export function App({
   const [rank, setrank] = useState('1');
   const [ranknameHasChanged, setranknameHasChanged] = useState(false);
   const [resultInfoForDisplay, setResultInfoForDisplay] = useState('');
+  const [selectedOpponentDetails, setselectedOpponentDetails] = useState({});
+
+
   //REVIEW: set as a global var. Perhaps change to environment var ?:
   const rankingDefault = '5c36f5422c87fa27306acb52';
+
+  //cb from DoChallenge.js once an opponent has been selected
+  const updateOpponentDetailsCB = (opponent) => {
+    setselectedOpponentDetails(opponent.name);
+    setselectedOpponentDetails(opponent.contactno);
+    setselectedOpponentDetails(opponent.email);
+  }
 
   function _loadExternalBalance_callback(externalbalance) {
     if (externalbalance !== undefined) {
@@ -71,6 +81,7 @@ export function App({
 
   //Below appears to be relevant to user events not e.g. callbacks that fetch data
   const setspecificRankingOptionBtnsCB = () => {
+    console.log('in setspecificRankingOptionBtns')
     setspecificRankingOptionBtns(true);
   }
   const handleListAllChildClick = () => {
@@ -93,7 +104,6 @@ export function App({
     _loadsetJSONData(newrankIdtxt, setrankingJSONdataCB);
   }
   const setResultInfoForDisplayCB = (text) => {
-    console.log('setResultInfoForDisplayCB in app.js', text);
     setResultInfoForDisplay(text);
   }
   //cb from createuser.js to set the username
@@ -149,9 +159,9 @@ export function App({
 
   const processStateAfter_loadCurrentUserAccounts = (userAcctArr) => {
     //console.log('selectedAddress', web3.givenProvider.selectedAddress)
-    //console.log('userAcctArr before clean', userAcctArr)
+    console.log('userAcctArr before clean', userAcctArr)
     userAcctArr = ChangeState.cleanUpUserSRAccountData(userAcctArr);
-    //console.log('userAcctArr after clean', userAcctArr)
+    console.log('userAcctArr after clean', userAcctArr)
     if (userAcctArr) {
       setuserAccounts(userAcctArr);
       //console.log('userAcctArr[0].userAccount', userAcctArr[0])
@@ -257,13 +267,12 @@ export function App({
           return userdata;
           //return usersWithBal;
         }).then(function(resolvedUserData){
-          console.log('resolvedUserData', resolvedUserData)
                   processStateAfter_loadCurrentUserAccounts(resolvedUserData);
                   setIsLoading(false);
               }).catch(function(error) {
                    console.log('error is:', error)
               }).then(function() {
-                   console.log('in the last then')
+
               });
             }
         await mapTheAccounts();
@@ -476,6 +485,13 @@ export function App({
       loadingJSON = {
         isLoadingJSON
       }
+      updateOpponentDetailsCB = {
+        updateOpponentDetailsCB
+      }
+      selectedOpponentDetails = {
+        selectedOpponentDetails
+      }
+
       />
 
       <

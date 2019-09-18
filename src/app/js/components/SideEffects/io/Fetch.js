@@ -1,11 +1,6 @@
 
 import React from 'react'
 import axiosMock from 'axios'
-//import {render, fireEvent, cleanup, wait} from '../'
-//import {render, fireEvent, cleanup, wait} from '@testing-library/react'
-import 'jest-dom/extend-expect'
-//import {renderWithRouter} from '../../../utils'
-
 
 class Fetch extends React.Component {
   state = {}

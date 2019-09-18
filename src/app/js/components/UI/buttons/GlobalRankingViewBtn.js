@@ -21,6 +21,7 @@ import { Button } from 'react-bootstrap';
 
     props.setviewingOnlyCB(true);
     //this.props.onAfterUserUpdate();
+
     props.history.push('/home/@' + props.username);
     //this.openResultModal();
    }

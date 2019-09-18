@@ -1,10 +1,12 @@
-import 'jest-dom/extend-expect'
+import '@testing-library/dom'
+import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/extend-expect'
 //use * as notation for the mockable functions:
 import * as
 challengeSendToContract
 from '../io/challengeSendToContract';
 //use {} notation for the function(s) importing
-//that will test here 
+//that will test here
 import {
   sendChallengeToContract
 }

@@ -6,7 +6,7 @@ import JSONops from '../../Logic/JSONops'
 //enable mocking:
 //This function returns a tx hash:
   export const challengeSendToContract = async (gasEstimate, challengeState, newrankId, user, selectedOpponentName, data) => {
-    console.log('gasEstimate', gasEstimate)
+
     const account = await getWeb3Accounts();
     const challenge = await DSportRank.methods.challenge(challengeState);
     //return await challenge.send({ from: await getWeb3Accounts(), gas: gasEstimate + 100000 });

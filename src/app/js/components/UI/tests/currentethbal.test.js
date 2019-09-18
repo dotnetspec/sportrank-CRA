@@ -3,7 +3,9 @@ import {renderWithRouter} from '../../../utils'
 //NB: from ../CurrentETHBal wouldn't work.
 //Would not accept uppercase in the file name!
 import CurrentETHBal from '../Currentethbal'
-import 'jest-dom/extend-expect'
+import '@testing-library/dom'
+import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/extend-expect'
 import { render, cleanup, fireEvent, getByText, container, waitForElement, getByLabelText } from '@testing-library/react'
 
 afterEach(cleanup);

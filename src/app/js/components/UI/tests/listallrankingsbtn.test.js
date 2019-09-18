@@ -1,4 +1,6 @@
-import 'jest-dom/extend-expect'
+import '@testing-library/dom'
+import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/extend-expect'
 import ListAllRankingsBtn from '../buttons/ListAllRankingsBtn'
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'

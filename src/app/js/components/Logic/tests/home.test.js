@@ -9,7 +9,9 @@ import Home  from '../Home'
 import { render, fireEvent, cleanup,
    waitForElement, wait} from '@testing-library/react'
 import {renderWithRouter} from '../../../utils'
-import 'jest-dom/extend-expect'
+import '@testing-library/dom'
+import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/extend-expect'
 //since this is a test it's not actually importing the real 'axios' but
 //rather the axios in the __mocks__ folder
 //import axiosMock  from '../../SideEffects/tests/__mocks__/axios'

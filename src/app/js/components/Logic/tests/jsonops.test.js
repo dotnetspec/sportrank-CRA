@@ -1,7 +1,9 @@
 import {
   wait,
 } from '@testing-library/dom'
-import 'jest-dom/extend-expect'
+import '@testing-library/dom'
+import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/extend-expect'
 import JSONops from '../JSONops'
 import {Jsonio, _sendJSONDataWithRankingID}  from '../../SideEffects/io/Jsonio'
 import { render, cleanup, fireEvent, getByText, container, waitForElement, getByLabelText } from '@testing-library/react'

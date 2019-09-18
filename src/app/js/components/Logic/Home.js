@@ -135,7 +135,7 @@ const selectRowPropAfterClickRow = {
         setWarningModalIsOpen(true);
       } else if (props.user.username !== '') {
       _handleShowChallengeModal();
-      props.onAfterUserUpdate();
+      //props.onAfterUserUpdate();
     } else {
       setWarningText('Error: Sorry your account is not recognized');
       setWarningModalIsOpen(true);

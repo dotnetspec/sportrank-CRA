@@ -1,4 +1,6 @@
-import 'jest-dom/extend-expect'
+import '@testing-library/dom'
+import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/extend-expect'
 import ChangeState from '../../Logic/ChangeState'
 import {userAccountsArray} from '../../../../../../cypress/fixtures/userAccounts'
 import {userAccountsFromContractArr} from '../../../../../../cypress/fixtures/userAccountsFromContract'

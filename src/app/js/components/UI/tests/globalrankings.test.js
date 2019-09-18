@@ -10,9 +10,9 @@ import {
 //waitForElement,
   //debug
 } from '@testing-library/react'
-import 'jest-dom/extend-expect'
-import 'jest-dom'
 import '@testing-library/dom'
+import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/extend-expect'
 import {specificRankingData} from '../../../../../../test-fixtures/jsonbin/specificRankingData'
 import {cleanedUpSRContractData} from '../../../../../../test-fixtures/jsonbin/cleanedUpSRContractData'
 import {globalRankings} from '../../../../../../test-fixtures/jsonbin/globalRankings'
@@ -50,7 +50,7 @@ const props  = {
              //expect(getByText(/List All Rankings/i)).toHaveTextContent('List All Rankings')
              // console.log(globalRankings, props.rankingListJSONdata)
              //debug();
-             expect (getByText(/mplayer1ra/i)).toBeInTheDocument();
+             expect(getByText(/mplayer1ra/i)).toBeInTheDocument();
              expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument();
              // const dialogContainer2 = getByTestId("menuitem1")
              // //the querySelector (span) has to be nested within the dialogContainer
