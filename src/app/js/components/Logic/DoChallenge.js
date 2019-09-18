@@ -125,14 +125,17 @@ function displayContactDetails(){
 
       const gasEstimate = await estimateGas();
       console.log('gasEstimate', gasEstimate);
-      const result = await challengeSendToContract(gasEstimate, state.challenge, props.newrankId, props.user, props.selectedOpponentName, props.data, challengeSendToContractCB);
+      //const result = await challengeSendToContract(gasEstimate, state.challenge, props.newrankId, props.user, props.selectedOpponentName, props.data, challengeSendToContractCB);
+      await challengeSendToContract(gasEstimate, state.challenge, props.newrankId, props.user, props.selectedOpponentName, props.data);
+
       //use a callback to process the result after contract updated
       //REVIEW: Update must come after sendTransaction() in case e.g. there's not enough gas
       //otherwise, if this goes through there could be ranking errors etc.
-      async function challengeSendToContractCB(){
-        JSONops._updateDoChallengeJSON(props.newrankId, props.user, props.selectedOpponentName, props.data);
-        console.log('result', await result);
-      }
+      // async function challengeSendToContractCB(){
+      //   console.log('props.data', props.data)
+      //   JSONops._updateDoChallengeJSON(props.newrankId, props.user, props.selectedOpponentName, props.data);
+      //   console.log('result', await result);
+      // }
         //REVIEW: this will have to be modified to obtain details from the
         //bc rather than the json
         displayContactDetails();

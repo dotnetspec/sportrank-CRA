@@ -1,18 +1,20 @@
 import DSportRank from '../../../../../ABIaddress';
 //import { getWeb3defaultAccount } from './web3defaultAccount';
-import {getWeb3Accounts} from './web3Accounts';
+//import {getWeb3Accounts} from './web3Accounts';
 import JSONops from '../../Logic/JSONops'
+import web3 from '../../../../../web3';
 //this may appear unnecessary but it's done to
 //enable mocking:
 //This function returns a tx hash:
   export const challengeSendToContract = async (gasEstimate, challengeState, newrankId, user, selectedOpponentName, data) => {
 
-    const account = await getWeb3Accounts();
+    //const account = await getWeb3Accounts();
+    const account = web3.givenProvider.selectedAddress;
     const challenge = await DSportRank.methods.challenge(challengeState);
     //return await challenge.send({ from: await getWeb3Accounts(), gas: gasEstimate + 100000 });
     try{
           challenge.send({
-            from: account[0], gas: gasEstimate + 100000
+            from: account, gas: gasEstimate + 100000
           })
           .on('transactionHash', function(hash){
               JSONops._updateDoChallengeJSON(newrankId, user, selectedOpponentName, data);
