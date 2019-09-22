@@ -184,7 +184,7 @@ const requestConfig = {
       DESCRIPTION: description,
       CURRENTCHALLENGERNAME: "AVAILABLE",
       CURRENTCHALLENGERID: 0,
-      ACCOUNT: account,
+      ADDRESS: account,
       EMAIL: email,
       CONTACTNO: contactno,
       RANK: 1,

@@ -269,7 +269,7 @@ const JSONops = {
     console.log('inside _setUserNameValue')
     let setNewUserValue = {
       jsonRS: jsonObj,
-      lookupField: 'ACCOUNT',
+      lookupField: 'ADDRESS',
       lookupKey: userAccountNo,
       targetField: valueToSet,
       targetData: newValue,
@@ -353,12 +353,12 @@ const JSONops = {
     //console.log('userIDNumber', userIDNumber)
     const selectedopponentIDNumber = this._getUserValue(data, selectedOpponent, "id");
 
-    const challengeraccount = this._getUserValue(data, currentUser, "ACCOUNT");
+    const challengeraccount = this._getUserValue(data, currentUser, "ADDRESS");
     //console.log('challengeraccount', challengeraccount);
     const challengeraddress = challengeraccount.owner;
     //console.log('challengeraddress', challengeraddress);
 
-    const opponentaccount = this._getUserValue(data, selectedOpponent, "ACCOUNT");
+    const opponentaccount = this._getUserValue(data, selectedOpponent, "ADDRESS");
 
     const opponentaddress = opponentaccount.owner;
     //console.log('opponentaddress', opponentaddress);
@@ -435,7 +435,7 @@ const JSONops = {
       "DESCRIPTION": description,
       "CURRENTCHALLENGERNAME": "AVAILABLE",
       "CURRENTCHALLENGERID": 0,
-      "ACCOUNT": accountno,
+      "ADDRESS": accountno,
       "RANK": rankLastPosition,
       "EMAIL": email,
       "CONTACTNO": contactno,
@@ -459,7 +459,7 @@ const JSONops = {
       "DESCRIPTION": description,
       "CURRENTCHALLENGERNAME": "AVAILABLE",
       "CURRENTCHALLENGERID": 0,
-      "ACCOUNT": accountno,
+      "ADDRESS": accountno,
       "RANK": 1,
       "EMAIL": email,
       "CONTACTNO": contactno,
@@ -716,8 +716,8 @@ const JSONops = {
     if (data === undefined) {
       return false
     }
-    //using ACCOUNT not NAME to test if user is listed in the json
-    const result = this._getUserValue(data, currentUser, "ACCOUNT")
+    //using ADDRESS not NAME to test if user is listed in the json
+    const result = this._getUserValue(data, currentUser, "ADDRESS")
     //console.log('result', result)
     if (result === undefined) {
       return false
@@ -732,9 +732,9 @@ const JSONops = {
 
   //just returning undefined not good enough
   isSafeToAddPlayerToJSON: function(data, currentUser) {
-    //using ACCOUNT not NAME to test if user is listed in the json
+    //using ADDRESS not NAME to test if user is listed in the json
     //need to check multiple fields to ensure user not already listed
-    const accountNo = this._getUserValue(data, currentUser, "ACCOUNT")
+    const accountNo = this._getUserValue(data, currentUser, "ADDRESS")
     const currentChallengerName = this._getUserValue(data, currentUser, "CURRENTCHALLENGERNAME")
     const currentid = this._getUserValue(data, currentUser, "id")
     ////5 is arbitrary. if < 5 no account number was returned

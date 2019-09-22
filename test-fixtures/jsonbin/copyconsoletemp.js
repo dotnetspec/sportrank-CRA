@@ -17,7 +17,7 @@ export const copyconsoletemp =
     "CURRENTCHALLENGERNAME": "AVAILABLE",
     "CURRENTCHALLENGERID": 0,
     "CURRENTCHALLENGERADDRESS": "",
-    "ACCOUNT": {
+    "ADDRESS": {
       "address": "0xD99eB29299CEF8726fc688180B30E634827b3078",
       "user": {
         "0": {
@@ -53,7 +53,7 @@ export const copyconsoletemp =
     "CURRENTCHALLENGERNAME": "AVAILABLE",
     "CURRENTCHALLENGERID": 0,
     "CURRENTCHALLENGERADDRESS": "",
-    "ACCOUNT": {
+    "ADDRESS": {
       "creationDate": "12345678",
       "balance": "99.981",
       "owner": "0xDdF507E108C94B0348fb42658D527e7EfD51672d",
@@ -74,7 +74,7 @@ export const copyconsoletemp =
     "CURRENTCHALLENGERNAME": "AVAILABLE",
     "CURRENTCHALLENGERID": 0,
     "CURRENTCHALLENGERADDRESS": "",
-    "ACCOUNT": {
+    "ADDRESS": {
       "creationDate": "12345678",
       "balance": "99.981",
       "owner": "0x48DF2ee04DFE67902B83a670281232867e5dC0Ca",
@@ -95,7 +95,7 @@ export const copyconsoletemp =
     "CURRENTCHALLENGERNAME": "AVAILABLE",
     "CURRENTCHALLENGERID": 0,
     "CURRENTCHALLENGERADDRESS": "",
-    "ACCOUNT": {
+    "ADDRESS": {
       "creationDate": "12345678",
       "balance": "99.981",
       "owner": "0x48DF2ee04DFE67902B83a670281232867e5dC0CB",
@@ -116,7 +116,7 @@ export const copyconsoletemp =
     "CURRENTCHALLENGERNAME": "AVAILABLE",
     "CURRENTCHALLENGERID": 0,
     "CURRENTCHALLENGERADDRESS": "",
-    "ACCOUNT": {
+    "ADDRESS": {
       "creationDate": "12345678",
       "balance": "99.981",
       "owner": "0x48DF2ee04DFE67902B83a670281232867e5dC0CC",

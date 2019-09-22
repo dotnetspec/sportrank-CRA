@@ -31,10 +31,10 @@ test.skip('_loadsetJSONData data is ranking data', done => {
   //await expect(fetch(httpStr)).resolves.toMatchSnapshot();
   //await expect(__loadsetJSONData(rankid, _loadsetJSONData_callback)).resolves.toMatchSnapshot();
   function _loadsetJSONData_callback(data) {
-    console.log('data', data[0].ACCOUNT);
-     expect(data[0].ACCOUNT).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
+    console.log('data', data[0].ADDRESS);
+     expect(data[0].ADDRESS).toMatch("0xe39b0Db1DeAE67c303A2C2eC8894A4c36175B11");
      //toMatchSnapshot causes timeout error
-     //expect(data[0].ACCOUNT).resolves.toMatchSnapshot();
+     //expect(data[0].ADDRESS).resolves.toMatchSnapshot();
      done();
    }
    _loadsetJSONData(rankid, _loadsetJSONData_callback);
