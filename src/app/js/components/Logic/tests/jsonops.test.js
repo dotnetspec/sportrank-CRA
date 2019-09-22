@@ -226,10 +226,11 @@ fit('JSONops createNewUserInJSON', () => {
   //non-existent made up account no!
   const accountno = '0x23fCa109110F043847bb0Ca87805f3642D8B7Dd8'
   const description = 'test Mr.testuser1 add';
-  //good data
+  //copyconsoletemp good data
   let result = JSONops.createNewUserInJSON(copyconsoletemp, currentUser, contactno, email, accountno, description, rankingID);
   expect(result.jsonRS[6].NAME).toEqual('testuser1');
   expect(result.jsonRS[6].ADDRESS).toEqual('0x23fCa109110F043847bb0Ca87805f3642D8B7Dd8');
+  expect(result.jsonRS[6].CURRENTCHALLENGERADDRESS).toEqual('');
 })
 
 it('JSONops isPlayerListedInJSON', () => {

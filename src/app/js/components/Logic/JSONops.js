@@ -435,6 +435,7 @@ const JSONops = {
       "DESCRIPTION": description,
       "CURRENTCHALLENGERNAME": "AVAILABLE",
       "CURRENTCHALLENGERID": 0,
+      "CURRENTCHALLENGERADDRESS": '',
       "ADDRESS": accountno,
       "RANK": rankLastPosition,
       "EMAIL": email,
