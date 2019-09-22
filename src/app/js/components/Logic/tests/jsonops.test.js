@@ -7,6 +7,11 @@ import '@testing-library/jest-dom/extend-expect'
 import JSONops from '../JSONops'
 import {Jsonio, _sendJSONDataWithRankingID}  from '../../SideEffects/io/Jsonio'
 import { render, cleanup, fireEvent, getByText, container, waitForElement, getByLabelText } from '@testing-library/react'
+import {
+  copyconsoletemp
+} from '../../../../../../test-fixtures/jsonbin/copyconsoletemp'
+
+
 jest.mock("../../SideEffects/io/Jsonio");
 //NB: a higher ranking has a lower ranking number
 //app is thinking in terms of integers (not rankings like a squash player!)
@@ -331,6 +336,57 @@ it('JSONops _updateDoChallengeJSONinJson test ', async () => {
   });
   expect(playerObjToTest[0].CURRENTCHALLENGERNAME).toEqual('player3');
 })
+
+//NB: Using the new data set here
+it('JSONops _updateDoChallengeJSONinJson test with CURRENTCHALLENGERADDRESS', async () => {
+  //these names could be anything - e.g. testUser5 etc.
+  //the names don't relate to the accounts directly (only the addresses do)
+  const currentUser = 'GanacheAcct4';
+  const selectedOpponent = 'GanacheAcct5';
+  const fromJson = JSONops._updateDoChallengeJSONinJson(rankingID, currentUser, selectedOpponent, copyconsoletemp);
+    var playerObjToTest = fromJson.filter(function(playerObj) {
+    return playerObj.NAME === 'GanacheAcct4';
+  });
+  //console.log('playerObj', playerObjToTest);
+  //array index is always [0] cos above only returns 1 object
+  expect(playerObjToTest[0].CURRENTCHALLENGERNAME).toEqual('GanacheAcct5');
+  expect(playerObjToTest[0].CURRENTCHALLENGERADDRESS).toEqual('0x48DF2ee04DFE67902B83a670281232867e5dC0CC');
+})
+
+it('JSONops _updateEnterResultJSON test with CURRENTCHALLENGERADDRESS', async () => {
+  //these names could be anything - e.g. testUser5 etc.
+  //the names don't relate to the accounts directly (only the addresses do)
+  const currentUser = 'GanacheAcct4';
+  const selectedOpponent = 'GanacheAcct5';
+  const playerNameOnRowClicked = 'GanacheAcct4';
+  const selectedOpponentRank = 5;
+  const fromJson = JSONops._updateDoChallengeJSONinJson(rankingID, currentUser, selectedOpponent, copyconsoletemp);
+    var playerObjToTest = fromJson.filter(function(playerObj) {
+    return playerObj.NAME === 'GanacheAcct4';
+  });
+  //console.log('playerObj', playerObjToTest);
+  //array index is always [0] cos above only returns 1 object
+  expect(playerObjToTest[0].CURRENTCHALLENGERNAME).toEqual('GanacheAcct5');
+  expect(playerObjToTest[0].CURRENTCHALLENGERADDRESS).toEqual('0x48DF2ee04DFE67902B83a670281232867e5dC0CC');
+  expect(playerObjToTest[0].CURRENTCHALLENGERID).toEqual(6);
+//rankingID, currentUser, currentUserRank, playerNameOnRowClicked, selectedOpponentRank, data)
+  const fromJson2 = JSONops._updateEnterResultJSON(rankingID, playerObjToTest[0].NAME, playerObjToTest[0].RANK, playerNameOnRowClicked, selectedOpponentRank, copyconsoletemp);
+    //iterate through all the objects in the json and return the one matching 'GanacheAcct4'
+    var playerObjToTest2 = fromJson2.filter(function(playerObj) {
+    return playerObj.NAME === 'GanacheAcct4';
+  });
+  //console.log('playerObj', playerObjToTest2);
+  //array index is always [0] cos above only returns 1 object
+  expect(playerObjToTest[0].CURRENTCHALLENGERNAME).toEqual('AVAILABLE');
+  expect(playerObjToTest[0].CURRENTCHALLENGERADDRESS).toEqual('');
+  expect(playerObjToTest[0].CURRENTCHALLENGERID).toEqual(0);
+
+  expect(playerObjToTest2[0].CURRENTCHALLENGERNAME).toEqual('AVAILABLE');
+  expect(playerObjToTest2[0].CURRENTCHALLENGERADDRESS).toEqual('');
+  expect(playerObjToTest2[0].CURRENTCHALLENGERID).toEqual(0);
+})
+
+
 
 //helper functions
 function filterJson(json, filterText){
