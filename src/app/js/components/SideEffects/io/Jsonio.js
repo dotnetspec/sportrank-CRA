@@ -39,6 +39,7 @@ import axios from 'axios';
         req.open("PUT", httpString, true);
         req.setRequestHeader("Content-type", "application/json");
         req.setRequestHeader("secret-key", "$2a$10$HIPT9LxAWxYFTW.aaMUoEeIo2N903ebCEbVqB3/HEOwiBsxY3fk2i");
+        req.setRequestHeader("collection-id", "5d7deab3371673119fab12a6");
         let myJsonString = JSON.stringify(data);
         console.log('httpString, data in _sendJSONDataWithRankingID', httpString, data);
 
@@ -63,28 +64,23 @@ import axios from 'axios';
 //https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 //REVIEW: Possibly implement requestConfig later ...
 
-const requestConfig = {
-        method: 'GET',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-        // ,
-        // body: JSON.stringify({
-        //   'test',
-        //   'test'
-        // })
-      };
-
 
  export async function getDefaultRankingList (rankingDefault, getDefaultRankingList_callback) {
       //export const getDefaultRankingList = async (rankingDefault, getDefaultRankingList_callback) => {
         try {
           let httpStr = 'https://api.jsonbin.io/b/' + rankingDefault + '/latest';
-          axios.get(httpStr)
+          var requestConfig = {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'secret-key': '$2a$10$HIPT9LxAWxYFTW.aaMUoEeIo2N903ebCEbVqB3/HEOwiBsxY3fk2i',
+                'collection-id': '5d7deb68371673119fab12d7'
+              }
+            }
+          axios.get(httpStr, requestConfig)
           .then(res => {
             const json = res.data;
-            //console.log('json', json)
+            console.log('json', json)
             getDefaultRankingList_callback(json)
             //return checkUndefined(json);
             //return json;
@@ -109,14 +105,15 @@ const requestConfig = {
   console.log('newrankId IN _loadsetJSONData', newrankId);
       try {
             let httpStr = 'https://api.jsonbin.io/b/' + newrankId + '/latest';
-            var obj = {
+            var requestConfig = {
                 method: 'GET',
                 headers: {
                   'Content-Type': 'application/json',
-                  'secret-key': '$2a$10$HIPT9LxAWxYFTW.aaMUoEeIo2N903ebCEbVqB3/HEOwiBsxY3fk2i'
+                  'secret-key': '$2a$10$HIPT9LxAWxYFTW.aaMUoEeIo2N903ebCEbVqB3/HEOwiBsxY3fk2i',
+                  'collection-id': '5d7deab3371673119fab12a6'
                 }
               }
-            await fetch(httpStr, obj)
+            await fetch(httpStr, requestConfig)
                .then((response) => response.json())
                .then((responseJson) => {
                  if(responseJson.length !== 0){
@@ -130,23 +127,32 @@ const requestConfig = {
             }
 }
 
- export async function _loadsetRankingListJSONData (rankingDefault, _loadsetRankingListJSONData_callback){
-//REVIEW: following is attempt to refactor fetchjson
-//await fetchJSON(rankingDefault, _loadsetRankingListJSONData_callback);
-  try {
-          let httpStr = 'https://api.jsonbin.io/b/' + rankingDefault + '/latest';
-          await fetch(httpStr, requestConfig)
-           .then((response) => response.json())
-           .then((responseJson) => {
-             if(responseJson.length !== 0){
-               responseJson = checkUndefined(responseJson);
-               _loadsetRankingListJSONData_callback(responseJson);
-              }
-           })
-        }catch (err) {
-             return console.error(err);
-          }
-}
+//  export async function _loadsetRankingListJSONData (rankingDefault, _loadsetRankingListJSONData_callback){
+// //REVIEW: following is attempt to refactor fetchjson
+// //await fetchJSON(rankingDefault, _loadsetRankingListJSONData_callback);
+//   try {
+//           let httpStr = 'https://api.jsonbin.io/b/' + rankingDefault + '/latest';
+//           var requestConfig = {
+//               method: 'GET',
+//               headers: {
+//                 'Content-Type': 'application/json',
+//                 'secret-key': '$2a$10$HIPT9LxAWxYFTW.aaMUoEeIo2N903ebCEbVqB3/HEOwiBsxY3fk2i',
+//                 'collection-id': '5d7deb68371673119fab12d7'
+//               }
+//             }
+//           await fetch(httpStr, requestConfig)
+//            .then((response) => response.json())
+//            .then((responseJson) => {
+//              if(responseJson.length !== 0){
+//                responseJson = checkUndefined(responseJson);
+//                console.log('responseJson IN _loadsetRankingListJSONData', responseJson);
+//                _loadsetRankingListJSONData_callback(responseJson);
+//               }
+//            })
+//         }catch (err) {
+//              return console.error(err);
+//           }
+// }
 
 
 
@@ -183,6 +189,7 @@ const requestConfig = {
       ACTIVE: true,
       DESCRIPTION: description,
       CURRENTCHALLENGERNAME: "AVAILABLE",
+      CURRENTCHALLENGERADDRESS: "",
       CURRENTCHALLENGERID: 0,
       ADDRESS: account,
       EMAIL: email,
