@@ -152,11 +152,12 @@ _continueClick = () => {
 
                   // get a gas estimate before sending the transaction
                   //const gasEstimate = await editAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
-                  const gasEstimate = await estimateGas();
+                  //const gasEstimate = await estimateGas();
                   //REVIEIW: Not sure this is doing anything affecting app as all the work
                   //done in json currently:
                   //gasEstimate, usernameHash, updatedContactno, updatedEmail, updatedDescription, newrankId, updatedImageHash
-                  const result = await newRankingSendToContract(gasEstimate, usernameHash, this.props.newrankId, updatedImageHash);
+                  console.log('usernameHash', usernameHash);
+                  const result = await newRankingSendToContract(usernameHash, this.props.newrankId, updatedImageHash);
                    // check result status. if status is false or '0x0', show user the tx details to debug error
                    // if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
                    //   return this.setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });

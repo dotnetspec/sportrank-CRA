@@ -10,27 +10,36 @@ import web3 from '../../../../../web3';
   //const account = await getWeb3Accounts();
   //const newRanking = await DSportRank.methods.editAccount(usernameHash, updatedDescription, newrankId, updatedImageHash);
 
-  export const newRankingSendToContract = async (gasEstimate, usernameHash, newrankId, updatedImageHash) => {
+  export const newRankingSendToContract = async (usernameHash, newrankId, updatedImageHash) => {
     //const account = await getWeb3Accounts();
     //NB: this might be just web3.selectedAddress; outside of local test environment
     const account = web3.givenProvider.selectedAddress;
     //console.log('account', account)
-    //const newgasEstimate = await DSportRank.methods.editAccount.estimateGas({ from: account, gas: 10000000000 });
+    //const newgasEstimate = await DSportRank.methods.editAccount.estimateGas({ from: account});
+
+    DSportRank.methods.editAccount(usernameHash, '', '', '', newrankId, updatedImageHash).estimateGas({from: account})
+.then(function(gasAmount){
+  const newRanking =  DSportRank.methods.editAccount(usernameHash, '', '', '', newrankId, updatedImageHash);
+  //const transGasEstimate = await newRanking.gasEstimate();
+  //return await challenge.send({ from: await getWeb3Accounts(), gas: gasEstimate + 100000 });
+  newRanking.send({
+    from: account, gas: gasAmount + 1000
+  })
+  .on('transactionHash', function(hash){
+      console.log('hash', hash);
+  })
+  .on('receipt', function(receipt){
+      console.log('receipt', receipt);
+  })
+  .on('confirmation', function(confirmationNumber, receipt){
+    //return receipt;
+    //console.log('confirmationNumber', confirmationNumber);
+  })
+})
+.catch(function(error){
+    console.log('error', error)
+});
+
     //console.log('edit account params', '1', usernameHash, '2', updatedContactno, '3', updatedEmail, '4', updatedDescription, '5', newrankId, '6', updatedImageHash)
-    const newRanking = await DSportRank.methods.editAccount(usernameHash, '', '', '', newrankId, updatedImageHash);
-    //const transGasEstimate = await newRanking.gasEstimate();
-    //return await challenge.send({ from: await getWeb3Accounts(), gas: gasEstimate + 100000 });
-    newRanking.send({
-      from: account, gas: gasEstimate + 100000
-    })
-    .on('transactionHash', function(hash){
-        console.log('hash', hash);
-    })
-    .on('receipt', function(receipt){
-        console.log('receipt', receipt);
-    })
-    .on('confirmation', function(confirmationNumber, receipt){
-      //return receipt;
-      //console.log('confirmationNumber', confirmationNumber);
-    })
+
 }

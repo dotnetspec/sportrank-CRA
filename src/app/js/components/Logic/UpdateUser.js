@@ -67,11 +67,10 @@ class UpdateUser extends Component {
           // //nxt 2 lines commented to avoid compile err
           // //const gasEstimate = await editAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
           // const account = await getWeb3Accounts();
+          //console.log('this.props.account.owner', this.props.account.owner);
           const gasEstimate = await estimateGas();
           // //const result = await editAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
           // const result = await editAccount.send({ from: account,  gas: gasEstimate + 1000 });
-          //console.log('this.props.account', this.props.account);
-
           const result = updateUserSendToContract(gasEstimate, this.props.account.owner, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash, updateUserSendToContractCB)
           //const result = updateUserSendToContract(gasEstimate, this.props.account.owner, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash)
 
