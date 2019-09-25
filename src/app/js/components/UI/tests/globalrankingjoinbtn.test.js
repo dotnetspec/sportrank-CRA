@@ -8,6 +8,9 @@ import '@testing-library/jest-dom/extend-expect'
 import GlobalRankingJoinBtn from '../buttons/GlobalRankingJoinBtn'
 import React from 'react'
 import { render, fireEvent, cleanup } from '@testing-library/react'
+import {
+  rankingduplicateusers
+} from '../../../../../../test-fixtures/jsonbin/rankingduplicateusers'
 
 //originally based on example:
 //https://testing-library.com/docs/dom-testing-library/example-intro

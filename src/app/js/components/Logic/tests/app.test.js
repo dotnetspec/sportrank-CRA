@@ -291,7 +291,7 @@ describe('<App/> ', () => {
                   }
                   />);
                   //debug();
-                  expect(getByText(/List All Rankings/i)).toHaveTextContent('List All Rankings');
+                  expect(getByText(/Home\/List All/i)).toHaveTextContent('Home\/List All');
                   expect(getByText(/Update Profile/i)).toBeInTheDocument();
                   expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument();
                 });
@@ -402,16 +402,16 @@ describe('<App/> ', () => {
                     container,
                     getByValue
                   } = renderWithRouter( < App / > );
-                  //expect(container.innerHTML).toMatch('List All Rankings')
-                  expect(getByValue(container, 'List All Rankings').toHaveTextContent('List All Rankings'))
+                  //expect(container.innerHTML).toMatch('Home\/List All')
+                  expect(getByValue(container, 'Home\/List All').toHaveTextContent('Home\/List All'))
                   //console.log(container.classList, container.id, container.innerHTML);
                   //expect(getByTestId('ListAllRankings')).toHaveAttribute('enabled')
                   //const container = render(<BrowserRouter><App /></BrowserRouter>)
                   //looking for text that hasn't been rendered just causes error
                   //expect(getByText("De-Activate")).not.toBeVisible();
-                  //expect(getByText("List All Rankings")).toBeVisible();
-                  //expect(document.querySelector('.ListAllRankings').innerHTML).toBe("List All Rankings")
-                  //expect(getByTestId('ListAllRankings')).toHaveTextContent('List All Rankings')
-                  //expect(getByText('List All Rankings')).toBeInTheDocument()
+                  //expect(getByText("Home\/List All")).toBeVisible();
+                  //expect(document.querySelector('.ListAllRankings').innerHTML).toBe("Home\/List All")
+                  //expect(getByTestId('ListAllRankings')).toHaveTextContent('Home\/List All')
+                  //expect(getByText('Home\/List All')).toBeInTheDocument()
                 });
               });

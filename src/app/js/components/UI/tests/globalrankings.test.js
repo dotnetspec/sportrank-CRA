@@ -47,7 +47,7 @@ const props  = {
       //do the tests
     it('RTL - check initial display', () => {
              const { getByText, debug } = renderWithRouter(<GlobalRankings {...props}/>);
-             //expect(getByText(/List All Rankings/i)).toHaveTextContent('List All Rankings')
+             //expect(getByText(/Home\/List All/i)).toHaveTextContent('Home\/List All')
              // console.log(globalRankings, props.rankingListJSONdata)
              //debug();
              expect(getByText(/mplayer1ra/i)).toBeInTheDocument();
@@ -84,7 +84,7 @@ const props  = {
           expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
           expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/De-Activate?/i)
           expect(getByText(/Update Profile/i)).toBeInTheDocument();
-          expect(getByText(/List All Rankings/i)).toBeInTheDocument()
+          expect(getByText(/Home\/List All/i)).toBeInTheDocument()
     });
 
     xit('specificRankingOptionBtns - false does not display', () => {
@@ -99,7 +99,7 @@ const props  = {
           const { getByText } = renderWithRouter(<GlobalRankings {...props}/>);
           expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument();
           expect(getByText(/Update Profile/i)).toBeInTheDocument();
-          expect(getByText(/List All Rankings/i)).toBeInTheDocument()
+          expect(getByText(/Home\/List All/i)).toBeInTheDocument()
     });
 
   xit('RTL - isCurrentUserActive false - Display Re-Activate', () => {

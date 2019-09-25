@@ -24,7 +24,7 @@ import { withRouter } from 'react-router-dom';
              data-cy='ListAllRankings'
              data-testid='ListAllRankings'
              onClick={(e) => _handleRankingList()}>
-               List All Rankings
+               Home/List All
              </Button>
          );
  };

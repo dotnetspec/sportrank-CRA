@@ -19,7 +19,7 @@ setResultInfoForDisplayCB: jest.fn()
     {...props}
     />
     </BrowserRouter>);
-  fireEvent.click(getByText(/List All Rankings/i));
+  fireEvent.click(getByText(/Home\/List All/i));
   //we only test the cb inside the function not the
   //_handleRankingList event function that calls it
   expect(props.onListAllChildClick.mock.calls.length).toBe(1);

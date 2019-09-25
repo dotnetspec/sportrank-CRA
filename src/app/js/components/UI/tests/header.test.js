@@ -68,7 +68,7 @@ describe('Header UI', () => {
                 ...props
               }
               />);
-              expect(getByText(/List All Rankings/i)).toHaveTextContent('List All Rankings');
+              expect(getByText(/Home\/List All/i)).toHaveTextContent('Home\/List All');
               expect(getByText(/Update Profile/i)).toBeInTheDocument();
               expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
             });
@@ -119,7 +119,7 @@ describe('Header UI', () => {
                     expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
                     expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/De-Activate?/i);
                     expect(getByText(/Update Profile/i)).toBeInTheDocument();
-                    expect(getByText(/List All Rankings/i)).toBeInTheDocument()
+                    expect(getByText(/Home\/List All/i)).toBeInTheDocument()
                   });
 
                   it('specificRankingOptionBtns - true, player active false, display Re-Activate', () => {
@@ -139,7 +139,7 @@ describe('Header UI', () => {
                         expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
                         expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/Re-Activate?/i);
                         expect(getByText(/Update Profile/i)).toBeInTheDocument();
-                        expect(getByText(/List All Rankings/i)).toBeInTheDocument()
+                        expect(getByText(/Home\/List All/i)).toBeInTheDocument()
                       });
 
                 it('specificRankingOptionBtns - false does not display', () => {
@@ -159,7 +159,7 @@ describe('Header UI', () => {
                         ...props
                       }
                       />);
-                      expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument(); expect(getByText(/Update Profile/i)).toBeInTheDocument(); expect(getByText(/List All Rankings/i)).toBeInTheDocument()
+                      expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument(); expect(getByText(/Update Profile/i)).toBeInTheDocument(); expect(getByText(/Home\/List All/i)).toBeInTheDocument()
                     });
 
                   it('RTL - isCurrentUserActive false - Display Re-Activate', () => {
@@ -242,7 +242,7 @@ describe('Header UI', () => {
                               expect(document.querySelector('[data-testid="activatebtn-input"]')).not.toBeInTheDocument();
                               //expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/De-Activate?/i)
                               expect(getByText(/Update Profile/i)).toBeInTheDocument();
-                              expect(getByText(/List All Rankings/i)).toBeInTheDocument()
+                              expect(getByText(/Home\/List All/i)).toBeInTheDocument()
                             });
 
                           it('specificRankingOptionBtns - user in json - display', () => {
@@ -267,6 +267,6 @@ describe('Header UI', () => {
                                 expect(document.querySelector('[data-testid="activatebtn-input"]')).toBeInTheDocument();
                                 expect(document.querySelector('[data-testid="activatebtn-input"]')).toHaveTextContent(/De-Activate?/i);
                                 expect(getByText(/Update Profile/i)).toBeInTheDocument();
-                                expect(getByText(/List All Rankings/i)).toBeInTheDocument()
+                                expect(getByText(/Home\/List All/i)).toBeInTheDocument()
                               });
                           });

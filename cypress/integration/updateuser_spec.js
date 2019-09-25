@@ -4,7 +4,7 @@ describe("updateduser: User Profile Test", function(){
   //cy.visit('/')
   cy.GlobalSeed()
   //just to illustrate end() function
-  //cy.contains('List All Rankings').click().end()
+  //cy.contains('Home\/List All').click().end()
   cy.contains('Update Profile').click()
   })
 
