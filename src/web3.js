@@ -33,7 +33,7 @@ else {
   //below log relevant outside local
   //console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
   //below necessary for local tests
-  console.log('NB: Test Environment - Ganache GUI')
+  //console.log('NB: Test Environment - Ganache GUI')
   //window.web3 = new Web3(Web3.givenProvider || 'wss://rinkeby.infura.io/ws' || 'ws://localhost:8546' || 'https://localhost:8546', null, {});
   window.web3 = new Web3(Web3.givenProvider || 'HTTP://127.0.0.1:7545' || 'wss://rinkeby.infura.io/ws' || 'ws://localhost:8546' || 'https://localhost:8546', null, {});
 }
