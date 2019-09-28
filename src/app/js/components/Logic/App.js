@@ -22,7 +22,9 @@ import {
 import web3 from '../../../../web3';
 import DSportRank from '../../../../ABIaddress';
 import ChangeState from './ChangeState';
-import {formatEth} from '../../utils';
+import {
+  formatEth
+} from '../../utils';
 
 /**
  * Functional component representing the highest order component. Any user
@@ -36,36 +38,34 @@ export function App({
   props
 }) {
   const [user, setUser] = useState({});
-  const [userName, setUserName] = useState('');
+  const [description, setdescription] = useState({});
+  const [selectedOpponentDetails, setselectedOpponentDetails] = useState({});
   const [account, setAccount] = useState({});
   const [error, setError] = useState({});
   const [userAccounts, setuserAccounts] = useState([])
-  const [balance, setBalance] = useState(0)
   const [data, setdata] = useState([])
-  const [updatedExtAcctBalCB, setupdatedExtAcctBalCB] = useState(0)
-  const [isLoading, setIsLoading] = useState(true);
   const [userRankingLists] = useState([]);
+  const [rankingListData, setrankingListData] = useState([]);
+  const [ranknameHasChanged, setranknameHasChanged] = useState(false);
+  const [specificRankingOptionBtns, setspecificRankingOptionBtns] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isUserInJson, setIsUserInJson] = useState(false);
   const [isLoadingJSON, setisLoadingJSON] = useState(true);
   const [isCurrentUserActive, setIsCurrentUserActive] = useState(false);
   const [isCurrentUserActiveCB] = useState(false);
   const [isRankingIDInvalid] = useState(false);
-  const [newrankId, setnewrankId] = useState('');
-  const [rankingListData, setrankingListData] = useState([]);
   const [viewingOnlyCB, setviewingOnlyCB] = useState(true);
+  const [userName, setUserName] = useState('');
   const [contactno, setcontactno] = useState('');
   const [email, setemail] = useState('');
-  const [description, setdescription] = useState({});
-  const [specificRankingOptionBtns, setspecificRankingOptionBtns] = useState(false);
-  const [rank, setrank] = useState('1');
-  const [ranknameHasChanged, setranknameHasChanged] = useState(false);
+  const [newrankId, setnewrankId] = useState('');
   const [resultInfoForDisplay, setResultInfoForDisplay] = useState('');
-  const [selectedOpponentDetails, setselectedOpponentDetails] = useState({});
-
+  const [rank, setrank] = useState('1');
+  const [updatedExtAcctBalCB, setupdatedExtAcctBalCB] = useState(0)
+  const [balance, setBalance] = useState(0)
 
   //REVIEW: set as a global var. Perhaps change to environment var ?:
   const rankingDefault = '5c36f5422c87fa27306acb52';
-
   //cb from DoChallenge.js once an opponent has been selected
   const updateOpponentDetailsCB = (opponent) => {
     setselectedOpponentDetails(opponent.name);
@@ -110,9 +110,6 @@ export function App({
   //in time for getNewRankingID() to put it in the json
   const setuserNameCB = (name) => {
     setUserName(name);
-    //this was originally
-    //may need to account for this
-    //setUser(name);
   }
   const setcontactNoCB = (number) => {
     setcontactno(number);
@@ -151,26 +148,21 @@ export function App({
    */
   const _onError = (err, source) => {
     if (source) err.source = source;
-    //setState({ error: err });
     setError(err);
     props.history.push('/whoopsie');
   }
   //#endregion
 
   const processStateAfter_loadCurrentUserAccounts = (userAcctArr) => {
-    //console.log('selectedAddress', web3.givenProvider.selectedAddress)
-    console.log('userAcctArr before clean', userAcctArr)
     userAcctArr = ChangeState.cleanUpUserSRAccountData(userAcctArr);
     console.log('userAcctArr after clean', userAcctArr)
     if (userAcctArr) {
       setuserAccounts(userAcctArr);
-      //console.log('userAcctArr[0].userAccount', userAcctArr[0])
       //REVIEW: sort out this duplication
       setAccount(userAcctArr[0]);
       setUser(userAcctArr[0])
       setError(userAcctArr[0].error);
       setUserName(userAcctArr[0].username);
-      //console.log(userAcctArr[0])
       if (userAcctArr[0].data !== undefined) {
         setIsUserInJson(JSONops.isPlayerListedInJSON(userAcctArr[0].data, userAcctArr[0].username));
         setIsCurrentUserActive(JSONops._getUserValue(userAcctArr[0].data, userAcctArr[0].username, "ACTIVE"));
@@ -202,87 +194,88 @@ export function App({
 
       const mapTheAccounts = async (accountsArray) => {
         web3.eth.getAccounts()
-        .then(function(expectingAResult){
+          .then(function(expectingAResult) {
             return expectingAResult;
-        })
-        .then(async function(accountsArray){
-          //based on: https://flaviocopes.com/javascript-async-await-array-map/
-          //get the hashes by async
-          //each separate piece of async data needs these parts ...
-          const functionWithPromise = item => { //a function that returns a promise
-            return Promise.resolve(DSportRank.methods.owners(item).call())
-          }
-
-          const anAsyncFunction = async item => {
-            return await functionWithPromise(item)
-          }
-          //wait for the async hash calls to resolve for all accounts
-          const getData = async () => {
-            return await Promise.all(accountsArray.map(item => anAsyncFunction(item)))
-          }
-          const data = await getData()
-          //each separate piece of async data needs these parts (above)  ...
-
-          //use the hashes to get the user data from contract by async
-          const functionGetUserDataWithPromise = item => { //a function that returns a promise
-            return Promise.resolve(DSportRank.methods.users(item).call());
-          }
-
-          const anAsyncFunctionToGetUserData = async item => {
-            return await functionGetUserDataWithPromise(item)
-          }
-          //wait for the async hash calls to resolve for all users
-          const getUserData = async () => {
-            return await Promise.all(data.map(item => anAsyncFunctionToGetUserData(item)))
-          }
-
-          const userdata = await getUserData()
-          //console.log('user data in the list', userdata)
-
-          const functionWithPromiseToGetBal = item => { //a function that returns a promise
-            return Promise.resolve(web3.eth.getBalance(item.owner));
-          }
-
-          const anAsyncFunctionToGetBal = async item => {
-            return await functionWithPromiseToGetBal(item)
-          }
-          //wait for the async hash calls to resolve for all accounts
-          //and get the balances ...
-          const getBalances = async () => {
-            return await Promise.all(userdata.map(item => anAsyncFunctionToGetBal(item)))
-          }
-          const balances = await getBalances();
-          //NB: the mapping here affects getUserData() I think because it
-          //finishes before getUserData and therefore that array already has
-          //formatted balances from here:
-          userdata.map(addBalToUsers);
-          function addBalToUsers(item, index){
-            let balAsEth =  web3.utils.fromWei(balances[index], 'ether');
-            balAsEth =  formatEth(balAsEth, 3);
-            const newItem = item.balance = balAsEth;
-            return newItem;
-          }
-          //originally appeared that would have to create a new array
-          //with the balances mapped ... but this was unnecessary ...
-          return userdata;
-          //return usersWithBal;
-        }).then(function(resolvedUserData){
-                  processStateAfter_loadCurrentUserAccounts(resolvedUserData);
-                  setIsLoading(false);
-              }).catch(function(error) {
-                   console.log('error is:', error)
-              }).then(function() {
-
-              });
-            }
-        await mapTheAccounts();
-        if(window.ethereum){
-          window.ethereum.on('accountsChanged', async function () {
-            // Time to reload your interface with accounts[0]!
-            await mapTheAccounts();
           })
-        }
-        setIsLoading(false);
+          .then(async function(accountsArray) {
+            //based on: https://flaviocopes.com/javascript-async-await-array-map/
+            //get the hashes by async
+            //each separate piece of async data needs these parts ...
+            const functionWithPromise = item => { //a function that returns a promise
+              return Promise.resolve(DSportRank.methods.owners(item).call())
+            }
+
+            const anAsyncFunction = async item => {
+              return await functionWithPromise(item)
+            }
+            //wait for the async hash calls to resolve for all accounts
+            const getData = async () => {
+              return await Promise.all(accountsArray.map(item => anAsyncFunction(item)))
+            }
+            const data = await getData()
+            //each separate piece of async data needs these parts (above)  ...
+
+            //use the hashes to get the user data from contract by async
+            const functionGetUserDataWithPromise = item => { //a function that returns a promise
+              return Promise.resolve(DSportRank.methods.users(item).call());
+            }
+
+            const anAsyncFunctionToGetUserData = async item => {
+              return await functionGetUserDataWithPromise(item)
+            }
+            //wait for the async hash calls to resolve for all users
+            const getUserData = async () => {
+              return await Promise.all(data.map(item => anAsyncFunctionToGetUserData(item)))
+            }
+
+            const userdata = await getUserData()
+            //console.log('user data in the list', userdata)
+
+            const functionWithPromiseToGetBal = item => { //a function that returns a promise
+              return Promise.resolve(web3.eth.getBalance(item.owner));
+            }
+
+            const anAsyncFunctionToGetBal = async item => {
+              return await functionWithPromiseToGetBal(item)
+            }
+            //wait for the async hash calls to resolve for all accounts
+            //and get the balances ...
+            const getBalances = async () => {
+              return await Promise.all(userdata.map(item => anAsyncFunctionToGetBal(item)))
+            }
+            const balances = await getBalances();
+            //NB: the mapping here affects getUserData() I think because it
+            //finishes before getUserData and therefore that array already has
+            //formatted balances from here:
+            userdata.map(addBalToUsers);
+
+            function addBalToUsers(item, index) {
+              let balAsEth = web3.utils.fromWei(balances[index], 'ether');
+              balAsEth = formatEth(balAsEth, 3);
+              const newItem = item.balance = balAsEth;
+              return newItem;
+            }
+            //originally appeared that would have to create a new array
+            //with the balances mapped ... but this was unnecessary ...
+            return userdata;
+            //return usersWithBal;
+          }).then(function(resolvedUserData) {
+            processStateAfter_loadCurrentUserAccounts(resolvedUserData);
+            setIsLoading(false);
+          }).catch(function(error) {
+            console.log('error is:', error)
+          }).then(function() {
+
+          });
+      }
+      await mapTheAccounts();
+      if (window.ethereum) {
+        window.ethereum.on('accountsChanged', async function() {
+          // Time to reload your interface with accounts[0]!
+          await mapTheAccounts();
+        })
+      }
+      setIsLoading(false);
     }
     fetchData();
   }, []); // Or [someId] (sent as a param to a function) if effect needs props or state (apparently)
@@ -502,8 +495,6 @@ export function App({
       div data-testid = 'loading' > Loading... < /div>
     );
   }
-  //}
-  //#endregion
 }
 
 export default withRouter(App)
