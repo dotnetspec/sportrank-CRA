@@ -41,7 +41,7 @@ export default function GlobalRankingJoinBtn(props) {
         const result = JSONops._setUserValue(tempjson, props.username, "ACTIVE", true);
         props.setrankingJSONdataCB(result);
         //just display as if user had selected 'View'
-        props.setspecificRankingOptionBtnsCB();
+        props.setspecificRankingOptionBtnsCB(true);
         props.history.push('/home/@' + props.username);
       } else {
         //get the data ready with the new user
@@ -51,7 +51,7 @@ export default function GlobalRankingJoinBtn(props) {
           await _sendJSONDataWithRankingID(jsonDataBeforeRender, row.RANKINGID);
         }
         props.setrankingJSONdataCB(jsonDataBeforeRender);
-        props.setspecificRankingOptionBtnsCB();
+        props.setspecificRankingOptionBtnsCB(true);
         //if joining and not yet a member of the ranking home will add the new player to the bottom
         //of the rankings in the selected ladder
         props.history.push('/home/@' + props.username);

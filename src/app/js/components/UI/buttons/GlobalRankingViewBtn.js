@@ -15,7 +15,7 @@ import { Button } from 'react-bootstrap';
     //REVIEW: the naming here.
     //tell Header that the view btn has been clicked
     //so it can display the 'Activate?' btn
-    props.setspecificRankingOptionBtnsCB();
+    props.setspecificRankingOptionBtnsCB(true);
 
     props.setnewrankIdCB(row.RANKINGID);
 

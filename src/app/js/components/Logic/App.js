@@ -80,9 +80,9 @@ export function App({
   }
 
   //Below appears to be relevant to user events not e.g. callbacks that fetch data
-  const setspecificRankingOptionBtnsCB = () => {
+  const setspecificRankingOptionBtnsCB = (bool) => {
     console.log('in setspecificRankingOptionBtns')
-    setspecificRankingOptionBtns(true);
+    setspecificRankingOptionBtns(bool);
   }
   const handleListAllChildClick = () => {
     setspecificRankingOptionBtns(false);
