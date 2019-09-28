@@ -132,7 +132,7 @@ _continueClick = () => {
         //chicken and egg problem getting an initiial json
         //req.send('{"RANKING": "NEWRANKING", "STATUS":"NEW", "id":1}') || {}
         const { account } = this.props;
-        req.send('{"RANKING": "NEWRANKING", "STATUS":"NEW", "id":1, "ACTIVE": false,"RANK": 0,"CURRENTCHALLENGERNAME": "AVAILABLE", "ADDRESS": "' + account + '", "CURRENTCHALLENGERADDRESS": "" }')
+        req.send('{"RANKING": "NEWRANKING", "STATUS":"NEW", "id":1, "ACTIVE": false,"RANK": 0,"CURRENTCHALLENGERNAME": "AVAILABLE", "ACCOUNT": "' + account + '", "CURRENTCHALLENGERADDRESS": "" }')
         }catch (err) {
         // stop loading state and show the error
         console.log(err)

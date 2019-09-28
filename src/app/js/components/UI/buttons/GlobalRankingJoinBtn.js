@@ -3,7 +3,10 @@ import {
   Button
 } from 'react-bootstrap';
 import JSONops from '../../Logic/JSONops'
-import {_loadsetJSONData, _sendJSONDataWithRankingID} from '../../SideEffects/io/Jsonio'
+import {
+  _loadsetJSONData,
+  _sendJSONDataWithRankingID
+} from '../../SideEffects/io/Jsonio'
 /**
  * Functional component representing global ranking join button in the BootstrapTable.
  * The component rendering in this area is controlled by
@@ -18,62 +21,58 @@ export default function GlobalRankingJoinBtn(props) {
 
     //if the user clicks 'Join' then should always be ACTIVE
     props.setOnCallbackisCurrentUserActiveCB(true)
+    //and this needs to be reflected in the json as well as in the UI
+    //see below
 
     props.setnewrankIdCB(row.RANKINGID);
     //only allow this cb to be processed if it's
     //NOT a new user (otherwise overwrites change just made)
     let tempjson = [];
-    const handleCB = (data) =>{
-    //   if (props.username !== ''){
+    const handleCB = async (data) => {
+      //   if (props.username !== ''){
       tempjson = data;
-      //}
+      console.log('tempjson, props.username', tempjson, props.username)
+      const isplayeralreadylisted = JSONops.isPlayerListedInJSON(tempjson, props.username);
+      console.log('already listed?', isplayeralreadylisted);
+      //props.setrankingJSONdataCB(tempjson);
+      //return null;
+      if (isplayeralreadylisted) {
+        //set user to ACTIVE in the json
+        const result = JSONops._setUserValue(tempjson, props.username, "ACTIVE", true);
+        props.setrankingJSONdataCB(result);
+        //just display as if user had selected 'View'
+        props.setspecificRankingOptionBtnsCB();
+        props.history.push('/home/@' + props.username);
+      } else {
+        //get the data ready with the new user
+        //before loading 'Home' page
+        const jsonDataBeforeRender = await preprocessDataBeforeRender(tempjson);
+        if (jsonDataBeforeRender !== undefined) {
+          await _sendJSONDataWithRankingID(jsonDataBeforeRender, row.RANKINGID);
+        }
+        props.setrankingJSONdataCB(jsonDataBeforeRender);
+        props.setspecificRankingOptionBtnsCB();
+        //if joining and not yet a member of the ranking home will add the new player to the bottom
+        //of the rankings in the selected ladder
+        props.history.push('/home/@' + props.username);
+      }
     }
 
     //REVIEW: move to jsonio?
     await _loadsetJSONData(row.RANKINGID, await handleCB);
-    //get the data ready with the new user
-    //before loading 'Home' page
-      const jsonDataBeforeRender = await preprocessDataBeforeRender(tempjson);
-      if(jsonDataBeforeRender !== undefined){
-      await _sendJSONDataWithRankingID(jsonDataBeforeRender, row.RANKINGID);
-      }
-      props.setrankingJSONdataCB(jsonDataBeforeRender);
-      props.setspecificRankingOptionBtnsCB();
-      //props.setviewingOnlyCB(false);
-      //if joining and not yet a member of the ranking home will add the new player to the bottom
-      //of the rankings in the selected ladder
 
-      props.history.push('/home/@' + props.username);
   }
 
   const preprocessDataBeforeRender = async (handleCB) => {
     //if there is a username but it's not listed in the json,
     //add this user to the current list
     //REVIEW: This test may be more consistently handled
-// console.log('about to preprocessDataBeforeRender')
-// console.log('is handleCB defined', handleCB)
-// console.log('props.viewingOnlyCB', props.viewingOnlyCB)
-// console.log('props.username', props.username)
-// console.log('!JSONops.isPlayerListedInJSON', !JSONops.isPlayerListedInJSON(handleCB, props.username))
-// const isPlayerListedAlready = JSONops.isPlayerListedInJSON(handleCB, props.username);
-// console.log('isPlayerListedAlready',isPlayerListedAlready)
-// console.log('!isPlayerListedAlready',!isPlayerListedAlready)
-// console.log('props.account', props.account)
     if (props.username !== '' &&
-      //!(JSONops.isPlayerListedInJSON(handleCB, props.username))
       JSONops.isSafeToAddPlayerToJSON(handleCB, props.username)
-      //&&
-      //props.loadingJSON === false &&
-      //props.viewingOnlyCB === false
-      //props.setviewingOnlyCB(false)
     ) {
-      //console.log('createNewUserInJSON in preprocessDataBeforeRender in home.js')
-      //console.log('props.rankingID in preprocessDataBeforeRender in home.js', props.newrankId)
-      const newUserJsonObj = JSONops.createNewUserInJSON(handleCB, props.username, props.contactno, props.email, props.account, props.description, props.newrankId);
-      //_sendJSONDataWithRankingID(newUserJsonObj, props.newrankId);
-      //console.log('newUserJsonObj', newUserJsonObj);
+      console.log('account in create new', props.account)
+      const newUserJsonObj = JSONops.createNewUserInJSON(handleCB, props.username, props.contactno, props.email, props.account.owner, props.description, props.newrankId);
       return newUserJsonObj.jsonRS;
-      //console.log('player created')
     }
     if (props.isRankingIDInvalid) {
       console.log('in isRankingIDInvalid')
@@ -85,29 +84,15 @@ export default function GlobalRankingJoinBtn(props) {
       return null;
     }
     //if the player isn't listed in the json then add them (only if user clicked 'join')
-    //if (!JSONops.isPlayerListedInJSON(handleCB, props.username)
-    if(JSONops.isSafeToAddPlayerToJSON(handleCB, props.username))
-      {
-      const newUserJsonObj = JSONops.createNewUserInJSON(handleCB, props.username, props.contactno, props.email, props.account, props.description, props.newrankId)
+    if (JSONops.isSafeToAddPlayerToJSON(handleCB, props.username)) {
+      const newUserJsonObj = JSONops.createNewUserInJSON(handleCB, props.username, props.contactno, props.email, props.account.owner, props.description, props.newrankId)
       console.log('newUserJsonObj.jsonRS', newUserJsonObj.jsonRS)
       return newUserJsonObj.jsonRS;
-      } else {
-        console.log('did nothing')
-        return handleCB;
-      }
+    } else {
+      console.log('did nothing')
+      return handleCB;
+    }
   }
-
-  // useEffect(() => {
-  //    //const jsonDataBeforeRender = preprocessDataBeforeRender();
-  //    // console.log('jsonDataBeforeRender', jsonDataBeforeRender);
-  //    // if(JSONops.isDefinedJson(jsonDataBeforeRender)){
-  //    //   //console.log('about to send json to _sendJSONDataWithRankingID', jsonDataBeforeRender, props.newrankId);
-  //    //   _sendJSONDataWithRankingID(jsonDataBeforeRender, props.newrankId);
-  //    //   props.setrankingJSONdataCB(jsonDataBeforeRender);
-  //      //set to viewingOnly and re-render
-  //      //props.setviewingOnlyCB(true);
-  //    //}
-  //   }, [])
 
   return ( <
     Button className = 'globalrankingjoinbtn'
@@ -117,7 +102,7 @@ export default function GlobalRankingJoinBtn(props) {
     data-cy = 'globalrankingjoinbtn'
     //type="button"
     onClick = {
-      () =>
+      (e) =>
       onClickRankingJoinSelected(props.row)
     } >
     Join <

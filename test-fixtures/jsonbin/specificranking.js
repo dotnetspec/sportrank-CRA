@@ -17,19 +17,31 @@ export const specificranking =
     "CURRENTCHALLENGERNAME": "AVAILABLE",
     "CURRENTCHALLENGERID": 0,
     "CURRENTCHALLENGERADDRESS": "",
-    "ADDRESS": {
-      "creationDate": "12345678",
-      "balance": "99.873",
-      "owner": "0x48DF2ee04DFE67902B83a670281232867e5dC0Ca",
-      "picture": "Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL",
-      "rankingDefault": "5d89fab625cf38577615edeb",
-      "username": "testuser1",
-      "contactno": "",
-      "email": "",
-      "description": ""
-    },
+    "ADDRESS": "0x48DF2ee04DFE67902B83a670281232867e5dC0Ca",
     "RANK": 1,
     "NAME": "testuser1",
     "id": 2
+  },
+  {
+    "DATESTAMP": 1569386461484,
+    "ACTIVE": true,
+    "CURRENTCHALLENGERNAME": "AVAILABLE",
+    "CURRENTCHALLENGERID": 0,
+    "CURRENTCHALLENGERADDRESS": "",
+    "ADDRESS": "0xDdF507E108C94B0348fb42658D527e7EfD51672d",
+    "RANK": 2,
+    "NAME": "GanacheAcct3",
+    "id": 3
+  },
+  {
+    "DATESTAMP": 1569386461484,
+    "ACTIVE": false,
+    "CURRENTCHALLENGERNAME": "AVAILABLE",
+    "CURRENTCHALLENGERID": 0,
+    "CURRENTCHALLENGERADDRESS": "",
+    "ADDRESS": "0x48DF2ee04DFE67902B83a670281232867e5dC0Cb",
+    "RANK": 4,
+    "NAME": "testuser2",
+    "id": 3
   }
 ]

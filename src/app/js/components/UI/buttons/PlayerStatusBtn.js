@@ -8,24 +8,18 @@ import JSONops from '../../Logic/JSONops';
  */
 
  export default function PlayerStatusBtn(props){
-   //const [playerActive, setPlayerActive] = React.useState(true);
-   //const [btnText, setValue] = React.useState('De-Activate?');
-   //const [bsStyle, setStyle] = React.useState('success');
+
+   const isCurrentUserActive = JSONops._getUserValue(props.rankingJSONdata, props.username, "ACTIVE");
    //do this way to avoid 're-render' error
    let bsStyle = {color: 'red'}
    let btnText = 'De-Activate?';
 
-   if(props.isCurrentUserActive === true){
+   if(isCurrentUserActive === true){
      bsStyle = {color: 'red'}
      btnText='De-Activate?';
-     // setValue('De-Activate?')
-     // setStyle('success')
    }else{
-     //bsStyle = 'success';
      bsStyle = {color: 'green'}
      btnText='Re-Activate?';
-     // setValue('Re-Activate?')
-     // setStyle('warning')
    }
 
    //below didn't work ...
@@ -33,37 +27,21 @@ import JSONops from '../../Logic/JSONops';
 
    //REVIEW: use the main props
    //NB: orig uses 'event': const onChange = event => setValue(event.target.value);
-     const _handleChangeStatusPlayerBtnText = () => {
+     const _handleChangeStatusPlayerBtnText = (isCurrentUserActive) => {
        if(props.username !== null){
-           if(props.isCurrentUserActive === true){
-             //setPlayerActive(false);
-             //setStyle('warning');
-             //setValue('Re-Activate?');
-             //style = 'warning';
-             //value='Re-Activate?';
-
+           if(isCurrentUserActive === true){
              //send to de-activate component to change isCurrentUserActiveCB
              props.history.push('/delete/@' + props.username);
            }else{
-             //setPlayerActive(true );
-             //setStyle('success');
-             //setValue('De-Activate?')
-             //style = 'success';
-             //value='De-Activate?';
              props.setOnCallbackisCurrentUserActiveCB(true);
              try {
                //REVIEW: isCurrentUserActiveCB needs be called based on JSONops.reactivatePlayer
                //returning True/False. Put here for now so that test will pass
-
-               //console.log('in _handleReactivatePlayer', props.newrankId, props.rankingJSONdata, props.username, props.account)
                JSONops.reactivatePlayer(props.newrankId, props.rankingJSONdata, props.username, props.account);
-               //props.isCurrentUserActiveCB(true);
 
                props.history.push('/home/@' + props.username);
-               //this.props.history.push('/home/@' + username);
              } catch (err) {
              // stop loading state and show the error
-             //console.log('err.message', err.message);
              };
            }
          }else {
@@ -78,10 +56,9 @@ import JSONops from '../../Logic/JSONops';
        placeholder="De-Activate?"
        data-testid="activatebtn-input"
        style={bsStyle}
-       onClick={() => _handleChangeStatusPlayerBtnText()}
+       onClick={() => _handleChangeStatusPlayerBtnText(isCurrentUserActive)}
        >
          {btnText}
        </Button>
    );
  };
- //export default PlayerStatusBtn

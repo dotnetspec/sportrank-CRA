@@ -38,9 +38,9 @@ class Header extends Component {
       showModal: false,
       showTooltip: false,
       playerActive: true,
-      specificRankingOptionBtns: false,
-      isUserInJson: JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, this.props.username),
-      isCurrentUserActive: JSONops._getUserValue(this.props.rankingJSONdata, this.props.username, "ACTIVE")
+      specificRankingOptionBtns: false
+      //isUserInJson: JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, this.props.username),
+      //isCurrentUserActive: JSONops._getUserValue(this.props.rankingJSONdata, this.props.username, "ACTIVE")
       //updatedExtAcctBalCB: 0
     };
 //this.handleChildClick = this.handleChildClick.bind(this)
@@ -373,10 +373,9 @@ if(username === 'CreateUser') this.props.history.push('/create')};
 
 displayActivationBtns(){
   //player may have created ranking without joining it ....
-  //console.log('this.props.specificRankingOptionBtns', this.props.specificRankingOptionBtns, 'this.state.isUserInJson', this.state.isUserInJson)
-  if(this.props.specificRankingOptionBtns && this.state.isUserInJson){
+  if(this.props.specificRankingOptionBtns && JSONops.isPlayerListedInJSON(this.props.rankingJSONdata, this.props.username)){
         return(
-          <PlayerStatusBtn isCurrentUserActive={this.state.isCurrentUserActive} data-cy='playerStatus' data-testid='playerStatus' {...this.props} newrankId={this.props.newrankId} username={this.props.username} rankingJSONdata={this.props.rankingJSONdata} account={this.props.owner}/>
+          <PlayerStatusBtn data-cy='playerStatus' data-testid='playerStatus' {...this.props} newrankId={this.props.newrankId} username={this.props.username} rankingJSONdata={this.props.rankingJSONdata} account={this.props.owner}/>
       )
     }else{ return null }
 }

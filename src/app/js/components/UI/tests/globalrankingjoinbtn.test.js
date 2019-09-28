@@ -69,3 +69,44 @@ it('GlobalRankingJoinBtn - calls "onClick" prop on button click', () => {
   //expect(setviewingOnlyCB).toHaveBeenCalled();
   expect(setnewrankIdCB).toHaveBeenCalled();
 });
+
+//REVIEW: unable to get this test to work 
+xit('GlobalRankingJoinBtn - calls "onClickRankingJoinSelected" on button click', () => {
+  // Render new instance in every test to prevent leaking state
+  const historyMock = { push: jest.fn() };
+  const onClick = jest.fn();
+  const onAfterUserUpdate = jest.fn();
+  const newrankId = jest.fn();
+  const setviewingOnlyCB = jest.fn();
+  const setnewrankIdCB = jest.fn();
+  const _loadsetJSONData = jest.fn();
+  const _sendJSONDataWithRankingID = jest.fn();
+  const setrankingJSONdataCB = jest.fn();
+  const onClickRankingJoinSelected = jest.fn();
+  const setOnCallbackisCurrentUserActiveCB = jest.fn();
+  //const setspecificRankingOptionBtnsCB = jest.fn();
+
+  const row = {RANKINGNAME: "mplayer1rank", RANKINGDESC: "mp1r", ACTIVE: true, RANKINGID: "5c875c79adeb832d3ec6732d"}
+  const { getByText } = render(<GlobalRankingJoinBtn
+    setspecificRankingOptionBtnsCB={onClick}
+    row={row}
+    onAfterUserUpdate={onAfterUserUpdate}
+    newrankId={newrankId}
+    setviewingOnlyCB={setviewingOnlyCB}
+    history={historyMock}
+    setnewrankIdCB={setnewrankIdCB}
+    _loadsetJSONData={_loadsetJSONData}
+    rankingJSONdata={dataTrue}
+    _sendJSONDataWithRankingID={_sendJSONDataWithRankingID}
+    setrankingJSONdataCB={setrankingJSONdataCB}
+    onClickRankingJoinSelected={onClickRankingJoinSelected}
+    setOnCallbackisCurrentUserActiveCB={setOnCallbackisCurrentUserActiveCB}
+    />);
+
+  fireEvent.click(getByText(/Join/i));
+  //expect(onClick).toHaveBeenCalled();
+  //expect(onClickRankingJoinSelected).toHaveBeenCalled();
+  //expect(onAfterUserUpdate).toHaveBeenCalled();
+  //expect(setviewingOnlyCB).toHaveBeenCalled();
+  expect(onClickRankingJoinSelected).toHaveBeenCalled();
+});

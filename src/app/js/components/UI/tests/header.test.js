@@ -1,3 +1,5 @@
+//REVIEW: Any way to improve tests? Click events are not being used, just set properties
+
 import React from 'react'
 import {
   renderWithRouter
@@ -15,9 +17,9 @@ import {
 import '@testing-library/dom'
 import '@testing-library/jest-dom'
 import '@testing-library/jest-dom/extend-expect'
-// import {
-//   specificRankingData
-// } from '../../../../../../test-fixtures/jsonbin/specificRankingData'
+import {
+  specificranking
+} from '../../../../../../test-fixtures/jsonbin/specificranking'
 import {
   cleanedUpSRContractData
 } from '../../../../../../test-fixtures/jsonbin/cleanedUpSRContractData'
@@ -98,15 +100,16 @@ describe('Header UI', () => {
                 });
 
               //NB: props need to be specific to these tests
+              //there is no click event here so isCurrentUserActive: true has to be set
               it('specificRankingOptionBtns - true displays', () => {
                   const props = {
                     userAccounts: cleanedUpSRContractData,
-                    username: cleanedUpSRContractData[1].username,
+                    username: cleanedUpSRContractData[0].username,
                     account: testAccountPlayer1Rinkeby,
                     specificRankingOptionBtns: true,
-                    rankingJSONdata: copyconsoletemp
-                    // ,
-                    // isCurrentUserActive: true
+                    rankingJSONdata: specificranking
+                    ,
+                    isCurrentUserActive: true
                     // ,
                     // isUserInJson: true
                   }
@@ -188,9 +191,9 @@ describe('Header UI', () => {
                           username: cleanedUpSRContractData[2].username,
                           account: testAccountPlayer1Rinkeby,
                           specificRankingOptionBtns: true,
-                          rankingJSONdata: copyconsoletemp
-                          // ,
-                          // isCurrentUserActive: true
+                          rankingJSONdata: specificranking
+                          ,
+                          isCurrentUserActive: true
                           // ,
                           // isUserInJson: true
                         }
@@ -252,9 +255,11 @@ describe('Header UI', () => {
                                 username: uname,
                                 account: testAccountPlayer1Rinkeby,
                                 specificRankingOptionBtns: true,
-                                rankingJSONdata: copyconsoletemp
-                                // ,
-                                // isCurrentUserActive: JSONops._getUserValue(copyconsoletemp, uname, "ACTIVE"),
+                                rankingJSONdata: specificranking
+                                ,
+                                //isCurrentUserActive: JSONops._getUserValue(copyconsoletemp, uname, "ACTIVE")
+                                isCurrentUserActive: true
+                                //,
                                 // isUserInJson: JSONops.isPlayerListedInJSON(copyconsoletemp, uname)
 
                               }

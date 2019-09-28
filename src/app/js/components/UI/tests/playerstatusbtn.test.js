@@ -1,5 +1,5 @@
-// src/__tests__/example.js
-// query utilities:
+//moved from isCurrentUserActive to sending specificranking rankingJSONdata
+//TODO: update the other tests to use same
 import {
   // Tip: all queries are also exposed on an object
   // called "queries" which you could import here as well
@@ -12,7 +12,9 @@ import '@testing-library/jest-dom/extend-expect'
 import PlayerStatusBtn from '../buttons/PlayerStatusBtn'
 import React from 'react'
 import { render, cleanup, fireEvent, getByText, container, waitForElement, getByLabelText } from '@testing-library/react'
-
+import {
+  specificranking
+} from '../../../../../../test-fixtures/jsonbin/specificranking'
 //originally based on example:
 //https://testing-library.com/docs/dom-testing-library/example-intro
 
@@ -26,9 +28,9 @@ it('PlayerStatusBtn calls isCurrentUserActiveCB on click when user active is fal
   const historyMock = { push: jest.fn() };
   const setOnCallbackisCurrentUserActiveCB = jest.fn();
   const props  = {
-    isCurrentUserActive: false,
+    rankingJSONdata: specificranking,
     setOnCallbackisCurrentUserActiveCB: setOnCallbackisCurrentUserActiveCB,
-    username: 'player1',
+    username: 'testuser2',
     history: historyMock
   }
   const { getByTestId } = render(<PlayerStatusBtn
@@ -39,12 +41,12 @@ it('PlayerStatusBtn calls isCurrentUserActiveCB on click when user active is fal
 })
 
 
-it('PlayerStatusBtn text correct with isCurrentUserActive = true', async () => {
+it('PlayerStatusBtn text correct with CurrentUser Active = true', async () => {
 const historyMock = { push: jest.fn() };
 
   const props  = {
-    isCurrentUserActive: true,
-    username: 'player1',
+    rankingJSONdata: specificranking,
+    username: 'GanacheAcct3',
     history: historyMock
   }
   const { getByTestId} = render(<PlayerStatusBtn
@@ -59,12 +61,13 @@ const historyMock = { push: jest.fn() };
   expect(inputNode).toMatchSnapshot()
 })
 
-it('PlayerStatusBtn text correct with isCurrentUserActive = false', async () => {
+fit('PlayerStatusBtn text correct with CurrentUser Active = false', async () => {
     //const isCurrentUserActiveCB = jest.fn();
     const historyMock = { push: jest.fn() };
     const props  = {
-      isCurrentUserActive: false,
-      username: 'player1',
+      //isCurrentUserActive: false,
+      rankingJSONdata: specificranking,
+      username: 'testuser2',
       history: historyMock
     }
     const { getByTestId } = render(<PlayerStatusBtn
