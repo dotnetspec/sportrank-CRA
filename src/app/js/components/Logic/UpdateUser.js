@@ -8,7 +8,7 @@ import { isEmpty } from '../../utils';
 //import {estimateGas} from '../SideEffects/io/estimateGas'
 //import DSportRank from '../../../../ABIaddress';
 //import web3 from '../../../../web3';
-import { estimateGas } from '../SideEffects/io/estimateGas';
+//import { estimateGas } from '../SideEffects/io/estimateGas';
 //import { getWeb3Accounts } from '../SideEffects/io/web3Accounts';
 import { updateUserSendToContract } from '../SideEffects/io/updateUserSendToContract';
 import MMWaitModal from '../UI/Modals/MMWaitModal';
@@ -68,10 +68,10 @@ class UpdateUser extends Component {
           // //const gasEstimate = await editAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
           // const account = await getWeb3Accounts();
           //console.log('this.props.account.owner', this.props.account.owner);
-          const gasEstimate = await estimateGas();
+          //const gasEstimate = await estimateGas();
           // //const result = await editAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
           // const result = await editAccount.send({ from: account,  gas: gasEstimate + 1000 });
-          const result = updateUserSendToContract(gasEstimate, this.props.account.owner, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash, updateUserSendToContractCB)
+          const result = updateUserSendToContract(this.props.account.owner, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash, updateUserSendToContractCB);
           //const result = updateUserSendToContract(gasEstimate, this.props.account.owner, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash)
 
           //use CB to wait for the result to come back and update the page
