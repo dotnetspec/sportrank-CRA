@@ -54,6 +54,9 @@ export default function DoChallengeModal(props) {
         //(e) => _handleClose()
         props.closeChallengeModalCB
       }
+      account = {
+        props.account
+      }
       data = {
         props.rankingJSONdata
       }

@@ -211,7 +211,7 @@ const selectRowPropAfterClickRow = {
 
       //IF there's an active user ...
       if (jsonOpsReturnOjb.currentUserName === props.user.username && jsonOpsReturnOjb.activeBool) {
-        //TODO: implement when we have a challengerAddress 
+        //TODO: implement when we have a challengerAddress
         //const opponentInfo = fetchUserData(challengerAddress);
         const textOpsReturnOjb = userInfoText(jsonOpsReturnOjb.currentChallengerName, jsonOpsReturnOjb.currentChallengerContactNo,
         jsonOpsReturnOjb.currentChallengerEmail, jsonOpsReturnOjb.currentUserRank);
@@ -388,6 +388,9 @@ const selectRowPropAfterClickRow = {
             //userPlayerJsonDataDisplay={userPlayerJsonDataDisplay}
             rankingJSONdata = {
               props.rankingJSONdata
+            }
+            account = {
+              props.account
             }
             user = {
               props.user.username

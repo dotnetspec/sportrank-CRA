@@ -15,7 +15,7 @@ import JSONops from './JSONops'
 //import { getWeb3Accounts } from '../SideEffects/io/web3Accounts';
 //import { sendEthTransaction } from '../SideEffects/io/sendEthTransaction';
 import { challengeSendToContract } from '../SideEffects/io/challengeSendToContract';
-import { estimateGas } from '../SideEffects/io/estimateGas';
+//import { estimateGas } from '../SideEffects/io/estimateGas';
 // import MMWaitModal from '../UI/Modals/MMWaitModal'
 
 
@@ -50,7 +50,7 @@ import { estimateGas } from '../SideEffects/io/estimateGas';
       //isLoading: false,
       const [isLoading, setIsLoading] = useState(false)
       //error: '',
-      const [setError] = useState('')
+      const [error, setError] = useState('')
       //selectedChallengeOption: 'No'
       //const [selectedChallengeOption, setSelectedChallengeOption] = useState('No')
       //const [showModal, setShowModal] = useState(false);
@@ -62,11 +62,6 @@ import { estimateGas } from '../SideEffects/io/estimateGas';
     const [challengeInput] = useState('')
   //}
   //#endregion
-
-
-
-
-
 function displayContactDetails(){
   const oppoContactNumber = JSONops._getUserValue(props.data, props.selectedOpponentName, 'CONTACTNO')
   const oppoEmail = JSONops._getUserValue(props.data, props.selectedOpponentName, 'EMAIL')
@@ -97,15 +92,7 @@ function displayContactDetails(){
     //   console.log('here preventDefault');
     //   return e.preventDefault();
     // }
-
-    // show loading state
-    //setState({ isLoading: true });
     setIsLoading(true);
-
-    //REVIEW: I don't see how these props from orig are used
-    //const { username, account, onAfterChallenge } = this.props;
-    //this.challengeInput = "at last!";
-
     // using the callback
     //NB: we are not currently sending challenges to the blockchain
     //but updating the json and callback of the contactNoCB
@@ -121,12 +108,16 @@ function displayContactDetails(){
       //    console.log('challenge', challenge)
       //  });
       //REVIEW: probably change naming of setState as that confuses with object components
-      await setState(state.challenge = props.user + " vs " + props.selectedOpponentName);
+      //await setState(state.challenge = props.user + " vs " + props.selectedOpponentName);
+      const challenge = props.user + " vs " + props.selectedOpponentName;
+      console.log('challenge', challenge)
 
-      const gasEstimate = await estimateGas();
-      console.log('gasEstimate', gasEstimate);
+      //const gasEstimate = await estimateGas();
+    //  console.log('gasEstimate', gasEstimate);
+    console.log('this.props.account',props.account)
       //const result = await challengeSendToContract(gasEstimate, state.challenge, props.newrankId, props.user, props.selectedOpponentName, props.data, challengeSendToContractCB);
-      await challengeSendToContract(gasEstimate, state.challenge, props.newrankId, props.user, props.selectedOpponentName, props.data);
+      console.log(challenge, props.newrankId, props.user, props.selectedOpponentName, props.data)
+      await challengeSendToContract(challenge, props.newrankId, props.user, props.selectedOpponentName, props.data);
 
       //use a callback to process the result after contract updated
       //REVIEW: Update must come after sendTransaction() in case e.g. there's not enough gas
@@ -153,7 +144,8 @@ function displayContactDetails(){
       // remove loading state and show error message
       //setState({ isLoading: false, error: err.message });
       setIsLoading(false);
-      setError(err.message)
+      // setError(err.message)
+      // console.log('error', error)
     }
   }
 
@@ -257,9 +249,8 @@ function displayContactDetails(){
   //}
   //#endregion
 }
-
 //declare this outside the DoChallenge function (if want to export for tests)
 //just giving the function a different name so it can be mocked
-export const sendChallengeToContract = async (gasEstimate, challenge) => {
-    return challengeSendToContract(gasEstimate, challenge);
-  }
+// export const sendChallengeToContract = async (gasEstimate, challenge) => {
+//     return challengeSendToContract(gasEstimate, challenge);
+//   }
