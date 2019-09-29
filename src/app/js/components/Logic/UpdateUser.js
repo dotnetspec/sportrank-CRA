@@ -1,16 +1,30 @@
-import { Grid, Button, FormGroup, Col, Row } from 'react-bootstrap';
-import { withRouter } from 'react-router-dom'
-import React, { Component } from 'react';
+import {
+  Grid,
+  Button,
+  FormGroup,
+  Col,
+  Row
+} from 'react-bootstrap';
+import {
+  withRouter
+} from 'react-router-dom'
+import React, {
+  Component
+} from 'react';
 import FieldGroup from '../UI/FieldGroup';
 import JSONops from './JSONops'
-import { isEmpty } from '../../utils';
+import {
+  isEmpty
+} from '../../utils';
 //import {updatedUserSendToContract} from '../SideEffects/io/updatedUserSendToContract'
 //import {estimateGas} from '../SideEffects/io/estimateGas'
 //import DSportRank from '../../../../ABIaddress';
 //import web3 from '../../../../web3';
 //import { estimateGas } from '../SideEffects/io/estimateGas';
 //import { getWeb3Accounts } from '../SideEffects/io/web3Accounts';
-import { updateUserSendToContract } from '../SideEffects/io/updateUserSendToContract';
+import {
+  updateUserSendToContract
+} from '../SideEffects/io/updateUserSendToContract';
 import MMWaitModal from '../UI/Modals/MMWaitModal';
 //import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
@@ -35,76 +49,64 @@ class UpdateUser extends Component {
       email: this.props.user.email,
       showModal: false
     };
-      this.closeModalCB = this.closeModalCB.bind(this);
+    this.closeModalCB = this.closeModalCB.bind(this);
   }
   //#endregion
 
   //for sending to the modal
-  showModal(){
-    this.setState({ showModal: true });
+  showModal() {
+    this.setState({
+      showModal: true
+    });
   }
 
-  closeModalCB(){
+  closeModalCB() {
     //update the new details display.
     this.props.setuserCB(this.props.user, this.props.username, this.state.contactno, this.state.email, this.state.description);
     this.props.history.push('/');
   }
 
-  async useBCToAddUpdatedUserVals(){
+  async useBCToAddUpdatedUserVals() {
     console.log('in useBCToAddUpdatedUserVals');
     try {
       const updatedDescription = this.state.description;
-      const updatedContactno  = this.state.contactno;
+      const updatedContactno = this.state.contactno;
       const updatedEmail = this.state.email;
-      console.log('updatedDescription', updatedDescription);
       //TODO: dummy value - This needs to be fully implemented with IPFS
       const updatedImageHash = 'Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL';
       //ensure defaultRankid isn't altered by updating the user
-      const placeHolderForRankId = '';
-      // set up our contract method with the input values from the form
-          // const editAccount = DSportRank.methods.editAccount(usernameHash, updatedDescription, placeHolderForRankId, updatedImageHash);
-          // // get a gas estimate before sending the transaction
-          // //nxt 2 lines commented to avoid compile err
-          // //const gasEstimate = await editAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
-          // const account = await getWeb3Accounts();
-          //console.log('this.props.account.owner', this.props.account.owner);
-          //const gasEstimate = await estimateGas();
-          // //const result = await editAccount.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
-          // const result = await editAccount.send({ from: account,  gas: gasEstimate + 1000 });
-          const result = updateUserSendToContract(this.props.account.owner, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash, updateUserSendToContractCB);
-          //const result = updateUserSendToContract(gasEstimate, this.props.account.owner, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash)
-
-          //use CB to wait for the result to come back and update the page
-          async function updateUserSendToContractCB(){
-            JSONops.updateUserInJSON(this.props.newrankId, this.props.rankingJSONdata, this.props.user.username, this.state.contactno, this.state.email, this.state.description);
-          }
-
-
-          if (result.status && !Boolean(result.status.toString().replace('0x', ''))) {
-            console.log('inside the if')
-            return this.setState({ isLoading: false, formState: 'error', formUpdated: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
-          }
-
-      //console.log('here after contract should have updated', this.state.error)
+      const placeHolderForRankId = '';;
+      const result = updateUserSendToContract(this.props.account.owner, updatedContactno, updatedEmail, updatedDescription, placeHolderForRankId, updatedImageHash, updateUserSendToContractCB);
+      //use CB to wait for the result to come back and update the page
+      async function updateUserSendToContractCB() {
+        JSONops.updateUserInJSON(this.props.newrankId, this.props.rankingJSONdata, this.props.user.username, this.state.contactno, this.state.email, this.state.description);
+      }
+      if (result.status && !Boolean(result.status.toString().replace('0x', ''))) {
+        console.log('inside the if')
+        return this.setState({
+          isLoading: false,
+          formState: 'error',
+          formUpdated: false,
+          error: 'Error executing transaction, transaction details: ' + JSON.stringify(result)
+        });
+      }
       // stop loading state, and render the form as successful
-      this.setState({ isLoading: false, formState: 'success', formUpdated: false, showModal: true });
-
-      // //NB: below prevents onAfterUserUpdate
-      // this.props.history.push('/');
-      //
-      // // tell parent we've updated our user, so the current
-      // // user is re-fetched to get the user's details
-      // //REVIEW: return here?
-      // this.props.onAfterUserUpdate();
+      this.setState({
+        isLoading: false,
+        formState: 'success',
+        formUpdated: false,
+        showModal: true
+      });
       return null;
-
-      //return to home page
-      //this.props.history.push('/');
-    }
-    catch (err) {
+    } catch (err) {
       console.log('here in the err', err)
       // stop loading state and show user the error
-      this.setState({ isLoading: false, formState: 'error', formUpdated: false, error: err.message });
+      this.setState({
+        isLoading: false,
+        formState: 'error',
+        formUpdated: false,
+        error: err.message
+      });
     }
   }
 
@@ -118,7 +120,9 @@ class UpdateUser extends Component {
    */
   _handleClick = async (e, username) => {
     this.useBCToAddUpdatedUserVals();
-    this.setState({ isLoading: false });
+    this.setState({
+      isLoading: false
+    });
     return null;
   }
 
@@ -132,176 +136,233 @@ class UpdateUser extends Component {
    * @return {null}
    */
   _handleChange(e) {
-    let state = { formUpdated: true };
+    let state = {
+      formUpdated: true
+    };
     const input = e.target.name;
     const value = e.target.value;
 
     state[input] = value;
-
     this.setState(state);
   }
 
-//QUESTION; Why was it necessary to send this.props.user[1] as a parameter
-//to this function and not just use this.props.user (which is seen as an object by JSONops.reactivatePlayer)?
+  //QUESTION; Why was it necessary to send this.props.user[1] as a parameter
+  //to this function and not just use this.props.user (which is seen as an object by JSONops.reactivatePlayer)?
   _handleReactivatePlayer(user) {
     try {
-    JSONops.reactivatePlayer(this.props.rankingJSONdata, user, this.props.account);
+      JSONops.reactivatePlayer(this.props.rankingJSONdata, user, this.props.account);
       this.props.history.push('/');
     } catch (err) {
-    // stop loading state and show the error
-    console.log(err.message);
+      // stop loading state and show the error
+      console.log(err.message);
     };
   }
 
   _cancelClick(e) {
     try {
-    this.props.onAfterUserUpdate();
-    this.props.history.push('/');
+      this.props.history.push('/');
     } catch (err) {
-    // stop loading state and show the error
-    console.log(err.message);
+      // stop loading state and show the error
+      console.log(err.message);
     };
   }
-
   //#endergion
-
   //#region React lifecycle events
   //REVIEW: not sure what this is doing
-  componentDidUpdate(prevProps){
-
-    // if(this.props.user.description !== prevProps.user.description){
-    //   this.setState({description: this.props.user.description});
-    // }
-    if(this.props.description !== prevProps.description){
-      this.setState({description: this.props.description});
+  componentDidUpdate(prevProps) {
+    if (this.props.description !== prevProps.description) {
+      this.setState({
+        description: this.props.description
+      });
     }
   }
 
-  componentDidMount(){
-    // const { user } = this.props;
-    // console.log('this.props.rankingJSONdata')
-    // console.log(this.props.rankingJSONdata)
-    // console.log('user.username')
-    // console.log(user.username)
-    //
-    // let contactno = JSONops._getUserValue(this.props.rankingJSONdata, user.username, "CONTACTNO");
-    // this.setState({contactno: contactno});
-    // //console.log(this.state.contactno)
-    // let email = JSONops._getUserValue(this.props.rankingJSONdata, user.username, "EMAIL");
-    // this.setState({email: email});
-    //console.log(this.state.email)
-  }
-
   render() {
-    const { isLoading, formState, formUpdated, contactno, email, description, picture } = this.state;
-    const { user } = this.props;
+    const {
+      isLoading,
+      formState,
+      formUpdated,
+      contactno,
+      email,
+      description,
+      picture
+    } = this.state;
+    const {
+      user
+    } = this.props;
     //const feedback = formState === 'success' ? 'Saved' : error;
-    //console.log('rendering updateUser error', this.state.error)
-    return (
-      <div>
-      <MMWaitModal show={this.state.showModal} closeModalCB={this.closeModalCB}></MMWaitModal>
-      <Grid>
-        <Row>
-          <Col xs={12}>
-            <h2>Update { user.username } <small>{this.props.account.owner}</small></h2>
-          </Col>
-        </Row>
-        {isEmpty(this.state.error) ? null : <span className='error'>Oh no!</span>}
-        <p></p>
-        <Row className="show-Grid">
-          <Col xs={12} >
-            <Button
-              bsStyle="primary"
-              //disabled={ !isValid }
-              //onClick={ !isValid ? null : (e) => this._handleClick(e) }
-              onClick={ (e) => this._cancelClick(e) }
-            >
-            { isLoading ? 'Loading...' : 'Cancel' }
-            </Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <form
-            className="updateForm"
-            onSubmit={ isLoading || !formUpdated ? null : (e) => this._handleClick(e) }>
-              <FieldGroup
-                className="username"
-                type="text"
-                value={ user.username }
-                disabled={true}
-                name="username"
-                label="Player Name"
-              />
-              <FieldGroup
-                className="contactno"
-                autoFocus
-                type="text"
-                //value={ this.props.userAccounts[0].user.contactno }
-                value={contactno}
-                placeholder="Your Contact Number"
-                onChange={ (e) => this._handleChange(e) }
-                name="contactno"
-                label="Contact Number"
-                validationState={ formState }
-              />
-              <FieldGroup
-                className="email"
-                type="text"
-                //value={ this.props.userAccounts[0].user.email }
-                value={email}
-                placeholder="Your Email"
-                onChange={ (e) => this._handleChange(e) }
-                name="email"
-                label="Email"
-                validationState={ formState }
-              />
-              <FieldGroup
-                className="description"
-                type="text"
-                value={ description }
-                placeholder="Grade, availability etc."
-                onChange={ (e) => this._handleChange(e) }
-                name="description"
-                label="Player Details"
-                validationState={ formState }
-              />
-              <FieldGroup
-                type="file"
-                value={ picture }
-                onChange={ (e) => this._handleChange(e) }
-                name="picture"
-                label="Profile picture (PLEASE IGNORE - THIS FEATURE IS NOT FULLY IMPLEMENTED IN ALPHA)"
-                inputRef={ (input) => this.inputPicture = input }
-                validationState={ formState }
-              />
-              <FormGroup>
-                {/* user.picture.length ? <Image src={ user.picture } width="100" circle /> : '' */}
-              </FormGroup>
-              <FormGroup>
-                <Button
-                  className="updateProfileBtn"
-                  bsStyle="primary"
-                  // disabled={ isLoading || !formUpdated }
-                  // onClick={ isLoading || !formUpdated ? null : (e) => this._handleClick(e) }
-                  onClick={ (e) => this._handleClick(e, user.username) }
-                >
-                  { isLoading ? 'Loading...' : 'Update Profile' }
-                </Button>
-              </FormGroup>
-              <FormGroup
-                validationState={ formState }
-              >
+    return ( <
+      div >
+      <
+      MMWaitModal show = {
+        this.state.showModal
+      }
+      closeModalCB = {
+        this.closeModalCB
+      } > < /MMWaitModal> <
+      Grid >
+      <
+      Row >
+      <
+      Col xs = {
+        12
+      } >
+      <
+      h2 > Update {
+        user.username
+      } < small > {
+        this.props.account.owner
+      } < /small></h2 >
+      <
+      /Col> <
+      /Row> {
+        isEmpty(this.state.error) ? null : < span className = 'error' > Oh no! < /span>} <
+          p > < /p> <
+          Row className = "show-Grid" >
+          <
+          Col xs = {
+            12
+          } >
+          <
+          Button
+        bsStyle = "primary"
+        //disabled={ !isValid }
+        //onClick={ !isValid ? null : (e) => this._handleClick(e) }
+        onClick = {
+            (e) => this._cancelClick(e)
+          } >
+          {
+            isLoading ? 'Loading...' : 'Cancel'
+          } <
+          /Button> <
+          /Col> <
+          /Row> <
+          Row >
+          <
+          Col xs = {
+            12
+          } >
+          <
+          form
+        className = "updateForm"
+        onSubmit = {
+            isLoading || !formUpdated ? null : (e) => this._handleClick(e)
+          } >
+          <
+          FieldGroup
+        className = "username"
+        type = "text"
+        value = {
+          user.username
+        }
+        disabled = {
+          true
+        }
+        name = "username"
+        label = "Player Name" /
+          >
+          <
+          FieldGroup
+        className = "contactno"
+        autoFocus
+        type = "text"
+        //value={ this.props.userAccounts[0].user.contactno }
+        value = {
+          contactno
+        }
+        placeholder = "Your Contact Number"
+        onChange = {
+          (e) => this._handleChange(e)
+        }
+        name = "contactno"
+        label = "Contact Number"
+        validationState = {
+          formState
+        }
+        /> <
+        FieldGroup
+        className = "email"
+        type = "text"
+        //value={ this.props.userAccounts[0].user.email }
+        value = {
+          email
+        }
+        placeholder = "Your Email"
+        onChange = {
+          (e) => this._handleChange(e)
+        }
+        name = "email"
+        label = "Email"
+        validationState = {
+          formState
+        }
+        /> <
+        FieldGroup
+        className = "description"
+        type = "text"
+        value = {
+          description
+        }
+        placeholder = "Grade, availability etc."
+        onChange = {
+          (e) => this._handleChange(e)
+        }
+        name = "description"
+        label = "Player Details"
+        validationState = {
+          formState
+        }
+        /> <
+        FieldGroup
+        type = "file"
+        value = {
+          picture
+        }
+        onChange = {
+          (e) => this._handleChange(e)
+        }
+        name = "picture"
+        label = "Profile picture (PLEASE IGNORE - THIS FEATURE IS NOT FULLY IMPLEMENTED IN ALPHA)"
+        inputRef = {
+          (input) => this.inputPicture = input
+        }
+        validationState = {
+          formState
+        }
+        /> <
+        FormGroup > {
+            /* user.picture.length ? <Image src={ user.picture } width="100" circle /> : '' */ } <
+          /FormGroup> <
+          FormGroup >
+          <
+          Button
+        className = "updateProfileBtn"
+        bsStyle = "primary"
+        // disabled={ isLoading || !formUpdated }
+        // onClick={ isLoading || !formUpdated ? null : (e) => this._handleClick(e) }
+        onClick = {
+            (e) => this._handleClick(e, user.username)
+          } >
+          {
+            isLoading ? 'Loading...' : 'Update Profile'
+          } <
+          /Button> <
+          /FormGroup> <
+          FormGroup
+        validationState = {
+            formState
+          } >
 
-              </FormGroup>
-            </form>
-          </Col>
-        </Row>
-      </Grid>
-    </div>
-    );
+          <
+          /FormGroup> <
+          /form> <
+          /Col> <
+          /Row> <
+          /Grid> <
+          /div>
+      );
+    }
+    //#endregion
   }
-  //#endregion
-}
 
-export default withRouter(UpdateUser);
+  export default withRouter(UpdateUser);
