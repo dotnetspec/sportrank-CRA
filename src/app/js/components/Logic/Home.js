@@ -65,8 +65,8 @@ const selectRowPropAfterClickRow = {
       const [warningText, setWarningText] = useState('')
       const [showMMModal, setShowMMModal] = useState(false)
       //const [rank, setRank] = useState(0)
-      const [contactNo, setcontactNo] = useState('')
-      const [email, setEmail] = useState('')
+      const [oppocontactno, setoppocontactno] = useState('')
+      const [oppoemail, setoppoemail] = useState('')
       //const [data, setData] = useState('')
       const [resultInfoForDisplay, setResultInfoForDisplay] = useState('')
       //const [tableData, setTableData] = useState('')
@@ -217,6 +217,8 @@ const selectRowPropAfterClickRow = {
       if (jsonOpsReturnOjb.currentUserName === props.username && jsonOpsReturnOjb.activeBool) {
         //TODO: implement when we have a challengerAddress
         //const opponentInfo = fetchUserData(challengerAddress);
+        jsonOpsReturnOjb.currentChallengerContactNo = oppocontactno;
+        jsonOpsReturnOjb.currentChallengerEmail = oppoemail;
         const textOpsReturnOjb = userInfoText(jsonOpsReturnOjb.currentChallengerName, jsonOpsReturnOjb.currentChallengerContactNo,
         jsonOpsReturnOjb.currentChallengerEmail, jsonOpsReturnOjb.currentUserRank);
         //jsx below has to remain in scope (cannot move it out)
@@ -361,7 +363,9 @@ const selectRowPropAfterClickRow = {
         const oppenentdetailsfromaddr = async () => {
           //function(jsonObj, currentUser, valueToLookup
           const oppodetails = await opponentdetails(oppoaddress);
-          console.log('oppodetails', oppodetails);
+          console.log('oppodetails', oppodetails.contactno, oppodetails.email );
+          setoppocontactno(oppodetails.contactno);
+          setoppoemail(oppodetails.email);
         }
 
         if(oppoaddress) oppenentdetailsfromaddr();

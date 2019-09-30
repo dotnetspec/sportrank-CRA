@@ -787,7 +787,7 @@ describe('JSONops - pure', () => {
   })
 });
 
-fit('insertplayerexistingranking', () => {
+it('insertplayerexistingranking', () => {
   const currentUser = 'testuser1';
   const contactno = '1234567890'
   const email = 'mytest7@mytest7.com'
@@ -1324,12 +1324,13 @@ it('JSONops reactivatePlayerInJson test ', async () => {
 })
 
 
-it('JSONops _updateDoChallengeJSONinJson test ', async () => {
-  const fromJson = JSONops._updateDoChallengeJSONinJson(rankingID, currentUser, selectedOpponent, dataTrue);
+fit('JSONops _updateDoChallengeJSONinJson test ', async () => {
+  const selectedOpponent = 'GanacheAcct2'
+  const fromJson = JSONops._updateDoChallengeJSONinJson(rankingID, currentUser, selectedOpponent, specificranking);
   var playerObjToTest = fromJson.filter(function(playerObj) {
-    return playerObj.NAME === 'player1';
+    return playerObj.NAME === 'testuser1';
   });
-  expect(playerObjToTest[0].CURRENTCHALLENGERNAME).toEqual('player3');
+  expect(playerObjToTest[0].CURRENTCHALLENGERNAME).toEqual('GanacheAcct2');
 })
 
 //NB: Using the new data set here
