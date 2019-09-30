@@ -11,7 +11,15 @@ import '@testing-library/jest-dom'
 import '@testing-library/jest-dom/extend-expect'
 import PlayerStatusBtn from '../buttons/PlayerStatusBtn'
 import React from 'react'
-import { render, cleanup, fireEvent, getByText, container, waitForElement, getByLabelText } from '@testing-library/react'
+import {
+  render,
+  cleanup,
+  fireEvent,
+  getByText,
+  container,
+  waitForElement,
+  getByLabelText
+} from '@testing-library/react'
 import {
   specificranking
 } from '../../../../../../test-fixtures/jsonbin/specificranking'
@@ -25,55 +33,67 @@ import {
 afterEach(cleanup);
 
 it('PlayerStatusBtn calls isCurrentUserActiveCB on click when user active is false', async () => {
-  const historyMock = { push: jest.fn() };
-  const setOnCallbackisCurrentUserActiveCB = jest.fn();
-  const props  = {
-    rankingJSONdata: specificranking,
-    setOnCallbackisCurrentUserActiveCB: setOnCallbackisCurrentUserActiveCB,
-    username: 'testuser2',
-    history: historyMock
-  }
-  const { getByTestId } = render(<PlayerStatusBtn
-  {...props}
-  />)
-  fireEvent.click(getByTestId('activatebtn-input'));
-  expect(setOnCallbackisCurrentUserActiveCB).toHaveBeenCalled();
-})
+      const historyMock = {
+        push: jest.fn()
+      };
+      const setOnCallbackisCurrentUserActiveCB = jest.fn();
+      const props = {
+        rankingJSONdata: specificranking,
+        setOnCallbackisCurrentUserActiveCB: setOnCallbackisCurrentUserActiveCB,
+        username: 'testuser3',
+        history: historyMock
+      }
+      const {
+        getByTestId
+      } = render( < PlayerStatusBtn {
+          ...props
+        }
+        />)
+        fireEvent.click(getByTestId('activatebtn-input')); expect(setOnCallbackisCurrentUserActiveCB).toHaveBeenCalled();
+      })
 
 
-it('PlayerStatusBtn text correct with CurrentUser Active = true', async () => {
-const historyMock = { push: jest.fn() };
+    it('PlayerStatusBtn text correct with CurrentUser Active = true', async () => {
+        const historyMock = {
+          push: jest.fn()
+        };
 
-  const props  = {
-    rankingJSONdata: specificranking,
-    username: 'GanacheAcct3',
-    history: historyMock
-  }
-  const { getByTestId} = render(<PlayerStatusBtn
-  {...props}
-  />)
+        const props = {
+          rankingJSONdata: specificranking,
+          username: 'GanacheAcct3',
+          history: historyMock
+        }
+        const {
+          getByTestId
+        } = render( < PlayerStatusBtn {
+            ...props
+          }
+          />)
 
-  const inputNode = getByTestId('activatebtn-input')
+          const inputNode = getByTestId('activatebtn-input')
 
-  expect(inputNode).toHaveTextContent(
-    'De-Activate?'
-  )
-  expect(inputNode).toMatchSnapshot()
-})
+          expect(inputNode).toHaveTextContent(
+            'De-Activate?'
+          ) expect(inputNode).toMatchSnapshot()
+        })
 
-fit('PlayerStatusBtn text correct with CurrentUser Active = false', async () => {
-    //const isCurrentUserActiveCB = jest.fn();
-    const historyMock = { push: jest.fn() };
-    const props  = {
-      //isCurrentUserActive: false,
-      rankingJSONdata: specificranking,
-      username: 'testuser3',
-      history: historyMock
-    }
-    const { getByTestId } = render(<PlayerStatusBtn
-    {...props}
-    />)
-   const inputNode = getByTestId('activatebtn-input')
-   expect(inputNode).toHaveTextContent('Re-Activate?')
-   expect(inputNode).toMatchSnapshot()
-})
+      xit('PlayerStatusBtn text correct with CurrentUser Active = false', async () => {
+          //const isCurrentUserActiveCB = jest.fn();
+          const historyMock = {
+            push: jest.fn()
+          };
+          const props = {
+            //isCurrentUserActive: false,
+            rankingJSONdata: specificranking,
+            username: 'testuser3',
+            history: historyMock
+          }
+          const {
+            getByTestId
+          } = render( < PlayerStatusBtn {
+              ...props
+            }
+            />)
+            const inputNode = getByTestId('activatebtn-input')
+            expect(inputNode).toHaveTextContent('Re-Activate?') expect(inputNode).toMatchSnapshot()
+          })

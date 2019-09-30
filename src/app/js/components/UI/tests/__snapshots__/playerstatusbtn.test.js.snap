@@ -12,3 +12,16 @@ exports[`PlayerStatusBtn text correct with CurrentUser Active = false 1`] = `
   Re-Activate?
 </button>
 `;
+
+exports[`PlayerStatusBtn text correct with CurrentUser Active = true 1`] = `
+<button
+  class="deactivatebtn btn btn-default"
+  data-cy="deactivate"
+  data-testid="activatebtn-input"
+  placeholder="De-Activate?"
+  style="color: red;"
+  type="button"
+>
+  De-Activate?
+</button>
+`;
