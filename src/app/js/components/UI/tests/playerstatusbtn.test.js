@@ -74,7 +74,8 @@ it('PlayerStatusBtn calls isCurrentUserActiveCB on click when user active is fal
 
           expect(inputNode).toHaveTextContent(
             'De-Activate?'
-          ) expect(inputNode).toMatchSnapshot()
+          );
+          expect(inputNode).toMatchSnapshot();
         })
 
       xit('PlayerStatusBtn text correct with CurrentUser Active = false', async () => {
@@ -95,5 +96,6 @@ it('PlayerStatusBtn calls isCurrentUserActiveCB on click when user active is fal
             }
             />)
             const inputNode = getByTestId('activatebtn-input')
-            expect(inputNode).toHaveTextContent('Re-Activate?') expect(inputNode).toMatchSnapshot()
+            expect(inputNode).toHaveTextContent('Re-Activate?');
+            expect(inputNode).toMatchSnapshot();
           })
