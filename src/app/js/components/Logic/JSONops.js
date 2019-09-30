@@ -366,7 +366,7 @@ const JSONops = {
     //const selectedOpponentIDNumber = this._getUserValue(data, selectedOpponent, "id");
 
     let updatedUserJSON =
-                      this._setUserValue(data, selectedOpponent, "CURRENTCHALLENGERID", userIDNumber);
+      this._setUserValue(data, selectedOpponent, "CURRENTCHALLENGERID", userIDNumber);
     updatedUserJSON = this._setUserValue(data, currentUser, "CURRENTCHALLENGERID", selectedopponentIDNumber);
     //updatedUserJSON = this._setUserValue(data, selectedOpponent, "CURRENTCHALLENGERADDRESS", opponentaddress);
     //console.log('updatedUserJSON', updatedUserJSON)
@@ -503,7 +503,6 @@ const JSONops = {
 
   reactivatePlayer: function(rankingID, data, currentUser, accountno) {
     const result = this.reactivatePlayerInJson(rankingID, data, currentUser, accountno);
-    console.log('rankingID in deactivatePlayer', rankingID);
     _sendJSONDataWithRankingID(result, rankingID);
   },
 
@@ -545,8 +544,6 @@ const JSONops = {
   },
 
   deactivatePlayerInJson: function(rankingID, data, currentUser, accountno) {
-    //console.log('rankingID, data, currentUser, accountno in deactivatePlayer', rankingID, data, currentUser, accountno)
-    //console.log('data', data)
     let shiftUpRankingUpdateObj = {
       jsonRS: data,
       lookupField: "",
@@ -555,7 +552,6 @@ const JSONops = {
       targetData: "",
       checkAllRows: false
     };
-
     //need this one to get the opponenets name when user is the challenger
     let lookupCurrentUsersOppenentPlayerValue = {
       jsonRS: data,
@@ -565,83 +561,40 @@ const JSONops = {
       //targetData: "",
       checkAllRows: false
     };
-    //console.log(lookupCurrentUserRank)
-
     let updatedUserJSON = this._setUserValue(data, currentUser, "ACTIVE", false);
-
-    //const currentUserRank = this._getUserRank(originalData, currentUser);
     const currentUserRank = this._getUserValue(data, currentUser, "RANK");
 
     //re-set targetfield and targetData set to 1
     //leave as is (w/o _setUserValue)
     shiftUpRankingUpdateObj.lookupField = "RANK";
+    //shiftUpRankingUpdateObj.lookupKey = true
     shiftUpRankingUpdateObj.targetField = "RANK";
     shiftUpRankingUpdateObj.targetData = 1;
 
     updatedUserJSON = this.shiftAllOtherPlayersRankingUpByOne(shiftUpRankingUpdateObj, currentUserRank);
-
     //NB:using original _setVal here not _getUserValue
     //cos of shiftAllOtherPlayersRankingUpByOne
-    updatedUserJSON = this._setVal(shiftUpRankingUpdateObj);
-
     //set the user's rank to the bottom  as well
     //REVIEW: it's possible this (below) could be part of shiftAllOtherPlayersRankingUpByOne code
     //but currently is necessary here
     updatedUserJSON = this._setUserValue(data, currentUser, "RANK", shiftUpRankingUpdateObj.jsonRS.length);
     //re-set my current opponent to AVAILABLE
     updatedUserJSON = this._setUserValue(data, currentUser, "CURRENTCHALLENGERNAME", "AVAILABLE");
-    //get current opponent (who player is challenging) name
-    //where current user is the challenger then we get the player name
-    //const opponentsName = this._getUserValue(data, currentUser, "CURRENTCHALLENGERNAME");
-    //console.log('currentUsersOppenentPlayerValue', currentUsersOppenentPlayerValue)
-    //re-set my opponents 'current opponent' to AVAILABLE if not already AVAILABLE
-    // if(opponentsName !== "AVAILABLE"){
-    //   updatedUserJSON = this._setUserValue(data, opponentsName, "CURRENTCHALLENGERNAME", "AVAILABLE");
-    // }
     //handle the opponent's display (if there is an opponenet)
     let currentUsersOppenentPlayerValue = this._getVal(lookupCurrentUsersOppenentPlayerValue);
     if (currentUsersOppenentPlayerValue !== undefined) {
       //re-set my opponents 'current opponent' to AVAILABLE
       updatedUserJSON = this._setUserValue(data, currentUsersOppenentPlayerValue, "CURRENTCHALLENGERNAME", "AVAILABLE");
     }
-    //re-set my opponents 'current opponent' to AVAILABLE
-    //updatedUserJSON = this._setUserValue(data, currentUsersOppenentPlayerValue, "CURRENTCHALLENGERNAME", "AVAILABLE");
-
-    //console.log('deactivatePlayer updatedUserJSON', updatedUserJSON)
-    //this._sendJSONData(updatedUserJSON);
-    //this._sendJSONDataWithRankingID(updatedUserJSON, rankingID);
     return updatedUserJSON;
   },
 
-  // getCurrentUsersOppenentPlayerValue: function((data, currentUser){
-  //   let lookupCurrentUsersOppenentPlayerValue = {
-  //     jsonRS: data,
-  //     lookupField: 'CURRENTCHALLENGERNAME',
-  //     lookupKey: currentUser,
-  //     targetField: 'NAME',
-  //     //targetData: "",
-  //     checkAllRows: false
-  //     };
-  //     //console.log(lookupCurrentUserRank)
-  //     this._getUserValue(data, currentUser, "CURRENTCHALLENGERNAMEANK");
-  //     const currentUsersOppenentPlayerValue = this._getVal(lookupCurrentUsersOppenentPlayerValue);
-  //     return currentUsersOppenentPlayerValue;
-  // },
-
-  shiftAllOtherPlayersRankingUpByOne: function(update, currentUserRank) {
+  shiftAllOtherPlayersRankingUpByOne: function(update, currentuserrank) {
     let ranktobeupdated = 1;
-
     for (var i = 0; i < update.jsonRS.length; i++) {
-
       ranktobeupdated = update.jsonRS[i][update.lookupField];
       //make the change according to the current users relative position
-      // if(currentUserRank === update.jsonRS[i][update.lookupField]){
-      //   //this is the current user's rank which must now be set to the last rank
-      //   update.jsonRS[i][update.targetField] = update.jsonRS.length;
-      // }
-      // else
-
-      if (currentUserRank < update.jsonRS[i][update.lookupField]) {
+      if (currentuserrank < update.jsonRS[i][update.lookupField]) {
         ranktobeupdated -= 1;
         update.jsonRS[i][update.targetField] = ranktobeupdated;
       }

@@ -67,7 +67,7 @@ fit('PlayerStatusBtn text correct with CurrentUser Active = false', async () => 
     const props  = {
       //isCurrentUserActive: false,
       rankingJSONdata: specificranking,
-      username: 'testuser2',
+      username: 'testuser3',
       history: historyMock
     }
     const { getByTestId } = render(<PlayerStatusBtn

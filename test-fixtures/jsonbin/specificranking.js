@@ -1,5 +1,3 @@
-//REVIEW: this probably will not be used and copyconsoletemp (or renamed version) will be instead
-
 export const specificranking =
 [
   {
@@ -34,8 +32,18 @@ export const specificranking =
     "id": 3
   },
   {
+    "DATESTAMP": 1569676868368,
+    "ACTIVE": true,
+    "CURRENTCHALLENGERNAME": "testuser1",
+    "CURRENTCHALLENGERID": 2,
+    "ADDRESS": "0xD99eB29299CEF8726fc688180B30E634827b3078",
+    "RANK": 3,
+    "NAME": "GanacheAcct2",
+    "id": 4
+  },
+  {
     "DATESTAMP": 1569386461484,
-    "ACTIVE": false,
+    "ACTIVE": true,
     "CURRENTCHALLENGERNAME": "AVAILABLE",
     "CURRENTCHALLENGERID": 0,
     "CURRENTCHALLENGERADDRESS": "",
@@ -43,5 +51,16 @@ export const specificranking =
     "RANK": 4,
     "NAME": "testuser2",
     "id": 3
+  },
+  {
+    "DATESTAMP": 1569386461484,
+    "ACTIVE": false,
+    "CURRENTCHALLENGERNAME": "AVAILABLE",
+    "CURRENTCHALLENGERID": 0,
+    "CURRENTCHALLENGERADDRESS": "",
+    "ADDRESS": "0x48DF2ee04DFE67902B83a670281232867e5dC0Cc",
+    "RANK": 5,
+    "NAME": "testuser3",
+    "id": 4
   }
 ]
