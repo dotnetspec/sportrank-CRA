@@ -30,7 +30,7 @@ const JSONops = {
     isJSONEmpty
 
     Insertinig Values:
-    createNewUserInNewJSON
+    insertplayernewranking
 
     Sorting values:
     shiftAllOtherPlayersRankingUpByOne
@@ -404,22 +404,13 @@ const JSONops = {
 
   //TODO: this is going to become createNewUserInExistingRankingJson
   //NB: rankingID is at the end of the param list
-  createNewUserInJSON: function(originalData, username, contactno, email, accountno, description, rankingID) {
+  insertplayerexistingranking: function(originalData, username, contactno, email, accountno, description, rankingID) {
 
     let createNewJSONuserObj = {
       jsonRS: originalData
     };
-    // let nextIDObj = {
-    //   jsonRS: originalData
-    //   };
-    //
-    // nextIDObj.lookupField = "NAME";
-    // //TODO: this is 'currentuser' elasewhere
-    // nextIDObj.lookupKey = username;
-    //console.log('createNewJSONuserObj.jsonRS.length in createNewUserInJSON', createNewJSONuserObj.jsonRS.length)
     //REVIEW: Does this line correctly handle a blockchain reset in dev?
     let nextID = createNewJSONuserObj.jsonRS.length + 1;
-    //console.log('createNewJSONuserObj.jsonRS.length', createNewJSONuserObj.jsonRS.length)
     //if it's a completely new json length will be 0
     if (createNewJSONuserObj.jsonRS.length < 1) {
       //console.log('json was new and had no existing data')
@@ -432,44 +423,39 @@ const JSONops = {
     const newData = {
       "DATESTAMP": Date.now(),
       "ACTIVE": true,
-      "DESCRIPTION": description,
+      //"DESCRIPTION": description,
       "CURRENTCHALLENGERNAME": "AVAILABLE",
       "CURRENTCHALLENGERID": 0,
       "CURRENTCHALLENGERADDRESS": '',
       "ADDRESS": accountno,
       "RANK": rankLastPosition,
-      "EMAIL": email,
-      "CONTACTNO": contactno,
+      //"EMAIL": email,
+      //"CONTACTNO": contactno,
       "NAME": username,
       "id": nextID
     }
     createNewJSONuserObj.jsonRS.push(newData);
-    //console.log('rankingID in createNewUserInJSON', rankingID)
+    //console.log('rankingID in insertplayerexistingranking', rankingID)
     return createNewJSONuserObj;
     //_sendJSONDataWithRankingID(createNewJSONuserObj.jsonRS, rankingID);
   },
 
-  createNewUserInNewJSON: function(username, contactno, email, accountno, description, rankingID) {
-    console.log('inside createNewUserInNewJSON')
-    // let createNewJSONuserObj = {
-    //   jsonRS: {}
-    //   };
+  insertplayernewranking: function(username, contactno, email, accountno, description, rankingID) {
+    console.log('inside insertplayernewranking')
     const newData = {
       "DATESTAMP": Date.now(),
       "ACTIVE": true,
-      "DESCRIPTION": description,
+      //"DESCRIPTION": description,
       "CURRENTCHALLENGERNAME": "AVAILABLE",
       "CURRENTCHALLENGERID": 0,
+      "CURRENTCHALLENGERADDRESS": '',
       "ADDRESS": accountno,
       "RANK": 1,
-      "EMAIL": email,
-      "CONTACTNO": contactno,
+      //"EMAIL": email,
+      //"CONTACTNO": contactno,
       "NAME": username,
       "id": 1
     }
-    //createNewJSONuserObj.jsonRS.push(newData);
-    //this._sendJSONData(createNewJSONuserObj.jsonRS);
-    //this._sendJSONDataWithRankingID(createNewJSONuserObj.jsonRS, rankingID);
     return _sendJSONDataWithRankingID(newData, rankingID);
   },
 

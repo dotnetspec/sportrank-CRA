@@ -783,40 +783,18 @@ describe('JSONops - pure', () => {
     //REVIEW: other tests can be added with this in future
     const filteredResult = filterJson(result, 'player1');
     expect(filteredResult[0].CURRENTCHALLENGERNAME).toEqual('AVAILABLE');
-
     //expect(_sendJSONDataWithRankingID).toHaveBeenCalled();
   })
 });
 
-it('JSONops createNewUserInJSON', () => {
-  //TODO: add similar tests to new data in test-fixtures
-  // const dataTrue = [
-  //   {id: 7, STATUS: "NEW", RANKING: "NEWRANKING"},
-  //   {"DATESTAMP":1545369526439,"ACTIVE":true,"DESCRIPTION":"alskdfjalj","CURRENTCHALLENGERNAME":"player4","CURRENTCHALLENGERID":4,"ADDRESS":"0xa864Ea9d142C0997572aD7a2077A67a30a853cc0","RANK":2,"EMAIL":"laskdfjlfj","CONTACTNO":"laskdfjlajf","NAME":"player1","id":3},
-  //   {"DATESTAMP":1545301903330,"ACTIVE":true,"DESCRIPTION":"laskjfljk","CURRENTCHALLENGERNAME":"AVAILABLE","CURRENTCHALLENGERID":0,"ADDRESS":"0x2dCC1bd7852819026981B48479b8C3BE5056C0cd","RANK":3,"EMAIL":"aslkdfj","CONTACTNO":"alskjdflaj","NAME":"player2","id":2},
-  //   {"id":1,"NAME":"player3","CONTACTNO":"","EMAIL":"","RANK":5,"ADDRESS":"0x0f124b4C7Ccb22c79B3A95BB92188a810802ea26","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545369526437},
-  //   {"id":4,"NAME":"player4","CONTACTNO":"","EMAIL":"","RANK":1,"ADDRESS":"0xA87b6b69C139d414D2ca80744dB16172f997a7f7","CURRENTCHALLENGERID":5,"CURRENTCHALLENGERNAME":"player5","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
-  //   {"id":5,"NAME":"player5","CONTACTNO":"","EMAIL":"","RANK":6,"ADDRESS":"0x3dA1f7f1937985Da9baf87a9b934A50B55981E8E","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"player4","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
-  //   {"id":6,"NAME":"player6","CONTACTNO":"","EMAIL":"","RANK":4,"ADDRESS":"0x23fCa109110F043847bb0Ca87805f3642D8B7Dc7","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301853807}
-  // ];
-  // const dataFalseWithUserLowerInRanking = [
-  //   {id: 7, STATUS: "NEW", RANKING: "NEWRANKING"},
-  //   {"DATESTAMP":1545369526439,"ACTIVE":true,"DESCRIPTION":"alskdfjalj","CURRENTCHALLENGERNAME":"player4","CURRENTCHALLENGERID":4,"ADDRESS":"0xa864Ea9d142C0997572aD7a2077A67a30a853cc0","RANK":1,"EMAIL":"laskdfjlfj","CONTACTNO":"laskdfjlajf","NAME":"player1","id":3},
-  //   {"DATESTAMP":1545301903330,"ACTIVE":true,"DESCRIPTION":"laskjfljk","CURRENTCHALLENGERNAME":"AVAILABLE","CURRENTCHALLENGERID":0,"ADDRESS":"0x2dCC1bd7852819026981B48479b8C3BE5056C0cd","RANK":3,"EMAIL":"aslkdfj","CONTACTNO":"alskjdflaj","NAME":"player2","id":2},
-  //   {"id":1,"NAME":"player3","CONTACTNO":"","EMAIL":"","RANK":5,"ADDRESS":"0x0f124b4C7Ccb22c79B3A95BB92188a810802ea26","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545369526437},
-  //   {"id":4,"NAME":"player4","CONTACTNO":"","EMAIL":"","RANK":2,"ADDRESS":"0xA87b6b69C139d414D2ca80744dB16172f997a7f7","CURRENTCHALLENGERID":5,"CURRENTCHALLENGERNAME":"player5","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
-  //   {"id":5,"NAME":"player5","CONTACTNO":"","EMAIL":"","RANK":6,"ADDRESS":"0x3dA1f7f1937985Da9baf87a9b934A50B55981E8E","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"player4","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301970660},
-  //   {"id":6,"NAME":"player6","CONTACTNO":"","EMAIL":"","RANK":6,"ADDRESS":"0x23fCa109110F043847bb0Ca87805f3642D8B7Dc7","CURRENTCHALLENGERID":0,"CURRENTCHALLENGERNAME":"AVAILABLE","DESCRIPTION":"","ACTIVE":true,"DATESTAMP":1545301853807}
-  // ];
-  //new user is player7
+fit('insertplayerexistingranking', () => {
   const currentUser = 'testuser1';
   const contactno = '1234567890'
   const email = 'mytest7@mytest7.com'
   //non-existent made up account no!
   const accountno = '0x23fCa109110F043847bb0Ca87805f3642D8B7Dd8'
   const description = 'test Mr.testuser1 add';
-  //copyconsoletemp good data
-  let result = JSONops.createNewUserInJSON(copyconsoletemp, currentUser, contactno, email, accountno, description, rankingID);
+  let result = JSONops.insertplayerexistingranking(specificranking, currentUser, contactno, email, accountno, description, rankingID);
   expect(result.jsonRS[6].NAME).toEqual('testuser1');
   expect(result.jsonRS[6].ADDRESS).toEqual('0x23fCa109110F043847bb0Ca87805f3642D8B7Dd8');
   expect(result.jsonRS[6].CURRENTCHALLENGERADDRESS).toEqual('');

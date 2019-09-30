@@ -52,58 +52,7 @@ _continueClick = () => {
    *
    * @returns {null}
    */
-  // _handleClick = async () => {
-  //   //TODO: all the json data for create new user is here ready to be appended to
-  //   //NB: isLoading is set to false in getNewRankId()
-  //   this.setState({ isLoading: true });
-  //
-  //   if (this.state.userConfirm === false){
-  //     this.setState({ WarningModalIsOpen: true });
-  //   }
-  //   //only do this once the user has confirmed the rank name
-  //   //
-  //   if(this.state.userConfirm){
-  //             //JSONops.createNewUserInJSON(this.props.rankingJSONdata, this.state.username, this.state.contactno, this.state.email, this.props.account, this.state.description);
-  //             const { username, description } = this.state;
-  //             try {
-  //               // set up our contract method with the input values from the form
-  //               //code can be implement within here once new contract has been deployed
-  //               if(this.state.ranknameHasChanged) {
-  //                 console.log(this.state.rankId)
-  //               }
-  //
-  //               const newRankingId = JSONops._sendCreateNewRankingJSONData();
-  //               console.log(newRankingId);
-  //               const createRanking = DSportRank.methods.createRanking(this.state.username, this.state.description, this.state.rankName, this.state.rankId);
-  //               //get a gas estimate before sending the transaction
-  //               const gasEstimate = await createRanking.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
-  //               //send the transaction to create an account with our gas estimate
-  //               //(plus a little bit more in case the contract state has changed).
-  //               const result = await createRanking.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
-  //               // check result status. if status is false or '0x0', show user the tx details to debug error
-  //               if (result.status && !Boolean(result.status.toString().replace('0x', ''))) { // possible result values: '0x0', '0x1', or false, true
-  //                 return this.setState({ isLoading: false, error: 'Error executing transaction, transaction details: ' + JSON.stringify(result) });
-  //               }
-  //               // Completed of async action, set loading state back
-  //               this.setState({ isLoading: false });
-  //               // tell our parent (app.js) that we've created a user so it
-  //               // will re-fetch the current user details from the contract (re-load the account info)
-  //               this.props.onAfterUserUpdate();
-  //               // redirect user to the  update user page
-  //               //this.props.history.push('/update/@' + username);
-  //               this.props.history.push('/');
-  //             } catch (err) {
-  //               // stop loading state and show the error
-  //               this.setState({ isLoading: false, error: err.message });
-  //             };
-  //           //user didn't confirm
-  //         }else{
-  //             console.log('user has not confirmed')
-  //           // const wtext = 'Please ensure your username is as you want it'
-  //           // wtext = ' since it CANNOT be changed, even if you de-activate your account!'
-  //           //   this.setState({ warningText: wtext });
-  //         }
-  // }
+
 
   /**
    * Handles the 'create new ranking' button click event which
@@ -115,44 +64,24 @@ _continueClick = () => {
   _handleCreateNewRankingClick = async (e) => {
       console.log('in _handleCreateNewRankingClick');
       console.log('user', this.props.user.username)
-
     // show loading state
     this.setState({ isLoading: true });
     //REVIEW: I don't see how these props from orig are used
     //const { username, account, onAfterChallenge } = this.props;
     //this.challengeInput = "at last!";
     //const sendETHDev = DSportRank.methods.sendETHDev();
-
     if (this.state.userConfirm === false){
       this.setState({ WarningModalIsOpen: true });
     }
-
     //only do this once the user has confirmed the rank name
     if(this.state.userConfirm){
             try{
-
-              //          //get a gas estimate before sending the transaction
-              //          const gasEstimate = await createRanking.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
-              //          //send the transaction to create an account with our gas estimate
-              //          //(plus a little bit more in case the contract state has changed).
-              //          const result = await createRanking.send({ from: web3.eth.defaultAccount,  gas: gasEstimate + 1000 });
-
-              //const usernameHash = web3.utils.keccak256(user.username);
               const usernameHash = web3.utils.keccak256(this.props.user.username);
               //const updatedDescription = this.state.rankDescription;
               //TODO: dummy value - This needs to be fully implemented with IPFS
               const updatedImageHash = 'Qmcs96FrhP5N9kJnhNsU87tUsuHpVbaSnGm7nxh13jMLLL';
-
-              //const  newrankId  = this.props.getNewRankId();
-
               console.log('newRankingId in CreateNewRanking', this.props.newrankId)
 
-              // set up our contract method with the input values from the form
-                  //const editAccount = DSportRank.methods.editAccount(usernameHash, updatedDescription, this.props.newrankId, updatedImageHash);
-
-                  // get a gas estimate before sending the transaction
-                  //const gasEstimate = await editAccount.estimateGas({ from: web3.eth.defaultAccount, gas: 10000000000 });
-                  //const gasEstimate = await estimateGas();
                   //REVIEIW: Not sure this is doing anything affecting app as all the work
                   //done in json currently:
                   //gasEstimate, usernameHash, updatedContactno, updatedEmail, updatedDescription, newrankId, updatedImageHash
@@ -167,46 +96,21 @@ _continueClick = () => {
 
                //REVIEW: New ranking must come after editAccount.send() in case e.g. there's not enough gas
                //otherwise, if this goes through there could be ranking errors etc.
-               //becomes  updateRankingsJSON (or similar)
-               //JSONops._updateDoChallengeJSON(this.props.user, this.props.selectedOpponentName, this.props.data);
-
-               //    "RANKINGDESC": "The first ranking list",
-               // "RANKINGNAME": "My_Club_Default",
-               // "RANKINGID": "123456789012345"
-
 
                console.log('before _sendCreateNewRankingJSONData this.props.', this.props.newrankId)
               const resultOfSendJsonToGlobalList = await JSONops._sendCreateNewRankingJSONData(this.props.rankingListJSONdata, this.props.newrankId ,this.state.rankName,this.state.rankDescription )
               console.log('resultOfSendJsonToGlobalList', resultOfSendJsonToGlobalList)
               //add current user to the new ranking list as the first player
               //no because they might just be an administrator
-              //await JSONops.createNewUserInNewJSON(this.props.user.username, this.props.contactNoCB, this.props.emailCB, this.props.account, 'squash player', this.props.newrankId)
-
-              //JSONops.createNewUserInJSON(originalData, this.props.user.username, this.props.contactNoCB, this.props.emailCB, this.props.account, 'squash player', this.props.)
-               // Completed of async action, set loading state back
-               //this.setState({ isLoading: false });
-               // tell our parent (app.js) that we've created a user so it
-               // will re-fetch the current user details from the contract (re-load the account info)
-               //this.props.onAfterUserUpdate();
 
               // change loading state
               this.setState({ isLoading: false });
 
-              // tell parent we've updated a user and to re-fetch user details from the contract
-              //TODO: change to onAfterNewRanking();
-              //this.props.onAfterChallenge();
-              //console.log('about to go to onAfterUserUpdate')
-              //this.props.onAfterUserUpdate();
-
-              //QUESTION: is this the right place for this function?
-              //this.displayContactDetails();
-
               // redirect user to the  GlobalRankings page
                this.props.history.push('/');
-               //this.props.history.push('/home/@' + this.props.user.username);
+
             }
             catch(err){
-              //console.log(result)
               console.log(err)
               // remove loading state and show error message
               this.setState({ isLoading: false, error: err.message });

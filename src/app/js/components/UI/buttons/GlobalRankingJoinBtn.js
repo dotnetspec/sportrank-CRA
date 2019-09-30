@@ -71,7 +71,7 @@ export default function GlobalRankingJoinBtn(props) {
       JSONops.isSafeToAddPlayerToJSON(handleCB, props.username)
     ) {
       console.log('account in create new', props.account)
-      const newUserJsonObj = JSONops.createNewUserInJSON(handleCB, props.username, props.contactno, props.email, props.account.owner, props.description, props.newrankId);
+      const newUserJsonObj = JSONops.insertplayerexistingranking(handleCB, props.username, props.contactno, props.email, props.account.owner, props.description, props.newrankId);
       return newUserJsonObj.jsonRS;
     }
     if (props.isRankingIDInvalid) {
@@ -85,7 +85,7 @@ export default function GlobalRankingJoinBtn(props) {
     }
     //if the player isn't listed in the json then add them (only if user clicked 'join')
     if (JSONops.isSafeToAddPlayerToJSON(handleCB, props.username)) {
-      const newUserJsonObj = JSONops.createNewUserInJSON(handleCB, props.username, props.contactno, props.email, props.account.owner, props.description, props.newrankId)
+      const newUserJsonObj = JSONops.insertplayerexistingranking(handleCB, props.username, props.contactno, props.email, props.account.owner, props.description, props.newrankId)
       console.log('newUserJsonObj.jsonRS', newUserJsonObj.jsonRS)
       return newUserJsonObj.jsonRS;
     } else {
