@@ -30,6 +30,10 @@ import DoChallengeModal from '../UI/Modals/DoChallengeModal';
 import MMWaitModal from '../UI/Modals/MMWaitModal'
 import LadderInfoPanel from '../UI/LadderInfoPanel'
 import LadderUserPanel from '../UI/LadderUserPanel'
+import {
+  opponentdetails
+} from '../SideEffects/io/opponentdetails'
+
 //import Grid from 'react-bootstrap/Grid'
 //import PageHeader from 'react-bootstrap/PageHeader'
 
@@ -61,8 +65,8 @@ const selectRowPropAfterClickRow = {
       const [warningText, setWarningText] = useState('')
       const [showMMModal, setShowMMModal] = useState(false)
       //const [rank, setRank] = useState(0)
-      //const [contactNoCB, setcontactNoCB] = useState('')
-      //const [emailCB, setEmailCB] = useState('')
+      const [contactNo, setcontactNo] = useState('')
+      const [email, setEmail] = useState('')
       //const [data, setData] = useState('')
       const [resultInfoForDisplay, setResultInfoForDisplay] = useState('')
       //const [tableData, setTableData] = useState('')
@@ -105,16 +109,16 @@ const selectRowPropAfterClickRow = {
     const {
       rankingJSONdata
     } = props;
-    if (selectRowPropAfterClickRow.selectedOpponentName === props.user.username) {
+    if (selectRowPropAfterClickRow.selectedOpponentName === props.username) {
       setWarningText(' You cannot challenge yourself!');
       setWarningModalIsOpen(true);
-    } else if (!JSONops.isPlayerLowerRankThanChallengeOpponent(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.user.username)) {
+    } else if (!JSONops.isPlayerLowerRankThanChallengeOpponent(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.username)) {
       setWarningText(' This opponent is lower than you in the rankings - aim high!');
       setWarningModalIsOpen(true);
-    } else if (JSONops.isPlayerAlreadyChallengingThisOpp(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.user.username)) {
+    } else if (JSONops.isPlayerAlreadyChallengingThisOpp(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.username)) {
       setWarningText(' You are already challenging this player!')
       setWarningModalIsOpen(true);
-    } else if (!JSONops.isPlayerAvailableToChallenge(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.user.username)) {
+    } else if (!JSONops.isPlayerAvailableToChallenge(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.username)) {
       setWarningText(' Please allow ongoing challenge(s) to complete ...');
       setWarningModalIsOpen(true);
     } else {
@@ -128,12 +132,12 @@ const selectRowPropAfterClickRow = {
     selectRowPropAfterClickRow.selectedOpponentName = `${row['NAME']}`;
     selectRowPropAfterClickRow.selectedOpponentRank = `${row['RANK']}`;
     setResultInfoForDisplay('');
-      if(!JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.user.username)){
+      if(!JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.username)){
         setWarningText(` You are not currently listed in this ranking.
         Please click ListAllRankings
         and then Join to select the ranking you wish to be added to`);
         setWarningModalIsOpen(true);
-      } else if (props.user.username !== '') {
+      } else if (props.username !== '') {
       _handleShowChallengeModal();
       //props.onAfterUserUpdate();
     } else {
@@ -146,8 +150,8 @@ const selectRowPropAfterClickRow = {
     selectRowPropAfterClickRow.selectedOpponentName = `${row['NAME']}`;
     selectRowPropAfterClickRow.selectedOpponentRank = `${row['RANK']}`;
     setResultInfoForDisplay('');
-    console.log('username', props.user.username)
-    if(!JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.user.username)){
+    console.log('username', props.username)
+    if(!JSONops.isPlayerListedInJSON(props.rankingJSONdata, props.username)){
       setWarningText(` You are not currently listed in this ranking.
       Please click ListAllRankings
       and then Join to select the ranking you wish to be added to`);
@@ -186,7 +190,7 @@ const selectRowPropAfterClickRow = {
     const {
       rankingJSONdata
     } = props;
-    if (!JSONops.isPlayerAvailableToEnterResultAgainst(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.user.username)) {
+    if (!JSONops.isPlayerAvailableToEnterResultAgainst(rankingJSONdata, selectRowPropAfterClickRow.selectedOpponentName, props.username)) {
       setWarningText('You must challenge an opponent before attempting to enter a result!');
       setWarningModalIsOpen(true);
     } else {
@@ -207,10 +211,10 @@ const selectRowPropAfterClickRow = {
   const userPlayerJsonDataDisplay = () => {
     //console.log('userPlayerJsonDataDisplay', userPlayerJsonDataDisplay)
       //get a json obj with all the user data in it
-      const jsonOpsReturnOjb = JSONops.createUserPlayerJsonDataDisplay(props.rankingListJSONdata, props.newrankId, props.rankingJSONdata, props.user);
+      const jsonOpsReturnOjb = JSONops.createUserPlayerJsonDataDisplay(props.rankingListJSONdata, props.newrankId, props.rankingJSONdata, props.username);
 
       //IF there's an active user ...
-      if (jsonOpsReturnOjb.currentUserName === props.user.username && jsonOpsReturnOjb.activeBool) {
+      if (jsonOpsReturnOjb.currentUserName === props.username && jsonOpsReturnOjb.activeBool) {
         //TODO: implement when we have a challengerAddress
         //const opponentInfo = fetchUserData(challengerAddress);
         const textOpsReturnOjb = userInfoText(jsonOpsReturnOjb.currentChallengerName, jsonOpsReturnOjb.currentChallengerContactNo,
@@ -219,13 +223,13 @@ const selectRowPropAfterClickRow = {
         return (
           <React.Fragment>
             <LadderInfoPanel jsonObj={jsonOpsReturnOjb} rankingJSONdata={props.rankingJSONdata}></LadderInfoPanel>
-            <LadderUserPanel txtObj={textOpsReturnOjb}  username={props.user.username}></LadderUserPanel>
+            <LadderUserPanel txtObj={textOpsReturnOjb}  username={props.username}></LadderUserPanel>
           </React.Fragment>
         )
         }
         //there's no ACTIVE user
         else
-        if (jsonOpsReturnOjb.currentUserName === props.user.username && !jsonOpsReturnOjb.activeBool) {
+        if (jsonOpsReturnOjb.currentUserName === props.username && !jsonOpsReturnOjb.activeBool) {
           return ( <
             div >
             Your player is currently deactivated! < p > < /p>
@@ -246,7 +250,7 @@ const selectRowPropAfterClickRow = {
           //REVIEW: this should only occur after an Embark re-set and there's no
           //inital account or data - there may be a better way to test for this
           //console.log('rankingJSONdata', props.rankingJSONdata)
-          if (JSONops.isJSONEmpty(props.rankingJSONdata) && props.user.username === null) {
+          if (JSONops.isJSONEmpty(props.rankingJSONdata) && props.username === null) {
 
             console.log('json is empty and there is no username');
             props.history.push('/create');
@@ -350,6 +354,17 @@ const selectRowPropAfterClickRow = {
           //refresh if the cb from join btn doesn't update the prop in time
           props.onAfterUserUpdate();
         }
+
+        console.log('props.rankingJSONdata', props.rankingJSONdata, 'uname', props.username);
+        const oppoaddress = JSONops._getUserValue(props.rankingJSONdata, props.username, "CURRENTCHALLENGERADDRESS")
+        console.log('oppoAddress', oppoaddress);
+        const oppenentdetailsfromaddr = async () => {
+          //function(jsonObj, currentUser, valueToLookup
+          const oppodetails = await opponentdetails(oppoaddress);
+          console.log('oppodetails', oppodetails);
+        }
+
+        if(oppoaddress) oppenentdetailsfromaddr();
            //set to viewingOnly and re-render
            setviewingOnlyCB(true);
        }, [props, setviewingOnlyCB])
@@ -393,7 +408,7 @@ const selectRowPropAfterClickRow = {
               props.account
             }
             user = {
-              props.user.username
+              props.username
             }
             //REVIEW: updateTextCB not doing anything
             // updateTextCB = {
@@ -428,8 +443,8 @@ const selectRowPropAfterClickRow = {
             selectedOpponentRank = {
               selectRowPropAfterClickRow.selectedOpponentRank
             }
-            user = {
-              props.user.username
+            username = {
+              props.username
             }
             selectedOpponentName = {
               selectRowPropAfterClickRow.selectedOpponentName

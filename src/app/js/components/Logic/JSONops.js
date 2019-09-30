@@ -71,17 +71,17 @@ const JSONops = {
     return true;
   },
 
-  createUserPlayerJsonDataDisplay: function(rankingListJSONdata, newrankId, rankingJSONdata, user) {
-    const currentChallengerName = JSONops._getUserValue(rankingJSONdata, user.username, "CURRENTCHALLENGERNAME");
+  createUserPlayerJsonDataDisplay: function(rankingListJSONdata, newrankId, rankingJSONdata, username) {
+    const currentChallengerName = JSONops._getUserValue(rankingJSONdata, username, "CURRENTCHALLENGERNAME");
     const createUserPlayerJsonDataDisplayObj = {
       textToDisplayRankName: JSONops._getGlobalRankingVal(rankingListJSONdata, newrankId, 'RANKINGNAME'),
       textToDisplayRankDesc: JSONops._getGlobalRankingVal(rankingListJSONdata, newrankId, 'RANKINGDESC'),
-      currentUserRank: JSONops._getUserValue(rankingJSONdata, user.username, "RANK"),
+      currentUserRank: JSONops._getUserValue(rankingJSONdata, username, "RANK"),
       currentChallengerName: currentChallengerName,
       currentChallengerContactNo: JSONops._getUserValue(rankingJSONdata, currentChallengerName, "CONTACTNO"),
       currentChallengerEmail: JSONops._getUserValue(rankingJSONdata, currentChallengerName, "EMAIL"),
-      currentUserName: JSONops._getUserValue(rankingJSONdata, user.username, "NAME"),
-      activeBool: JSONops._getUserValue(rankingJSONdata, user.username, "ACTIVE")
+      currentUserName: JSONops._getUserValue(rankingJSONdata, username, "NAME"),
+      activeBool: JSONops._getUserValue(rankingJSONdata, username, "ACTIVE")
     }
     return createUserPlayerJsonDataDisplayObj;
   },
@@ -115,7 +115,7 @@ const JSONops = {
         return responseObj;
       }
     }
-    //for 'won' if e.g. current user is ranked 2 (a lower integer) and oppenent is ranked 4
+    //for 'won' if e.g. current user is ranked 2 (a lower integer) and opponent is ranked 4
     // (a higher integer)
     //this will just set 'AVAILABLE' and NO ranking change will be made
     else if (resultEntered === 'won' && this.isUserAlreadyHigherRankedThanOpponent(currentUserRankInt, selectedOpponentRankInt)) {
@@ -553,7 +553,7 @@ const JSONops = {
       checkAllRows: false
     };
     //need this one to get the opponenets name when user is the challenger
-    let lookupCurrentUsersOppenentPlayerValue = {
+    let lookupCurrentUsersOpponentPlayerValue = {
       jsonRS: data,
       lookupField: 'CURRENTCHALLENGERNAME',
       lookupKey: currentUser,
@@ -581,10 +581,10 @@ const JSONops = {
     //re-set my current opponent to AVAILABLE
     updatedUserJSON = this._setUserValue(data, currentUser, "CURRENTCHALLENGERNAME", "AVAILABLE");
     //handle the opponent's display (if there is an opponenet)
-    let currentUsersOppenentPlayerValue = this._getVal(lookupCurrentUsersOppenentPlayerValue);
-    if (currentUsersOppenentPlayerValue !== undefined) {
+    let currentUsersopponentplayervalue = this._getVal(lookupCurrentUsersOpponentPlayerValue);
+    if (currentUsersopponentplayervalue !== undefined) {
       //re-set my opponents 'current opponent' to AVAILABLE
-      updatedUserJSON = this._setUserValue(data, currentUsersOppenentPlayerValue, "CURRENTCHALLENGERNAME", "AVAILABLE");
+      updatedUserJSON = this._setUserValue(data, currentUsersopponentplayervalue, "CURRENTCHALLENGERNAME", "AVAILABLE");
     }
     return updatedUserJSON;
   },
