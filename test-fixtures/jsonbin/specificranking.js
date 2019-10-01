@@ -51,7 +51,7 @@ export const specificranking =
     "ADDRESS": "0x48DF2ee04DFE67902B83a670281232867e5dC0Cb",
     "RANK": 4,
     "NAME": "testuser2",
-    "id": 3
+    "id": 5
   },
   {
     "DATESTAMP": 1569386461484,
@@ -62,6 +62,28 @@ export const specificranking =
     "ADDRESS": "0x48DF2ee04DFE67902B83a670281232867e5dC0Cc",
     "RANK": 5,
     "NAME": "testuser3",
-    "id": 4
+    "id": 6
+  },
+  {
+    "DATESTAMP": 1569676868368,
+    "ACTIVE": true,
+    "CURRENTCHALLENGERNAME": "",
+    "CURRENTCHALLENGERID": 0,
+    "CURRENTCHALLENGERADDRESS": "",
+    "ADDRESS": "0xD99eB29299CEF8726fc688180B30E634827b3079",
+    "RANK": 6,
+    "NAME": "GanacheAcct4",
+    "id": 7
+  },
+  {
+    "DATESTAMP": 1569676868368,
+    "ACTIVE": true,
+    "CURRENTCHALLENGERNAME": "",
+    "CURRENTCHALLENGERID": 0,
+    "CURRENTCHALLENGERADDRESS": "",
+    "ADDRESS": "0xD99eB29299CEF8726fc688180B30E634827b3080",
+    "RANK": 7,
+    "NAME": "GanacheAcct5",
+    "id": 8
   }
 ]

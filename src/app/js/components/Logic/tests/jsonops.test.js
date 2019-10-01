@@ -788,16 +788,28 @@ describe('JSONops - pure', () => {
 });
 
 it('insertplayerexistingranking', () => {
-  const currentUser = 'testuser1';
+  //generate a new user name each time run this test
+  let randomusername = Math.random().toString(36).substring(7);
   const contactno = '1234567890'
   const email = 'mytest7@mytest7.com'
   //non-existent made up account no!
   const accountno = '0x23fCa109110F043847bb0Ca87805f3642D8B7Dd8'
-  const description = 'test Mr.testuser1 add';
-  let result = JSONops.insertplayerexistingranking(specificranking, currentUser, contactno, email, accountno, description, rankingID);
-  expect(result.jsonRS[6].NAME).toEqual('testuser1');
-  expect(result.jsonRS[6].ADDRESS).toEqual('0x23fCa109110F043847bb0Ca87805f3642D8B7Dd8');
-  expect(result.jsonRS[6].CURRENTCHALLENGERADDRESS).toEqual('');
+  const description = 'test Mr.RandomName add';
+  let result = JSONops.insertplayerexistingranking(specificranking, randomusername, contactno, email, accountno, description, rankingID);
+  //iterate through all the objects in the json and return the one matching randomusername
+  var playerObjToTest = result.jsonRS.filter(function(playerObj) {
+    return playerObj.NAME === randomusername;
+  });
+
+  expect(playerObjToTest[0].DATESTAMP).toBeDefined();
+  expect(playerObjToTest[0].ACTIVE).toBe(true);
+  expect(playerObjToTest[0].CURRENTCHALLENGERNAME).toEqual('AVAILABLE');
+  expect(playerObjToTest[0].CURRENTCHALLENGERID).toBe(0);
+  expect(playerObjToTest[0].RANK).toBe(7);
+  expect(playerObjToTest[0].id).toBe(result.jsonRS.length);
+  expect(playerObjToTest[0].NAME).toEqual(randomusername);
+  expect(playerObjToTest[0].ADDRESS).toEqual('0x23fCa109110F043847bb0Ca87805f3642D8B7Dd8');
+  expect(playerObjToTest[0].CURRENTCHALLENGERADDRESS).toEqual('');
 })
 
 it('JSONops isPlayerListedInJSON', () => {
@@ -1324,49 +1336,52 @@ it('JSONops reactivatePlayerInJson test ', async () => {
 })
 
 
-fit('JSONops _updateDoChallengeJSONinJson test ', async () => {
+it('JSONops _updateDoChallengeJSONinJson test ', async () => {
+  const currentuser = 'testuser1'
   const selectedOpponent = 'GanacheAcct2'
-  const fromJson = JSONops._updateDoChallengeJSONinJson(rankingID, currentUser, selectedOpponent, specificranking);
+  const fromJson = JSONops._updateDoChallengeJSONinJson(rankingID, currentuser, selectedOpponent, specificranking);
   var playerObjToTest = fromJson.filter(function(playerObj) {
     return playerObj.NAME === 'testuser1';
   });
   expect(playerObjToTest[0].CURRENTCHALLENGERNAME).toEqual('GanacheAcct2');
+  expect(playerObjToTest[0].CURRENTCHALLENGERADDRESS).toEqual('0xD99eB29299CEF8726fc688180B30E634827b3078');
+  expect(playerObjToTest[0].CURRENTCHALLENGERID).toBe(4);
 })
 
 //NB: Using the new data set here
 it('JSONops _updateDoChallengeJSONinJson test with CURRENTCHALLENGERADDRESS', async () => {
   //these names could be anything - e.g. testUser5 etc.
   //the names don't relate to the accounts directly (only the addresses do)
-  const currentUser = 'GanacheAcct4';
+  const currentuser = 'GanacheAcct4';
   const selectedOpponent = 'GanacheAcct5';
-  const fromJson = JSONops._updateDoChallengeJSONinJson(rankingID, currentUser, selectedOpponent, copyconsoletemp);
+  const fromJson = JSONops._updateDoChallengeJSONinJson(rankingID, currentuser, selectedOpponent, specificranking);
   var playerObjToTest = fromJson.filter(function(playerObj) {
     return playerObj.NAME === 'GanacheAcct4';
   });
   //console.log('playerObj', playerObjToTest);
   //array index is always [0] cos above only returns 1 object
   expect(playerObjToTest[0].CURRENTCHALLENGERNAME).toEqual('GanacheAcct5');
-  expect(playerObjToTest[0].CURRENTCHALLENGERADDRESS).toEqual('0x48DF2ee04DFE67902B83a670281232867e5dC0CC');
+  expect(playerObjToTest[0].CURRENTCHALLENGERADDRESS).toEqual('0xD99eB29299CEF8726fc688180B30E634827b3080');
 })
 
 it('JSONops _updateEnterResultJSON test with CURRENTCHALLENGERADDRESS', async () => {
-  //these names could be anything - e.g. testUser5 etc.
+  //these names could be anything - e.g. testUser5 etc.(but have to exist in test data of course)
   //the names don't relate to the accounts directly (only the addresses do)
-  const currentUser = 'GanacheAcct4';
+  const currentuser = 'GanacheAcct4';
   const selectedOpponent = 'GanacheAcct5';
   const playerNameOnRowClicked = 'GanacheAcct4';
-  const selectedOpponentRank = 5;
-  const fromJson = JSONops._updateDoChallengeJSONinJson(rankingID, currentUser, selectedOpponent, copyconsoletemp);
+  const selectedOpponentRank = 7;
+  const fromJson = JSONops._updateDoChallengeJSONinJson(rankingID, currentuser, selectedOpponent, specificranking);
   var playerObjToTest = fromJson.filter(function(playerObj) {
     return playerObj.NAME === 'GanacheAcct4';
   });
   //console.log('playerObj', playerObjToTest);
   //array index is always [0] cos above only returns 1 object
   expect(playerObjToTest[0].CURRENTCHALLENGERNAME).toEqual('GanacheAcct5');
-  expect(playerObjToTest[0].CURRENTCHALLENGERADDRESS).toEqual('0x48DF2ee04DFE67902B83a670281232867e5dC0CC');
-  expect(playerObjToTest[0].CURRENTCHALLENGERID).toEqual(6);
+  expect(playerObjToTest[0].CURRENTCHALLENGERADDRESS).toEqual('0xD99eB29299CEF8726fc688180B30E634827b3080');
+  expect(playerObjToTest[0].CURRENTCHALLENGERID).toEqual(8);
   //rankingID, currentUser, currentUserRank, playerNameOnRowClicked, selectedOpponentRank, data)
-  const fromJson2 = JSONops._updateEnterResultJSON(rankingID, playerObjToTest[0].NAME, playerObjToTest[0].RANK, playerNameOnRowClicked, selectedOpponentRank, copyconsoletemp);
+  const fromJson2 = JSONops._updateEnterResultJSON(rankingID, playerObjToTest[0].NAME, playerObjToTest[0].RANK, playerNameOnRowClicked, selectedOpponentRank, specificranking);
   //iterate through all the objects in the json and return the one matching 'GanacheAcct4'
   var playerObjToTest2 = fromJson2.filter(function(playerObj) {
     return playerObj.NAME === 'GanacheAcct4';

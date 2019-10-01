@@ -327,30 +327,28 @@ const JSONops = {
     return updatedUserJSON;
   },
 
-  _updateDoChallengeJSONinJson: function(rankingID, currentUser, selectedOpponent, data) {
-    console.log('selectedOpponent', selectedOpponent)
+  _updateDoChallengeJSONinJson: function(rankingID, currentuser, selectedOpponent, data) {
     //get the user's id number
-    const userIDNumber = this._getUserValue(data, currentUser, "id");
+    const userIDNumber = this._getUserValue(data, currentuser, "id");
     const selectedopponentIDNumber = this._getUserValue(data, selectedOpponent, "id");
-    const challengeraddress = this._getUserValue(data, currentUser, "ADDRESS");
+    const challengeraddress = this._getUserValue(data, currentuser, "ADDRESS");
     const opponentaddress = this._getUserValue(data, selectedOpponent, "ADDRESS");;
     //NB: selectedOpponentIDNumber not currently used but possible it may be needed
     let updatedUserJSON =
       this._setUserValue(data, selectedOpponent, "CURRENTCHALLENGERID", userIDNumber);
-    updatedUserJSON = this._setUserValue(data, currentUser, "CURRENTCHALLENGERID", selectedopponentIDNumber);
+    updatedUserJSON = this._setUserValue(data, currentuser, "CURRENTCHALLENGERID", selectedopponentIDNumber);
     //set both names to be challenging eachother (no AVAILABLE) to ensure only 1 opponent at a time
     //to avoid validation problems with selecting opponents etc.
-    updatedUserJSON = this._setUserValue(data, selectedOpponent, "CURRENTCHALLENGERNAME", currentUser);
-    updatedUserJSON = this._setUserValue(data, currentUser, "CURRENTCHALLENGERNAME", selectedOpponent);
+    updatedUserJSON = this._setUserValue(data, selectedOpponent, "CURRENTCHALLENGERNAME", currentuser);
+    updatedUserJSON = this._setUserValue(data, currentuser, "CURRENTCHALLENGERNAME", selectedOpponent);
     updatedUserJSON = this._setUserValue(data, selectedOpponent, "CURRENTCHALLENGERADDRESS", challengeraddress);
-    updatedUserJSON = this._setUserValue(data, currentUser, "CURRENTCHALLENGERADDRESS", opponentaddress);
-
+    updatedUserJSON = this._setUserValue(data, currentuser, "CURRENTCHALLENGERADDRESS", opponentaddress);
     return updatedUserJSON;
   },
 
   //REVIEW:handle the same way as the enterresult functionality above (i.e. don't need 2 sep functs here )
-  _updateDoChallengeJSON: function(rankingID, data, currentUser, accountno) {
-    const result = this._updateDoChallengeJSONinJson(rankingID, data, currentUser, accountno);
+  _updateDoChallengeJSON: function(rankingID, data, currentuser, accountno) {
+    const result = this._updateDoChallengeJSONinJson(rankingID, data, currentuser, accountno);
     //console.log('rankingID in _updateDoChallengeJSONinJson', rankingID);
     _sendJSONDataWithRankingID(result, rankingID);
   },
