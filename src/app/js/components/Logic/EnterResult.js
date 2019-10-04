@@ -47,44 +47,6 @@ class EnterResult extends Component{
   }
   //#endregion
 
-
-// _processResult(resultEntered, currentUser){
-//
-// //Handle the opponent's row being clicked as well as user's row
-// let checkedUserRank, checkedOpponentRank = 0;
-// const opponentCurrentlyChallengingUser = JSONops._getUserValue(this.props.data, currentUser, "CURRENTCHALLENGERNAME");
-//
-//   checkedUserRank = JSONops._getUserValue(this.props.data, currentUser, "RANK");
-//   checkedOpponentRank = JSONops._getUserValue(this.props.data, opponentCurrentlyChallengingUser, "RANK");
-//
-//              const currentUserRankInt = parseInt(checkedUserRank);
-//              const selectedOpponentRankInt = parseInt(checkedOpponentRank);
-//
-//              if (resultEntered === 'undecided' ){
-//                JSONops._updateEnterResultUnchangedJSON(this.props.newrankId, currentUser,opponentCurrentlyChallengingUser, this.props.data);
-//                return "Thank you. No changes have been made. Your ranking is unchanged"
-//              }
-//              else if (resultEntered === 'won' && currentUserRankInt < selectedOpponentRankInt){
-//               JSONops._updateEnterResultUnchangedJSON(this.props.newrankId, currentUser,opponentCurrentlyChallengingUser, this.props.data);
-//               JSONops.updateDateStampsInJSON(this.props.newrankId, this.props.data, currentUser, opponentCurrentlyChallengingUser);
-//               console.log('result send to _updateEnterResultUnchangedJSON');
-//               return "Thank you. Your result has been entered. Your ranking is unchanged"
-//
-//             }else if (resultEntered === 'lost' && currentUserRankInt > selectedOpponentRankInt){
-//
-//               JSONops._updateEnterResultUnchangedJSON(this.props.newrankId, currentUser,opponentCurrentlyChallengingUser, this.props.data);
-//               JSONops.updateDateStampsInJSON(this.props.newrankId, this.props.data, currentUser, opponentCurrentlyChallengingUser);
-//               console.log('result send to _updateEnterResultUnchangedJSON');
-//               return "Thank you. Your result has been entered. Your ranking is unchanged"
-//
-//             }else{
-//               JSONops._updateEnterResultJSON(this.props.newrankId, currentUser, checkedUserRank, opponentCurrentlyChallengingUser, checkedOpponentRank, this.props.data);
-//               JSONops.updateDateStampsInJSON(this.props.newrankId, this.props.data, currentUser,opponentCurrentlyChallengingUser);
-//               console.log('result send to _updateEnterResultJSON');
-//               return "Thank you. Your result has been entered. Your ranking has been changed"
-//             }
-//     }
-
   //#region Component events
   /**
    * Handles the 'challenge' button click event which
@@ -98,11 +60,6 @@ class EnterResult extends Component{
    //obj reference issues (and used bind in the constructor)
   //_handleClick = async (e) => {
 
-  // handleUpdateWarningText(result) {
-  //      //var lang = this.refs.dropdown.value;
-  //      this.props.updateWarningText(result);
-  //  }
-
     _handleClick(e){
     try{
 
@@ -110,7 +67,7 @@ class EnterResult extends Component{
       //this.props.updateWarningText();
       //this.props.onAfterResult();
       console.log('data in handleclick', this.props.data);
-      const result = JSONops.processResult(this.selectedOption, this.props.user, this.props.data, this.props.newrankId);
+      const result = JSONops.processresult(this.selectedOption, this.props.user, this.props.data, this.props.newrankId);
       _sendJSONDataWithRankingID(result.updatedUserJSON, this.props.newrankId);
       this.props.setResultInfoForDisplayCB(result.text);
       // remove loading state

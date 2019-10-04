@@ -32,10 +32,10 @@ describe('TextOps - pure', () => {
     currentChallengerName = 'AVAILABLE';
     result = userInfoText(currentChallengerName, currentChallengerContactNo, currentChallengerEmail, currentUserRank) ;
     expect(result.textToDisplayContinue).toEqual('Please select an AVAILABLE opponent (below) to challenge: ');
-    // result = JSONops.processResult(resultEntered, currentUser, dataTrueWithUserHigherInRanking, rankingID);
+    // result = JSONops.processresult(resultEntered, currentUser, dataTrueWithUserHigherInRanking, rankingID);
     // expect(result.text).toEqual("Thank you. Your result has been entered. Your ranking has been changed");
 
-    // result = JSONops.processResult(resultEntered, currentUser, dataTrueWithUserHigherInRanking, rankingID);
+    // result = JSONops.processresult(resultEntered, currentUser, dataTrueWithUserHigherInRanking, rankingID);
     // expect(result.text).toEqual('Thank you. Your result has been entered. Your ranking is unchanged');
 
     //REVIEW: other tests can be added with this in future

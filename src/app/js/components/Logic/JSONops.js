@@ -86,7 +86,7 @@ const JSONops = {
     return createUserPlayerJsonDataDisplayObj;
   },
 
-  processResult: function(resultEntered, currentUser, data, newrankId) {
+  processresult: function(resultEntered, currentUser, data, newrankId) {
     //responseObj created to deal with testing/logic etc. issues of returning
     //both the text and the obj so that _sendJSONDataWithRankingID can be extracted
     //from this logic
@@ -177,8 +177,8 @@ const JSONops = {
   },
 
 
-  //export function processResult(resultEntered, currentUser) {
-  //_processResult(resultEntered, currentUser){
+  //export function processresult(resultEntered, currentUser) {
+  //_processresult(resultEntered, currentUser){
 
   //Handle the opponent's row being clicked as well as user's row
 
@@ -313,7 +313,7 @@ const JSONops = {
   _updateEnterResultUnchangedJSON: function(rankingID, currentUser, selectedOpponent, data) {
     //set both player to AVAILABLE
     const opponentCurrentlyChallengingUser = this._getUserValue(data, currentUser, "CURRENTCHALLENGERNAME");
-    //console.log(opponentCurrentlyChallengingUser)
+    console.log('opponentCurrentlyChallengingUser', opponentCurrentlyChallengingUser)
     let updatedUserJSON = data;
     if (opponentCurrentlyChallengingUser !== 'AVAILABLE') {
       updatedUserJSON = this._setUserValue(data, opponentCurrentlyChallengingUser, "CURRENTCHALLENGERNAME", "AVAILABLE");
@@ -322,6 +322,17 @@ const JSONops = {
       updatedUserJSON = this._setUserValue(data, selectedOpponent, "CURRENTCHALLENGERNAME", "AVAILABLE");
       //case where opponent's row isn't the one clicked on (user clicks own row to enter result)
       updatedUserJSON = this._setUserValue(data, opponentCurrentlyChallengingUser, "CURRENTCHALLENGERNAME", "AVAILABLE");
+
+      //FOR ADDRESS
+      updatedUserJSON = this._setUserValue(data, currentUser, "CURRENTCHALLENGERADDRESS", "");
+      updatedUserJSON = this._setUserValue(data, selectedOpponent, "CURRENTCHALLENGERADDRESS", "");
+      updatedUserJSON = this._setUserValue(data, opponentCurrentlyChallengingUser, "CURRENTCHALLENGERADDRESS", "");
+
+      //FOR ID
+      updatedUserJSON = this._setUserValue(data, currentUser, "CURRENTCHALLENGERID", 0);
+      updatedUserJSON = this._setUserValue(data, selectedOpponent, "CURRENTCHALLENGERID", 0);
+      updatedUserJSON = this._setUserValue(data, opponentCurrentlyChallengingUser, "CURRENTCHALLENGERID", 0);
+
       //console.log('updatedUserJSON', updatedUserJSON);
     }
     return updatedUserJSON;
